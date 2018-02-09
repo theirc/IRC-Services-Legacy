@@ -1,0 +1,22 @@
+machine:
+  python:
+    version: 3.5.1
+  node:
+    version: 5.6.0
+  ruby:
+    version: 2.2.4
+  environment:
+    DBUS_SESSION_BUS_ADDRESS: /dev/null
+dependencies:
+  pre:
+    - mv package.json not_needed_for_ci_atm.json
+    - sudo apt-get install ruby-sass python-numpy libicu-dev
+  post:
+    - echo "DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'" > service_info/local_settings.py
+    - mv not_needed_for_ci_atm.json package.json
+    - npm install
+    - python manage.py collectstatic --noinput
+test:
+  override:
+  - python manage.py test --liveserver=localhost:8000-8010,8090-8100,9000-9200
+

@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block title %}Refugee Info{% endblock %}
+
+{% block content %}
+    <a class="button country-button" id="cms" href="{% url 'cms:landing_page' %}">CMS</a>
+
+    <a class="button country-button" id="service-provider-portal" href="{% url 'spp:landing_page' %}">Service Provider Portal</a>
+{% endblock %}
+

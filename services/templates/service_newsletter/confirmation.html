@@ -1,0 +1,308 @@
+{% extends 'service_newsletter/base.html' %}
+{% load newsletter_extras %}
+
+{% block header-image %}
+    <img
+        align="center"
+        alt="refugees"
+        src="https://gallery.mailchimp.com/881109e97ad9515d9bad45d66/images/bd6ee6fd-eb3b-4cee-b96d-8195fe6222d4.png"
+        width="600"
+        style="max-width:600px;
+        padding-bottom: 0;
+        display: inline !important;
+        vertical-align: bottom;"
+        class="mcnImage">
+{% endblock %}
+
+{% block content %}
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnTextBlock" style="min-width:100%;">
+    <tbody class="mcnTextBlockOuter">
+        <tr>
+            <td valign="top" class="mcnTextBlockInner" style="padding-top:9px;">
+              	<!--[if mso]>
+				<table align="left" border="0" cellspacing="0" cellpadding="0" width="100%" style="width:100%;">
+				<tr>
+				<![endif]-->
+
+				<!--[if mso]>
+				<td valign="top" width="600" style="width:600px;">
+				<![endif]-->
+                <table align="left" border="0" cellpadding="0" cellspacing="0" style="max-width:100%; min-width:100%;" width="100%" class="mcnTextContentContainer">
+                    <tbody><tr>
+
+                        <td valign="top" class="mcnTextContent" style="padding: 0px 18px 9px; font-size: 20px; font-style: normal; font-weight: bold;">
+
+                            {{ newsletter_settings.confirmation_content_header | safe }}
+
+                        </td>
+                    </tr>
+                </tbody></table>
+				<!--[if mso]>
+				</td>
+				<![endif]-->
+
+				<!--[if mso]>
+				</tr>
+				</table>
+				<![endif]-->
+            </td>
+        </tr>
+    </tbody>
+    </table>
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnTextBlock" style="min-width:100%;">
+        <tbody class="mcnTextBlockOuter">
+            <tr>
+                <td valign="top" class="mcnTextBlockInner" style="padding-top:9px;">
+                    <!--[if mso]>
+                    <table align="left" border="0" cellspacing="0" cellpadding="0" width="100%" style="width:100%;">
+                    <tr>
+                    <![endif]-->
+
+                    <!--[if mso]>
+                    <td valign="top" width="600" style="width:600px;">
+                    <![endif]-->
+                    <table align="left" border="0" cellpadding="0" cellspacing="0" style="max-width:100%; min-width:100%;" width="100%" class="mcnTextContentContainer">
+                        <tbody><tr>
+
+                            <td valign="top" class="mcnTextContent" style="padding: 0px 18px 9px; font-size: 12px; font-style: normal; font-weight: normal; text-align: left;">
+
+                                <div style="text-align: left; font-size: 13px; font-family: 'Helvetica'; ">
+                                    <p dir="ltr" style="text-align: left; font-size: 13px; font-style: normal; font-weight: normal;">
+                                        {{ newsletter_settings.confirmation_content_before_name_text | safe }}<!--
+                                        -->{% if show_variables %}<span>{ receiver_name }</span>{% else %}{{ receiver_name }}{% endif %}<!--
+                                        -->{{ newsletter_settings.confirmation_content_after_name_text | safe }}<!--
+                                        -->{{ newsletter_settings.confirmation_content_text_before_provider | safe }}<!--
+                                        -->{% if show_variables %}<span>{ provider }</span>{% else %}{{ provider }}{% endif %}<!--
+                                        -->{{ newsletter_settings.confirmation_content_text_between_provider_service | safe }}<!--
+                                        -->{% if show_variables %}<span>{ location }</span>{% else %}{{ location }}{% endif %}<!--
+                                        -->{{ newsletter_settings.confirmation_content_text_after_service | safe }}
+                                    </p>
+                                </div>
+
+                            </td>
+                        </tr>
+                    </tbody></table>
+                    <!--[if mso]>
+                    </td>
+                    <![endif]-->
+
+                    <!--[if mso]>
+                    </tr>
+                    </table>
+                    <![endif]-->
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    {% if show_variables %}
+        <table style="max-width:100%; min-width:100%;" class="mcnTextContentContainer" width="100%" align="left" cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <tr>
+                    <td class="mcnTextContent" style="padding: 0px 18px 9px; font-size: 14px; font-style: normal; font-weight: normal; text-align: center;" valign="top">
+                        <div>{ services }</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    {% else %}
+        {% for service in services %}
+            <table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnBoxedTextBlock" style="min-width:100%;">
+                <!--[if gte mso 9]>
+                <table align="center" border="0" cellspacing="0" cellpadding="0" width="100%">
+                <![endif]-->
+                <tbody class="mcnBoxedTextBlockOuter">
+                    <tr>
+                        <td valign="top" class="mcnBoxedTextBlockInner">
+
+                            <!--[if gte mso 9]>
+                            <td align="center" valign="top">
+                            <![endif]-->
+                            <table align="left" border="0" cellpadding="0" cellspacing="0" width="100%" style="min-width:100%;" class="mcnBoxedTextContentContainer">
+                                <tbody><tr>
+
+                                    <td style="padding-top:9px; padding-left:3px; padding-bottom:9px; padding-right:3px;">
+
+                                        <table border="0" cellpadding="18" cellspacing="0" class="mcnTextContentContainer" width="100%" style="min-width: 100% !important;border: 1px dashed #7A7777;">
+                                            <tbody><tr>
+                                                <td valign="top" class="mcnTextContent" style="color: #222222;font-family: Helvetica;font-size: 14px;font-weight: normal;line-height: 150%; text-align: left;">
+                                                    <p dir="ltr" style="font-weight: bold; text-transform: uppercase; text-align: left;color: #222222;font-family: Helvetica;font-size: 14px; line-height: 100%; margin-top: 0px">{{ service.name }} &nbsp;<br>
+                                                    <br>
+                                                    <p dir="ltr"
+                                                    style="text-align: left;color: #222222;font-family: Helvetica;font-size: 14px;font-weight: normal; margin-bottom: 0px;">
+                                                        <strong style="line-height: 200%;">Description:</strong>{% if service.description %} <span>{{ service.description | safe }}</span>{% endif %}
+                                                        {% if service.additional_info %}<br><strong style="line-height: 200%">Additional Information:</strong> <span>{{ service.additional_info | safe }}</span>{% endif %}
+                                                    </p>
+                                                    {% if service.opening_time.open_all_time %}
+                                                        <div dir="ltr"
+                                                        style="text-align: left;color: #222222;font-family: Helvetica;font-size: 14px;font-weight: normal;">
+                                                            <strong style="line-height: 200%;">Working Hours: </strong><br>
+                                                            <div style="display: inline-block; padding-left: calc(50% - 150px);">
+                                                                <span dir="ltr" style="text-align: left;color: #222222;font-family: Helvetica;font-size: 14px;font-weight: normal;line-height: 125%; padding: 5px;">Service is available 24/7</span>
+                                                            </div>
+                                                        </div>
+                                                    {% else %}
+                                                        <p dir="ltr"
+                                                        style="text-align: left;color: #222222;font-family: Helvetica;font-size: 14px;font-weight: normal; line-height: 200%; margin-top: 0px;">
+                                                            <strong>Working Hours: </strong>
+                                                        </p>
+                                                        <div style="display: inline-block; padding-left: calc(50% - 200px);">
+                                                            <table>
+                                                                {% for day in days %}
+                                                                    <tr>
+                                                                        <td align="left">
+                                                                            <span dir="ltr"
+                                                                                style="text-align: left;color: #222222;font-family: Helvetica;font-size: 14px;font-weight: normal;line-height: 125%; padding: 5px">{{ day | capfirst }}</span>
+                                                                        </td>
+                                                                        <td align="left" style="float: left;">
+                                                                            {% for shift in service.opening_time|get_item:day %}
+                                                                                {% if shift.open and shift.close %}
+                                                                                    <p dir="ltr"
+                                                                                    style="text-align: left;color: #222222;font-family: Helvetica;font-size: 14px;font-weight: normal;line-height: 125%; padding:5px; margin: 0">{{ shift.open | date:"h:i a" }}
+                                                                                        - {{ shift.close | date:"h:i a" }}</p>
+                                                                                {% else %}
+                                                                                    <p align="center" dir="ltr"
+                                                                                    style="text-align: center;color: #222222;font-family: Helvetica;font-size: 14px;font-weight: normal;line-height: 125%; padding: 5px; margin: 0">CLOSED</p>
+                                                                                {% endif %}
+                                                                            {% endfor %}
+                                                                        </td>
+                                                                    </tr>
+                                                                {% endfor %}
+                                                            </table>
+                                                        </div>
+                                                    {% endif %}
+                                                    <p dir="ltr"
+                                                    style="text-align: left;color: #222222;font-family: Helvetica;font-size: 14px;font-weight: normal;line-height: 125%;">
+                                                        <span style="white-space: pre-wrap;color: #222222; line-height: 200%; "><strong>Address:</strong> {% if service.address %}{{ service.address }}, {% endif %} {% if service.address_floor %}{{ service.address_floor }}, {% endif %} {% if service.address_city %}{{ service.address_city }}{% endif %}</span><br>
+                                                        <strong style="line-height: 200%;">Phone:</strong> {% if service.phone_number %}{{ service.phone_number }}{% endif %}<br>
+                                                        <strong style="line-height: 200%;">Website:</strong> {% if service.website %}{{ service.website }}{% endif %} <br>
+                                                        <strong style="line-height: 200%;">Email:</strong> {% if service.email %}{{ service.email }}{% endif %} <br>
+                                                        <strong style="line-height: 200%;">Facebook:</strong> {% if service.facebook_page %}{{ service.facebook_page }}{% endif %}
+                                                    </p>
+                                                    <p dir="ltr" style="text-align: center;color: #222222;font-family: Helvetica;font-size: 14px;font-weight: normal;line-height: 150%;"><br>
+                                                        <div style="display: inline-block; padding-left: calc(50% - 150px);">
+                                                            <strong id="docs-internal-guid-91e7c925-10fa-8fd3-35f7-736a72f117f0"></strong>
+                                                            <a style="text-decoration: none; color: black; display: inline-block;" href="{{ confirmation_url }}{{ service.id }}/{{ service.confirmation_key }}">
+                                                                <table>
+                                                                    <tr>
+                                                                        <td valign="top">
+                                                                            <span style="color: orange; display: inline-block;width: 8px;height: 8px;border-style: solid;border-width: 1px; margin-right: 5px; margin-top: 5px; float: left;"></span>
+                                                                        </td>
+                                                                        <td valign="top">
+                                                                            <span style="display: inline-block;">I confirm this information is correct.</span>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </a><br>
+                                                            <br>
+                                                            <a style="text-decoration: none; color: black; display: inline-block;" href="{{ confirmation_url }}{{ service.id }}/{{ service.confirmation_key }}">
+                                                                <table>
+                                                                    <tr>
+                                                                        <td valign="top">
+                                                                            <span style="color: orange; display: inline-block;width: 8px;height: 8px;border-style: solid;border-width: 1px; margin-right: 5px; margin-top: 5px; float: left;"></span>
+                                                                        </td>
+                                                                        <td valign="top">
+                                                                            <span style="display: inline-block;">This entry needs edits or the service no longer exists.</span>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </a>
+                                                        </div>
+                                                    </p>
+
+                                                    <div style="text-align: center;">&nbsp;</div>
+                                                    <table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnButtonBlock" style="min-width:100%;">
+                                                        <tbody class="mcnButtonBlockOuter">
+                                                            <tr>
+                                                                <td style="padding-top:0; padding-right:18px; padding-bottom:18px; padding-left:18px;" valign="top" align="center" class="mcnButtonBlockInner">
+                                                                    <table border="0" cellpadding="0" cellspacing="0" class="mcnButtonContentContainer" style="border-collapse: separate !important;border-radius: 3px;background-color: #FFCC33;">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td align="center" valign="middle" class="mcnButtonContent" style="font-family: Helvetica; font-size: 16px;">
+                                                                                    <a class="mcnButton " title="VIEW YOUR ENTRY" href="{{ web_client_url }}{{ service.region.slug }}/services/{{ service.id }}/" target="_blank" style="padding: 20px; display: table-cell; font-weight: bold;letter-spacing: normal;line-height: 100%;text-align: center;text-decoration: none;color: #333333;">
+                                                                                        VIEW YOUR ENTRY
+                                                                                    </a>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr></tbody>
+                                        </table>
+                                    </td>
+                                </tr></tbody>
+                            </table>
+                            <!--[if gte mso 9]>
+                            </td>
+                            <![endif]-->
+
+                            <!--[if gte mso 9]>
+                            </tr>
+                            </table>
+                            <![endif]-->
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            {% if not forloop.last %}
+            <table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnDividerBlock" style="min-width:100%;">
+                <tbody class="mcnDividerBlockOuter">
+            <tr>
+                <td class="mcnDividerBlockInner" style="min-width:100%; padding:18px;">
+                    <table class="mcnDividerContent" border="0" cellpadding="0" cellspacing="0" width="100%" style="min-width: 100%;border-top: 2px none #EAEAEA;">
+                        <tbody><tr>
+                            <td>
+                                <span></span>
+                            </td>
+                        </tr>
+                    </tbody></table>
+                </td>
+            </tr>
+        </tbody>
+            </table>
+            {%  endif %}
+        {% endfor %}
+    {% endif %}
+
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnTextBlock"
+           style="min-width:100%;">
+        <tbody class="mcnTextBlockOuter">
+        <tr>
+            <td valign="top" class="mcnTextBlockInner" style="padding-top:9px;" >
+                <!--[if mso]>
+				<table align="left" border="0" cellspacing="0" cellpadding="0" width="100%" style="width:100%;">
+				<tr>
+				<![endif]-->
+
+                <!--[if mso]>
+				<td valign="top" width="600" style="width:600px;">
+				<![endif]-->
+                <table align="left" border="0" cellpadding="0" cellspacing="0"
+                       style="max-width:100%; min-width:100%;" width="100%"
+                       class="mcnTextContentContainer">
+                    <tbody>
+                    <tr>
+
+                        <td valign="top" class="mcnTextContent"
+                            style="padding: 0px 18px 9px; text-align: left; font-size: 13px;">
+                            {{ newsletter_settings.confirmation_before_footer_text | safe }}
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <!--[if mso]>
+				</td>
+				<![endif]-->
+
+                <!--[if mso]>
+				</tr>
+				</table>
+				<![endif]-->
+            </td>
+        </tr>
+        </tbody>
+    </table>
+{% endblock %}

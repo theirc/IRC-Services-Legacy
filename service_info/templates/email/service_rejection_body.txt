@@ -1,0 +1,42 @@
+{% load i18n %}{# tried to keep the fragements to be translated the same in both templates #}
+{% blocktrans with provider_name=provider.name %}Dear {{ provider_name }}{% endblocktrans %}
+{% blocktrans with service_name=service.name %}
+Your service {{ service_name }} has been vetted and rejected by International Rescue Committee staff.
+ It is available to edit on the following link:: <a href="{{ service_link }}">{{ service_link }}</a>
+{% endblocktrans %}
+
+{% trans "For more information please contact support at info@refugee.info" %}
+{% trans "Thanks for your submission." %}
+
+{% trans "Best Regards" %}
+
+{% trans "Refugee Info" %}
+www.refugee.info <Facebook Link> <Twitter Link>
+{% trans "Support:" %} <a href="mailto:info@refugee.info">info@refugee.info</a>
+
+{% comment %}
+**email/service_rejected_body.txt**
+
+Used to generate the body of the service rejected email.
+
+This template has the following context:
+
+``service``
+  The Service that has been rejected
+
+``provider``
+  The Provider of the service
+
+``user``
+  The user associated with the provider (who will get the email)
+
+``site``
+    An object representing the site on which the user registered;
+    depending on whether ``django.contrib.sites`` is installed, this
+    may be an instance of either ``django.contrib.sites.models.Site``
+    (if the sites application is installed) or
+    ``django.contrib.sites.models.RequestSite`` (if not). Consult `the
+    documentation for the Django sites framework
+    <http://docs.djangoproject.com/en/dev/ref/contrib/sites/>`_ for
+    details regarding these objects' interfaces.
+{% endcomment %}

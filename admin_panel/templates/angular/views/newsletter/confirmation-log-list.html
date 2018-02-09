@@ -1,0 +1,53 @@
+<div class="analytics-panel">
+    <img src="/public/static/img/favicon.ico"/>
+    <h3>
+        Refugee.info | Service Newsletter
+    </h3>
+</div>
+
+<section class="content-header" ng-controller="ContentHeaderController as chctrl">
+    <h1>
+        {$ chctrl.state.data.title $}
+    </h1>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box box-default">
+                <div class="box-header">
+                    <h3 class="box-title">Service Confirmation Newsletter Logs</h3>
+                </div>
+                <div class="box-body">
+                    <table datatable="ng" class="table table-bordered table-striped" id="confirmationLogList" dt-options="ctrl.dtOptions" dt-column-defs="ctrl.dtColumnDefs">
+                        <thead>
+                            <tr align="center" style="font-weight: 700;">
+                                <td>Log ID</td>
+                                <td>Service</td>
+                                <td>Date</td>
+                                <td>Status</td>
+                                <td>Email sent to</td>
+                                <td>Note</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="log in ctrl.confirmationLogs" align="center">
+                                <td>{$ log.id $}</td>
+                                <td>
+                                    <button class="btn btn-primary btn-xs" ui-sref="service.open({serviceId: {$ log.service $} })">
+                                        <span><i class="fa fa-eye" style="padding-right: 5px"></i>Open ({$ log.service $})</span>
+                                    </button>
+                                </td>
+                                <td>{$ log.date $}</td>
+                                <td>{$ log.status $}</td>
+                                <td>{$ log.sent_to $}</td>
+                                <td>{$ log.note $}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+</section>

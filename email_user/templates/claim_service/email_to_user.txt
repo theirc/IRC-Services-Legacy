@@ -1,0 +1,5 @@
+Your account has been activated. Please use below credentials to log in. You can change your password in profile.
+Email: {{ email }}
+Password: {{ password }}
+Sincerely,
+Refugee Info Team

@@ -1,0 +1,21 @@
+{% load i18n sekizai_tags staticfiles %}
+
+<div class="aldryn aldryn-newsblog aldryn-newsblog-article-search js-aldryn-newsblog-article-search">
+    <form action="{{ query_url }}" class="form-inline" method="get">
+        {% csrf_token %}
+        <input type="hidden" name="max_articles" value="{{ instance.max_articles }}">
+        <div class="row">
+            <div class="input-field col s12">
+                <i class="material-icons prefix">search</i>
+                <input type="text" name="q" id="field-{{ instance.pk }}-keyword" placeholder="{% trans 'Keyword' %}"{% if query_url == None %} disabled{% endif %}>
+                <label for="field-{{ instance.pk }}-keyword">{% trans "Keyword search" %}</label>
+                <button type="submit" class="btn waves-effect waves-light"{% if query_url == None %} disabled{% endif %}>{% trans "Go" %}</button>
+            </div>
+        </div>
+    </form>
+
+    <div class="search-results js-search-results"></div>
+</div>
+
+{% addtoblock "css" %}<link rel="stylesheet" href="{% static 'css/aldryn-newsblog/article.css' %}">{% endaddtoblock %}
+{% addtoblock "js" %}<script src="{% static 'js/addons/cl.newsblog.js' %}"></script>{% endaddtoblock %}

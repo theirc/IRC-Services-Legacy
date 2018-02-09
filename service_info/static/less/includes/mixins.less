@@ -1,0 +1,86 @@
+@import "flex.less";
+
+.padded-box(@color, @bg-color, @border-color) {
+    border: 1px solid @border-color;
+    border-radius: 4px;
+
+    background-color: @bg-color;
+
+    color: @color;
+    & > a { color: @color; }
+    font-weight: 600;
+
+    text-align: center;
+    padding: 13px 12px;
+}
+
+.button-like(@color, @bg-color, @border-color,
+             @hover-color, @hover-bg-color, @hover-border-color,
+             @inactive-color, @inactive-bg-color, @inactive-border-color) {
+    .padded-box(@color, @bg-color, @border-color);
+    transition: all 0.25s;
+    &:hover {
+        transition: all 0.25s;
+        color: @hover-color;
+        & > a { color: @hover-color; }
+        border-color: @hover-border-color;
+        background-color: @hover-bg-color;
+    }
+    &.inactive, &.inactive:hover {
+        .padded-box(@inactive-color, @inactive-bg-color, @inactive-border-color);
+    }
+
+    a, a:hover {
+        text-decoration: none;
+        border-bottom: none;
+    }
+}
+
+.green-bg() {
+    .padded-box(white, #3cb879, #3CB879);
+}
+
+.white-green-button() {
+    .button-like(
+        #3cb879, white, #3cb879,
+        white, #3cb879, #3CB879,
+        darkgrey, white, darkgrey
+    );
+}
+
+.green-button() {
+    .button-like(
+        white, #3cb879, #3CB879,
+        white, #288355, #288355,
+        darkgrey, white, darkgrey
+    );
+}
+
+/*
+    Headers for Aldryn pages
+*/
+.green-header() {
+    color: white;
+    background-color: #33A069;
+    padding: 10px 20px;
+    border-radius: 4px;
+
+    & + * {
+      margin-top: 30px;
+      padding-top: 0 !important;
+    }
+}
+
+.transform(@transform) {
+    -webkit-transform: @transform;
+    -moz-transform: @transform;
+    -ms-transform: @transform;
+    transform: @transform;
+}
+
+.transition(@property, @time, @easing) {
+    -webkit-transition: @property @time @easing;
+    -moz-transition: @property @time @easing;
+    -o-transition: @property @time @easing;
+    transition: @property @time @easing;
+}

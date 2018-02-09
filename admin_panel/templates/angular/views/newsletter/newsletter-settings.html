@@ -1,0 +1,37 @@
+<div class="analytics-panel">
+    <img src="/public/static/img/favicon.ico"/>
+    <h3>
+        Refugee.info | Newsletter
+    </h3>
+</div>
+
+<section class="content-header" ng-controller="ContentHeaderController as chctrl">
+    <h1>
+        {$ chctrl.state.data.title $}
+    </h1>
+</section>
+
+<section class="content">
+    
+        <div class="row" ng-form name="newsletterSettingsForm">
+            <div class="col-xs-12">
+                <div ng-repeat="mail_type in ctrl.newsletterTypes" class="box box-primary collapsed-box newsletter-email-box">
+                    <div class="box-header" data-widget="collapse-header">
+                        <h3 class="box-title">{$ ctrl.getHeaderTitle(mail_type) $}</h3>
+                        <div class="box-tools">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                    class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div compile="ctrl.newsletterlHtmls[mail_type]"></div>
+                        <div class="buttons-right">
+                            <button type="button" class="btn btn-primary ng-scope" ng-click="ctrl.reset(mail_type)">Reset</button>
+                            <button type="button" class="btn btn-primary ng-scope" ng-click="ctrl.save(mail_type)">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>

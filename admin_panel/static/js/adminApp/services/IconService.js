@@ -1,0 +1,40 @@
+angular.module('adminApp').factory('IconService', function () {
+    return {
+        getAllIcons: () => [
+            'icon-bath',
+            'icon-changing-room',
+            'icon-charging',
+            'icon-children-place',
+            'icon-classroom',
+            'icon-computer',
+            'icon-cultural',
+            'icon-dentist',
+            'icon-infant-feeding',
+            'icon-jobs',
+            'icon-language-lessons',
+            'icon-lawyer',
+            'icon-library',
+            'icon-lodging',
+            'icon-mediation',
+            'icon-medkit',
+            'icon-mother-and-baby',
+            'icon-pharmacy',
+            'icon-pregnant-woman',
+            'icon-psychology',
+            'icon-question',
+            'icon-resting',
+            'icon-shower',
+            'icon-snacks',
+            'icon-soap',
+            'icon-social-service',
+            'icon-soup',
+            'icon-toilet',
+            'icon-toiletries',
+            'icon-translators',
+            'icon-tshirt',
+            'icon-vocational',
+            'icon-voluntary-return',
+            'icon-wifi'
+        ]
+    };
+});

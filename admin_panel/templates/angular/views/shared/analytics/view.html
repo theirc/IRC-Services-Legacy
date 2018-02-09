@@ -1,0 +1,79 @@
+<section class="content-header" style="margin-bottom: 15px; width: auto;">
+    <h1 style="margin-bottom: 22px">Refugee.info | {$ ctrl.title $}</h1>
+    <div class="row">
+        <div class="gas-right-panel col-md-offset-6 col-md-6 col-sm-12">
+            <input date-range-picker class="form-control date-picker" type="text" ng-model="ctrl.datePicker"
+                   min="ctrl.datePickerBoundries.min" max="ctrl.datePickerBoundries.max"
+                   options="ctrl.datePicker.options"/>
+            <a href="{$ ctrl.url $}" class="btn btn-default" target="_blank">
+                <i class="fa fa-external-link"></i>Open website</a>
+            <button type="button" ng-click="ctrl.printPage()" class="btn btn-default">
+                <i class="fa fa-print"></i>Print</button>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12 col-md-4">
+            <div class="small-box bg-green">
+                <div class="inner">
+                    <h3>{$ ctrl.sessionsValue $}</h3>
+                    <p>Sessions</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-arrow-swap"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-6 col-md-4">
+            <div class="small-box bg-blue">
+                <div class="inner">
+                    <h3>{$ ctrl.usersValue $}</h3>
+                    <p>Users</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-person"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-6 col-md-4">
+            <div class="small-box bg-yellow">
+                <div class="inner">
+                    <h3>{$ ctrl.pageViewsValue $}</h3>
+                    <p>Page Views</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-search"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 col-md-8">
+            <div class="box box-success">
+                <div class="box-header">
+                    <h3 class="box-title">Monthly sessions</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <canvas ng-if="ctrl.sessions.length" id="bar" class="chart chart-bar"
+                            chart-data="ctrl.sessions" chart-labels="ctrl.sessionsLabels"
+                            chart-options="ctrl.sessionsOptions"
+                            chart-dataset-override="ctrl.sessionsDatasetOverride">
+                    </canvas>
+                    <b ng-if="!ctrl.sessions.length" >No data available in selected periods month</b>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-md-4"></div>
+    </div>
+</section>

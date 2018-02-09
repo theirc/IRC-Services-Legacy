@@ -1,0 +1,35 @@
+@import "../../includes/mixins.less";
+
+@mobile-nav-height: 72px;
+
+#mobile-nav {
+  height: @mobile-nav-height;
+  padding-left: 0;
+
+  a.button-collapse {
+    height: @mobile-nav-height;
+    line-height: @mobile-nav-height;
+    width: 56px;
+    * {
+      line-height: inherit;
+    }
+  }
+
+  > .nav-wrapper > a.brand-logo {
+    background-color: white;
+    left: 0;
+    height: 72px;
+    width: 72px;
+    box-sizing: border-box;
+    .flex-layout();
+    .align-items(center);
+    .justify-content(center);
+    padding: 10px;
+
+    height: 100%;
+
+    > img {
+      height: 100%;
+    }
+  }
+}

@@ -1,0 +1,28 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+	<head>
+		<!-- NAME: 1 COLUMN -->
+		<!--[if gte mso 15]>
+		<xml>
+			<o:OfficeDocumentSettings>
+			<o:AllowPNG/>
+			<o:PixelsPerInch>96</o:PixelsPerInch>
+			</o:OfficeDocumentSettings>
+		</xml>
+		<![endif]-->
+		<meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>*|MC:SUBJECT|*</title>
+    </head>
+    <body>
+        <h2>
+            Refugee.Info
+        </h2>
+        {% if note %}
+            <strong>{{ service.newsletter_valid_emails }}</strong> for organisation: <strong>{{ service.provider.name }}</strong> requested an update for service: <strong>{{ service.name }}</strong> <a href="{{ api_url }}/#/service/{{ service.id }}">({{ service.id }})</a>.
+        {% else %}
+            <strong>{{ service.newsletter_valid_emails }}</strong> for organisation: <strong>{{ service.provider.name }}</strong> confirmed service: <strong>{{ service.name }}</strong> <a href="{{ api_url }}/#/service/{{ service.id }}">({{ service.id }})</a>.
+        {% endif %}
+    </body>
+</html>

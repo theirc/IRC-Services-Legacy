@@ -1,0 +1,31 @@
+{% load i18n %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Claim Form</title>
+</head>
+
+<body>
+<p>
+    User: <a href="{{ user_link }}">{{ user.email }}</a>
+    {% if user.is_active %}
+        is already activated.
+    {% else %}
+        is not active.
+    {% endif %}
+</p>
+
+<p>
+    Provider: <a href="{{ provider_link }}">{{ provider.name }}</a>
+</p>
+<p>
+    Provider wants to claim <a href="{{ service_link }}">{{ service.name_en }}</a>.
+</p>
+<p>
+    Please click on links to get into details. After review you can assign service to provider.
+    If you want to activate user click 'Activate provider account' button in the bottom of user details.
+</p>
+</body>
+
+</html>

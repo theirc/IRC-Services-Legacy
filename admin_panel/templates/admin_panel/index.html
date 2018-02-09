@@ -1,0 +1,213 @@
+{% load static %}
+<!DOCTYPE html>
+<html ng-app="adminApp"
+      ng-controller="BaseController as baseController"
+      lang="{$ baseController.language $}">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Refugee.Info Admin Site</title>
+
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'components-font-awesome/css/font-awesome.min.css' %}"
+          media="screen,projection">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/icomoon-font.css' %}">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="{% static "leaflet-draw/dist/leaflet.draw.css" %}">
+    <link rel="icon" type="image/png" href="{% static 'img/favicon-32x32.png' %}" sizes="32x32">
+
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="{% static "angular-datatables/dist/css/angular-datatables.css" %}">
+
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}">
+
+
+    <link rel="stylesheet" type="text/css" href="{% static 'angular-toasty/dist/angular-toasty.min.css' %}"
+          media="screen,projection">
+    <link rel="stylesheet" type="text/css" href="{% static 'angular-ui-select/dist/select.min.css' %}"
+          media="screen,projection">
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'fontawesome-iconpicker/dist/css/fontawesome-iconpicker.min.css' %}"
+          media="screen,projection">
+
+    <link rel="stylesheet" type="text/css" href='{% static 'leaflet/dist/leaflet.css' %}'/>
+    <link rel="stylesheet" type="text/css" href='{% static 'leaflet.markercluster/dist/MarkerCluster.css' %}'/>
+    <link rel="stylesheet" type="text/css" href='{% static 'leaflet.markercluster/dist/MarkerCluster.Default.css' %}'/>
+    <link rel="stylesheet" type="text/css"
+          href='{% static 'leaflet.vector-markers/dist/leaflet-vector-markers.css' %}'/>
+
+    <link rel="stylesheet" href="{%  static 'perfect-scrollbar/min/perfect-scrollbar.min.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700">
+
+    <link rel="stylesheet" type="text/css" href="https://dev.refugee.info/static/scss/content.css">
+    <link rel="stylesheet" href="{% static "less/admin.css" %}">
+
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/spp_main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/admin-main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/loading_overlay.css' %}">
+    <link rel="stylesheet" href="{% static 'css/layout.css' %}">
+    <link rel="stylesheet" href="{% static 'css/print.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap-daterangepicker/daterangepicker.css' %}"/>
+    <link rel="stylesheet" href="{% static 'angular-color-picker/dist/angularjs-color-picker.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'angular-material/angular-material.min.css' %}" />
+    <!-- only include if you use bootstrap -->
+    <link rel="stylesheet" href="{% static 'angular-color-picker/dist/themes/angularjs-color-picker-bootstrap.min.css' %}" />
+    <style>
+        [ng-cloak] {
+            display: none;
+        }
+    </style>
+    {% block additional-requirements %}{% endblock %}
+</head>
+
+<body class="hold-transition skin-green sidebar-mini">
+<div class="layout-container" ng-if="user" ng-cloak>
+    <header class="layout-header" ng-include="'partials/navbar.html'"></header>
+    <div class="layout-wrapper flex-row">
+        <perfect-scrollbar min-scrollbar-length="20" class="layout-navigation">
+            <div ng-include="'partials/menu.html'" class="layout-navigation-inner"></div>
+        </perfect-scrollbar>
+
+        <div class="layout-wrapper flex-column">
+            <div ui-view="main" autoscroll="false" class="layout-content"></div>
+            <footer class="layout-footer">
+                <span>Refugee.info is a project managed by the International Rescue Committee and Mercy Corps.</span>
+                <div class="hidden-xs" style="min-width: 120px">
+                    Connect:
+                    <a href="https://github.com/theirc"><i class="fa fa-github-square fa-fw" aria-hidden="true"></i></a>
+                    <a href="https://www.facebook.com/refugee.info/"><i class="fa fa-facebook-official fa-fw"
+                                                                        aria-hidden="true"></i></a>
+                    <a href="http://refugee.info/"> <i class="fa fa-globe fa-fw" aria-hidden="true"></i></a>
+                </div>
+            </footer>
+        </div>
+    </div>
+</div>
+
+<div ng-if="!user" ui-view="login" class="login-view" autoscroll="false"></div>
+
+
+{% block loading-spinner %}
+<div class="fixed-loading-container" ng-show="$root.isLoading">
+    <div class="sk-fading-circle">
+        <div class="sk-circle1 sk-circle"></div>
+        <div class="sk-circle2 sk-circle"></div>
+        <div class="sk-circle3 sk-circle"></div>
+        <div class="sk-circle4 sk-circle"></div>
+        <div class="sk-circle5 sk-circle"></div>
+        <div class="sk-circle6 sk-circle"></div>
+        <div class="sk-circle7 sk-circle"></div>
+        <div class="sk-circle8 sk-circle"></div>
+        <div class="sk-circle9 sk-circle"></div>
+        <div class="sk-circle10 sk-circle"></div>
+        <div class="sk-circle11 sk-circle"></div>
+        <div class="sk-circle12 sk-circle"></div>
+    </div>
+</div>
+{% endblock loading-spinner %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+<script src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src='{% static 'leaflet/dist/leaflet.js' %}'></script>
+<script type="text/javascript" src='{% static 'leaflet-draw/dist/leaflet.draw.js' %}'></script>
+<script src="{% static "js/app.js" %}"></script>
+
+
+<script type="text/javascript" src='{% static 'angular/angular.js' %}'></script>
+
+<script type="text/javascript" src='{% static 'angular-datatables/dist/angular-datatables.js' %}'></script>
+<script type="text/javascript" src='{% static 'angular-breadcrumb/dist/angular-breadcrumb.min.js' %}'></script>
+<script type="text/javascript" src="{% static 'angular-animate/angular-animate.js' %}"></script>
+<script type="text/javascript" src='{% static 'angular-ui-router/release/angular-ui-router.min.js' %}'></script>
+<script type="text/javascript" src="{% static 'djng/js/django-angular.js' %}"></script>
+<script type="text/javascript" src="{% static 'angular-cookies/angular-cookies.min.js' %}"></script>
+<script type="text/javascript" src='{% static 'angular-sanitize/angular-sanitize.min.js' %}'></script>
+<script type="text/javascript" src='{% static 'angular-ui-select/dist/select.min.js' %}'></script>
+<script type="text/javascript" src='{% static 'angular-drag-and-drop-lists/angular-drag-and-drop-lists.js' %}'></script>
+<script type="text/javascript" src='{% static 'ckeditor/ckeditor.js' %}'></script>
+<script type="text/javascript" src='{% static 'angular-ckeditor/angular-ckeditor.js' %}'></script>
+<script type="text/javascript" src='{% static 'angular-toasty/dist/angular-toasty.js' %}'></script>
+<script type="text/javascript" src='{% static 'angular-translate/angular-translate.min.js' %}'></script>
+<script type="text/javascript"
+        src='{% static 'angular-translate-loader-static-files/angular-translate-loader-static-files.js' %}'></script>
+<script type="text/javascript"
+        src='{% static 'angular-translate-storage-cookie/angular-translate-storage-cookie.min.js' %}'></script>
+<script type="text/javascript" src='{% static 'ngstorage/ngStorage.min.js' %}'></script>
+<script type="text/javascript" src='{% static 'angular-bootstrap/ui-bootstrap.min.js' %}'></script>
+<script type="text/javascript"
+        src='{% static 'fontawesome-iconpicker/dist/js/fontawesome-iconpicker.min.js' %}'></script>
+<script type="text/javascript" src='{% static 'lodash/dist/lodash.min.js' %}'></script>
+<script type="text/javascript" src='{% static 'restangular/dist/restangular.min.js' %}'></script>
+<script type="text/javascript"
+        src='{% static 'angular-simple-logger/dist/angular-simple-logger.light.min.js' %}'></script>
+<script type="text/javascript" src='{% static 'satellizer/dist/satellizer.min.js' %}'></script>
+<script type="text/javascript" src="{% static 'file-saver/FileSaver.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'ng-file-upload-shim/ng-file-upload-shim.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'ng-file-upload/ng-file-upload.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'chart.js/dist/Chart.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'angular-chart.js/dist/angular-chart.min.js' %}"></script>
+
+<script type="text/javascript" src='{% static 'js/cmsApp/app.built.js' %}'></script>
+<script type="text/javascript" src='{% static 'js/adminApp/app.built.js' %}'></script>
+
+<script src="https://maps.google.com/maps/api/js?v=3&key=AIzaSyAFC16LPK856xag5svt3_IxTyy0KI4Bc_I"></script>
+<script type="text/javascript" src='{% static 'leaflet-plugins/layer/tile/Google.js' %}'></script>
+<script type="text/javascript" src='{% static 'leaflet.markercluster/dist/leaflet.markercluster.js' %}'></script>
+<script type="text/javascript" src='{% static 'leaflet.vector-markers/dist/leaflet-vector-markers.js' %}'></script>
+<script type="text/javascript"
+        src='{% static 'angular-leaflet-directive/dist/angular-leaflet-directive.min.js' %}'></script>
+<script type="application/javascript" src="{% static 'moment/min/moment.min.js' %}"></script>
+<script type="application/javascript" src="{% static 'moment-timezone/builds/moment-timezone-with-data.min.js' %}"></script>
+<script type="application/javascript" src="{% static 'angular-moment/angular-moment.min.js' %}"></script>
+<script src="{% static 'bootstrap-daterangepicker/daterangepicker.js' %}"></script>
+<script src="{% static 'angular-daterangepicker/js/angular-daterangepicker.js' %}"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script src="{% static 'angular-material/angular-material.min.js' %}"></script>
+<script src="{% static 'angular-aria/angular-aria.min.js' %}"></script>
+<script src="{% static 'angular-messages/angular-messages.min.js' %}"></script>
+<script src="{% static 'angular-material/angular-material.min.js' %}"></script>
+<script src="{% static 'angular-spinner/dist/angular-spinner.min.js' %}"></script>
+<script>
+(function(w,d,s,g,js,fs){
+  g=w.gapi||(w.gapi={});g.analytics={q:[],ready:function(f){this.q.push(f);}};
+  js=d.createElement(s);fs=d.getElementsByTagName(s)[0];
+  js.src='https://apis.google.com/js/platform.js';
+  fs.parentNode.insertBefore(js,fs);js.onload=function(){g.load('analytics');};
+}(window,document,'script'));
+</script>
+
+<script src="{% static 'perfect-scrollbar/min/perfect-scrollbar.min.js' %}"></script>
+<script src="{% static 'angular-perfect-scrollbar/src/angular-perfect-scrollbar.js' %}"></script>
+<script src="{% static 'tinycolor/dist/tinycolor-min.js' %}"></script>
+<script src="{%  static 'angular-color-picker/dist/angularjs-color-picker.min.js' %}"></script>
+
+<script type="text/javascript">
+    window.API_URL = '{{ API_URL }}';
+    window.STATIC_URL = '{{ STATIC_URL }}';
+    angular.module('adminApp').constant('apiUrl', '{{ API_URL }}');
+    angular.module('adminApp').constant('staticUrl', '{{ STATIC_URL }}');
+    angular.module('adminApp').constant('webClientUrl', '{{ WEB_CLIENT_URL }}');
+    angular.module('adminApp').constant('languages', [{% for k, v in LANGUAGES %}['{{ k }}', '{{ v }}']{% if not forloop.last %}, {% endif %}{% endfor %}]);
+    angular.module('adminApp').constant('service_languages', [{% for k, v in SERVICE_LANGUAGES %}['{{ k }}', '{{ v }}']{% if not forloop.last %}, {% endif %}{% endfor %}]);
+    angular.module('adminApp').constant('userEmail', '{{ request.user }}');
+
+    $(function () {
+        if (window.L && !window.L.geoJSON) {
+            L.geoJSON = L.geoJson;
+        }
+    });
+</script>
+<toasty></toasty>
+</body>
+
+</html>

@@ -1,0 +1,29 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+	<head>
+		<!-- NAME: 1 COLUMN -->
+		<!--[if gte mso 15]>
+		<xml>
+			<o:OfficeDocumentSettings>
+			<o:AllowPNG/>
+			<o:PixelsPerInch>96</o:PixelsPerInch>
+			</o:OfficeDocumentSettings>
+		</xml>
+		<![endif]-->
+		<meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>*|MC:SUBJECT|*</title>
+    </head>
+    <body>
+        <h2>
+            Refugee.Info
+        </h2>
+        <h3>{{ time_number }} {{ time_unit }} has passed since the reminder email and still no reply has been submitted from:</h3>
+        <ul>
+            <li>{{ service.newsletter_valid_emails }} - {{service.provider.name}} has not replied to the reminder for service {{ service.name }} <a href="{{ api_url }}/#/service/{{ service.id }}">({{ service.id }})</a>.</li>
+        </ul>
+
+        Archive this service until confirmed.
+    </body>
+</html>

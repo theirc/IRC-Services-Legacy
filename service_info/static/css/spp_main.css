@@ -1,0 +1,234 @@
+.row-margin {
+  margin-bottom: 20px; }
+
+.spp-landing-page {
+  height: calc(100% - 80px); }
+  @media (max-width: 767px) {
+    .spp-landing-page {
+      height: calc(100% - 40px); } }
+
+@media (max-width: 767px) {
+  .navbar .navbar-flex .navbar-right {
+    display: flex; } }
+
+.view-container {
+  margin-top: 20px;
+  background-color: #FBFBFB;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25); }
+  .view-container textarea {
+    width: 100%;
+    max-width: 100%; }
+
+.service-details-map {
+  height: 400px; }
+  @media (max-height: 767px) {
+    .service-details-map {
+      height: 250px; } }
+
+.legend {
+  padding: 6px;
+  font-size: 14px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 5px;
+  min-width: 150px; }
+  .legend .info-title {
+    font-weight: bold;
+    width: 100%;
+    text-align: center; }
+  .legend .legend-row {
+    display: flex;
+    align-items: center; }
+  .legend i {
+    margin: 4px 10px 4px; }
+
+.service-details h1 {
+  margin: 0 0 10px 0; }
+
+.service-details textarea {
+  width: 100%;
+  max-width: 100%; }
+
+.service-details .form-group {
+  margin-bottom: 10px; }
+
+.service-details .button {
+  height: 50px; }
+
+.service-details .service-name {
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase; }
+
+.service-details .service-location {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  font-size: 13px;
+  color: #00BA50; }
+
+.service-details .service-details-bar {
+  border-bottom: 1px solid #EBEBEB; }
+  @media (min-width: 768px) {
+    .service-details .service-details-bar {
+      display: -webkit-box;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      justify-content: space-between; } }
+
+.service-details .service-description-title {
+  font-size: 15px; }
+
+.service-details .service-description-body {
+  font-size: 12px;
+  color: #565656; }
+
+.service-details .service-image {
+  max-width: 100%;
+  margin: 8px 0; }
+
+.service-details .service-opening-hours-table {
+  font-size: 12px;
+  color: #565656; }
+  .service-details .service-opening-hours-table tr {
+    border-bottom: 1px solid black; }
+    .service-details .service-opening-hours-table tr:last-of-type {
+      border-bottom: 0; }
+  .service-details .service-opening-hours-table td {
+    padding: 5px 10px; }
+  .service-details .service-opening-hours-table td.day-of-week {
+    text-transform: capitalize; }
+
+.spp-login-form {
+  border-top: 6px solid #fcd836;
+  border-radius: 6px; }
+  .spp-login-form button {
+    padding: 0 15px;
+    height: 34px;
+    font-size: 14px;
+    border-radius: 1px; }
+  .spp-login-form input {
+    border-radius: 1px; }
+  .spp-login-form a {
+    float: left; }
+  .spp-login-form .login-header {
+    height: 46px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 0 10px;
+    margin-top: 20px;
+    margin-bottom: 5px; }
+  .spp-login-form .alert {
+    padding: 10px;
+    margin-bottom: 0;
+    margin-top: 5px; }
+  .spp-login-form .close {
+    float: right; }
+
+.green-color {
+  color: #49b050; }
+
+.yellow-color {
+  color: #fcd836; }
+
+.red-color {
+  color: #e54c3a; }
+
+.dark-red-color {
+  color: #6c2419; }
+
+.spp-services-button {
+  border: 0 solid #00BA50;
+  background-color: #FFFFFF;
+  font-size: 12px;
+  text-transform: uppercase;
+  padding: 0 8px;
+  border-radius: 3px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15);
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  height: 25px;
+  margin: 0 3px;
+  transition: 0.3s all ease-out; }
+  .spp-services-button:hover {
+    background-color: #fcfcfc;
+    box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.25); }
+  .spp-services-button:focus {
+    outline: none;
+    box-shadow: 0 0 2px 1px #00BA50; }
+
+.button-container {
+  margin: 40px 0; }
+  .button-container .button {
+    margin-bottom: 8px; }
+  .button-container .button-black {
+    -webkit-transiton: background-color 0.15s linear;
+    -moz-transition: background-color 0.15s linear;
+    -ms-transition: background-color 0.15s linear;
+    -o-transition: background-color 0.15s linear;
+    -transition: background-color 0.15s linear;
+    transition: background-color 0.15s linear;
+    background-color: #000000;
+    color: #FFFFFF;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.33); }
+    .button-container .button-black:hover {
+      background-color: #303030; }
+    .button-container .button-black i.fa {
+      color: #FFFFFF;
+      padding: 0 10px; }
+  .button-container .button-white {
+    -webkit-transiton: background-color 0.15s linear;
+    -moz-transition: background-color 0.15s linear;
+    -ms-transition: background-color 0.15s linear;
+    -o-transition: background-color 0.15s linear;
+    -transition: background-color 0.15s linear;
+    transition: background-color 0.15s linear;
+    background-color: #FFFFFF;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.33);
+    color: #000000 !important; }
+    .button-container .button-white:hover {
+      background-color: #e2e2e2; }
+
+.button-green {
+  -webkit-transiton: background-color 0.15s linear;
+  -moz-transition: background-color 0.15s linear;
+  -ms-transition: background-color 0.15s linear;
+  -o-transition: background-color 0.15s linear;
+  -transition: background-color 0.15s linear;
+  transition: background-color 0.15s linear;
+  background-color: #00BA50;
+  color: #FFFFFF;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.33); }
+  .button-green:hover {
+    background-color: #27a442; }
+
+.contact-button {
+  position: fixed;
+  max-width: 150px;
+  right: 30px;
+  bottom: 20px;
+  text-transform: uppercase;
+  white-space: pre-wrap;
+  font-size: 12px; }
+
+.panel-title {
+  font-size: 14px; }
+
+.ordering-services {
+  display: inline-flex; }
+  .ordering-services div {
+    padding-right: 8px; }
+
+[ng-click],
+[data-ng-click],
+[x-ng-click] {
+  cursor: pointer; }

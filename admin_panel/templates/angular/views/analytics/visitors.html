@@ -1,0 +1,176 @@
+<section class="content-header">
+    <h1 style="margin-bottom: 22px">Visitors Dashboard</h1>
+    <div class="row">
+        <div class="gas-right-panel col-md-offset-6 col-md-6 col-sm-12">
+            <input date-range-picker class="form-control date-picker" type="text" ng-model="ctrl.datePicker"
+                   min="ctrl.datePickerBoundries.min" max="ctrl.datePickerBoundries.max"
+                   options="ctrl.datePicker.options"/>
+            <select class="form-control" name="view" ng-model="ctrl.viewId" style="width: 120px; margin-right: 5px"
+                    ng-options="r.id as r.name for r in ctrl.allViews" ng-change="ctrl.watcher()"></select>
+
+            <button type="button" ng-click="ctrl.printPage()" class="btn btn-default">
+                <i class="fa fa-print"></i>Print</button>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+
+
+    <div class="row">
+        <div class="col-lg-3 col-xs-6">
+            <div class="small-box bg-green">
+                <div class="inner">
+                    <h3>{$ ctrl.popStats.totalSessionsCount || 0 $}</h3>
+                    <p>Sessions</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-loop"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-xs-6">
+            <div class="small-box bg-blue">
+                <div class="inner">
+                    <h3>{$ ctrl.popStats.totalUsersCount || 0 $}</h3>
+                    <p>Unique users</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-ios-person"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-xs-6">
+            <div class="small-box bg-yellow">
+                <div class="inner">
+                    <h3>{$ ctrl.popStats.bounceRateAverage | number: 2 || 0 $}%</h3>
+                    <p>Bounce rate</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-ios-close"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-xs-6">
+            <div class="small-box bg-red">
+                <div class="inner">
+                    <h3>{$ ctrl.popStats.pageviewsPerSessionAverage | number: 2 || 0 $}</h3>
+                    <p>Pageviews / Session</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-ios-copy-outline"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-xs-6">
+            <div class="small-box bg-yellow">
+                <div class="inner">
+                    <h3>{$ ctrl.popStats.sessionDurationAverage || 0 $}</h3>
+                    <p>Average Session duration</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-ios-clock-outline"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8 col-xs-12">
+            <div class="box box-success">
+                <div class="box-header">
+                    <h3 class="box-title">Users</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body no-padding">
+                    <canvas class="chart chart-line" chart-data="ctrl.newUsers.data" chart-series="ctrl.newUsers.series"
+                            chart-labels="ctrl.newUsers.labels" chart-options="ctrl.newUsers.options"
+                            chart-dataset-override="ctrl.newUsers.datasetOverride">
+                    </canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8 col-xs-12">
+            <div class="box box-primary collapsed-box">
+                <div class="box-header">
+                    <h3 class="box-title">Sessions</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                class="fa fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body no-padding">
+                    <canvas class="chart chart-line" chart-data="ctrl.sessions.data" chart-series="ctrl.sessions.series"
+                            chart-labels="ctrl.sessions.labels" chart-options="ctrl.sessions.options"
+                            chart-dataset-override="ctrl.sessions.datasetOverride">
+                    </canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8 col-xs-12">
+            <div class="box box-primary collapsed-box">
+                <div class="box-header">
+                    <h3 class="box-title">Pageviews</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                class="fa fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body no-padding">
+                    <canvas class="chart chart-line" chart-data="ctrl.pageviews.data"
+                            chart-series="ctrl.pageviews.series"
+                            chart-labels="ctrl.pageviews.labels" chart-options="ctrl.pageviews.options"
+                            chart-dataset-override="ctrl.pageviews.datasetOverride">
+                    </canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8 col-xs-12">
+            <div class="box box-success collapsed-box">
+                <div class="box-header">
+                    <h3 class="box-title">Users by Language</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                class="fa fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body no-padding">
+                    <canvas class="chart chart-line" chart-data="ctrl.usersByLanguage.data"
+                            chart-series="ctrl.usersByLanguage.series"
+                            chart-labels="ctrl.usersByLanguage.labels" chart-options="{}"
+                            chart-dataset-override="ctrl.usersByLanguage.datasetOverride">
+                    </canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8 col-xs-12">
+            <div class="box box-primary collapsed-box">
+                <div class="box-header">
+                    <h3 class="box-title">Sessions by Language</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                class="fa fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body no-padding">
+                    <canvas class="chart chart-line" chart-data="ctrl.sessionsByLanguage.data"
+                            chart-series="ctrl.sessionsByLanguage.series"
+                            chart-labels="ctrl.sessionsByLanguage.labels" chart-options="{}"
+                            chart-dataset-override="ctrl.sessionsByLanguage.datasetOverride">
+                    </canvas>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="clearfix"></div>
+</section>

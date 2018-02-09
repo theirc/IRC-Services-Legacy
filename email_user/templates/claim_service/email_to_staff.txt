@@ -1,0 +1,12 @@
+User: {{ user.email }} - {{ user_link }}
+{% if user.is_active %}
+    is already activated.
+{% else %}
+    is not active.
+{% endif %}
+
+Provider: {{ provider.name }} - {{ provider_link }} .
+Provider wants to claim  {{ service.name_en }} - {{ service_link }} .
+
+Please click on links to get into details. After review you can assign service to provider.
+If you want to activate user click 'Activate provider account' button in the bottom of user details.

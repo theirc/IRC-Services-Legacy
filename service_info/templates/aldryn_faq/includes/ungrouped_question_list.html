@@ -1,0 +1,20 @@
+{% load cms_tags i18n %}
+{% load url from future %}
+
+<ul class="collapsible" data-collapsible="accordion">
+    {% for question in object_list %}
+    <li>
+        <div class="collapsible-header{% if forloop.first %} active{% endif %}">
+            <div class="collapsible-header-wrap">
+                {% render_model question "title" %}
+                <i class="material-icons">info_outline</i>
+            </div>
+        </div>
+        {% if view.config.app_data.config.show_description %}
+            <div class="collapsible-body">
+                {% render_model question "answer_text" %}
+            </div>
+        {% endif %}
+    </li>
+    {% endfor %}
+</ul>

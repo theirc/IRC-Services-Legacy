@@ -1,0 +1,355 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
+from django.db import models, migrations
+import sorl.thumbnail.fields
+import django.core.validators
+import django.db.models.deletion
+import django.db.models.base
+import django.contrib.gis.db.models.fields
+import services.models
+from django.conf import settings
+
+
+class Migration(migrations.Migration):
+
+    dependencies = [
+        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+    ]
+
+    operations = [
+        migrations.CreateModel(
+            name='Feedback',
+            fields=[
+                ('id', models.AutoField(primary_key=True, auto_created=True, serialize=False, verbose_name='ID')),
+                ('name', models.CharField(max_length=256, verbose_name='Name')),
+                ('phone_number', models.CharField(max_length=20, verbose_name='Phone Number (NN-NNNNNN)', validators=[django.core.validators.RegexValidator('^\\d{2}-\\d{6}$')])),
+                ('delivered', models.BooleanField(default=False, help_text='Was service delivered?')),
+                ('quality', models.SmallIntegerField(null=True, blank=True, default=None, help_text='How would you rate the quality of the service you received (from 1 to 5, where 5 is the highest rating possible)?', validators=[django.core.validators.MinValueValidator(1), django.core.validators.MaxValueValidator(5)])),
+                ('non_delivery_explained', models.CharField(blank=True, choices=[('no', 'No explanation'), ('unclear', 'Explanation was not clear'), ('unfair', 'Explanation was not fair'), ('yes', 'Clear and appropriate explanation')], help_text='Did you receive a clear explanation for why the service you sought was not delivered to you?', null=True, max_length=8, default=None)),
+                ('wait_time', models.CharField(blank=True, choices=[('lesshour', 'Less than 1 hour'), ('uptotwodays', 'Up to 2 days'), ('3-7days', '3-7 days'), ('1-2weeks', '1-2 weeks'), ('more', 'More than 2 weeks')], help_text='How long did you wait for the service to be delivered, after contacting the service provider?', null=True, max_length=12, default=None)),
+                ('wait_time_satisfaction', models.SmallIntegerField(null=True, blank=True, default=None, help_text='How do you rate your satisfaction with the time that you waited for the service to be delivered (from 1 to 5, where 5 is the highest rating possible)?', validators=[django.core.validators.MinValueValidator(1), django.core.validators.MaxValueValidator(5)])),
+                ('difficulty_contacting', models.CharField(max_length=20, choices=[('no', 'No'), ('didntknow', 'Did not know how to contact them'), ('nophoneresponse', 'Tried to contact them by phone but received no response'), ('noresponse', 'Tried to contact them in person but received no response or did not find their office'), ('unhelpful', 'Contacted them but response was unhelpful'), ('other', 'Other')], help_text='Did you experience difficulties contacting the provider of the service you needed?')),
+                ('other_difficulties', models.TextField(blank=True, default='', help_text='Other difficulties contacting the service provider')),
+                ('staff_satisfaction', models.SmallIntegerField(null=True, blank=True, default=None, help_text='How would you rate your satisfaction with the staff of the organization that provided services to you, (from 1 to 5, where 5 is the highest rating possible)?', validators=[django.core.validators.MinValueValidator(1), django.core.validators.MaxValueValidator(5)])),
+                ('extra_comments', models.TextField(blank=True, default='', help_text='Other comments')),
+                ('anonymous', models.BooleanField(default=False, help_text='I want my feedback to be anonymous to the service provider')),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='GeographicRegion',
+            fields=[
+                ('id', models.AutoField(primary_key=True, auto_created=True, serialize=False, verbose_name='ID')),
+                ('level', models.IntegerField(choices=[(1, 'Governate'), (2, 'District or CAZA')])),
+                ('area', models.FloatField()),
+                ('perimeter', models.FloatField()),
+                ('moh_na', models.CharField(max_length=25, help_text='Seems to be the governate')),
+                ('moh_cod', models.CharField(max_length=5, help_text='Seems to be the governate')),
+                ('kada_name', models.CharField(max_length=28, blank=True, default='', help_text='Seems to be the CAZA or district')),
+                ('kadaa_code', models.CharField(max_length=10, blank=True, default='', help_text='Seems to be the CAZA or district')),
+                ('cad_name', models.CharField(max_length=60, blank=True, default='')),
+                ('cad_code', models.CharField(max_length=16, blank=True, default='')),
+                ('shape_leng', models.FloatField()),
+                ('shape_area', models.FloatField()),
+                ('geom', django.contrib.gis.db.models.fields.MultiPolygonField(srid=4326)),
+                ('name', models.CharField(max_length=60)),
+                ('code', models.CharField(max_length=16)),
+                ('parent', models.ForeignKey(blank=True, to='services.GeographicRegion', null=True, related_name='children')),
+            ],
+            options={
+                'ordering': ['level', 'name'],
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='JiraUpdateRecord',
+            fields=[
+                ('id', models.AutoField(primary_key=True, auto_created=True, serialize=False, verbose_name='ID')),
+                ('update_type', models.CharField(max_length=22, choices=[('provider-change', 'Provider updated their information'), ('new-service', 'New service submitted by provider'), ('change-service', 'Change to existing service submitted by provider'), ('cancel-draft-service', 'Provider canceled a draft service'), ('cancel-current-service', 'Provider canceled a current service'), ('superseded-draft', 'Provider superseded a previous draft'), ('approve-service', 'Staff approved a new or changed service'), ('rejected-service', 'Staff rejected a new or changed service'), ('feedback', 'User submitted feedback'), ('request-for-service', 'User submitted request for service.')], verbose_name='update type')),
+                ('jira_issue_key', models.CharField(max_length=256, blank=True, default='', verbose_name='JIRA issue')),
+                ('by', models.ForeignKey(blank=True, null=True, to=settings.AUTH_USER_MODEL)),
+                ('feedback', models.ForeignKey(blank=True, to='services.Feedback', null=True, related_name='jira_records')),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='Nationality',
+            fields=[
+                ('id', models.AutoField(primary_key=True, auto_created=True, serialize=False, verbose_name='ID')),
+                ('number', models.IntegerField(unique=True)),
+                ('name_fa', models.CharField(max_length=256, blank=True, default='', verbose_name='name in Persian')),
+                ('name_ar', models.CharField(max_length=256, blank=True, default='', verbose_name='name in Arabic')),
+                ('name_en', models.CharField(max_length=256, blank=True, default='', verbose_name='name in English')),
+                ('name_de', models.CharField(max_length=256, blank=True, default='', verbose_name='name in German')),
+                ('name_fr', models.CharField(max_length=256, blank=True, default='', verbose_name='name in French')),
+            ],
+            options={
+                'verbose_name_plural': 'nationalities',
+            },
+            bases=(models.Model, ),
+        ),
+        migrations.CreateModel(
+            name='Provider',
+            fields=[
+                ('id', models.AutoField(primary_key=True, auto_created=True, serialize=False, verbose_name='ID')),
+                ('phone_number', models.CharField(max_length=20, verbose_name='phone number', validators=[django.core.validators.RegexValidator('^\\d{2}-\\d{6}$')])),
+                ('website', models.URLField(blank=True, default='', verbose_name='website')),
+                ('number_of_monthly_beneficiaries', models.IntegerField(blank=True, verbose_name='number of targeted beneficiaries monthly', null=True, validators=[django.core.validators.MinValueValidator(0), django.core.validators.MaxValueValidator(1000000)])),
+                ('focal_point_phone_number', models.CharField(max_length=20, verbose_name='focal point phone number')),
+                ('name_fa', models.CharField(verbose_name='Name in Persian', max_length=256, blank=True, default='', validators=[services.models.blank_or_at_least_one_letter])),
+                ('name_ar', models.CharField(verbose_name='Name in Arabic', max_length=256, blank=True, default='', validators=[services.models.blank_or_at_least_one_letter])),
+                ('name_en', models.CharField(verbose_name='Name in English', max_length=256, blank=True, default='', validators=[services.models.blank_or_at_least_one_letter])),
+                ('name_de', models.CharField(verbose_name='Name in German', max_length=256, blank=True, default='', validators=[services.models.blank_or_at_least_one_letter])),
+                ('name_fr', models.CharField(verbose_name='Name in French', max_length=256, blank=True, default='', validators=[services.models.blank_or_at_least_one_letter])),
+                ('focal_point_name_fa', models.CharField(verbose_name='focal point name in Persian', max_length=256, blank=True, default='', validators=[services.models.blank_or_at_least_one_letter])),
+                ('focal_point_name_ar', models.CharField(verbose_name='focal point name in Arabic', max_length=256, blank=True, default='', validators=[services.models.blank_or_at_least_one_letter])),
+                ('focal_point_name_en', models.CharField(verbose_name='focal point name in English', max_length=256, blank=True, default='', validators=[services.models.blank_or_at_least_one_letter])),
+                ('focal_point_name_de', models.CharField(verbose_name='focal point name in German', max_length=256, blank=True, default='', validators=[services.models.blank_or_at_least_one_letter])),
+                ('focal_point_name_fr', models.CharField(verbose_name='focal point name in French', max_length=256, blank=True, default='', validators=[services.models.blank_or_at_least_one_letter])),
+                ('description_fa', models.TextField(blank=True, default='', verbose_name='description in Persian')),
+                ('description_ar', models.TextField(blank=True, default='', verbose_name='description in Arabic')),
+                ('description_en', models.TextField(blank=True, default='', verbose_name='description in English')),
+                ('description_de', models.TextField(blank=True, default='', verbose_name='description in German')),
+                ('description_fr', models.TextField(blank=True, default='', verbose_name='description in French')),
+                ('address_fa', models.TextField(blank=True, default='', verbose_name='provider address in Persian')),
+                ('address_ar', models.TextField(blank=True, default='', verbose_name='provider address in Arabic')),
+                ('address_en', models.TextField(blank=True, default='', verbose_name='provider address in English')),
+                ('address_de', models.TextField(blank=True, default='', verbose_name='provider address in German')),
+                ('address_fr', models.TextField(blank=True, default='', verbose_name='provider address in French')),
+            ],
+            options={
+            },
+            bases=(models.Model, ),
+        ),
+        migrations.CreateModel(
+            name='ProviderType',
+            fields=[
+                ('id', models.AutoField(primary_key=True, auto_created=True, serialize=False, verbose_name='ID')),
+                ('number', models.IntegerField(unique=True)),
+                ('name_fa', models.CharField(max_length=256, blank=True, default='', verbose_name='Name in Persian')),
+                ('name_ar', models.CharField(max_length=256, blank=True, default='', verbose_name='Name in Arabic')),
+                ('name_en', models.CharField(max_length=256, blank=True, default='', verbose_name='Name in English')),
+                ('name_de', models.CharField(max_length=256, blank=True, default='', verbose_name='Name in German')),
+                ('name_fr', models.CharField(max_length=256, blank=True, default='', verbose_name='Name in French')),
+            ],
+            options={
+            },
+            bases=(models.Model, ),
+        ),
+        migrations.CreateModel(
+            name='RequestForService',
+            fields=[
+                ('id', models.AutoField(primary_key=True, auto_created=True, serialize=False, verbose_name='ID')),
+                ('provider_name', models.CharField(max_length=256, validators=[services.models.at_least_one_letter])),
+                ('service_name', models.CharField(max_length=256, validators=[services.models.at_least_one_letter])),
+                ('address', models.TextField()),
+                ('contact', models.TextField()),
+                ('description', models.TextField()),
+                ('rating', models.SmallIntegerField(null=True, blank=True, default=None, help_text='How would you rate the quality of the service you received (from 1 to 5, where 5 is the highest rating possible)?', validators=[django.core.validators.MinValueValidator(1), django.core.validators.MaxValueValidator(5)])),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='SelectionCriterion',
+            fields=[
+                ('id', models.AutoField(primary_key=True, auto_created=True, serialize=False, verbose_name='ID')),
+                ('text_fa', models.CharField(max_length=100, blank=True, default='')),
+                ('text_ar', models.CharField(max_length=100, blank=True, default='')),
+                ('text_en', models.CharField(max_length=100, blank=True, default='')),
+                ('text_de', models.CharField(max_length=100, blank=True, default='')),
+                ('text_fr', models.CharField(max_length=100, blank=True, default='')),
+            ],
+            options={
+                'verbose_name_plural': 'selection criteria',
+            },
+            bases=(models.Model, ),
+        ),
+        migrations.CreateModel(
+            name='Service',
+            fields=[
+                ('id', models.AutoField(primary_key=True, auto_created=True, serialize=False, verbose_name='ID')),
+                ('cost_of_service', models.TextField(blank=True, default='', verbose_name='cost of service')),
+                ('is_mobile', models.BooleanField(default=False, verbose_name='mobile service')),
+                ('status', models.CharField(verbose_name='status', max_length=10, choices=[('draft', 'draft'), ('current', 'current'), ('rejected', 'rejected'), ('canceled', 'canceled'), ('archived', 'archived')], default='draft')),
+                ('location', django.contrib.gis.db.models.fields.PointField(srid=4326, blank=True, verbose_name='location', null=True)),
+                ('sunday_open', models.TimeField(blank=True, null=True)),
+                ('sunday_close', models.TimeField(blank=True, null=True)),
+                ('monday_open', models.TimeField(blank=True, null=True)),
+                ('monday_close', models.TimeField(blank=True, null=True)),
+                ('tuesday_open', models.TimeField(blank=True, null=True)),
+                ('tuesday_close', models.TimeField(blank=True, null=True)),
+                ('wednesday_open', models.TimeField(blank=True, null=True)),
+                ('wednesday_close', models.TimeField(blank=True, null=True)),
+                ('thursday_open', models.TimeField(blank=True, null=True)),
+                ('thursday_close', models.TimeField(blank=True, null=True)),
+                ('friday_open', models.TimeField(blank=True, null=True)),
+                ('friday_close', models.TimeField(blank=True, null=True)),
+                ('saturday_open', models.TimeField(blank=True, null=True)),
+                ('saturday_close', models.TimeField(blank=True, null=True)),
+                ('image', sorl.thumbnail.fields.ImageField(upload_to='service-images/', blank=True, default='', help_text='Upload an image file (GIF, JPEG, PNG, WebP) with a square aspect ratio (Width equal to Height). The image size should be at least 1280 x 1280 for best results. SVG files are not supported.')),
+                ('name_fa', models.CharField(max_length=256, blank=True, default='', verbose_name='name in Persian')),
+                ('name_ar', models.CharField(max_length=256, blank=True, default='', verbose_name='name in Arabic')),
+                ('name_en', models.CharField(max_length=256, blank=True, default='', verbose_name='name in English')),
+                ('name_de', models.CharField(max_length=256, blank=True, default='', verbose_name='name in German')),
+                ('name_fr', models.CharField(max_length=256, blank=True, default='', verbose_name='name in French')),
+                ('additional_info_fa', models.TextField(blank=True, default='', verbose_name='additional information in Persian')),
+                ('additional_info_ar', models.TextField(blank=True, default='', verbose_name='additional information in Arabic')),
+                ('additional_info_en', models.TextField(blank=True, default='', verbose_name='additional information in English')),
+                ('additional_info_de', models.TextField(blank=True, default='', verbose_name='additional information in German')),
+                ('additional_info_fr', models.TextField(blank=True, default='', verbose_name='additional information in French')),
+                ('description_fa', models.TextField(blank=True, default='', verbose_name='description in Persian')),
+                ('description_ar', models.TextField(blank=True, default='', verbose_name='description in Arabic')),
+                ('description_en', models.TextField(blank=True, default='', verbose_name='description in English')),
+                ('description_de', models.TextField(blank=True, default='', verbose_name='description in German')),
+                ('description_fr', models.TextField(blank=True, default='', verbose_name='description in French')),
+            ],
+            options={
+            },
+            bases=(models.Model, ),
+        ),
+        migrations.CreateModel(
+            name='ServiceArea',
+            fields=[
+                ('id', models.AutoField(primary_key=True, auto_created=True, serialize=False, verbose_name='ID')),
+                ('name_fa', models.CharField(max_length=256, blank=True, default='', verbose_name='Name in Persian')),
+                ('name_ar', models.CharField(max_length=256, blank=True, default='', verbose_name='Name in Arabic')),
+                ('name_en', models.CharField(max_length=256, blank=True, default='', verbose_name='Name in English')),
+                ('name_de', models.CharField(max_length=256, blank=True, default='', verbose_name='Name in German')),
+                ('name_fr', models.CharField(max_length=256, blank=True, default='', verbose_name='Name in French')),
+                ('lebanon_region', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, null=True, to='services.GeographicRegion', default=None)),
+                ('parent', models.ForeignKey(blank=True, verbose_name='parent area', help_text='the area that contains this area', related_name='children', null=True, to='services.ServiceArea')),
+            ],
+            options={
+            },
+            bases=(models.Model, ),
+        ),
+        migrations.CreateModel(
+            name='ServiceType',
+            fields=[
+                ('id', models.AutoField(primary_key=True, auto_created=True, serialize=False, verbose_name='ID')),
+                ('number', models.IntegerField(unique=True)),
+                ('icon', models.ImageField(upload_to='service-type-icons', blank=True, verbose_name='icon')),
+                ('name_fa', models.CharField(max_length=256, blank=True, default='', verbose_name='name in Persian')),
+                ('name_ar', models.CharField(max_length=256, blank=True, default='', verbose_name='name in Arabic')),
+                ('name_en', models.CharField(max_length=256, blank=True, default='', verbose_name='name in English')),
+                ('name_de', models.CharField(max_length=256, blank=True, default='', verbose_name='name in German')),
+                ('name_fr', models.CharField(max_length=256, blank=True, default='', verbose_name='name in French')),
+                ('comments_fa', models.CharField(max_length=512, blank=True, default='', verbose_name='comments in Persian')),
+                ('comments_ar', models.CharField(max_length=512, blank=True, default='', verbose_name='comments in Arabic')),
+                ('comments_en', models.CharField(max_length=512, blank=True, default='', verbose_name='comments in English')),
+                ('comments_de', models.CharField(max_length=512, blank=True, default='', verbose_name='comments in German')),
+                ('comments_fr', models.CharField(max_length=512, blank=True, default='', verbose_name='comments in French')),
+            ],
+            options={
+                'ordering': ['number'],
+            },
+            bases=(models.Model, ),
+        ),
+        migrations.AddField(
+            model_name='service',
+            name='area_of_service',
+            field=models.ForeignKey(to='services.ServiceArea', verbose_name='area of service'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='service',
+            name='provider',
+            field=models.ForeignKey(to='services.Provider', verbose_name='provider'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='service',
+            name='type',
+            field=models.ForeignKey(blank=True, verbose_name='type', null=True, to='services.ServiceType'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='service',
+            name='update_of',
+            field=models.ForeignKey(blank=True, help_text='If a service record represents a modification of another service record, this field links to that other record.', null=True, related_name='updates', to='services.Service'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='selectioncriterion',
+            name='service',
+            field=models.ForeignKey(related_name='selection_criteria', to='services.Service'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='requestforservice',
+            name='area_of_service',
+            field=models.ForeignKey(to='services.ServiceArea', verbose_name='area of service'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='requestforservice',
+            name='service_type',
+            field=models.ForeignKey(to='services.ServiceType', verbose_name='type'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='provider',
+            name='type',
+            field=models.ForeignKey(to='services.ProviderType', verbose_name='type'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='provider',
+            name='user',
+            field=models.OneToOneField(verbose_name='user', help_text='user account for this provider', to=settings.AUTH_USER_MODEL),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='jiraupdaterecord',
+            name='provider',
+            field=models.ForeignKey(blank=True, to='services.Provider', null=True, related_name='jira_records'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='jiraupdaterecord',
+            name='request_for_service',
+            field=models.ForeignKey(blank=True, to='services.RequestForService', null=True, related_name='jira_records'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='jiraupdaterecord',
+            name='service',
+            field=models.ForeignKey(blank=True, to='services.Service', null=True, related_name='jira_records'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='jiraupdaterecord',
+            name='superseded_draft',
+            field=models.ForeignKey(blank=True, null=True, to='services.Service'),
+            preserve_default=True,
+        ),
+        migrations.AlterUniqueTogether(
+            name='jiraupdaterecord',
+            unique_together=set([('service', 'update_type')]),
+        ),
+        migrations.AddField(
+            model_name='feedback',
+            name='area_of_residence',
+            field=models.ForeignKey(to='services.ServiceArea', verbose_name='Area of residence'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='feedback',
+            name='nationality',
+            field=models.ForeignKey(to='services.Nationality', verbose_name='Nationality'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='feedback',
+            name='service',
+            field=models.ForeignKey(to='services.Service', verbose_name='Service'),
+            preserve_default=True,
+        ),
+    ]

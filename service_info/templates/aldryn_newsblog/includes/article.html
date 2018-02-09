@@ -1,0 +1,39 @@
+{% load i18n apphooks_config_tags cms_tags sekizai_tags staticfiles thumbnail %}
+{% load url from future %}
+
+<article class="aldryn-newsblog-article{% if article.is_featured %} aldryn-newsblog-featured{% endif %}{% if not article.published %} unpublished{% endif %}{% if article.future %} future{% endif %}">
+    {% block newsblog_visual %}
+        {% if article.featured_image_id %}
+            <img src="{% thumbnail article.featured_image.image 800x450 crop subject_location=article.featured_image.subject_location %}" alt="{{ article.featured_image.alt }}" class="img-responsive featured-image">
+        {% endif %}
+    {% endblock newsblog_visual %}
+
+    {% block newsblock_title %}
+        <h2>
+            {% render_model article "title" %}
+        </h2>
+    {% endblock newsblock_title %}
+
+    {% block newsblog_meta %}
+        {% if article.tags %}
+            <div class="tags">
+                {% for tag in article.tags.all %}
+                    <div class="chip amber">
+                        <a href="{% namespace_url 'article-list-by-tag' tag=tag.slug namespace=namespace default='' %}">
+                            {{ tag.name }}
+                            <i class="material-icons">label</i>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="lead">
+            {% render_model article "lead_in" %}
+        </div>
+    {% endblock newsblog_meta %}
+
+    {% block newsblog_content %}
+        {% render_placeholder article.content language placeholder_language %}
+    {% endblock newsblog_content %}
+</article>

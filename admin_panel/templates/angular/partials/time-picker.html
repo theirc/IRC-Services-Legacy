@@ -1,0 +1,27 @@
+<div class="time-picker-container">
+    <div class="time-picker">
+        From:
+        <select class="time-picker-select form-control" ng-model="ctrl.startingHour">
+            <option ng-repeat="option in ctrl.startingTimeHoursRange" ng-disabled="option.disabled" value="{{ option.value }}">{{ option.name }}</option>
+        </select> :
+        <select class="time-picker-select form-control" ng-model="ctrl.startingMinute">
+            <option ng-repeat="option in ctrl.startingTimeMinutesRange" ng-disabled="option.disabled" value="{{ option.value }}">{{ option.name }}</option>
+        </select>
+        <select class="time-picker-select form-control" ng-model="ctrl.startingFormat">
+            <option ng-repeat="option in ctrl.startingFormatRange" ng-disabled="option.disabled" value="{{ option.value }}">{{ option.name }}</option>
+        </select>
+    </div>
+    <div class="time-picker">
+        To:
+        <select class="time-picker-select form-control" ng-model="ctrl.endingHour">
+            <option ng-repeat="option in ctrl.endingTimeHoursRange" ng-disabled="option.disabled" value="{{ option.value }}">{{ option.name }}</option>
+        </select>
+         :
+        <select class="time-picker-select form-control" ng-model="ctrl.endingMinute">
+            <option ng-repeat="option in ctrl.endingTimeMinutesRange" ng-disabled="option.disabled" value="{{ option.value }}">{{ option.name }}</option>
+        </select>
+        <select class="time-picker-select form-control" ng-model="ctrl.endingFormat">
+            <option ng-repeat="option in ctrl.endingFormatRange" ng-disabled="option.disabled" value="{{ option.value }}">{{ option.name }}</option>
+        </select>
+    </div>
+</div>

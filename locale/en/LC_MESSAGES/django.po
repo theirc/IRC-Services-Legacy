@@ -1,0 +1,932 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-02-01 21:44+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Name"
+msgstr ""
+
+msgid "This field is required."
+msgstr ""
+
+msgid "Staff satisfaction is required if service was delivered."
+msgstr ""
+
+#, python-brace-format
+msgid "Invalid language code {code}. The valid codes are {valid_codes}."
+msgstr ""
+
+msgid "A user with that email already exists."
+msgstr ""
+
+msgid "User is not a provider.  Only providers can create services."
+msgstr ""
+
+msgid "You may only submit updates to current, draft or rejected services"
+msgstr ""
+
+msgid "There is already a pending draft update to this service."
+msgstr ""
+
+msgid "Close time is missing."
+msgstr ""
+
+msgid "Open time is missing."
+msgstr ""
+
+msgid "Close time is not later than open time."
+msgstr ""
+
+msgid "User account is disabled."
+msgstr ""
+
+msgid "Unable to log in with provided credentials."
+msgstr ""
+
+msgid ""
+"Activation key is invalid. Check that it was copied correctly and has not "
+"already been used."
+msgstr ""
+
+msgid "No user with that email"
+msgstr ""
+
+msgid "Password reset key is not valid"
+msgstr ""
+
+msgid "User is not pending activation"
+msgstr ""
+
+msgid "Service record must be current or pending changes to be canceled"
+msgstr ""
+
+msgid "Permissions"
+msgstr ""
+
+msgid "Important dates"
+msgstr ""
+
+msgid "The two password fields didn't match."
+msgstr ""
+
+msgid "Email"
+msgstr ""
+
+msgid "Required. 255 characters or fewer. Letters, digits and @/./+/-/_ only."
+msgstr ""
+
+msgid "This value may contain only letters, numbers and @/./+/-/_ characters."
+msgstr ""
+
+msgid "Password"
+msgstr ""
+
+msgid ""
+"Raw passwords are not stored, so there is no way to see this user's "
+"password, but you can change the password using <a href=\"password/\">this "
+"form</a>."
+msgstr ""
+
+msgid "Users must have an email address"
+msgstr ""
+
+msgid "Activation key is invalid or has already been used."
+msgstr ""
+
+msgid "email address"
+msgstr ""
+
+msgid "staff status"
+msgstr ""
+
+msgid "Designates whether the user can log into this admin site."
+msgstr ""
+
+msgid "active"
+msgstr ""
+
+msgid ""
+"Designates whether this user should be treated as active. Unselect this "
+"instead of deleting accounts."
+msgstr ""
+
+msgid "date joined"
+msgstr ""
+
+msgid "activation key"
+msgstr ""
+
+msgid "language"
+msgstr ""
+
+msgid "User's preferred language."
+msgstr ""
+
+msgid "user"
+msgstr ""
+
+msgid "User emails must be unique without regard to case."
+msgstr ""
+
+#, python-brace-format
+msgid "Password is too short. It must have at least {min_length} characters."
+msgstr ""
+
+#, python-format
+msgid ""
+"You're receiving this email because you requested a password reset for your "
+"user account at %(site_name)s."
+msgstr ""
+
+msgid "Please go to the following page and choose a new password:"
+msgstr ""
+
+msgid "Your username is your email address:"
+msgstr ""
+
+msgid "Thanks for using our site!"
+msgstr ""
+
+#, python-format
+msgid "The %(site_name)s team"
+msgstr ""
+
+#, python-format
+msgid ""
+"\n"
+"You (or someone pretending to be you) have asked to reset the\n"
+"password of an account at %(site_name)s.\n"
+"If this wasn't you, please ignore this email.\n"
+msgstr ""
+
+msgid ""
+"\n"
+"To reset the password, please click the following link:\n"
+msgstr ""
+
+#, python-format
+msgid ""
+"\n"
+"Sincerely,\n"
+"%(site_name)s Management\n"
+msgstr ""
+
+#, python-format
+msgid "Password reset on %(site_name)s"
+msgstr ""
+
+msgid "registration"
+msgstr ""
+
+#, python-format
+msgid ""
+"\n"
+"    You (or someone pretending to be you) have asked to register an account "
+"at\n"
+"    %(site.name)s.  If this wasn't you, please ignore this email\n"
+"    and your address will be removed from our records.\n"
+"    "
+msgstr ""
+
+msgid ""
+"\n"
+"    To activate this account, please click the following link:\n"
+"    "
+msgstr ""
+
+#, python-format
+msgid ""
+"\n"
+"    Sincerely,\n"
+"    %(site.name)s Management\n"
+"    "
+msgstr ""
+
+#, python-format
+msgid ""
+"\n"
+"You (or someone pretending to be you) have asked to register an account at\n"
+"%(site.name)s.  If this wasn't you, please ignore this email\n"
+"and your address will be removed from our records.\n"
+msgstr ""
+
+msgid ""
+"\n"
+"To activate this account, please click the following link:\n"
+msgstr ""
+
+#, python-format
+msgid ""
+"\n"
+"Sincerely,\n"
+"%(site.name)s Management\n"
+msgstr ""
+
+msgid "Account activation on"
+msgstr ""
+
+msgid "English"
+msgstr ""
+
+msgid "Arabic"
+msgstr ""
+
+msgid "French"
+msgstr ""
+
+msgid "en"
+msgstr ""
+
+msgid "ar"
+msgstr ""
+
+msgid "fr"
+msgstr ""
+
+msgid "Save"
+msgstr ""
+
+msgid "Delete"
+msgstr ""
+
+msgid "Save as new"
+msgstr ""
+
+msgid "Save and add another"
+msgstr ""
+
+msgid "Save and continue editing"
+msgstr ""
+
+msgid "Save and reject"
+msgstr ""
+
+msgid "Save and approve"
+msgstr ""
+
+msgid "Category"
+msgstr ""
+
+msgid "No entry found."
+msgstr ""
+
+msgid "Back to Category"
+msgstr ""
+
+msgid "Back to Overview"
+msgstr ""
+
+#, python-format
+msgid "Form name: %(form_name)s"
+msgstr ""
+
+#, python-format
+msgid "[Form submission] %(form_name)s"
+msgstr ""
+
+msgid "Upload"
+msgstr ""
+
+#, python-format
+msgid ""
+"Thank you for submitting your information, you will be <a href="
+"\"%(form_success_url)s\">redirected shortly</a>."
+msgstr ""
+
+msgid "Previous"
+msgstr ""
+
+msgid "Back to List"
+msgstr ""
+
+msgid "Next"
+msgstr ""
+
+msgid "No items available"
+msgstr ""
+
+msgid "Read More"
+msgstr ""
+
+msgid "No articles found"
+msgstr ""
+
+msgid ""
+"There were no results for your search. Please check your spelling and try "
+"again."
+msgstr ""
+
+msgid "Keyword"
+msgstr ""
+
+msgid "Keyword search"
+msgstr ""
+
+msgid "Go"
+msgstr ""
+
+msgid "No authors available"
+msgstr ""
+
+msgid "All"
+msgstr ""
+
+msgid "by"
+msgstr ""
+
+msgid "No results"
+msgstr ""
+
+msgid "No results found for"
+msgstr ""
+
+msgid "results"
+msgstr ""
+
+msgid "Rate This Page"
+msgstr ""
+
+msgid "Captcha Verification"
+msgstr ""
+
+msgid "Search for Services Nearby"
+msgstr ""
+
+msgid "International Rescue Committee Information Portal"
+msgstr ""
+
+msgid "Privacy"
+msgstr ""
+
+msgid "Github"
+msgstr ""
+
+msgid "Created by the International Rescue Committee"
+msgstr ""
+
+msgid "IRC Info Portal"
+msgstr ""
+
+msgid "Created by the IRC"
+msgstr ""
+
+msgid "Error submitting rating"
+msgstr ""
+
+msgid ""
+"\n"
+"                  There was an error submitting your page rating.\n"
+"                  Please check your connection and try again.\n"
+"                "
+msgstr ""
+
+msgid "Services"
+msgstr ""
+
+msgid "Choose Language"
+msgstr ""
+
+msgid "Logout"
+msgstr ""
+
+#, python-format
+msgid "Dear %(provider_name)s"
+msgstr ""
+
+#, python-format
+msgid ""
+"\n"
+"Your service %(service_name)s has been vetted and approved by International "
+"Rescue Committee staff.\n"
+"  It has been published on the following link: <a href=\"%(service_link)s\">"
+"%(service_link)s</a>\n"
+msgstr ""
+
+msgid "For more information please contact support at serviceinfo@rescue.org"
+msgstr ""
+
+msgid "Thanks for your submission."
+msgstr ""
+
+msgid "Best Regards"
+msgstr ""
+
+msgid "ServiceInfo"
+msgstr ""
+
+msgid "Support:"
+msgstr ""
+
+#, python-format
+msgid ""
+"\n"
+"Your service %(service_name)s has been vetted and approved by International "
+"Rescue Committee staff.\n"
+"It has been published on the following link: <a href=\"%(service_link)s\">"
+"%(service_link)s</a>\n"
+msgstr ""
+
+msgid "Service has been approved"
+msgstr ""
+
+msgid ""
+"You can type an address, a place name, or even a latitude and longitude into "
+"the search box (e.g. \"33.8869, 35.5131\")."
+msgstr ""
+
+msgid "Set icon for page"
+msgstr ""
+
+msgid "Allow ratings for page"
+msgstr ""
+
+msgid "Include social media for page"
+msgstr ""
+
+msgid "Materialize icon name"
+msgstr ""
+
+msgid "Choose an icon at "
+msgstr ""
+
+msgid "Description and Additional Information"
+msgstr ""
+
+#, python-brace-format
+msgid "Hours (all times in time zone {timezone})"
+msgstr ""
+
+msgid "Location"
+msgstr ""
+
+msgid "Image"
+msgstr ""
+
+msgid "Only services in draft status may be approved"
+msgstr ""
+
+#, python-brace-format
+msgid "Unable to approve service '{name}': {error}."
+msgstr ""
+
+msgid "Services have been approved"
+msgstr ""
+
+msgid "Approve new or changed service"
+msgstr ""
+
+msgid "Only services in draft status may be rejected"
+msgstr ""
+
+#, python-brace-format
+msgid "Unable to reject service '{name}': {error}."
+msgstr ""
+
+msgid "Services have been rejected"
+msgstr ""
+
+msgid "Reject new or changed service"
+msgstr ""
+
+msgid "The service was approved successfully."
+msgstr ""
+
+msgid "The service was rejected successfully."
+msgstr ""
+
+msgid "no image"
+msgstr ""
+
+#, python-format
+msgid "There is no service type with English name %r"
+msgstr ""
+
+#, python-format
+msgid "There is no service area with English name %r"
+msgstr ""
+
+msgid "Unable to open spreadsheet file; is it an Excel spreadsheet?"
+msgstr ""
+
+#, python-format
+msgid "Errors in sheet %s:"
+msgstr ""
+
+#, python-format
+msgid "Row %d"
+msgstr ""
+
+#, python-format
+msgid "Spreadsheet file should contain 3 sheets, this one has %d"
+msgstr ""
+
+msgid "First sheet has no data."
+msgstr ""
+
+#. Translators: do NOT translate text inside {braces}
+#, python-brace-format
+msgid "First sheet has wrong name, expected {expected}, got {actual}"
+msgstr ""
+
+#, python-format
+msgid "First sheet has wrong headers, expected %s"
+msgstr ""
+
+#, python-format
+msgid "%d is not a provider this user may delete"
+msgstr ""
+
+#, python-format
+msgid "%d is not a provider this user may import"
+msgstr ""
+
+msgid "Only staff may delete providers"
+msgstr ""
+
+msgid "Non-staff users may not create new providers"
+msgstr ""
+
+#, python-format
+msgid "%s is not a valid ID"
+msgstr ""
+
+#, python-format
+msgid "There is no provider with id=%s"
+msgstr ""
+
+msgid "Second sheet has no data."
+msgstr ""
+
+#. Translators: do NOT translate text inside {braces}
+#, python-brace-format
+msgid "Second sheet has wrong name, expected {expected}, got {actual}"
+msgstr ""
+
+#, python-format
+msgid "%d is not a service this user may delete"
+msgstr ""
+
+#, python-format
+msgid "%d is not a service this user may import"
+msgstr ""
+
+#, python-format
+msgid "No service with id=%s"
+msgstr ""
+
+msgid "Non-staff users may not create services for other providers"
+msgstr ""
+
+#. Translators: do NOT translate text inside {braces}
+#, python-brace-format
+msgid "Third sheet has wrong name, expected {expected}, got {actual}"
+msgstr ""
+
+#, python-format
+msgid "No selection criterion with id = %s"
+msgstr ""
+
+msgid ""
+"Selection criterion refers to service with ID or name {name!r} that is not "
+"in the 2nd sheet. Choices: {list1!r} or {list2!r}"
+msgstr ""
+
+#. Translators: Provider name
+#. Translators: Service name
+msgid "name in English"
+msgstr ""
+
+#. Translators: Provider name
+#. Translators: Service name
+msgid "name in Arabic"
+msgstr ""
+
+#. Translators: Provider name
+#. Translators: Service name
+msgid "name in French"
+msgstr ""
+
+msgid "type"
+msgstr ""
+
+msgid "phone number"
+msgstr ""
+
+msgid "website"
+msgstr ""
+
+#. Translators: Provider description
+#. Translators: Service description
+msgid "description in English"
+msgstr ""
+
+#. Translators: Provider description
+#. Translators: Service description
+msgid "description in Arabic"
+msgstr ""
+
+#. Translators: Provider description
+#. Translators: Service description
+msgid "description in French"
+msgstr ""
+
+msgid "user account for this provider"
+msgstr ""
+
+msgid "number of targeted beneficiaries monthly"
+msgstr ""
+
+msgid "focal point name in English"
+msgstr ""
+
+msgid "focal point name in Arabic"
+msgstr ""
+
+msgid "focal point name in French"
+msgstr ""
+
+msgid "focal point phone number"
+msgstr ""
+
+msgid "provider address in English"
+msgstr ""
+
+msgid "provider address in Arabic"
+msgstr ""
+
+msgid "provider address in French"
+msgstr ""
+
+msgid "parent area"
+msgstr ""
+
+msgid "the area that contains this area"
+msgstr ""
+
+msgid "selection criteria"
+msgstr ""
+
+msgid "Selection criterion must have text in at least one language"
+msgstr ""
+
+msgid "icon"
+msgstr ""
+
+msgid "comments in English"
+msgstr ""
+
+msgid "comments in Arabic"
+msgstr ""
+
+msgid "comments in French"
+msgstr ""
+
+msgid "provider"
+msgstr ""
+
+msgid "area of service"
+msgstr ""
+
+msgid "additional information in English"
+msgstr ""
+
+msgid "additional information in Arabic"
+msgstr ""
+
+msgid "additional information in French"
+msgstr ""
+
+msgid "cost of service"
+msgstr ""
+
+msgid "mobile service"
+msgstr ""
+
+msgid "draft"
+msgstr ""
+
+msgid "current"
+msgstr ""
+
+msgid "rejected"
+msgstr ""
+
+msgid "canceled"
+msgstr ""
+
+msgid "archived"
+msgstr ""
+
+msgid "status"
+msgstr ""
+
+msgid ""
+"If a service record represents a modification of another service record, "
+"this field links to that other record."
+msgstr ""
+
+msgid "location"
+msgstr ""
+
+msgid ""
+"Upload an image file (GIF, JPEG, PNG, WebP) with a square aspect ratio "
+"(Width equal to Height). The image size should be at least 1280 x 1280 for "
+"best results. SVG files are not supported."
+msgstr ""
+
+msgid "Only services in draft status may be approved."
+msgstr ""
+
+msgid "Only services in draft status may be rejected."
+msgstr ""
+
+msgid "Provider updated their information"
+msgstr ""
+
+msgid "New service submitted by provider"
+msgstr ""
+
+msgid "Change to existing service submitted by provider"
+msgstr ""
+
+msgid "Provider canceled a draft service"
+msgstr ""
+
+msgid "Provider canceled a current service"
+msgstr ""
+
+msgid "Provider superseded a previous draft"
+msgstr ""
+
+msgid "Staff approved a new or changed service"
+msgstr ""
+
+msgid "Staff rejected a new or changed service"
+msgstr ""
+
+msgid "User submitted feedback"
+msgstr ""
+
+msgid "User submitted request for service."
+msgstr ""
+
+msgid "update type"
+msgstr ""
+
+msgid "JIRA issue"
+msgstr ""
+
+msgid "nationalities"
+msgstr ""
+
+msgid "Phone Number (NN-NNNNNN)"
+msgstr ""
+
+msgid "Nationality"
+msgstr ""
+
+msgid "Area of residence"
+msgstr ""
+
+msgid "Service"
+msgstr ""
+
+msgid "Was service delivered?"
+msgstr ""
+
+msgid ""
+"How would you rate the quality of the service you received (from 1 to 5, "
+"where 5 is the highest rating possible)?"
+msgstr ""
+
+msgid ""
+"Did you receive a clear explanation for why the service you sought was not "
+"delivered to you?"
+msgstr ""
+
+msgid "No explanation"
+msgstr ""
+
+msgid "Explanation was not clear"
+msgstr ""
+
+msgid "Explanation was not fair"
+msgstr ""
+
+msgid "Clear and appropriate explanation"
+msgstr ""
+
+msgid ""
+"How long did you wait for the service to be delivered, after contacting the "
+"service provider?"
+msgstr ""
+
+msgid "Less than 1 hour"
+msgstr ""
+
+msgid "Up to 2 days"
+msgstr ""
+
+msgid "3-7 days"
+msgstr ""
+
+msgid "1-2 weeks"
+msgstr ""
+
+msgid "More than 2 weeks"
+msgstr ""
+
+msgid ""
+"How do you rate your satisfaction with the time that you waited for the "
+"service to be delivered (from 1 to 5, where 5 is the highest rating "
+"possible)?"
+msgstr ""
+
+msgid ""
+"Did you experience difficulties contacting the provider of the service you "
+"needed?"
+msgstr ""
+
+msgid "No"
+msgstr ""
+
+msgid "Did not know how to contact them"
+msgstr ""
+
+msgid "Tried to contact them by phone but received no response"
+msgstr ""
+
+msgid ""
+"Tried to contact them in person but received no response or did not find "
+"their office"
+msgstr ""
+
+msgid "Contacted them but response was unhelpful"
+msgstr ""
+
+msgid "Other"
+msgstr ""
+
+msgid "Other difficulties contacting the service provider"
+msgstr ""
+
+msgid ""
+"How would you rate your satisfaction with the staff of the organization that "
+"provided services to you, (from 1 to 5, where 5 is the highest rating "
+"possible)?"
+msgstr ""
+
+msgid "Other comments"
+msgstr ""
+
+msgid "I want my feedback to be anonymous to the service provider"
+msgstr ""
+
+msgid ""
+"Quality field is required if you answered 'Yes' to 'Was the service you "
+"sought delivered to you?'."
+msgstr ""
+
+msgid ""
+"An answer is required to 'How long did you wait for the service to be "
+"delivered, after contacting the service provider?' if you answered 'Yes' to "
+"'Was the service you sought delivered to you?'."
+msgstr ""
+
+msgid ""
+"An answer is required to 'How do you rate your satisfaction with the time "
+"that you waited for the service to be delivered?' if you answered 'Yes' to "
+"'Was the service you sought delivered to you?'."
+msgstr ""
+
+msgid ""
+"An answer is required to 'Did you receive a clear explanation for why the "
+"service you sought was not delivered to you?' if you answered 'No' to 'Was "
+"the service you sought delivered to you?'."
+msgstr ""
+
+msgid ""
+"An answer is required to 'Other difficulties contacting the service "
+"provider' if you answered 'Other' to 'Did you experience difficulties "
+"contacting the provider of the service you needed?'"
+msgstr ""
+
+msgid "Governate"
+msgstr ""
+
+msgid "District or CAZA"
+msgstr ""

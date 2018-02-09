@@ -1,0 +1,219 @@
+{% load cms_tags staticfiles sekizai_tags menu_tags i18n si_cms_language_tags %}
+
+<!doctype html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    {% if request.current_page.ratingextension.include_rating %}
+      <meta property="og:url" content="{{ request.get_full_path }}" />
+      <meta property="og:type" content="website" />
+      <meta property="og:title" content="{% page_attribute 'page_title' %}" />
+      <meta property="og:description" content="{% page_attribute meta_description %}" />
+      <meta property="og:site_name" content="Service Info" />
+      <meta property="og:locale" content="{% service_language_code 'Facebook' %}" />
+    {% endif %}
+    {% render_block "extra-meta" %}
+
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css"> -->
+    {% if request.LANGUAGE_CODE == 'ar' %}
+      <link href="{% static 'css/materialize.min-rtl.css' %}" rel="stylesheet">
+    {% else %}
+      <link href="{% static 'css/materialize.min.css' %}" rel="stylesheet">
+    {% endif %}
+    <link href="{% static 'fullcalendar/dist/fullcalendar.min.css' %}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link rel="shortcut icon" href="{% static 'images/sm-favicon.png' %}">
+
+    {% if request.LANGUAGE_CODE == 'ar' %}
+      <link href="{% static 'css/site-rtl.css' %}" rel="stylesheet">
+    {% else %}
+      <link href="{% static 'css/site.css' %}" rel="stylesheet">
+    {% endif %}
+    {% render_block "css" %}
+
+    <title>{% block title %}{% page_attribute "page_title" %}{% endblock title %}</title>
+
+  </head>
+  <body class="{% block body-class %}grey lighten-5{% endblock body-class %}">
+    {% cms_toolbar %}
+
+    {% if request.current_page.socialmediaextension.include_social_media %}
+      <div id="fb-root"></div>
+      <script>(function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/{% service_language_code 'Facebook' %}/sdk.js#xfbml=1&version=v2.5";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+      </script>
+    {% endif %}
+
+    <header id="cms-header" class="{% block header-class %}{% endblock header-class %}">
+      {% block header %}
+        {% block nav %}
+          {% block menu %}
+            {% show_menu 0 3 3 3 "cms/includes/menu.html" %}
+          {% endblock menu %}
+        {% endblock nav %}
+        <nav id="mobile-nav" class="amber lighten-2 hide-on-large-only {% block nav-class %}nav-wrapper {% endblock nav-class %}">
+          <div class="nav-wrapper">
+            <a href="#" data-activates="mobile-menu" class="button-collapse right"><i class="material-icons">menu</i></a>
+
+            <a href="{% url 'pages-root' %}" class="{% block brand-class %}brand-logo{% endblock brand-class %} left">
+              <img src="{% static 'images/logo-large.png' %}">
+            </a>
+
+            {% with mobile=True %}
+              {% show_menu 0 3 3 3 "cms/includes/menu.html" %}
+            {% endwith %}
+          </div>
+        </nav>
+      {% endblock header %}
+    </header>
+
+    <main id="cms-main" class="main {% block main-class %}container{% endblock main-class %}">
+      {% block hero %}{% endblock hero %}
+
+      {% block wrap-content %}
+        {% block content %}
+        {% endblock content %}
+      {% endblock wrap-content %}
+      {% if request.current_page.ratingextension.include_rating %}
+        <section class="row rating {% block rating-class %}{% endblock rating-class %}">
+          <form action="{% url 'update-page-rating' %}" method="POST" class="col s12 m8" id="page-rating">
+            {% csrf_token %}
+            <div class="card">
+              <div class="card-action stars-row">
+                <span class="left amber-text caption">
+                  {% trans "Rate This Page" %}:
+                </span>
+                <div class="stars">
+                  <input type="radio" name="rating" value="5" id="rating-5">
+                  <label for="rating-5"></label>
+                  <input type="radio" name="rating" value="4" id="rating-4">
+                  <label for="rating-4"></label>
+                  <input type="radio" name="rating" value="3" id="rating-3">
+                  <label for="rating-3"></label>
+                  <input type="radio" name="rating" value="2" id="rating-2">
+                  <label for="rating-2"></label>
+                  <input type="radio" name="rating" value="1" id="rating-1">
+                  <label for="rating-1"></label>
+                </div>
+              </div>
+            </div>
+
+            <div class="modal" id="captcha-modal">
+              <div class="modal-content captcha">
+                <h4>{% trans "Captcha Verification" %}</h4>
+                <input type="hidden" name="page_id" value="{{ request.current_page.id }}">
+                <input type="hidden" name="return_url" value="{{ request.get_full_path }}" />
+                <div class="g-recaptcha" data-sitekey="{{ CAPTCHA_SITEKEY }}"
+                     data-callback="__submit_captcha__"
+                ></div>
+              </div>
+            </div>
+
+            <div class="modal" id="rating-fail-modal">
+              <div class="modal-content">
+                <h4>{% trans "Error submitting rating" %}</h4>
+                <p>{% blocktrans %}
+                  There was an error submitting your page rating.
+                  Please check your connection and try again.
+                {% endblocktrans %}</p>
+              </div>
+            </div>
+          </form>
+        </section>
+      {% endif %}
+
+      {% if request.current_page.socialmediaextension.include_social_media %}
+        <section id="social">
+          <div class="row">
+            <div class="col s6">
+              <div class="fb-like"
+                data-href="{{ request.get_full_path }}"
+                data-layout="standard"
+                data-action="like"
+                data-show-faces="false"
+                data-share="false"></div>
+
+              <div class="fb-share-button"
+                data-href="{{ request.get_full_path }}"
+                data-layout="button_count"></div>
+            </div>
+
+            <div class="col s6">
+              <a href="https://twitter.com/share"
+                 class="twitter-share-button"{count}
+                 data-via="ServiceinfoLB"
+                 data-lang="{% service_language_code 'Twitter' %}">
+                Tweet
+              </a>
+              <script>
+                !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+              </script>
+            </div>
+          </div>
+        </section>
+      {% endif %}
+    </main>
+
+    <footer id="cms-footer" class="{% block footer-class %}page-footer grey darken-3{% endblock footer-class %}">
+      {% block footer %}
+        <div class="container white-text">
+          <div class="row">
+            <div class="col">
+              {% static_placeholder "footer_content" %}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <h6 class="grey-text">{% trans "Search for Services Nearby" %}</h6>
+              <p>
+                <a href="/app/index.html" class="waves-effect waves-light btn-large">
+                  {% trans "Services" %}
+                  <i class="material-icons right">search</i>
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="footer-copyright grey-text">
+          <div class="container">
+            <div class="hide-on-small-only">
+              <span class="left">{% trans "International Rescue Committee Information Portal" %}</span>
+              <span id="more-links" class="right">
+                <a href="#!">{% trans "Privacy" %}</a> ·
+                <a href="#!">{% trans "Github" %}</a> ·
+                {% trans "Created by the International Rescue Committee" %}
+              </span>
+            </div>
+            <div class="hide-on-med-and-up">
+              <span class="left">{% trans "IRC Info Portal" %}</span>
+              <span class="right">{% trans "Created by the IRC" %}</span>
+            </div>
+          </div>
+        </div>
+      {% endblock footer %}
+    </footer>
+
+    {% block modals %}{% endblock modals %}
+
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
+    <script src="{% static 'lib/moment/min/moment.min.js' %}"></script>
+    <script src="{% static 'lib/fullcalendar/dist/fullcalendar.min.js' %}"></script>
+    {% if request.LANGUAGE_CODE != 'en' %}
+      {% with 'lib/fullcalendar/dist/lang/'|add:request.LANGUAGE_CODE|add:'.js' as calendar_lg %}
+        <script src="{% static calendar_lg %}"></script>
+      {% endwith %}
+    {% endif %}
+    <script src="{% static 'js/dist/bundle.js' %}"></script>
+    <script src="https://www.google.com/recaptcha/api.js?hl={{ request.LANGUAGE_CODE }}" async defer></script>
+    {% render_block "js" %}
+
+    {% language_chooser "cms/includes/language-chooser.html" %}
+  </body>
+</html>
