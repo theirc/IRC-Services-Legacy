@@ -4,6 +4,7 @@ from django.http import Http404
 from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_decode
 from rest_framework.generics import get_object_or_404
+from django.contrib.auth.models import Group
 
 import regions.models
 from api.serializers import GroupSerializer
@@ -19,6 +20,11 @@ from . import apps as apps_serializers
 CAN_EDIT_STATUSES = [Service.STATUS_DRAFT, Service.STATUS_CURRENT, Service.STATUS_REJECTED]
 DRFValidationError = exceptions.ValidationError
 
+
+class GroupSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Group
+        fields = ('url', 'id', 'name')
 
 
 class RequireOneTranslationMixin(object):

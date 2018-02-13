@@ -6,6 +6,7 @@ router = routers.DefaultRouter()
 # base_name: override URL names for our user model - default would
 # be based on 'email_user' but we want to base them on 'user' instead.
 router.register(r'users', v2.UserViewSet, base_name='user')
+router.register(r'groups', v2.GroupViewSet, base_name='group')
 router.register(r'providers', v2.ProviderViewSet)
 router.register(r'services', v2.ServiceViewSet)
 router.register(r'service-management', v2.ServiceViewSet)

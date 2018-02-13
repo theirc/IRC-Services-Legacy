@@ -13,7 +13,7 @@ from django.utils.timezone import now
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAuthenticatedOrReadOnly
 
 from api.v2.serializers import UserAvatarSerializer, EmailSerializer, SecurePasswordCredentialsSerializer, \
-    ResetUserPasswordSerializer
+    ResetUserPasswordSerializer, GroupSerializer
 from email_user.models import EmailUser
 from regions.models import GeographicRegion
 from rest_framework import permissions
@@ -26,6 +26,13 @@ from ..filters import GeographicRegionFilter
 
 logger = logging.getLogger(__name__)
 
+
+class GroupViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer
 class UserViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.
