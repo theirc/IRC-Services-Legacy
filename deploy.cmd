@@ -121,6 +121,10 @@ IF NOT EXIST "%DEPLOYMENT_TARGET%\env\azure.env.%PYTHON_RUNTIME%.txt" (
 :: 4. Install packages
 echo Pip install requirements.
 env\scripts\pip install -r requirements.txt
+
+echo Pip install psycopg2
+env\scripts\pip install git+https://github.com/nwcell/psycopg2-windows.git@win64-py34#egg=psycopg2
+
 IF !ERRORLEVEL! NEQ 0 goto error
 
 REM Add additional package installation here
