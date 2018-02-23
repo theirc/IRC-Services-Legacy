@@ -57,3 +57,5 @@ service_info/whoosh_index
 
 .v/
 init.sh
+node_modules
+bower_components

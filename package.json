@@ -76,9 +76,7 @@
     "zone.js": "^0.8.20"
   },
   "config": {},
-  "scripts": {
-    "postinstall": "npm install gulp -g && npm install gulp && gulp && curl ${APNS_KEY-google.com} -L > push_cert.crt"
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "https://github.com/theirc/serviceinfo.git"
