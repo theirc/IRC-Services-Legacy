@@ -76,7 +76,9 @@
     "zone.js": "^0.8.20"
   },
   "config": {},
-  "scripts": {},
+  "scripts": {
+    "postinstall": "npm install gulp -g && npm install gulp && gulp"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/theirc/serviceinfo.git"
