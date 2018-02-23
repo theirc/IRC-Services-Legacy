@@ -35,7 +35,7 @@ gulp.task('spp-templates', ['spp-clean'], function () {
 gulp.task('cms-clean', function () {
     return del([
         'cms/static/css/**/*.css',
-        'cms/static/js/cmsApp/app.built.js',
+        //'cms/static/js/cmsApp/app.built.js',
         'cms/static/js/cmsApp/templates.js'
     ]);
 });
@@ -81,7 +81,7 @@ gulp.task('admin-sass', ['admin-clean'], function () {
 });
 
 gulp.task('admin-copy-less', ['admin-clean'], function () {
-    return gulp.src('bower_components/AdminLTE/dist/**/.css')
+    return gulp.src('node_modules/AdminLTE/dist/**/.css')
         .pipe(gulp.dest('admin_panel/static/less/build'));
 });
 
