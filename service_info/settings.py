@@ -143,7 +143,7 @@ STATIC_URL = '/public/static/'
 # Additional locations of static files
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'service_info', 'static'),
-    os.path.join(BASE_DIR, "bower_components"),
+    os.path.join(BASE_DIR, "node_modules"),
 )
 
 LOCALE_PATHS = (
