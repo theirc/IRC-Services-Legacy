@@ -120,9 +120,12 @@ IF NOT EXIST "%DEPLOYMENT_TARGET%\env\azure.env.%PYTHON_RUNTIME%.txt" (
 
 echo Updating pip
 env\scripts\python -m easy_install  --upgrade pip
+env\scripts\pip install wheel
+
 
 :: 4. Install packages
 echo Pip install requirements.
+env\scripts\pip install -r requirements-no-c.txt 
 env\scripts\pip install -r requirements.txt 
 
 REM echo Pip install psycopg2
