@@ -118,6 +118,9 @@ IF NOT EXIST "%DEPLOYMENT_TARGET%\env\azure.env.%PYTHON_RUNTIME%.txt" (
   echo Found compatible virtual environment.
 )
 
+echo Updating pip
+env\scripts\pip install -U pip
+
 :: 4. Install packages
 echo Pip install requirements.
 env\scripts\pip install -r requirements.txt
