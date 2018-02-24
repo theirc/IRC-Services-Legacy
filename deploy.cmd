@@ -119,8 +119,7 @@ IF NOT EXIST "%DEPLOYMENT_TARGET%\env\azure.env.%PYTHON_RUNTIME%.txt" (
 )
 
 echo Updating pip
-env\scripts\python -m easy_install pip
-env\scripts\pip install pip --upgrade
+env\scripts\python -m easy_install pip --upgrade
 
 :: 4. Install packages
 echo Pip install requirements.
