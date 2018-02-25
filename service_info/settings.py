@@ -1,5 +1,6 @@
 # Django settings for service_info project.
 import os
+import sys
 
 from celery.schedules import crontab
 from django.utils.translation import ugettext_lazy as _
@@ -431,7 +432,9 @@ CMS_ENVIRONMENT = os.environ.get('CMS_ENVIRONMENT', '')
 CMS_URL = os.environ.get('CMS_URL', '')
 CMS_USER = os.environ.get('CMS_USER', '')
 CMS_PASSWORD = os.environ.get('CMS_PASSWORD', '')
-SPATIALITE_LIBRARY_PATH = os.environ.get(
+
+if sys.platform == 'darwin':
+    SPATIALITE_LIBRARY_PATH = os.environ.get(
     'SPATIALITE_LIBRARY_PATH', '/usr/local/lib/mod_spatialite.dylib')
 
 
@@ -455,7 +458,6 @@ DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'noreply@rescue.org')
 SESSION_COOKIE_SECURE = False
 SESSION_COOKIE_HTTPONLY = False
 
-import sys
 
 if 'test' in sys.argv:
     CELERYBEAT_SCHEDULE = {}
