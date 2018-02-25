@@ -27,6 +27,16 @@ ADD . /code/
 RUN python manage.py collectstatic --noinput
 RUN python manage.py migrate --noinput
 
+# ssh
+ENV SSH_PASSWD "root:Docker!"
+RUN apt-get update \
+        && apt-get install -y --no-install-recommends dialog \
+        && apt-get update \
+    && apt-get install -y --no-install-recommends openssh-server \
+    && echo "$SSH_PASSWD" | chpasswd 
+
+COPY sshd_config /etc/ssh/
+
 EXPOSE 8000 2222
 
 ENV DJANGO_SETTINGS_MODULE service_info.settings
