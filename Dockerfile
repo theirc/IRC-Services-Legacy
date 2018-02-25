@@ -1,30 +1,27 @@
 
-FROM node:carbon
-
-RUN mkdir /code
-WORKDIR /code
-
-ADD package.json /code/
-ADD Gulpfile.js /code/
-RUN npm install
-RUN npm install gulp
-RUN npm install -g gulp
-RUN gulp
-
 FROM python:3.6
 
 RUN mkdir /code
 WORKDIR /code
+
 ADD requirements.txt /code/
 ADD apt-packages /code/
+ADD package.json /code/
+ADD Gulpfile.js /code/
+
 RUN pip install -r requirements.txt
 
-# ssh
-ENV SSH_PASSWD "root:Docker!"
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
 RUN apt-get update \
         && apt-get update \
         && apt-get  install -y  `cat /code/apt-packages`
 
+RUN apt-get install -y nodejs
+
+RUN npm install
+RUN npm install gulp
+RUN npm install -g gulp
+RUN gulp
 ADD . /code/
 
 RUN python manage.py collectstatic --noinput
