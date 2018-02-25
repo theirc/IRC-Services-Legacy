@@ -435,7 +435,9 @@ CMS_PASSWORD = os.environ.get('CMS_PASSWORD', '')
 
 if sys.platform == 'darwin':
     SPATIALITE_LIBRARY_PATH = os.environ.get(
-    'SPATIALITE_LIBRARY_PATH', '/usr/local/lib/mod_spatialite.dylib')
+        'SPATIALITE_LIBRARY_PATH',
+        '/usr/local/lib/mod_spatialite.dylib'
+    )
 
 
 if 'GEOS_LIBRARY_PATH' in os.environ:
@@ -525,12 +527,11 @@ REMINDER_UNCONFIRMED_REPORT_TIME = os.environ.get(
     'REMINDER_UNCONFIRMED_REPORT_TIME', 7)
 
 
-
 GHOST_USER_NAME = os.environ.get('GHOST_USER_NAME')
 GHOST_PASSWORD = os.environ.get('GHOST_PASSWORD')
 GHOST_TAG_MAP = dict([k.split(':') for k in os.environ.get(
     'GHOST_TAG_MAP', 'ur:urdu;fa:farsi;ar:arabic').split(';')])
-    
+
 try:
     from .local_settings import *
 except ImportError:

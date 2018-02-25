@@ -28,8 +28,10 @@ RUN apt-get update \
 ADD . /code/
 
 RUN python manage.py collectstatic --noinput
-RUN python manage.py migrate
+RUN python manage.py migrate --noinput
 
 EXPOSE 8000 2222
-CMD ["python", "/code/manage.py", "runserver", "0.0.0.0:8000"]
+
+ENV DJANGO_SETTINGS_MODULE service_info.settings
+CMD ["gunicorn", "-b 0.0.0.0:8000", "-w 4", "service_info.wsgi:application"]
 #ENTRYPOINT ["init.sh"]
