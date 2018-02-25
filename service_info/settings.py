@@ -1,5 +1,6 @@
 # Django settings for service_info project.
 import os
+import sys
 
 from celery.schedules import crontab
 from django.utils.translation import ugettext_lazy as _
@@ -143,7 +144,7 @@ STATIC_URL = '/public/static/'
 # Additional locations of static files
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'service_info', 'static'),
-    os.path.join(BASE_DIR, "bower_components"),
+    os.path.join(BASE_DIR, "node_modules"),
 )
 
 LOCALE_PATHS = (
@@ -431,8 +432,12 @@ CMS_ENVIRONMENT = os.environ.get('CMS_ENVIRONMENT', '')
 CMS_URL = os.environ.get('CMS_URL', '')
 CMS_USER = os.environ.get('CMS_USER', '')
 CMS_PASSWORD = os.environ.get('CMS_PASSWORD', '')
-SPATIALITE_LIBRARY_PATH = os.environ.get(
-    'SPATIALITE_LIBRARY_PATH', '/usr/local/lib/mod_spatialite.dylib')
+
+if sys.platform == 'darwin':
+    SPATIALITE_LIBRARY_PATH = os.environ.get(
+        'SPATIALITE_LIBRARY_PATH',
+        '/usr/local/lib/mod_spatialite.dylib'
+    )
 
 
 if 'GEOS_LIBRARY_PATH' in os.environ:
@@ -455,7 +460,6 @@ DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'noreply@rescue.org')
 SESSION_COOKIE_SECURE = False
 SESSION_COOKIE_HTTPONLY = False
 
-import sys
 
 if 'test' in sys.argv:
     CELERYBEAT_SCHEDULE = {}
@@ -523,12 +527,11 @@ REMINDER_UNCONFIRMED_REPORT_TIME = os.environ.get(
     'REMINDER_UNCONFIRMED_REPORT_TIME', 7)
 
 
-
 GHOST_USER_NAME = os.environ.get('GHOST_USER_NAME')
 GHOST_PASSWORD = os.environ.get('GHOST_PASSWORD')
 GHOST_TAG_MAP = dict([k.split(':') for k in os.environ.get(
     'GHOST_TAG_MAP', 'ur:urdu;fa:farsi;ar:arabic').split(';')])
-    
+
 try:
     from .local_settings import *
 except ImportError:

@@ -27,7 +27,7 @@ Installing
 ### Configuring App
     source ~/.virtualenvs/api.refugee.info/bin/activate      # if you installed
     pip install -r requirements.txt
-    bower install
+    npm install
     cp service_info/local_settings.example.py service_info/local_settings.py
 
 ### Building App
