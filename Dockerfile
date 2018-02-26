@@ -42,5 +42,6 @@ COPY sshd_config /etc/ssh/
 EXPOSE 8000 2222
 
 ENV DJANGO_SETTINGS_MODULE service_info.settings
-CMD ["gunicorn", "-b 0.0.0.0:8000", "-w 4", "service_info.wsgi:application"]
-#ENTRYPOINT ["init.sh"]
+
+RUN chmod 755 /code/init.sh
+ENTRYPOINT ["/code/init.sh"]
