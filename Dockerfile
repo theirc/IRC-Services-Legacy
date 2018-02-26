@@ -11,7 +11,7 @@ ADD Gulpfile.js /code/
 
 RUN pip install -r requirements.txt
 
-RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_9.x | bash -
 RUN apt-get update \
         && apt-get update \
         && apt-get  install -y  `cat /code/apt-packages`
