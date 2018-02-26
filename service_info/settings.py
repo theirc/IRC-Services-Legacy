@@ -176,6 +176,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sites.middleware.CurrentSiteMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'reversion.middleware.RevisionMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware'
 )
 
 TEMPLATES = [
@@ -259,6 +260,7 @@ INSTALLED_APPS = (
     'admin_panel',
 
     'services.templatetags.newsletter_extras',
+    'debug_toolbar',
 )
 
 MIGRATION_MODULES = {
@@ -531,6 +533,11 @@ GHOST_USER_NAME = os.environ.get('GHOST_USER_NAME')
 GHOST_PASSWORD = os.environ.get('GHOST_PASSWORD')
 GHOST_TAG_MAP = dict([k.split(':') for k in os.environ.get(
     'GHOST_TAG_MAP', 'ur:urdu;fa:farsi;ar:arabic').split(';')])
+
+INTERNAL_IPS = [
+    '127.0.0.1',
+    '64.35.8.132',
+]
 
 try:
     from .local_settings import *

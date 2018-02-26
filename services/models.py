@@ -102,7 +102,6 @@ class Provider(TranslatableModel, models.Model):
         to=settings.AUTH_USER_MODEL,
         verbose_name=_('Team'),
         related_name='providers',
-        null=True,
         blank=True,
     )
     user = models.ForeignKey(

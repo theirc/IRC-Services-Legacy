@@ -24,7 +24,6 @@ router.register(r'settings', v2.NewsletterEmailTemplateViewSet)
 
 # See http://www.django-rest-framework.org/api-guide/routers/ for the
 # URL names that DRF comes up with, to make it easy to reverse them.
-print([a.name for a in router.urls])
 urlpatterns = [
     # Wire up our API using automatic URL routing.
     url(r'^', include(router.urls)),
