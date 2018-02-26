@@ -18,11 +18,12 @@ RUN apt-get update \
 
 RUN apt-get install -y nodejs
 
+ADD . /code/
+
 RUN npm install
 RUN npm install gulp
 RUN npm install -g gulp
 RUN gulp
-ADD . /code/
 
 RUN python manage.py collectstatic --noinput
 RUN python manage.py migrate --noinput
