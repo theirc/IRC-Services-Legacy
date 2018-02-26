@@ -27,7 +27,7 @@ RUN npm rebuild node-sass --force
 RUN gulp
 
 RUN python manage.py collectstatic --noinput
-RUN python manage.py migrate --noinput
+#RUN python manage.py migrate --noinput
 
 # ssh
 ENV SSH_PASSWD "root:Docker!"
