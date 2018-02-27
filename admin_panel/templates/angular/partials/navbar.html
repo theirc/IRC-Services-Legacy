@@ -1,8 +1,11 @@
 <header class="main-header">
     <a href="/" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini"><b>R</b>.I</span>
-        <span class="logo-lg"> <img src="{$ staticUrl $}img/logo.png"/></span>
+        <span class="logo-mini">
+            <b>R</b>.I</span>
+        <span class="logo-lg">
+            <img src="{$ staticUrl $}img/logo.png" />
+        </span>
     </a>
 
     <nav class="navbar navbar-static-top" role="navigation" ng-controller="NavbarController as ctrl">
@@ -20,12 +23,13 @@
                         <span class="label label-primary" ng-if="selectedProvider">*</span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li class="footer"><a href="#">Select a provider from the list below.</a></li>
+                        <li class="footer">
+                            <a href="#">Select a provider from the list below.</a>
+                        </li>
                         <li>
                             <ul class="menu">
                                 <li ng-repeat="p in user.providers">
-                                    <a href="" class="dropdown-provider" ng-click="ctrl.impersonate(p)"
-                                       style="color: #777; white-space: normal;" ng-style="{
+                                    <a href="" class="dropdown-provider" ng-click="ctrl.impersonate(p)" style="color: #777; white-space: normal;" ng-style="{
                                        'font-weight': p.id == selectedProvider.id ? 'bold' : 'normal'
                                        }">
                                         {$ p.name $}
@@ -35,36 +39,30 @@
                         </li>
                     </ul>
                 </li>
-                <li class="dropdown user user-menu">
+                <li class="dropdown messages-menu">
                     <!-- Menu Toggle Button -->
-                    <a href="" class="dropdown-toggle" data-toggle="dropdown">
-                        <span class="white-scale-line"></span>
-                        <img ng-hide="user.avatar" src="/public/static/img/favicon.ico" class="img-circle avatar-img">
-                        <img ng-hide="!user.avatar" src="{$ user.avatar $}" class="img-circle avatar-img">
-                        <div>
-                            <div>{$ user.name $} {$ user.surname $}</div>
-                        </div>
-                        <div class="dropdown-icon">
-                            <i class="fa fa-angle-down" aria-hidden="true"></i>
-                        </div>
+                    <a href="" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                        <i class="fa fa-gears"></i>
                     </a>
                     <ul class="dropdown-menu">
-                        <!-- Menu Footer-->
-                        <li class="user-footer">
-                            <div class="profile-link">
-                                <a ui-sref="settings" ui-sref-active="active">Profile</a>
-                            </div>
-                            <div class="pull-right">
-                                <a href="" class="sign-out-button btn btn-default btn-flat" ng-click="ctrl.logout()">Sign
-                                    out</a>
-                            </div>
+                        <li>
+                            <ul class="menu">
+                                <li>
+                                    <a ui-sref="settings" ui-sref-active="active">Profile</a>
+                                </li>
+                                <li>
+                                    <a href="" ng-click="ctrl.logout()">Sign out
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
                 </li>
                 <!-- Control Sidebar Toggle Button -->
                 <li class="hide">
-                    <a href="" ng-click="baseController.sideBarCollapsed = !baseController.sideBarCollapsed"><i
-                            class="fa fa-gears"></i></a>
+                    <a href="" ng-click="baseController.sideBarCollapsed = !baseController.sideBarCollapsed">
+                        <i class="fa fa-gears"></i>
+                    </a>
                 </li>
             </ul>
         </div>

@@ -13,10 +13,10 @@ angular.module('adminApp').directive('serviceMap', function (leafletData) {
                 angular.extend(scope, {
                     layers: {
                         baselayers: {
-                            googleRoadmap: {
-                                name: 'Google Streets',
-                                layerType: 'ROADMAP',
-                                type: 'google'
+                            osm: {
+                                name: 'OpenStreetMap',
+                                url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                                type: 'xyz'
                             }
                         }
                     },

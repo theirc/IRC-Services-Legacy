@@ -535,8 +535,6 @@ GHOST_TAG_MAP = dict([k.split(':') for k in os.environ.get(
     'GHOST_TAG_MAP', 'ur:urdu;fa:farsi;ar:arabic').split(';')])
 
 INTERNAL_IPS = [
-    '127.0.0.1',
-    '64.35.8.132',
 ]
 
 try:

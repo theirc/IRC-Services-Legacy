@@ -14,32 +14,27 @@
 
                             <div class="form-group col-xs-6">
                                 <label for="name">Name</label>
-                                <input type="text" class="form-control" id="name"
-                                    placeholder="Name" ng-model="ctrl.object.name" required>
+                                <input type="text" class="form-control" id="name" placeholder="Name" ng-model="ctrl.object.name" required>
                             </div>
 
                             <div class="form-group col-xs-6">
                                 <label for="slug">Slug</label>
-                                <input type="text" class="form-control" id="slug"
-                                    placeholder="Slug" ng-model="ctrl.object.slug" required>
+                                <input type="text" class="form-control" id="slug" placeholder="Slug" ng-model="ctrl.object.slug" required>
                             </div>
                             <div class="form-group col-xs-6" ng-if="ctrl.object.level > 1">
                                 <label for="parent">Parent</label>
-                                <select class="form-control" name="parent" ng-model="ctrl.object.parent"
-                                        ng-options="r.id as r.name for r in ctrl.allRegions"></select>
+                                <select class="form-control" name="parent" ng-model="ctrl.object.parent" ng-options="r.id as r.name for r in ctrl.allRegions"></select>
 
                             </div>
 
                             <div class="form-group col-xs-6">
                                 <label for="level">Level</label>
-                                <select class="form-control" name="level" ng-model="ctrl.object.level"
-                                        ng-options="r.id as r.name for r in ctrl.levels" required></select>
+                                <select class="form-control" name="level" ng-model="ctrl.object.level" ng-options="r.id as r.name for r in ctrl.levels" required></select>
 
                             </div>
                             <div class="form-group col-xs-6">
                                 <label for="code">Code</label>
-                                <input type="text" class="form-control" id="code"
-                                    placeholder="Code" ng-model="ctrl.object.code">
+                                <input type="text" class="form-control" id="code" placeholder="Code" ng-model="ctrl.object.code">
                             </div>
                             <div class="form-group col-xs-12">
                                 <div class="checkbox ">
@@ -62,25 +57,16 @@
                         <div class="box-body">
                             <div class="nav-tabs-custom">
                                 <ul class="nav nav-tabs">
-                                    <li ng-class="{active: ctrl.selectedLanguageTab == (lang[0]||'en')}"
-                                        ng-repeat="lang in languages">
-                                        <a href=""
-                                        ng-click="ctrl.selectedLanguageTab = lang[0]"
-                                        data-toggle="tab"
-                                        aria-expanded="true">{$
-                                            lang[1] $}</a>
+                                    <li ng-class="{active: ctrl.selectedLanguageTab == (lang[0]||'en')}" ng-repeat="lang in languages">
+                                        <a href="" ng-click="ctrl.selectedLanguageTab = lang[0]" data-toggle="tab" aria-expanded="true">{$ lang[1] $}</a>
                                     </li>
                                 </ul>
                                 <div class="tab-content">
-                                    <div class="tab-pane"
-                                        ng-class="{active: ctrl.selectedLanguageTab == (lang[0]||'en')}"
-                                        ng-repeat="lang in languages">
+                                    <div class="tab-pane" ng-class="{active: ctrl.selectedLanguageTab == (lang[0]||'en')}" ng-repeat="lang in languages">
                                         <div class="row">
                                             <div class="form-group col-xs-12">
                                                 <label for="{$ idHelper('title',lang[0]) $}">Title</label>
-                                                <input type="text" class="form-control"
-                                                    ng-model="ctrl.object[idHelper('title',lang[0])]"
-                                                    placeholder="Title in {$ lang[1] $}">
+                                                <input type="text" class="form-control" ng-model="ctrl.object[idHelper('title',lang[0])]" placeholder="Title in {$ lang[1] $}">
                                             </div>
                                         </div>
                                     </div>
@@ -98,10 +84,10 @@
                         <div class="box-header">
                             <h3 class="box-title">Region Outline</h3>
                         </div>
-                        <div class="box-body">
+                        <div class="box-body" ng-if="ctrl.loaded">
 
                             <leaflet defaults="{
-            tileLayer: 'http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png',
+            tileLayer: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
             maxZoom: 14,
             drawControl: true,
             path: {
@@ -122,19 +108,15 @@
 
                         <div class="box-footer">
                             <div class="btn-group pull-right">
-                                <button type="button" class="btn btn-primary" ng-if="!ctrl.isEditing"
-                                        ng-click="ctrl.startEditing()">Edit
+                                <button type="button" class="btn btn-primary" ng-if="!ctrl.isEditing" ng-click="ctrl.startEditing()">Edit
                                 </button>
-                                <button type="button" class="btn btn-primary" ng-if="ctrl.isEditing"
-                                        ng-click="ctrl.save()" ng-disabled="!ctrl.object.geom.coordinates || ctrl.object.geom.coordinates.length === 0 || regionForm.$invalid">
+                                <button type="button" class="btn btn-primary" ng-if="ctrl.isEditing" ng-click="ctrl.save()" ng-disabled="!ctrl.object.geom.coordinates || ctrl.object.geom.coordinates.length === 0 || regionForm.$invalid">
                                     Save
                                 </button>
-                                <button type="button" class="btn btn-danger"
-                                        ng-if="!ctrl.isEditing && user.isSuperuser" ng-click="ctrl.remove()">
+                                <button type="button" class="btn btn-danger" ng-if="!ctrl.isEditing && user.isSuperuser" ng-click="ctrl.remove()">
                                     Delete
                                 </button>
-                                <button type="button" class="btn btn-warning" ng-if="ctrl.isEditing"
-                                        ng-click="ctrl.stopEditing()">Cancel
+                                <button type="button" class="btn btn-warning" ng-if="ctrl.isEditing" ng-click="ctrl.stopEditing()">Cancel
                                 </button>
                             </div>
                         </div>

@@ -84,7 +84,7 @@ class ProviderViewSet(viewsets.ModelViewSet):
     @list_route(methods=['get'], permission_classes=[IsAuthenticated])
     def my_providers(self, request):
         filtered = self.filter_queryset(self.get_queryset())
-        my = filtered.filter(user=request.user)
+        my = filtered.filter(user=request.user) | request.user.providers.all()
 
         return Response([self.get_serializer_class()(a, context={'request': request}).data for a in my])
 
