@@ -270,23 +270,7 @@ def pull_from_transifex(id, language, project=settings.TRANSIFEX_SERVICES_PROJEC
 
 
 def _translate_service(translation_dict, language, service):
-    if language == 'ar':
-        service.name_ar = translation_dict.get('name', '')
-        service.description_ar = translation_dict.get('description', '')
-        service.address_city_ar = translation_dict.get('address_city', '')
-        service.address_ar = translation_dict.get('address', '')
-        service.address_floor_ar = translation_dict.get('address_floor', '')
-        service.additional_info_ar = translation_dict.get('additional_info', '')
-        service.languages_spoken_ar = translation_dict.get('languages_spoken', '')
-        service.save()
-    elif language == 'fa':
-        service.name_fa = translation_dict.get('name', '')
-        service.description_fa = translation_dict.get('description', '')
-        service.address_city_fa = translation_dict.get('address_city', '')
-        service.address_fa = translation_dict.get('address', '')
-        service.address_floor_fa = translation_dict.get('address_floor', '')
-        service.additional_info_fa = translation_dict.get('additional_info', '')
-        service.languages_spoken_fa = translation_dict.get('languages_spoken', '')
-        service.save()
-    else:
-        logger.info('Got wrong language (other than arabic or farsi)')
+    for k in translation_dict.keys():
+        if hasattr(service, "{}_{}".format(k, language)):
+            setattr(service, "{}_{}".format(k, language), translation_dict[k])
+    service.save()
