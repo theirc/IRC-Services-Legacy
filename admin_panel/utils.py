@@ -1,6 +1,8 @@
 from __future__ import absolute_import, unicode_literals, division, print_function
 
 import json
+import html2text
+import re
 
 import requests
 from bs4 import BeautifulSoup
@@ -100,15 +102,17 @@ def pull_blog_from_transifex(slug, language):
                 previous_p = None
             body += i
 
-    body = " ".join(line.strip() for line in body.split("\n"))
-    body = body.replace('</p>', '</p>\n')
+    body = "".join(line.strip() for line in body.split("\n"))
+    body = body.replace(">\n\n",">\n")
+    md = re.sub(r"\n{2,10}>\n{2,10}", "\n>\n", html2text.html2text(str(body)), flags=re.M)
+
     mobiledoc = json.loads("""{"version":"0.3.1","markups":[],"atoms":[],"cards":[["card-markdown",{"cardName":"card-markdown","markdown":""}]],"sections":[[10,0]]}""")
-    mobiledoc['cards'][0][1]['markdown'] = body
+    mobiledoc['cards'][0][1]['markdown'] = md
     return {
         "slug": "{}-{}".format(slug, language),
-        "markdown": body,
+        "markdown": md,
         "mobiledoc": json.dumps(mobiledoc),
-        "html": body,
+        "html": str(body),
         "title": title,
     }
 

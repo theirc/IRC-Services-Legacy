@@ -109,6 +109,7 @@ class BlogPullAPIView(views.APIView):
             return response.Response({})
 
         jar = requests.cookies.RequestsCookieJar()
+        
 
         authorization_key = requests.post("https://refugee-info.ghost.io/ghost/api/v0.1/authentication/token",
                                           data=AUTH_REQUEST,

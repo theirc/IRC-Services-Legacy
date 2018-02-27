@@ -54,6 +54,7 @@ LANGUAGES = [
     ('fr', _('French')),
     ('de', _('German')),
     ('el', _('Greek')),
+    ('ur', _('Urdu')),
     ('es', _('Spanish')),
 ]
 
@@ -291,7 +292,7 @@ LOGGING = {
     },
     'root': {
         'handlers': ['console', ],
-        'level': 'DEBUG',
+        'level': 'ERROR',
     },
     'loggers': {
         'django.request': {
@@ -305,7 +306,7 @@ LOGGING = {
             'propagate': True,
         },
         'django.db.backends': {
-            'level': 'DEBUG',
+            'level': 'ERROR',
             'handlers': ['console'],
             'propagate': True,
         },
@@ -532,7 +533,7 @@ REMINDER_UNCONFIRMED_REPORT_TIME = os.environ.get(
 GHOST_USER_NAME = os.environ.get('GHOST_USER_NAME')
 GHOST_PASSWORD = os.environ.get('GHOST_PASSWORD')
 GHOST_TAG_MAP = dict([k.split(':') for k in os.environ.get(
-    'GHOST_TAG_MAP', 'ur:urdu;fa:farsi;ar:arabic').split(';')])
+    'GHOST_TAG_MAP', 'ur:urdu;fa:farsi;ar:arabic;fr:french').split(';')])
 
 INTERNAL_IPS = [
 ]
