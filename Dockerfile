@@ -6,6 +6,7 @@ WORKDIR /code
 
 ADD requirements.txt /code/
 ADD apt-packages /code/
+ADD nginx.conf /code/
 ADD package.json /code/
 ADD Gulpfile.js /code/
 
@@ -34,10 +35,12 @@ ENV SSH_PASSWD "root:Docker!"
 RUN apt-get update \
         && apt-get install -y --no-install-recommends dialog \
         && apt-get update \
-    && apt-get install -y --no-install-recommends openssh-server \
-    && echo "$SSH_PASSWD" | chpasswd 
+        && apt-get install -y --no-install-recommends openssh-server \
+        && echo "$SSH_PASSWD" | chpasswd 
 
 COPY sshd_config /etc/ssh/
+COPY nginx.conf /etc/nginx/sites-enabled/site.conf
+COPY nginx.conf /etc/nginx/sites-available/site.conf
 
 EXPOSE 8000 2222
 
