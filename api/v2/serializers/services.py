@@ -43,6 +43,8 @@ def resize_image(file_path):
     return scaled_file
 
 class ContactInformationSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=False, allow_null=True) # Readonly fields like id do not get deserialized
+
     class Meta:
         model = ContactInformation
         fields  =('id', 'index', 'text', 'type')
@@ -257,11 +259,22 @@ class ServiceSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         contact_informations = validated_data.pop('contact_informations')
-        
-        #Remove all previous contact information for this service
-        ContactInformation.objects.filter(service=instance).delete()
 
-        for contact in contact_informations:
+        # Separate the objects to be updated and to be created
+        to_update = [c for c in contact_informations if c['id']]
+        to_create = [c for c in contact_informations if not c['id']]
+
+        # Delete all records that are not in the list
+        ContactInformation.objects.filter(service=instance).exclude(id__in=[c['id'] for c in to_update]).delete()
+
+        # Go through updates, deserializes them, saves the changes
+        for obj, update in [(ContactInformation.objects.get(id=c['id']), c) for c in to_update]:
+            contact = ContactInformationSerializer(obj,data=update)
+            if contact.is_valid():
+                contact.save()
+
+        # Create the new ones
+        for contact in to_create:
             ContactInformation.objects.create(service=instance, **contact)
 
         tags = validated_data.pop('tags')
