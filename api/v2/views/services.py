@@ -26,6 +26,7 @@ from rest_framework.response import Response
 from services.models import Service, Provider, ServiceType, ServiceArea, ServiceTag, ProviderType, ServiceConfirmationLog
 from .utils import StandardResultsSetPagination
 from ..filters import ServiceFilter, CustomServiceFilter, RelativesServiceFilter, WithParentsServiceFilter
+from django_filters import rest_framework as django_filters
 
 logger = logging.getLogger(__name__)
 import openpyxl
@@ -312,8 +313,7 @@ class ServiceViewSet(viewsets.ModelViewSet):
     serializer_class = serializers_v2.ServiceSerializer
     pagination_class = StandardResultsSetPagination
     search_fields = ()
-    filter_backends = (filters.DjangoFilterBackend,
-                       filters.OrderingFilter, SearchFilter)
+    filter_backends = (django_filters.DjangoFilterBackend ,filters.OrderingFilter, SearchFilter)
 
     def get_search_fields(self):
         if 'service-management' in self.request.get_full_path():
