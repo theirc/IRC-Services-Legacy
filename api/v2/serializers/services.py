@@ -13,7 +13,7 @@ from rest_framework import exceptions, serializers
 
 from regions.models import GeographicRegion
 from services.models import Service, Provider, ServiceType, SelectionCriterion, ServiceTag, ProviderType, \
-    ServiceConfirmationLog
+    ServiceConfirmationLog, ContactInformation
 
 CAN_EDIT_STATUSES = [Service.STATUS_DRAFT, Service.STATUS_CURRENT, Service.STATUS_REJECTED]
 DRFValidationError = exceptions.ValidationError
@@ -42,6 +42,10 @@ def resize_image(file_path):
 
     return scaled_file
 
+class ContactInformationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ContactInformation
+        fields  =('id', 'index', 'text', 'type')
 
 class ServiceImageSerializer(serializers.ModelSerializer):
     image = serializers.ImageField(allow_null=True)
@@ -198,6 +202,7 @@ class ServiceSerializer(serializers.ModelSerializer):
     tags = ServiceTagSerializer(many=True)
     opening_time = serializers.SerializerMethodField()
     types = ServiceTypeSerializer(many=True)
+    contact_informations = ContactInformationSerializer(many=True)
 
     class Meta:
         model = Service
@@ -237,7 +242,8 @@ class ServiceSerializer(serializers.ModelSerializer):
                 'second_focal_point_email',
                 'second_focal_point_first_name',
                 'second_focal_point_last_name',
-                'exclude_from_confirmation'
+                'exclude_from_confirmation',
+                'contact_informations'
             ] +
             generate_translated_fields('name') +
             generate_translated_fields('address_city') +
@@ -250,6 +256,14 @@ class ServiceSerializer(serializers.ModelSerializer):
         required_translated_fields = ['name', 'description']
 
     def update(self, instance, validated_data):
+        contact_informations = validated_data.pop('contact_informations')
+        
+        #Remove all previous contact information for this service
+        ContactInformation.objects.filter(service=instance).delete()
+
+        for contact in contact_informations:
+            ContactInformation.objects.create(service=instance, **contact)
+
         tags = validated_data.pop('tags')
         types = validated_data.pop('types')
         validated_data['region'] = GeographicRegion.objects.get(id=self.initial_data['region']['id'])
@@ -380,6 +394,7 @@ class ServiceCreateSerializer(serializers.ModelSerializer):
     tags = ServiceTagSerializer(many=True)
     opening_time = serializers.SerializerMethodField()
     types = ServiceTypeSerializer(many=True)
+    contact_informations = ContactInformationSerializer(many=True)
 
     class Meta:
         model = Service
@@ -416,7 +431,8 @@ class ServiceCreateSerializer(serializers.ModelSerializer):
                 'focal_point_email',
                 'second_focal_point_first_name',
                 'second_focal_point_last_name',
-                'second_focal_point_email'
+                'second_focal_point_email',
+                'contact_informations'
             ] +
             generate_translated_fields('name') +
             generate_translated_fields('address_city') +
@@ -435,7 +451,9 @@ class ServiceCreateSerializer(serializers.ModelSerializer):
         opening_time = self.initial_data.get('opening_time')
         validated_data['opening_time'] = json.dumps(opening_time)
         validated_data['created_at'] = datetime.now()
-        services = Service.objects.filter(slug=self.initial_data.get('slug'))
+        contact_informations = validated_data.pop('contact_informations')
+        services = Service.objects.filter(slug=self.initial_data.get('slug'))           
+
         if len(services) > 0:
             new_slug = self.initial_data.get('slug')
             service = Service.objects.create(**validated_data)
@@ -460,6 +478,11 @@ class ServiceCreateSerializer(serializers.ModelSerializer):
                                                         status=ServiceConfirmationLog.CONFIRMED,
                                                         note="Confirmed by ADMIN",
                                                         sent_to='-')
+
+        
+        for contact in contact_informations:
+            ContactInformation.objects.create(service=service, **contact)
+
         return service
 
     def get_opening_time(self, obj):
@@ -492,3 +515,5 @@ class ServiceConfirmationLogListSerializer(serializers.ModelSerializer):
     class Meta:
         model = ServiceConfirmationLog
         fields = '__all__'
+
+

@@ -287,7 +287,8 @@ class ServiceSerializer(RequireOneTranslationMixin,
                 'is_mobile',
                 'image',
                 'phone_number',
-                'updated_at'
+                'updated_at',
+                'contact_informations'
             ] +
             generate_translated_fields('name') +
             generate_translated_fields('address') +
