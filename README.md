@@ -60,13 +60,3 @@ Installing
     export DJANGO_SETTINGS_MODULE="service_info.settings"
 ##### From project directory (with virtual environment activated) run:
     ~/.virtualenvs/api.refugee.info/bin/celery -A service_info worker -l info -E -B --purge
-
-##### Newsletter testing configuration:
-###### Setup email and following settings in service_info.settings:
-    API_URL = 'http://127.0.0.1:8000/'
-    NEWSLETTER_TEST = True
-    CONFIRM_TIME = 4
-    REMINDER_TIME = 2
-
-###### environment variable for task executing every minute:
-    export NEWSLETTER_SCHEDULE_MINUTE="*"

@@ -369,16 +369,6 @@ CORS_ALLOW_HEADERS = (
 # minlength attribute in frontend/templates/provider-form.hbs
 MINIMUM_PASSWORD_LENGTH = 6
 
-# Periodic celery tasks
-CELERYBEAT_SCHEDULE = {
-    "newsletter": {
-        'task': 'services.tasks.service_confirmation_newsletter',
-        'schedule': crontab(minute=str(os.environ.get('NEWSLETTER_SCHEDULE_MINUTE', '0')),
-                            hour=str(os.environ.get('NEWSLETTER_SCHEDULE_HOUR', '*'))),
-    },
-}
-
-
 HAYSTACK_CONNECTIONS = {
     'default': {
         'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',

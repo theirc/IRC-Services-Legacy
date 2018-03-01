@@ -9,20 +9,31 @@ angular.module("adminApp").factory("HttpRequestAuthInterceptor", function($rootS
 	};
 });
 angular.module("adminApp").factory("HttpRequestLoadingInterceptor", function($rootScope, $q) {
+	var debounced = _.debounce(()=> {
+		$rootScope.isLoading = true;
+	}, 100);
+
 	return {
 		request: function(config) {
-			$rootScope.isLoading = true;
+			debounced();
+
 			return config;
 		},
 		response: function(response) {
+			debounced.cancel();
+
 			$rootScope.isLoading = false;
 			return response;
 		},
 		requestError: function(rejection) {
+			debounced.cancel();
+			
 			$rootScope.isLoading = false;
 			return $q.reject(rejection);
 		},
 		responseError: function(rejection) {
+			debounced.cancel();
+			
 			$rootScope.isLoading = false;
 			return $q.reject(rejection);
 		},
