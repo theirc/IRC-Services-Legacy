@@ -1,0 +1,137 @@
+/* skin-black navbar */
+.skin-signpost .main-header {
+  -webkit-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.05); }
+  .skin-signpost .main-header .navbar-toggle {
+    color: #333; }
+  .skin-signpost .main-header .navbar-brand {
+    color: #333;
+    border-right: 1px solid #222; }
+  .skin-signpost .main-header .navbar {
+    background-color: #111; }
+    .skin-signpost .main-header .navbar .nav > li > a {
+      color: #fff; }
+    .skin-signpost .main-header .navbar .nav .open > a,
+    .skin-signpost .main-header .navbar .nav .open > a:focus,
+    .skin-signpost .main-header .navbar .nav .open > a:hover,
+    .skin-signpost .main-header .navbar .nav > .active > a,
+    .skin-signpost .main-header .navbar .nav > li > a:active,
+    .skin-signpost .main-header .navbar .nav > li > a:focus,
+    .skin-signpost .main-header .navbar .nav > li > a:hover {
+      background: #333;
+      color: #999; }
+    .skin-signpost .main-header .navbar .sidebar-toggle {
+      color: #fff; }
+      .skin-signpost .main-header .navbar .sidebar-toggle:hover {
+        color: #999;
+        background: #333; }
+    .skin-signpost .main-header .navbar > .sidebar-toggle {
+      color: #999;
+      border-right: 1px solid #222; }
+    .skin-signpost .main-header .navbar .navbar-nav > li > a {
+      border-right: 1px solid #222; }
+    .skin-signpost .main-header .navbar .navbar-custom-menu .navbar-nav > li > a,
+    .skin-signpost .main-header .navbar .navbar-right > li > a {
+      border-left: 1px solid #222;
+      border-right-width: 0; }
+  .skin-signpost .main-header > .logo {
+    background-color: #000;
+    color: #eee;
+    border-bottom: 0 solid transparent;
+    border-right: 1px solid #222; }
+    .skin-signpost .main-header > .logo:hover {
+      background-color: black; }
+    @media (max-width: 767px) {
+      .skin-signpost .main-header > .logo {
+        background-color: #000;
+        color: #eee;
+        border-bottom: 0 solid transparent;
+        border-right: none; }
+        .skin-signpost .main-header > .logo:hover {
+          background-color: black; } }
+  .skin-signpost .main-header li.user-header {
+    background-color: #222; }
+
+.skin-signpost .content-header {
+  background: transparent;
+  box-shadow: none; }
+
+.skin-signpost .left-side,
+.skin-signpost .main-sidebar,
+.skin-signpost .wrapper {
+  background-color: #222d32; }
+
+.skin-signpost .user-panel > .info > a,
+.skin-signpost .user-panel > .info {
+  color: #fff; }
+
+.skin-signpost .sidebar-menu > li.header {
+  color: #4b646f;
+  background: #1a2226; }
+
+.skin-signpost .sidebar-menu > li > a {
+  border-left: 3px solid transparent; }
+
+.skin-signpost .sidebar-menu > li.active > a,
+.skin-signpost .sidebar-menu > li.menu-open > a,
+.skin-signpost .sidebar-menu > li:hover > a {
+  color: #fff;
+  background: #1e282c; }
+
+.skin-signpost .sidebar-menu > li.active > a {
+  border-left-color: #fff; }
+
+.skin-signpost .sidebar-menu > li > .treeview-menu {
+  margin: 0 1px;
+  background: #2c3b41; }
+
+.skin-signpost .sidebar a {
+  color: #b8c7ce; }
+  .skin-signpost .sidebar a:hover {
+    text-decoration: none; }
+
+.skin-signpost .sidebar-menu .treeview-menu > li > a {
+  color: #8aa4af; }
+
+.skin-signpost .sidebar-menu .treeview-menu > li > a:hover,
+.skin-signpost .sidebar-menu .treeview-menu > li.active > a {
+  color: #fff; }
+
+.skin-signpost .sidebar-form {
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+  border: 1px solid #374850;
+  margin: 10px; }
+  .skin-signpost .sidebar-form .btn,
+  .skin-signpost .sidebar-form input[type="text"] {
+    box-shadow: none;
+    background-color: #374850;
+    border: 1px solid transparent;
+    height: 35px; }
+  .skin-signpost .sidebar-form input[type="text"] {
+    color: #666;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 2px; }
+    .skin-signpost .sidebar-form input[type="text"]:focus,
+    .skin-signpost .sidebar-form input[type="text"]:focus + .input-group-btn .btn {
+      background-color: #fff;
+      color: #666; }
+    .skin-signpost .sidebar-form input[type="text"]:focus + .input-group-btn .btn {
+      border-left-color: #fff; }
+  .skin-signpost .sidebar-form .btn {
+    color: #999;
+    border-top-left-radius: 0;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+    border-bottom-left-radius: 0; }
+
+.skin-signpost .pace .pace-progress {
+  background: #222; }
+
+.skin-signpost .pace .pace-activity {
+  border-top-color: #222;
+  border-left-color: #222; }

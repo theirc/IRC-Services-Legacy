@@ -12,7 +12,7 @@ angular.module('adminApp').factory('tableUtils', (DTOptionsBuilder, DTColumnBuil
                     .withPaginationType('full_numbers')
                     .withOption('createdRow', createdRow)
 
-                    ;
+                ;
 
 
                 function createdRow(row, data, dataIndex) {
@@ -21,8 +21,7 @@ angular.module('adminApp').factory('tableUtils', (DTOptionsBuilder, DTColumnBuil
             },
             defaultsWithService(service) {
                 return this.defaults()
-                    .withOption('ajax', service.forDataTables)
-                    ;
+                    .withOption('ajax', service.forDataTables);
             },
             defaultsWithServiceName(serviceName) {
                 let service = $injector.get(serviceName);
@@ -54,11 +53,11 @@ angular.module('adminApp').factory('tableUtils', (DTOptionsBuilder, DTColumnBuil
                 let service = $injector.get(serviceName);
                 return this.defaultsWithServiceAndFilterAndSearch(service, filter);
             },
-            newColumn(...args){
+            newColumn(...args) {
                 return DTColumnBuilder.newColumn(...args);
             },
-            newDateColumn(...args){
-                return DTColumnBuilder.newColumn(...args).renderWith((d, t, f, m)=> {
+            newDateColumn(...args) {
+                return DTColumnBuilder.newColumn(...args).renderWith((d, t, f, m) => {
                     return d ? moment(d).format('LLL') : '';
                 });
             },
@@ -74,26 +73,29 @@ angular.module('adminApp').factory('tableUtils', (DTOptionsBuilder, DTColumnBuil
 
                 function renderActions(data, type, full, meta) {
                     return `
-                    <button class="btn btn-primary btn-xs" ui-sref="${sref}({id: ${full.id}})">
+                    <a class="btn btn-primary btn-xs" ui-sref="${sref}({id: ${full.id}})">
                         <i class="fa fa-eye"></i>
-                    </button>
+                        Open
+                    </a>
                 `;
                 }
             },
-            newServiceActionColumn(sref = "^.open", duplicateSref ="^.duplicate", archiveSref="^.archive") {
+            newServiceActionColumn(sref = "^.open", duplicateSref = "^.duplicate", archiveSref = "^.archive") {
                 return DTColumnBuilder.newColumn(null).withTitle('Actions').notSortable().renderWith(renderActions);
 
                 function renderActions(data, type, full, meta) {
                     return `
-                    <button class="btn btn-danger btn-xs" ui-sref="${archiveSref}({serviceId: ${full.id}})">
-                        <span><i class="fa fa-archive" style="padding-right: 5px"></i>Archive</span>
-                    </button>
-                    <button class="btn btn-primary btn-xs" ui-sref="${sref}({serviceId: ${full.id}})">
-                        <span><i class="fa fa-eye" style="padding-right: 5px"></i>Edit</span>
-                    </button>
-                    <button class="btn btn-warning btn-xs" ui-sref="${duplicateSref}({serviceId: ${full.id}})">
-                        <span><i class="fa fa-files-o" style="padding-right: 5px"></i>Duplicate</span>
-                    </button>
+                    <div class="btn-group">
+                        <a class="btn btn-danger btn-xs" ui-sref="${archiveSref}({serviceId: ${full.id}})">
+                            <span><i class="fa fa-archive" style="padding-right: 5px"></i>Archive</span>
+                        </a>
+                        <a class="btn btn-primary btn-xs" ui-sref="${sref}({serviceId: ${full.id}})">
+                            <span><i class="fa fa-eye" style="padding-right: 5px"></i>Edit</span>
+                        </a>
+                        <a class="btn btn-warning btn-xs" ui-sref="${duplicateSref}({serviceId: ${full.id}})">
+                            <span><i class="fa fa-files-o" style="padding-right: 5px"></i>Duplicate</span>
+                        </a>
+                    </div>
                 `;
                 }
             }
@@ -101,5 +103,4 @@ angular.module('adminApp').factory('tableUtils', (DTOptionsBuilder, DTColumnBuil
     };
 
     return generator(scope);
-})
-;
+});

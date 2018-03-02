@@ -193,6 +193,14 @@ angular.module('adminApp')
             'canceled': 'Canceled',
             'archived': 'Archived'
         };
+        vm.contactTypeChoices = {
+            'email':  'Email',
+            'phone': 'Phone',
+            'viber': 'Viber',
+            'whatsapp': 'Whatsapp',
+            'skype': 'Skype',
+            'facebook_messenger': 'Facebook Messenger'
+        };
         vm.days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
         if (vm.isNew || !vm.service.opening_time) {
             vm.service.provider = vm.provider.id;
@@ -469,6 +477,15 @@ angular.module('adminApp')
                 height: 100
             };
         };
+        vm.addContactInformation = () =>{
+            if (!vm.service.contact_informations){
+                vm.service.contact_informations = [];
+            }
+            vm.service.contact_informations.push({'id': null, 'text': '', 'index': vm.service.contact_informations.length, 'type': ''})            
+        }
+        vm.removeContact = (index) =>{
+            vm.service.contact_informations.splice(index,1)
+        }
     })
     .controller('ServiceConfirmationController', function ($http, $state, $stateParams, service, serviceTypes, apiUrl) {
         let vm = this;

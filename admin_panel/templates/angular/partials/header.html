@@ -1,7 +1,7 @@
 <section class="content-header" ng-controller="ContentHeaderController as chctrl">
     <h1>
-        {$ chctrl.state.data.title $}
-        <small>{$ ctrl.object.name$}</small>
+        {{ chctrl.state.data.title }}
+        <small>{{ ctrl.object.name}}</small>
         <a type="button" class="btn btn-warning pull-right" ui-sref="^.list">Back</a>
     </h1>
 </section>

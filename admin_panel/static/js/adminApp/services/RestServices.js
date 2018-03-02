@@ -50,6 +50,10 @@
                         'Content-Type': undefined
                     }).then(() => {}, () => {});
             };
+            service.impersonateProvider = function (id) {
+                return Restangular.one('providers', id)
+                    .customGET('impersonate_provider');
+            };
 
 
             return wrap(service);

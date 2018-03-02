@@ -1,4 +1,4 @@
-@import "../../../cms/static/css/mixins";
+@import "mixins.scss";
 
 $content-background-color: #ecf0f5;
 $footer-background-color: #ffffff;
@@ -44,7 +44,7 @@ $sidebar-width: 230px;
   position: relative;
   background-color: $navigation-background-color;
   transition: transform 0.3s ease-in-out, margin 0.3s ease-in-out;
-  width: $sidebar-width;
+  min-width: $sidebar-width;
   .layout-navigation-inner {
     .sidebar {
       padding-bottom: 50px;
@@ -79,6 +79,7 @@ $sidebar-width: 230px;
 .layout-content {
   flex: 1;
   overflow-y: auto;
+  overflow-x: hidden;
   background-color: $content-background-color;
 }
 

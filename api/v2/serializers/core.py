@@ -5,9 +5,9 @@ from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_decode
 from rest_framework.generics import get_object_or_404
 from django.contrib.auth.models import Group
+from django.contrib.auth import authenticate, get_user_model
 
 import regions.models
-from api.serializers import GroupSerializer
 from api.utils import generate_translated_fields
 from collections import OrderedDict
 from django.conf import settings
@@ -17,8 +17,46 @@ from rest_framework import exceptions, serializers
 from services.models import Service, Provider, ServiceArea
 from . import apps as apps_serializers
 
-CAN_EDIT_STATUSES = [Service.STATUS_DRAFT, Service.STATUS_CURRENT, Service.STATUS_REJECTED]
+CAN_EDIT_STATUSES = [Service.STATUS_DRAFT,
+                     Service.STATUS_CURRENT, Service.STATUS_REJECTED]
 DRFValidationError = exceptions.ValidationError
+
+
+
+class GroupSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Group
+        fields = ('url', 'id', 'name')
+
+
+class APILoginSerializer(serializers.Serializer):
+    """
+    Serializer for our "login" API.
+    Both validates the call parameters and authenticates
+    the user, returning the user in the validated_data
+    if successful.
+
+    Adapted from authtoken/serializers.py for our email-based user model
+    """
+    email = serializers.EmailField()
+    password = serializers.CharField()
+
+    def validate(self, attrs):
+        attrs = super().validate(attrs)
+        email = attrs.get('email')
+        password = attrs.get('password')
+        user = authenticate(email=email, password=password)
+
+        if user:
+            if not user.is_active:
+                msg = _('User account is disabled.')
+                raise exceptions.ValidationError(msg)
+        else:
+            msg = _('Unable to log in with provided credentials.')
+            raise exceptions.ValidationError(msg)
+
+        attrs['user'] = user
+        return attrs
 
 
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
@@ -63,6 +101,7 @@ class ServiceAreaSerializer(RequireOneTranslationMixin,
         )
         required_translated_fields = ['name']
 
+
 class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -102,7 +141,8 @@ class EmailSerializer(serializers.Serializer):
             get_object_or_404(EmailUser, email=attrs['email'])
             return attrs
         except Http404:
-            raise DRFValidationError('The e-mail address is not assigned to any user account.')
+            raise DRFValidationError(
+                'The e-mail address is not assigned to any user account.')
 
 
 class SecurePasswordCredentialsSerializer(serializers.Serializer):
@@ -133,7 +173,8 @@ class ResetUserPasswordSerializer(serializers.Serializer):
         try:
             self.user = get_object_or_404(EmailUser, pk=attrs['id'])
             if attrs['new_password1'] != attrs['new_password2']:
-                raise DRFValidationError("The two password fields didn't match.")
+                raise DRFValidationError(
+                    "The two password fields didn't match.")
         except Http404:
             raise DRFValidationError('Invalid user.')
 
@@ -163,7 +204,8 @@ class ProviderSerializer(serializers.ModelSerializer):
                 'user', 'number_of_monthly_beneficiaries'
             ]
         )
-        required_translated_fields = ['name', 'description', 'focal_point_name', 'address']
+        required_translated_fields = [
+            'name', 'description', 'focal_point_name', 'address']
 
 
 class ServiceExcelSerializer(serializers.ModelSerializer):
@@ -245,6 +287,7 @@ class GeographicRegionSerializer(serializers.ModelSerializer):
 
     def get_parent__name(self, obj):
         return obj.parent.name if obj.parent else ''
+
     class Meta:
         model = GeographicRegion
         fields = tuple(
@@ -275,6 +318,7 @@ class GeographicRegionSerializerNoGeometry(serializers.ModelSerializer):
              'parent__name'] +
             generate_translated_fields('title')
         )
+
 
 class UserPermissionSerializer(serializers.ModelSerializer):
     permissions = serializers.SerializerMethodField(required=False)

@@ -2,7 +2,7 @@
  * Created by reyrodrigues on 1/3/17.
  */
 
-angular.module("adminApp").config(function($stateProvider, moment) {
+angular.module("adminApp").config(function ($stateProvider, moment) {
 	const analyticsContentMinBoundary = moment("2016-09-01");
 	const analyticsVisitorsMinBoundary = moment("2016-09-01");
 	const analyticsHotspotMinBoundary = moment("2017-03-03");
@@ -46,9 +46,9 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 			data: {
 				allowAnonymous: true,
 			},
-			onEnter: function(AuthService) {
-				return AuthService.logout().then(function() {
-					document.location = "/";
+			onEnter: function (AuthService) {
+				return AuthService.logout().then(function () {
+					document.location = "/logout/";
 				});
 			},
 		})
@@ -61,7 +61,7 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 			data: {
 				allowAnonymous: true,
 			},
-			onEnter: function($stateParams, $state, $uibModal) {
+			onEnter: function ($stateParams, $state, $uibModal) {
 				$uibModal
 					.open({
 						templateUrl: "views/user/reset_password.html",
@@ -71,7 +71,7 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 						resolve: {},
 						controller: "ResetPasswordController as ctrl",
 					})
-					.result.finally(function() {});
+					.catch(function () {});
 			},
 		})
 		.state("resetPassword.check", {
@@ -79,7 +79,7 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 			data: {
 				allowAnonymous: true,
 			},
-			onEnter: function($stateParams, $state, $uibModal) {
+			onEnter: function ($stateParams, $state, $uibModal) {
 				$uibModal
 					.open({
 						templateUrl: "views/user/reset_password.html",
@@ -89,7 +89,7 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 						resolve: {},
 						controller: "ResetPasswordController as ctrl",
 					})
-					.result.finally(function() {});
+					.catch(function () {});
 			},
 		})
 		.state("home", {
@@ -110,8 +110,8 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 					template: "<div></div>",
 					controller: ($state, $rootScope) => {
 						/*
-                        * TODO: figure out a default dashboard per user
-                        * */
+						 * TODO: figure out a default dashboard per user
+						 * */
 						let locationPath = window.location.hash;
 						if (locationPath.includes("next=")) {
 							let redirectUrl = locationPath
@@ -132,156 +132,7 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 				},
 			},
 		})
-		/*
-             * Menu
-             * */
-		// Analytics Dashboard
-		.state("analytics", {
-			url: "/analytics",
-			abstract: true,
-			resolve: {},
-		})
-		.state("analytics.services", {
-			url: "/services",
-			views: {
-				services: {
-					templateUrl: "views/analytics/services.html",
-				},
-			},
-			resolve: {},
-		})
-		.state("analytics.content", {
-			url: "/content",
-			views: {
-				"main@": {
-					templateUrl: "views/analytics/content.html",
-					controller: "AnalyticsContentController as ctrl",
-				},
-			},
-			resolve: {
-				analytics: AnalyticsService => AnalyticsService.getContentAnalytics(analyticsLastWeekStartDate, analyticsLastWeekEndDate).then(response => response.data),
-				tableData: LatestPageService => LatestPageService.forDataTables,
-				datepickerRanges: () => ({
-					startDate: analyticsLastWeekStartDate,
-					endDate: analyticsLastWeekEndDate,
-				}),
-				datePickerBoundries: () => ({
-					min: analyticsContentMinBoundary,
-					max: analyticsMaxBoundary,
-				}),
-			},
-		})
-		.state("analytics.content.outdated", {
-			url: "/outdated",
-			views: {
-				outdated: {
-					templateUrl: "views/analytics/content.outdated.html",
-					controller: "AnalyticsOutdatedContentController as ctrl",
-				},
-			},
-			resolve: {
-				outdated: AnalyticsService => AnalyticsService.getOutdatedContent().then(response => response.data),
-			},
-		})
-		.state("analytics.visitors", {
-			url: "/visitors",
-			views: {
-				"main@": {
-					templateUrl: "views/analytics/visitors.html",
-					controller: "AnalyticsVisitorsController as ctrl",
-				},
-			},
-			resolve: {
-				datepickerRanges: function() {
-					return {
-						startDate: analyticsLastWeekStartDate,
-						endDate: analyticsLastWeekEndDate,
-					};
-				},
-				datePickerBoundries: function() {
-					return {
-						min: analyticsVisitorsMinBoundary,
-						max: analyticsMaxBoundary,
-					};
-				},
-			},
-		})
-		.state("analytics.mobile", {
-			url: "/mobile",
-			views: {
-				mobile: {
-					templateUrl: "views/analytics/mobile.html",
-				},
-			},
-			resolve: {},
-		})
-		.state("analytics.social", {
-			url: "/social",
-			views: {
-				"main@": {
-					templateUrl: "views/analytics/social.html",
-					controller: "AnalyticsSocialController as ctrl",
-				},
-			},
-			resolve: {
-				datepickerRanges: () => {
-					return {
-						startDate: analyticsLastWeekStartDate,
-						endDate: analyticsLastWeekEndDate,
-					};
-				},
-				datePickerBoundries: () => {
-					return {
-						min: analyticsSocialMinBoundary,
-						max: analyticsMaxBoundary,
-					};
-				},
-			},
-		})
-		.state("analytics.hotspots", {
-			url: "/hotspots",
-			views: {
-				"main@": {
-					templateUrl: "views/analytics/hotspots.html",
-					controller: "AnalyticsHotspotsController as ctrl",
-				},
-			},
-			resolve: {
-				merakiStats: AnalyticsService => AnalyticsService.getMerakiStats(analyticsLastWeekStartDate, analyticsLastWeekEndDate, "L_637259347272927954").then(response => response.data),
-				merakiNetworks: AnalyticsService => AnalyticsService.getMerakiNetworks().then(response => response.data),
-				merakiApps: AnalyticsService => AnalyticsService.getMerakiApps(analyticsLastWeekStartDate, analyticsLastWeekEndDate, "L_637259347272927954").then(response => response.data),
-				datepickerRanges: function() {
-					return {
-						startDate: analyticsLastWeekStartDate,
-						endDate: analyticsLastWeekEndDate,
-					};
-				},
-				datePickerBoundries: function() {
-					return {
-						min: analyticsHotspotMinBoundary,
-						max: analyticsMaxBoundary,
-					};
-				},
-			},
-		})
-		.state("analytics.balance", {
-			url: "/balance",
-			views: {
-				balance: {
-					templateUrl: "views/analytics/balance.html",
-				},
-			},
-			resolve: {},
-		})
-		.state("analytics.search", {
-			url: "/search",
-			views: {
-				search: {
-					templateUrl: "views/analytics/search.html",
-				},
-			},
-			resolve: {},
-		})
+
 		// Team Management
 		.state("team", {
 			url: "/team",
@@ -296,38 +147,11 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 			},
 			resolve: {},
 		})
-		// Calendar & Eventes
-		.state("calendar", {
-			url: "/calendar",
-			data: {
-				title: "Calendar & Eventes",
-			},
-			views: {
-				"main@": {
-					templateUrl: "views/calendar/view.html",
-					controller: "CalendarController as ctrl",
-				},
-			},
-			resolve: {},
-		})
-		// What's New
-		.state("whatsNew", {
-			url: "/whats-new",
-			data: {
-				title: "What's New",
-			},
-			views: {
-				"main@": {
-					templateUrl: "views/whatsnew/view.html",
-					controller: "WhatsNewController as ctrl",
-				},
-			},
-			resolve: {},
-		})
+
 
 		/*
-             * Your Apps
-             * */
+		 * Your Apps
+		 * */
 
 		// Services Management
 		.state("service", {
@@ -346,29 +170,31 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 				},
 			},
 			resolve: {
-				provider: function(ProviderService, $rootScope, $q) {
+				provider: function (ProviderService, $rootScope, $q) {
 					var dfd = $q.defer();
-					$rootScope.$watch("selectedProvider", function(value) {
+					$rootScope.$watch("selectedProvider", function (value) {
 						if (value) {
-							ProviderService.get($rootScope.selectedProvider.id).then(function(p) {
+							ProviderService.get($rootScope.selectedProvider.id).then(function (p) {
 								dfd.resolve(p);
 							});
 						}
 					});
 					return dfd.promise;
 				},
-				services: function(ServiceService, $rootScope, $q) {
+				services: function (ServiceService, $rootScope, $q) {
 					var dfd = $q.defer();
-					$rootScope.$watch("selectedProvider", function(value) {
+					$rootScope.$watch("selectedProvider", function (value) {
 						if (value) {
-							ServiceService.get("", { provider: $rootScope.selectedProvider.id }).then(function(p) {
+							ServiceService.get("", {
+								provider: $rootScope.selectedProvider.id
+							}).then(function (p) {
 								dfd.resolve(p);
 							});
 						}
 					});
 					return dfd.promise;
 				},
-				serviceTypes: function(CommonDataService) {
+				serviceTypes: function (CommonDataService) {
 					return CommonDataService.getServiceTypes();
 				},
 				regions: function allRegions(GeoRegionService, $q, $window) {
@@ -376,8 +202,10 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 					if ($window.sessionStorage.allRegions) {
 						dfd.resolve(JSON.parse($window.sessionStorage.allRegions));
 					} else {
-						GeoRegionService.getList({ exclude_geometry: true }).then(function(r) {
-							var regions = r.plain().map(function(r1) {
+						GeoRegionService.getList({
+							exclude_geometry: true
+						}).then(function (r) {
+							var regions = r.plain().map(function (r1) {
 								return {
 									name: r1.name,
 									centroid: r1.centroid,
@@ -406,18 +234,18 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 				},
 			},
 			resolve: {
-				provider: function(ProviderService, $rootScope, $q) {
+				provider: function (ProviderService, $rootScope, $q) {
 					var dfd = $q.defer();
-					$rootScope.$watch("selectedProvider", function(value) {
+					$rootScope.$watch("selectedProvider", function (value) {
 						if (value) {
-							ProviderService.get($rootScope.selectedProvider.id).then(function(p) {
+							ProviderService.get($rootScope.selectedProvider.id).then(function (p) {
 								dfd.resolve(p);
 							});
 						}
 					});
 					return dfd.promise;
 				},
-				serviceTypes: function(CommonDataService) {
+				serviceTypes: function (CommonDataService) {
 					return CommonDataService.getServiceTypes();
 				},
 				regions: function allRegions(GeoRegionService, $q, $window) {
@@ -425,8 +253,10 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 					if ($window.sessionStorage.allRegions) {
 						dfd.resolve(JSON.parse($window.sessionStorage.allRegions));
 					} else {
-						GeoRegionService.getList({ exclude_geometry: true }).then(function(r) {
-							var regions = r.plain().map(function(r1) {
+						GeoRegionService.getList({
+							exclude_geometry: true
+						}).then(function (r) {
+							var regions = r.plain().map(function (r1) {
 								return {
 									name: r1.name,
 									centroid: r1.centroid,
@@ -455,15 +285,15 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 				},
 			},
 			resolve: {
-				provider: function(Restangular, $rootScope) {
+				provider: function (Restangular, $rootScope) {
 					if ($rootScope.selectedProvider) {
 						return Restangular.one("providers", $rootScope.selectedProvider.id).get();
 					} else {
 						var dfd = $q.defer();
-						$rootScope.$watch("selectedProvider", function() {
+						$rootScope.$watch("selectedProvider", function () {
 							Restangular.one("providers", $rootScope.selectedProvider.id)
 								.get()
-								.then(function(p) {
+								.then(function (p) {
 									dfd.resolve(p);
 								});
 						});
@@ -471,10 +301,10 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 						return dfd;
 					}
 				},
-				providers: function(ProviderService, Restangular, $q) {
+				providers: function (ProviderService, Restangular, $q) {
 					var dfd = $q.defer();
-					ProviderService.getList().then(function(p) {
-						var providers = p.plain().map(function(ps) {
+					ProviderService.getList().then(function (p) {
+						var providers = p.plain().map(function (ps) {
 							return {
 								name: ps.name,
 								id: ps.id,
@@ -484,7 +314,7 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 					});
 					return dfd.promise;
 				},
-				serviceTypes: function(CommonDataService) {
+				serviceTypes: function (CommonDataService) {
 					return CommonDataService.getServiceTypes();
 				},
 				regions: function allRegions(GeoRegionService, $q, $window) {
@@ -492,8 +322,10 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 					if ($window.sessionStorage.allRegions) {
 						dfd.resolve(JSON.parse($window.sessionStorage.allRegions));
 					} else {
-						GeoRegionService.getList({ exclude_geometry: true }).then(function(r) {
-							var regions = r.plain().map(function(r1) {
+						GeoRegionService.getList({
+							exclude_geometry: true
+						}).then(function (r) {
+							var regions = r.plain().map(function (r1) {
 								return {
 									name: r1.name,
 									centroid: r1.centroid,
@@ -508,7 +340,7 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 					}
 					return dfd.promise;
 				},
-				service: function(Restangular, $stateParams) {
+				service: function (Restangular, $stateParams) {
 					return Restangular.one("services", $stateParams.serviceId).get();
 				},
 				tags: Restangular => Restangular.all("service-tag").getList(),
@@ -532,11 +364,13 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 				},
 			},
 			resolve: {
-				serviceTypes: function(CommonDataService) {
+				serviceTypes: function (CommonDataService) {
 					return CommonDataService.getServiceTypes();
 				},
-				service: function(Restangular, $stateParams) {
-					return Restangular.one("services").customGET("preview", { id: $stateParams.serviceId });
+				service: function (Restangular, $stateParams) {
+					return Restangular.one("services").customGET("preview", {
+						id: $stateParams.serviceId
+					});
 				},
 			},
 		})
@@ -552,16 +386,16 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 				},
 			},
 			resolve: {
-				provider: function(Restangular, $rootScope) {
+				provider: function (Restangular, $rootScope) {
 					if ($rootScope.selectedProvider) {
 						return Restangular.one("providers", $rootScope.selectedProvider.id).get();
 					} else {
 						var dfd = $q.defer();
-						$rootScope.$watch("selectedProvider", function() {
+						$rootScope.$watch("selectedProvider", function () {
 							conosle.log("changed??", $rootScope.selectedProvider);
 							Restangular.one("providers", $rootScope.selectedProvider.id)
 								.get()
-								.then(function(p) {
+								.then(function (p) {
 									dfd.resolve(p);
 								});
 						});
@@ -569,10 +403,10 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 						return dfd;
 					}
 				},
-				providers: function(ProviderService, Restangular, $q) {
+				providers: function (ProviderService, Restangular, $q) {
 					var dfd = $q.defer();
-					ProviderService.getList().then(function(p) {
-						var providers = p.plain().map(function(ps) {
+					ProviderService.getList().then(function (p) {
+						var providers = p.plain().map(function (ps) {
 							return {
 								name: ps.name,
 								id: ps.id,
@@ -582,7 +416,7 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 					});
 					return dfd.promise;
 				},
-				serviceTypes: function(CommonDataService) {
+				serviceTypes: function (CommonDataService) {
 					return CommonDataService.getServiceTypes();
 				},
 				regions: function allRegions(GeoRegionService, $q, $window) {
@@ -590,8 +424,10 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 					if ($window.sessionStorage.allRegions) {
 						dfd.resolve(JSON.parse($window.sessionStorage.allRegions));
 					} else {
-						GeoRegionService.getList({ exclude_geometry: true }).then(function(r) {
-							var regions = r.plain().map(function(r1) {
+						GeoRegionService.getList({
+							exclude_geometry: true
+						}).then(function (r) {
+							var regions = r.plain().map(function (r1) {
 								return {
 									name: r1.name,
 									centroid: r1.centroid,
@@ -606,7 +442,7 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 					}
 					return dfd.promise;
 				},
-				service: function() {
+				service: function () {
 					return {};
 				},
 				tags: Restangular => Restangular.all("service-tag").getList(),
@@ -617,7 +453,7 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 		})
 		.state("service.duplicate", {
 			url: "/duplicate/:serviceId",
-			onEnter: function($stateParams, $state, $uibModal, ServiceService, toasty) {
+			onEnter: function ($stateParams, $state, $uibModal, ServiceService, toasty) {
 				$uibModal
 					.open({
 						templateUrl: "views/service/service-duplicate.html",
@@ -631,24 +467,24 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 						controller: "ServiceDuplicateController as ctrl",
 					})
 					.result.then(data => {
-						ServiceService.duplicate(data.serviceId, data.newName).then(() => {
+						return ServiceService.duplicate(data.serviceId, data.newName).then(() => {
 							toasty.success({
 								msg: "Service successfully duplicated.",
 								clickToClose: true,
 								showClose: false,
 								sound: false,
 							});
-							$state.reload();
+							$state.go('service.list');
 						});
 					})
-					.result.finally(() => {
-						$state.go("^");
+					.catch(() => {
+						$state.go('service.list');
 					});
 			},
 		})
 		.state("service.archive", {
 			url: "/archive/:serviceId",
-			onEnter: function($stateParams, $state, $uibModal, ServiceService, toasty) {
+			onEnter: function ($stateParams, $state, $uibModal, ServiceService, toasty) {
 				$uibModal
 					.open({
 						templateUrl: "views/service/service-archive.html",
@@ -662,18 +498,18 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 						controller: "ServiceArchiveController as ctrl",
 					})
 					.result.then(serviceId => {
-						ServiceService.archive(serviceId).then(() => {
+						return ServiceService.archive(serviceId).then(() => {
 							toasty.success({
 								msg: "Service successfully archived.",
 								clickToClose: true,
 								showClose: false,
 								sound: false,
 							});
-							$state.reload();
+							$state.go('service.list');
 						});
 					})
-					.result.finally(() => {
-						$state.go("^");
+					.catch(() => {
+						$state.go('service.list');
 					});
 			},
 		})
@@ -715,154 +551,10 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 			},
 		})
 
-		// Balance Checker
-		.state("balance", {
-			url: "/balance",
-			data: {
-				title: "Balance Checker",
-			},
-			views: {
-				"main@": {
-					templateUrl: "views/shared/analytics/view.html",
-					controller: "AnalyticsDetailController as ctrl",
-				},
-			},
-			resolve: {
-				statObjects: function(Restangular) {
-					return Restangular.all("web-stats/").customGET("detail", {
-						view_id: balanceCheckerId,
-						date: analyticsLastWeekStartDate,
-						end_date: analyticsLastWeekEndDate,
-					});
-				},
-				analyticsId: function() {
-					return balanceCheckerId;
-				},
-				title: function() {
-					return "Balance Checker";
-				},
-				url: function() {
-					return "#";
-				},
-				datepickerRanges: function() {
-					return {
-						startDate: analyticsLastWeekStartDate,
-						endDate: analyticsLastWeekEndDate,
-					};
-				},
-				datePickerBoundries: function() {
-					return {
-						min: analyticsBalanceMinBoundary,
-						max: analyticsMaxBoundary,
-					};
-				},
-			},
-		})
-		// GAS Search tool
-		.state("gas", {
-			url: "/gas",
-			data: {
-				title: "GAS Search tool",
-			},
-			views: {
-				"main@": {
-					templateUrl: "views/shared/analytics/view.html",
-					controller: "AnalyticsDetailController as ctrl",
-				},
-			},
-			resolve: {
-				statObjects: function(Restangular) {
-					return Restangular.all("web-stats/").customGET("detail", {
-						view_id: gasSearchId,
-						date: analyticsLastWeekStartDate,
-						end_date: analyticsLastWeekEndDate,
-					});
-				},
-				analyticsId: function() {
-					return gasSearchId;
-				},
-				title: function() {
-					return "Gas Search Tool";
-				},
-				url: function() {
-					return "https://search.rescueapp.org/#/";
-				},
-				datepickerRanges: function() {
-					return {
-						startDate: analyticsLastWeekStartDate,
-						endDate: analyticsLastWeekEndDate,
-					};
-				},
-				datePickerBoundries: function() {
-					return {
-						min: analyticsGasMinBoundary,
-						max: analyticsMaxBoundary,
-					};
-				},
-			},
-		})
-
 		/*
-             * Your Apps
-             * */
+		 * Instance Admin
+		 * */
 
-		// Social Media
-		.state("social", {
-			url: "/social",
-			abstract: true,
-		})
-		.state("social.conversation", {
-			url: "/conversation",
-			abstract: true,
-		})
-		.state("social.conversation.list", {
-			url: "/",
-			data: {
-				title: "Conversations",
-			},
-			views: {
-				"main@": {
-					templateUrl: "views/generic/table-view.html",
-					controller: "ConversationListController as ctrl",
-				},
-			},
-			resolve: {},
-		})
-		.state("social.conversation.open", {
-			url: "/:id",
-			data: {
-				title: "Conversation",
-			},
-			views: {
-				"main@": {
-					templateUrl: "views/conversation/view.html",
-					controller: "ConversationOpenController as ctrl",
-				},
-			},
-			resolve: {
-				object: function(ConversationService, $stateParams) {
-					return ConversationService.get($stateParams.id);
-				},
-				messages: function(MessageService, $stateParams) {
-					return MessageService.getList({ conversation: $stateParams.id, ordering: "created" });
-				},
-			},
-		})
-		// Notifications
-		.state("notifications", {
-			url: "/notifications",
-			data: {
-				title: "Notifications",
-			},
-			views: {
-				"main@": {
-					templateUrl: "views/notifications/view.html",
-					controller: "NotificationsController as ctrl",
-				},
-			},
-			resolve: {},
-		})
-		// Account Settings
 		.state("settings", {
 			url: "/settings",
 			data: {
@@ -875,47 +567,14 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 				},
 			},
 			resolve: {
-				user: function(Restangular, $rootScope) {
+				user: function (Restangular, $rootScope) {
 					return Restangular.one("users", $rootScope.user.id).get();
 				},
-				groups: function(Restangular) {
+				groups: function (Restangular) {
 					return Restangular.all("groups").getList();
 				},
 			},
 		})
-
-		// Tutorials and Support
-		.state("tutorials", {
-			url: "/tutorials",
-			data: {
-				title: "Tutorials and Support",
-			},
-			views: {
-				"main@": {
-					templateUrl: "views/tutorials/view.html",
-					controller: "TutorialsController as ctrl",
-				},
-			},
-			resolve: {},
-		})
-		// Contact Us
-		.state("contactUs", {
-			url: "/contact-us",
-			data: {
-				title: "Contact Us",
-			},
-			views: {
-				"main@": {
-					templateUrl: "views/contact/view.html",
-					controller: "ContactUsController as ctrl",
-				},
-			},
-			resolve: {},
-		})
-
-		/*
-             * Refugee.info Admin
-             * */
 
 		// Users Management
 		.state("user", {
@@ -967,14 +626,15 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 				},
 			},
 			resolve: {
-				user: function(Restangular, $stateParams) {
+				user: function (Restangular, $stateParams) {
 					return Restangular.one("users", $stateParams.id).get();
 				},
-				groups: function(Restangular) {
+				groups: function (Restangular) {
 					return Restangular.all("groups").getList();
 				},
 			},
 		})
+
 		// Service Provider Management
 		.state("provider", {
 			url: "/provider",
@@ -992,7 +652,7 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 				},
 			},
 			resolve: {
-				providerTypes: function(CommonDataService) {
+				providerTypes: function (CommonDataService) {
 					return CommonDataService.getProviderTypes();
 				},
 			},
@@ -1009,20 +669,20 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 				},
 			},
 			resolve: {
-				providerTypes: function(CommonDataService) {
+				providerTypes: function (CommonDataService) {
 					return CommonDataService.getProviderTypes();
 				},
-				serviceAreas: function(CommonDataService) {
+				serviceAreas: function (CommonDataService) {
 					return CommonDataService.getServiceAreas();
 				},
-				systemUsers: function(CommonDataService) {
+				systemUsers: function (CommonDataService) {
 					return CommonDataService.getUsersForLookup();
 				},
-				provider: function(ProviderService, $rootScope, $q) {
+				provider: function (ProviderService, $rootScope, $q) {
 					var dfd = $q.defer();
-					$rootScope.$watch("selectedProvider", function(value) {
+					$rootScope.$watch("selectedProvider", function (value) {
 						if (value) {
-							ProviderService.get($rootScope.selectedProvider.id).then(function(p) {
+							ProviderService.get($rootScope.selectedProvider.id).then(function (p) {
 								dfd.resolve(p);
 							});
 						}
@@ -1043,20 +703,20 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 				},
 			},
 			resolve: {
-				providerTypes: function(CommonDataService) {
+				providerTypes: function (CommonDataService) {
 					return CommonDataService.getProviderTypes();
 				},
-				serviceAreas: function(CommonDataService) {
+				serviceAreas: function (CommonDataService) {
 					return CommonDataService.getServiceAreas();
 				},
-				systemUsers: function(CommonDataService) {
+				systemUsers: function (CommonDataService) {
 					return CommonDataService.getUsersForLookup();
 				},
-				provider: function(ProviderService, $rootScope, $q) {
+				provider: function (ProviderService, $rootScope, $q) {
 					var dfd = $q.defer();
-					$rootScope.$watch("selectedProvider", function(value) {
+					$rootScope.$watch("selectedProvider", function (value) {
 						if (value) {
-							ProviderService.get($rootScope.selectedProvider.id).then(function(p) {
+							ProviderService.get($rootScope.selectedProvider.id).then(function (p) {
 								dfd.resolve(p);
 							});
 						}
@@ -1077,16 +737,16 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 				},
 			},
 			resolve: {
-				providerTypes: function(CommonDataService) {
+				providerTypes: function (CommonDataService) {
 					return CommonDataService.getProviderTypes();
 				},
-				serviceAreas: function(CommonDataService) {
+				serviceAreas: function (CommonDataService) {
 					return CommonDataService.getServiceAreas();
 				},
-				systemUsers: function(CommonDataService) {
+				systemUsers: function (CommonDataService) {
 					return CommonDataService.getUsersForLookup();
 				},
-				provider: function(ProviderService, $stateParams) {
+				provider: function (ProviderService, $stateParams) {
 					return ProviderService.get($stateParams.id);
 				},
 				regions: function allRegions(GeoRegionService, $q, $window) {
@@ -1094,8 +754,10 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 					if ($window.sessionStorage.allRegions) {
 						dfd.resolve(JSON.parse($window.sessionStorage.allRegions));
 					} else {
-						GeoRegionService.getList({ exclude_geometry: true }).then(function(r) {
-							var regions = r.plain().map(function(r1) {
+						GeoRegionService.getList({
+							exclude_geometry: true
+						}).then(function (r) {
+							var regions = r.plain().map(function (r1) {
 								return {
 									name: r1.name,
 									centroid: r1.centroid,
@@ -1110,6 +772,24 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 					}
 					return dfd.promise;
 				},
+			},
+		})
+		.state("provider.impersonate", {
+			url: "/:id/impersonate",
+			resolve: {
+				provider: function (ProviderService, $stateParams) {
+					return ProviderService.get($stateParams.id);
+				},
+			},
+			onEnter: ($rootScope, $state, provider, ProviderService) => {
+				if ($rootScope.user.isSuperuser) {
+					ProviderService.impersonateProvider(provider.id).then(() => {
+						$rootScope.selectedProvider = provider;
+						$state.go('service.list');
+					});
+				} else {
+					$state.go('home');
+				}
 			},
 		})
 		.state("provider.create", {
@@ -1124,16 +804,16 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 				},
 			},
 			resolve: {
-				providerTypes: function(CommonDataService) {
+				providerTypes: function (CommonDataService) {
 					return CommonDataService.getProviderTypes();
 				},
-				serviceAreas: function(CommonDataService) {
+				serviceAreas: function (CommonDataService) {
 					return CommonDataService.getServiceAreas();
 				},
-				systemUsers: function(CommonDataService) {
+				systemUsers: function (CommonDataService) {
 					return CommonDataService.getUsersForLookup();
 				},
-				provider: function() {
+				provider: function () {
 					return {};
 				},
 				regions: function allRegions(GeoRegionService, $q, $window) {
@@ -1141,8 +821,10 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 					if ($window.sessionStorage.allRegions) {
 						dfd.resolve(JSON.parse($window.sessionStorage.allRegions));
 					} else {
-						GeoRegionService.getList({ exclude_geometry: true }).then(function(r) {
-							var regions = r.plain().map(function(r1) {
+						GeoRegionService.getList({
+							exclude_geometry: true
+						}).then(function (r) {
+							var regions = r.plain().map(function (r1) {
 								return {
 									name: r1.name,
 									centroid: r1.centroid,
@@ -1159,6 +841,7 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 				},
 			},
 		})
+
 		//Geographic Regions
 		.state("region", {
 			url: "/region",
@@ -1189,18 +872,20 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 				},
 			},
 			resolve: {
-				region: function($q) {
+				region: function ($q) {
 					var dfd = $q.defer();
 					dfd.resolve({});
 					return dfd.promise;
 				},
-				allRegions: function(GeoRegionService, $q, $window) {
+				allRegions: function (GeoRegionService, $q, $window) {
 					var dfd = $q.defer();
 					if ($window.sessionStorage.allRegions) {
 						dfd.resolve(JSON.parse($window.sessionStorage.allRegions));
 					} else {
-						GeoRegionService.getList({ exclude_geometry: true }).then(function(r) {
-							var regions = r.plain().map(function(r1) {
+						GeoRegionService.getList({
+							exclude_geometry: true
+						}).then(function (r) {
+							var regions = r.plain().map(function (r1) {
 								return {
 									name: r1.name,
 									centroid: r1.centroid,
@@ -1229,16 +914,18 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 				},
 			},
 			resolve: {
-				region: function(GeoRegionService, $stateParams) {
+				region: function (GeoRegionService, $stateParams) {
 					return GeoRegionService.get($stateParams.id);
 				},
-				allRegions: function(GeoRegionService, $q, $window) {
+				allRegions: function (GeoRegionService, $q, $window) {
 					var dfd = $q.defer();
 					if ($window.sessionStorage.allRegions) {
 						dfd.resolve(JSON.parse($window.sessionStorage.allRegions));
 					} else {
-						GeoRegionService.getList({ exclude_geometry: true }).then(function(r) {
-							var regions = r.plain().map(function(r1) {
+						GeoRegionService.getList({
+							exclude_geometry: true
+						}).then(function (r) {
+							var regions = r.plain().map(function (r1) {
 								return {
 									name: r1.name,
 									centroid: r1.centroid,
@@ -1255,65 +942,8 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 				},
 			},
 		})
-		// App Management
-		.state("apps", {
-			url: "/apps",
-			abstract: true,
-		})
-		.state("apps.manage", {
-			url: "/manage",
-			abstract: true,
-		})
-		.state("apps.manage.list", {
-			url: "/",
-			data: {
-				title: "Micro Apps",
-			},
-			views: {
-				"main@": {
-					templateUrl: "views/generic/table-view.html",
-					controller: "MicroAppListController as ctrl",
-				},
-			},
-			resolve: {},
-		})
-		.state("apps.manage.create", {
-			url: "/create",
-			data: {
-				title: "New Micro App",
-			},
-			views: {
-				"main@": {
-					templateUrl: "views/app/view.html",
-					controller: "MicroAppOpenController as ctrl",
-				},
-			},
-			resolve: {
-				object: function($q) {
-					var dfd = $q.defer();
-					dfd.resolve({});
-					return dfd.promise;
-				},
-			},
-		})
-		.state("apps.manage.open", {
-			url: "/:id",
-			data: {
-				title: "Micro App",
-			},
-			views: {
-				"main@": {
-					templateUrl: "views/app/view.html",
-					controller: "MicroAppOpenController as ctrl",
-				},
-			},
-			resolve: {
-				object: function(MicroAppService, $stateParams) {
-					return MicroAppService.get($stateParams.id);
-				},
-			},
-		})
 
+		// Blog
 		.state("blog", {
 			url: "/blog",
 			abstract: true,
@@ -1401,12 +1031,12 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 				},
 			},
 			resolve: {
-				object: function($q) {
+				object: function ($q) {
 					var dfd = $q.defer();
 					dfd.resolve({});
 					return dfd.promise;
 				},
-				serviceTypes: function(CommonDataService) {
+				serviceTypes: function (CommonDataService) {
 					return CommonDataService.getServiceTypes();
 				},
 			},
@@ -1423,10 +1053,10 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 				},
 			},
 			resolve: {
-				object: function(ServiceTypeService, $stateParams) {
+				object: function (ServiceTypeService, $stateParams) {
 					return ServiceTypeService.get($stateParams.id);
 				},
-				serviceTypes: function(CommonDataService) {
+				serviceTypes: function (CommonDataService) {
 					return CommonDataService.getServiceTypes();
 				},
 			},
@@ -1461,7 +1091,7 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 				},
 			},
 			resolve: {
-				object: function($q) {
+				object: function ($q) {
 					var dfd = $q.defer();
 					dfd.resolve({});
 					return dfd.promise;
@@ -1480,334 +1110,9 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 				},
 			},
 			resolve: {
-				object: function(ProviderTypeService, $stateParams) {
+				object: function (ProviderTypeService, $stateParams) {
 					return ProviderTypeService.get($stateParams.id);
 				},
 			},
 		})
-
-		// CMS Routes TODO: REFACTOR
-		.state("environmentChoice", {
-			url: "/cms/",
-			views: {
-				main: {
-					templateUrl: "partials/environment.choice.html",
-					controller: "EnvironmentController as ctrl",
-				},
-			},
-			resolve: {
-				environments: function() {
-					return ["staging", "production"];
-				},
-			},
-			ncyBreadcrumb: {
-				label: "Environments",
-			},
-		})
-		.state("countryChoice", {
-			url: ":environment",
-			parent: "environmentChoice",
-			views: {
-				"main@": {
-					templateUrl: "partials/country.choice.html",
-					controller: "CountryController as ctrl",
-				},
-				"environmentBreadcrumbs@": {
-					templateUrl: "partials/environment.breadcrumbs.html",
-					controller: "CountryController as ctrl",
-				},
-			},
-			resolve: {
-				countries: function(RegionService) {
-					return RegionService.getCountries().then(function(response) {
-						return response.data;
-					});
-				},
-			},
-			ncyBreadcrumb: {
-				label: "Countries",
-			},
-		})
-		.state("about", {
-			url: ":environment/about",
-			parent: "environmentChoice",
-			views: {
-				"main@": {
-					templateUrl: "partials/about.html",
-					controller: "AboutController as ctrl",
-				},
-			},
-			resolve: {
-				page: function(PageService, $stateParams) {
-					return PageService.getPage("about-us", $stateParams.environment).then(function(response) {
-						return response.data;
-					});
-				},
-			},
-		})
-		.state("main", {
-			url: "/:countrySlug",
-			parent: "countryChoice",
-			views: {
-				"main@": {
-					templateUrl: "partials/main.html",
-					controller: "CMSRegionListController as ctrl",
-				},
-				"countryBreadcrumbs@": {
-					templateUrl: "partials/country.breadcrumbs.html",
-					controller: "RegionListController as ctrl",
-				},
-			},
-			resolve: {
-				pages: function(PageService, $stateParams) {
-					return PageService.getPagesSimple($stateParams.environment, $stateParams.countrySlug).then(function(response) {
-						return response.data;
-					});
-				},
-				country: function(RegionService, $stateParams) {
-					return RegionService.getSimplePagesByRegion($stateParams.countrySlug, $stateParams.environment).then(function(response) {
-						return response.data;
-					});
-				},
-			},
-			ncyBreadcrumb: {
-				label: "Edit Region",
-			},
-		})
-		.state("regionDetails", {
-			url: "/:regionSlug",
-			parent: "main",
-			views: {
-				regionDetails: {
-					templateUrl: "partials/region.details.html",
-					controller: "RegionDetailsController as ctrl",
-				},
-				pageList: {
-					templateUrl: "partials/page.list.html",
-					controller: "RegionDetailsController as ctrl",
-				},
-				regionHeader: {
-					templateUrl: "partials/region.header.html",
-					controller: "RegionDetailsController as ctrl",
-				},
-			},
-			resolve: {
-				region: function(RegionService, $stateParams) {
-					if ($stateParams.regionSlug == "-") {
-						return {};
-					}
-					return RegionService.getPagesByRegion($stateParams.regionSlug, $stateParams.environment).then(function(response) {
-						return response.data;
-					});
-				},
-			},
-			ncyBreadcrumb: {
-				skip: true, // Never display this state in breadcrumb.
-			},
-		})
-		.state("regionPublish", {
-			url: "/publish",
-			parent: "regionDetails",
-			onEnter: function($stateParams, $state, $uibModal) {
-				$uibModal
-					.open({
-						templateUrl: "partials/region.publish.html",
-						windowTemplateUrl: "partials/directives/window.html",
-						backdrop: "static",
-						resolve: {
-							region: (RegionService, $stateParams) => RegionService.getPagesByRegion($stateParams.regionSlug, $stateParams.environment).then(response => response.data),
-						},
-						controller: "RegionPublishController as ctrl",
-					})
-					.result.finally(() => {
-						$state.go("^");
-					});
-			},
-		})
-		.state("pageCreate", {
-			url: "/create",
-			parent: "regionDetails",
-			views: {
-				"main@": {
-					templateUrl: "partials/page.create.html",
-					controller: "PageCreateController as ctrl",
-				},
-			},
-			resolve: {
-				simpleRegions: function(RegionService) {
-					return RegionService.getSimpleRegions().then(function(response) {
-						return response.data;
-					});
-				},
-			},
-		})
-		.state("pageDetails", {
-			url: "/:pageSlug",
-			parent: "regionDetails",
-			views: {
-				pageDetails: {
-					templateUrl: "partials/page.details.html",
-					controller: "PageDetailsController as ctrl",
-				},
-			},
-			resolve: {
-				page: function(PageService, $stateParams) {
-					return PageService.getPage($stateParams.pageSlug, $stateParams.environment).then(function(response) {
-						var page = response.data;
-						if (page) {
-							page.newSlug = page.slug;
-						}
-						return page;
-					});
-				},
-			},
-			ncyBreadcrumb: {
-				skip: true, // Never display this state in breadcrumb.
-			},
-		})
-		.state("pageUpdate", {
-			url: "/update",
-			parent: "pageDetails",
-			views: {
-				"main@": {
-					templateUrl: "partials/page.update.html",
-					controller: "PageUpdateController as ctrl",
-				},
-			},
-			resolve: {
-				simpleRegions: function(RegionService) {
-					return RegionService.getSimpleRegions().then(function(response) {
-						return response.data;
-					});
-				},
-				countries: function(RegionService) {
-					return RegionService.getCountries().then(function(response) {
-						return response.data;
-					});
-				},
-			},
-			ncyBreadcrumb: {
-				skip: true, // Never display this state in breadcrumb.
-			},
-		})
-		.state("pageDelete", {
-			url: "/delete",
-			parent: "pageDetails",
-			onEnter: function($stateParams, $state, $uibModal) {
-				$uibModal
-					.open({
-						templateUrl: "partials/page.delete.html",
-						windowTemplateUrl: "partials/directives/window.html",
-						backdrop: "static",
-						resolve: {
-							page: function(PageService, $stateParams) {
-								return PageService.getPage($stateParams.pageSlug, $stateParams.environment).then(function(response) {
-									var page = response.data;
-									page.newSlug = page.slug;
-									return page;
-								});
-							},
-						},
-						controller: "PageDeleteController as ctrl",
-					})
-					.result.finally(function() {
-						$state.go("^");
-					});
-			},
-		})
-		.state("pagePublish", {
-			url: "/publish",
-			parent: "pageDetails",
-			onEnter: function($stateParams, $state, $uibModal) {
-				$uibModal
-					.open({
-						templateUrl: "partials/page.publish.html",
-						windowTemplateUrl: "partials/directives/window.html",
-						backdrop: "static",
-						resolve: {
-							page: function(PageService, $stateParams) {
-								return PageService.getPage($stateParams.pageSlug, $stateParams.environment).then(function(response) {
-									var page = response.data;
-									page.newSlug = page.slug;
-									return page;
-								});
-							},
-						},
-						controller: "PagePublishController as ctrl",
-					})
-					.result.finally(function() {
-						$state.go("^");
-					});
-			},
-		})
-		.state("pagePreview", {
-			url: "/preview/:languageCode",
-			parent: "pageDetails",
-			views: {
-				"main@": {
-					templateUrl: "partials/page.preview.html",
-					controller: "PagePreviewController as ctrl",
-				},
-				"languageChoice@": {
-					templateUrl: "partials/page.language.html",
-					controller: "PagePreviewController as ctrl",
-				},
-			},
-			resolve: {
-				page: function(PageService, $stateParams) {
-					return PageService.getPageContent($stateParams.pageSlug, $stateParams.languageCode, $stateParams.environment).then(function(response) {
-						return response.data;
-					});
-				},
-			},
-			ncyBreadcrumb: {
-				skip: true, // Never display this state in breadcrumb.
-			},
-		})
-		.state("pageCompare", {
-			url: "/compare",
-			parent: "pageDetails",
-			views: {
-				"main@": {
-					templateUrl: "partials/page.compare.html",
-					controller: "PageCompareController as ctrl",
-				},
-				"languageChoice@": {
-					templateUrl: "partials/page.language.html",
-					controller: "PageCompareController as ctrl",
-				},
-			},
-			resolve: {
-				differences: (PageService, $stateParams) => {
-					return PageService.comparePage($stateParams.pageSlug).then(response => response.data);
-				},
-			},
-			ncyBreadcrumb: {
-				skip: true, // Never display this state in breadcrumb.
-			},
-		})
-		.state("regionPreview", {
-			url: "/preview/:languageCode",
-			parent: "regionDetails",
-			views: {
-				"main@": {
-					templateUrl: "partials/region.preview.html",
-					controller: "RegionPreviewController as ctrl",
-				},
-				"languageChoice@": {
-					templateUrl: "partials/region.language.html",
-					controller: "RegionPreviewController as ctrl",
-				},
-			},
-			resolve: {
-				region: function(RegionService, $stateParams) {
-					return RegionService.getRegionContent($stateParams.regionSlug, $stateParams.environment, $stateParams.languageCode).then(function(response) {
-						return response.data;
-					});
-				},
-			},
-			ncyBreadcrumb: {
-				skip: true, // Never display this state in breadcrumb.
-			},
-		});
 });

@@ -25,7 +25,7 @@ django-compressor==2.1
 django-cors-headers==1.2.1
 django-emailit==0.2.2
 django-filer==1.2.5
-django-filter==0.15.2
+django-filter
 django-formtools==1.0
 django-haystack==2.7.0
 django-mptt==0.8.6
@@ -45,9 +45,9 @@ django-storages==1.5.1
 django-tablib==3.1.2
 django-taggit==0.21.2
 django-treebeard==4.0.1
-djangorestframework==3.4.7
-djangorestframework-gis==0.10.1
-djangorestframework-recursive==0.1.1
+djangorestframework
+djangorestframework-gis
+djangorestframework-recursive
 easy-thumbnails==2.3
 elasticsearch==2.4.0
 et-xmlfile==1.0.1

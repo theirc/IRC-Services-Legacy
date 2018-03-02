@@ -2,11 +2,11 @@
 <section class="sidebar" ng-controller="MenuController as ctrl">
 
     <!-- Sidebar user panel (optional) -->
-    <div class="user-panel" style="height: 90px; display: flex; align-items: center">
+    <div class="user-panel" style="height: 50[x; display: flex; align-items: center">
         <div class="hide-xs info" style="text-align: center; left: 0; position: inherit; display: flex; justify-content: center; align-items: center; width: 100%; padding: 5px 5px 5px 5px">
             <div class="info-name" style="display: flex; align-items: flex-start; flex-direction: column; justify-content: space-between;">
                 <div class="user-names">
-                    <span>{$ !user.name && !user.surname ? user.email : '' $}{$ user.name $} {$ user.surname $}</span>
+                    <span>{{ !user.name && !user.surname ? user.email : '' }}{{ user.name }} {{ user.surname }}</span>
                 </div>
             </div>
         </div>
@@ -16,15 +16,16 @@
     <!-- Sidebar Menu -->
     <ul class="sidebar-menu">
         <li ng-repeat-start="i in ctrl.menuItems" ng-if="!i.hide" class="header">
-            <span>{$ i.title $}</span>
+            <span>{{ i.title }}</span>
         </li>
 
-        <li ng-repeat-end ng-repeat="k in i.items" ng-if="!k.hide && !i.hide" ng-class="{treeview: k.items, active: k.active}" style="background-color: rgb(44, 59, 65);">
-            <a href="" ui-sref="{$ k.sref $}" ng-if="!k.items">
-                <span>{$ k.title$}</span>
+        <li ng-repeat-end ng-repeat="k in i.items" ng-if="!k.hide && !i.hide" ng-class="{treeview: k.items, active: k.items && k.active}"
+            style="background-color: rgb(44, 59, 65);">
+            <a href="" ui-sref="{{ k.sref }}" ng-if="!k.items">
+                <span>{{ k.title}}</span>
             </a>
             <a href="" ng-if="k.items">
-                <span>{$ k.title$}</span>
+                <span>{{ k.title}}</span>
                 <span class="pull-right-container">
                     <i class="fa fa-angle-down pull-right"></i>
                 </span>
@@ -32,9 +33,9 @@
 
 
             <ul class="treeview-menu" ui-sref-active="menu-open" ng-if="k.items && !k.hide">
-                <li ng-repeat="l in k.items" ng-if="!i.hide && !k.hide && !l.hide" ui-sref-active="active" style="padding: 12px 30px 12px 15px;">
-                    <a href="#" ui-sref="{$ l.sref $}">
-                        <span>{$ l.title$}</span>
+                <li ng-repeat="l in k.items" ng-if="!i.hide && !k.hide && !l.hide" style="padding: 12px 30px 12px 15px;">
+                    <a href="#" ui-sref="{{ l.sref }}">
+                        <span>{{ l.title}}</span>
                     </a>
                 </li>
             </ul>

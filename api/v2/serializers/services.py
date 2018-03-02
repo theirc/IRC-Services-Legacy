@@ -13,7 +13,7 @@ from rest_framework import exceptions, serializers
 
 from regions.models import GeographicRegion
 from services.models import Service, Provider, ServiceType, SelectionCriterion, ServiceTag, ProviderType, \
-    ServiceConfirmationLog
+    ServiceConfirmationLog, ContactInformation
 
 CAN_EDIT_STATUSES = [Service.STATUS_DRAFT, Service.STATUS_CURRENT, Service.STATUS_REJECTED]
 DRFValidationError = exceptions.ValidationError
@@ -42,6 +42,115 @@ def resize_image(file_path):
 
     return scaled_file
 
+class RequireOneTranslationMixin(object):
+    """Validate that for each set of fields with prefix
+    in `Meta.required_translated_fields` and ending in _en, _ar, _fr,
+    that at least one value is provided."""
+
+    # Override run_validation so we can get in at the beginning
+    # of validation for a call and add our own errors to those
+    # the other validations find.
+    def run_validation(self, data=serializers.empty):
+        # data is a dictionary
+        errs = defaultdict(list)
+        for field in self.Meta.required_translated_fields:
+            if not any(data.get(key, False) for key in generate_translated_fields(field, False)):
+                errs[field].append(_('This field is required.'))
+        try:
+            validated_data = super().run_validation(data)
+        except (exceptions.ValidationError, DjangoValidationError) as exc:
+            errs.update(serializers.get_validation_error_detail(exc))
+        if errs:
+            raise exceptions.ValidationError(errs)
+        return validated_data
+
+
+
+class ProviderSerializer(RequireOneTranslationMixin, serializers.HyperlinkedModelSerializer):
+    number_of_monthly_beneficiaries = serializers.IntegerField(
+        min_value=0, max_value=1000000,
+        required=False,
+        allow_null=True
+    )
+
+    class Meta:
+        model = Provider
+        fields = tuple(
+            [
+                'url', 'id',
+            ] +
+            generate_translated_fields('name') +
+            generate_translated_fields('description') +
+            generate_translated_fields('focal_point_name') +
+            generate_translated_fields('address') +
+            [
+                'type', 'phone_number', 'website',
+                'focal_point_phone_number',
+                'user', 'number_of_monthly_beneficiaries'
+            ]
+        )
+        required_translated_fields = ['name', 'description', 'focal_point_name', 'address']
+        extra_kwargs = {
+            # Override how serializer comes up with the view name (URL name) for users,
+            # because by default it'll base it on the model name from the user field,
+            # which is 'email_user', and we're using 'user' as the base for our URL
+            # name for users.
+            'user': {'view_name': 'user-detail'}
+        }
+
+
+
+class CreateProviderSerializer(ProviderSerializer):
+    email = serializers.EmailField()
+    password = serializers.CharField()
+    base_activation_link = serializers.URLField()
+    number_of_monthly_beneficiaries = serializers.IntegerField(
+        min_value=0, max_value=1000000,
+        required=False,
+        allow_null=True
+    )
+
+    class Meta(ProviderSerializer.Meta):
+        model = Provider
+        fields = [field for field in ProviderSerializer.Meta.fields
+                  if field not in ['user']]
+        fields += ['email', 'password', 'base_activation_link']
+
+    def run_validation(self, data=serializers.empty):
+        # data is a dictionary
+        errs = defaultdict(list)
+        email = data.get('email', False)
+        if email and get_user_model().objects.filter(email__iexact=email).exists():
+            errs['email'].append(_("A user with that email already exists."))
+        try:
+            validated_data = super().run_validation(data)
+        except (exceptions.ValidationError, DjangoValidationError) as exc:
+            errs.update(serializers.get_validation_error_detail(exc))
+        if errs:
+            raise exceptions.ValidationError(errs)
+        return validated_data
+
+    def validate(self, attrs):
+        attrs = super().validate(attrs)
+
+        email = attrs.get('email')
+        password = attrs.get('password')
+
+        form = EmailUserCreationForm(data={
+            'email': email,
+            'password1': password,
+            'password2': password,
+        })
+        if not form.is_valid():
+            raise exceptions.ValidationError(form.errors)
+        return attrs
+
+class ContactInformationSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=False, allow_null=True) # Readonly fields like id do not get deserialized
+
+    class Meta:
+        model = ContactInformation
+        fields  =('id', 'index', 'text', 'type')
 
 class ServiceImageSerializer(serializers.ModelSerializer):
     image = serializers.ImageField(allow_null=True)
@@ -198,6 +307,7 @@ class ServiceSerializer(serializers.ModelSerializer):
     tags = ServiceTagSerializer(many=True)
     opening_time = serializers.SerializerMethodField()
     types = ServiceTypeSerializer(many=True)
+    contact_informations = ContactInformationSerializer(many=True)
 
     class Meta:
         model = Service
@@ -237,7 +347,8 @@ class ServiceSerializer(serializers.ModelSerializer):
                 'second_focal_point_email',
                 'second_focal_point_first_name',
                 'second_focal_point_last_name',
-                'exclude_from_confirmation'
+                'exclude_from_confirmation',
+                'contact_informations'
             ] +
             generate_translated_fields('name') +
             generate_translated_fields('address_city') +
@@ -250,6 +361,25 @@ class ServiceSerializer(serializers.ModelSerializer):
         required_translated_fields = ['name', 'description']
 
     def update(self, instance, validated_data):
+        contact_informations = validated_data.pop('contact_informations')
+
+        # Separate the objects to be updated and to be created
+        to_update = [c for c in contact_informations if c['id']]
+        to_create = [c for c in contact_informations if not c['id']]
+
+        # Delete all records that are not in the list
+        ContactInformation.objects.filter(service=instance).exclude(id__in=[c['id'] for c in to_update]).delete()
+
+        # Go through updates, deserializes them, saves the changes
+        for obj, update in [(ContactInformation.objects.get(id=c['id']), c) for c in to_update]:
+            contact = ContactInformationSerializer(obj,data=update)
+            if contact.is_valid():
+                contact.save()
+
+        # Create the new ones
+        for contact in to_create:
+            ContactInformation.objects.create(service=instance, **contact)
+
         tags = validated_data.pop('tags')
         types = validated_data.pop('types')
         validated_data['region'] = GeographicRegion.objects.get(id=self.initial_data['region']['id'])
@@ -380,6 +510,7 @@ class ServiceCreateSerializer(serializers.ModelSerializer):
     tags = ServiceTagSerializer(many=True)
     opening_time = serializers.SerializerMethodField()
     types = ServiceTypeSerializer(many=True)
+    contact_informations = ContactInformationSerializer(many=True)
 
     class Meta:
         model = Service
@@ -416,7 +547,8 @@ class ServiceCreateSerializer(serializers.ModelSerializer):
                 'focal_point_email',
                 'second_focal_point_first_name',
                 'second_focal_point_last_name',
-                'second_focal_point_email'
+                'second_focal_point_email',
+                'contact_informations'
             ] +
             generate_translated_fields('name') +
             generate_translated_fields('address_city') +
@@ -435,7 +567,9 @@ class ServiceCreateSerializer(serializers.ModelSerializer):
         opening_time = self.initial_data.get('opening_time')
         validated_data['opening_time'] = json.dumps(opening_time)
         validated_data['created_at'] = datetime.now()
-        services = Service.objects.filter(slug=self.initial_data.get('slug'))
+        contact_informations = validated_data.pop('contact_informations')
+        services = Service.objects.filter(slug=self.initial_data.get('slug'))           
+
         if len(services) > 0:
             new_slug = self.initial_data.get('slug')
             service = Service.objects.create(**validated_data)
@@ -460,6 +594,11 @@ class ServiceCreateSerializer(serializers.ModelSerializer):
                                                         status=ServiceConfirmationLog.CONFIRMED,
                                                         note="Confirmed by ADMIN",
                                                         sent_to='-')
+
+        
+        for contact in contact_informations:
+            ContactInformation.objects.create(service=service, **contact)
+
         return service
 
     def get_opening_time(self, obj):
@@ -492,3 +631,5 @@ class ServiceConfirmationLogListSerializer(serializers.ModelSerializer):
     class Meta:
         model = ServiceConfirmationLog
         fields = '__all__'
+
+

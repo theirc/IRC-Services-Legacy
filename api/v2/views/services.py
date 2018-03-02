@@ -4,10 +4,9 @@ import logging
 import re
 from admin_panel.utils import push_service_to_transifex, pull_completed_service_from_transifex, \
     get_service_transifex_info
-from api.serializers import CreateProviderSerializer, ProviderSerializer, ProviderTypeSerializer
 from api.utils import generate_translated_fields
 from api.v2 import serializers as serializers_v2
-from api.v2.serializers import ServiceImageSerializer, ServiceAreaSerializer
+from api.v2.serializers import ServiceImageSerializer, ServiceAreaSerializer, CreateProviderSerializer, ProviderSerializer, ProviderTypeSerializer
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 from django.contrib.gis.geos import Point, Polygon
@@ -26,6 +25,7 @@ from rest_framework.response import Response
 from services.models import Service, Provider, ServiceType, ServiceArea, ServiceTag, ProviderType, ServiceConfirmationLog
 from .utils import StandardResultsSetPagination
 from ..filters import ServiceFilter, CustomServiceFilter, RelativesServiceFilter, WithParentsServiceFilter
+from django_filters import rest_framework as django_filters
 
 logger = logging.getLogger(__name__)
 import openpyxl
@@ -213,6 +213,12 @@ class ProviderViewSet(viewsets.ModelViewSet):
             "content_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         }, content_type="application/json")
 
+    @detail_route(methods=['GET'])
+    def impersonate_provider(self, request, pk):
+        request.session['selected-provider'] = pk
+
+        return Response({})
+
     @detail_route(methods=['post'],
                   permission_classes=[permissions.DjangoObjectPermissions],
                   parser_classes=[parsers.MultiPartParser])
@@ -312,8 +318,7 @@ class ServiceViewSet(viewsets.ModelViewSet):
     serializer_class = serializers_v2.ServiceSerializer
     pagination_class = StandardResultsSetPagination
     search_fields = ()
-    filter_backends = (filters.DjangoFilterBackend,
-                       filters.OrderingFilter, SearchFilter)
+    filter_backends = (django_filters.DjangoFilterBackend ,filters.OrderingFilter, SearchFilter)
 
     def get_search_fields(self):
         if 'service-management' in self.request.get_full_path():

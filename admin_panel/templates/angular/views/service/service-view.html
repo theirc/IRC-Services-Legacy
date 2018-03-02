@@ -1,13 +1,7 @@
-<div class="analytics-panel">
-    <h3>
-        Refugee.info | Services Management
-    </h3>
-</div>
-
 <section class="content-header" ng-controller="ContentHeaderController as chctrl">
     <h1>
-        {$ chctrl.state.data.title $}
-        <small>{$ ctrl.provider.name_en$}</small>
+        {{ chctrl.state.data.title }}
+        <small>{{ ctrl.provider.name_en}}</small>
         <button type="button" class="btn btn-warning pull-right" ng-click="ctrl.goBack()">Back</button>
     </h1>
 </section>
@@ -27,7 +21,7 @@
 
                                         <ui-select ng-model="ctrl.service.provider" theme="bootstrap" ng-disabled="!ctrl.isEditing" ng-change="ctrl.generateSlug()"
                                             ng-required="true">
-                                            <ui-select-match placeholder="Select the provider or search for it on the list">{$ $select.selected.name | limitTo: 100 $}</ui-select-match>
+                                            <ui-select-match placeholder="Select the provider or search for it on the list">{{ $select.selected.name | limitTo: 100 }}</ui-select-match>
                                             <ui-select-choices repeat="item.id as item in ctrl.providers | filter: $select.search">
                                                 <div ng-bind-html="item.name | highlight: $select.search"></div>
                                             </ui-select-choices>
@@ -37,7 +31,7 @@
                                     <div class="form-group col-xs-12" ng-if="user.isSuperuser && !ctrl.isNew">
                                         <label for="provider">Provider</label>
                                         <ui-select ng-model="ctrl.service.provider.id" theme="bootstrap" ng-disabled="!ctrl.isEditing" ng-required="true">
-                                            <ui-select-match placeholder="Select the provider or search for it on the list">{$ $select.selected.name | limitTo: 100 $}</ui-select-match>
+                                            <ui-select-match placeholder="Select the provider or search for it on the list">{{ $select.selected.name | limitTo: 100 }}</ui-select-match>
                                             <ui-select-choices repeat="item.id as item in ctrl.providers | filter: $select.search">
                                                 <div ng-bind-html="item.name | highlight: $select.search"></div>
                                             </ui-select-choices>
@@ -62,58 +56,58 @@
                                         <i class="fa fa-arrow-down"></i>Pull from transifex
                                     </button>
                                 </div>
-                                <span>Transifex status: {$ ctrl.transifexStatus $}</span>
+                                <span>Transifex status: {{ ctrl.transifexStatus }}</span>
                             </div>
                         </div>
                         <div class="box-body" read-only-form is-editing="ctrl.isEditing">
                             <div class="nav-tabs-custom">
                                 <ul class="nav nav-tabs">
                                     <li ng-class="{active: ctrl.selectedLanguageTab == (lang[0]||'en')}" ng-repeat="lang in serviceLanguages">
-                                        <a href="" ng-click="ctrl.selectedLanguageTab = lang[0]" data-toggle="tab" aria-expanded="true">{$ lang[1] $}</a>
+                                        <a href="" ng-click="ctrl.selectedLanguageTab = lang[0]" data-toggle="tab" aria-expanded="true">{{ lang[1] }}</a>
                                     </li>
                                 </ul>
                                 <div class="tab-content">
                                     <div class="tab-pane" ng-class="{active: ctrl.selectedLanguageTab == (lang[0]||'en')}" ng-repeat="lang in languages">
                                         <div class="row">
                                             <div class="form-group col-xs-12">
-                                                <label for="{$ idHelper('name',lang[0]) $}">Name</label>
-                                                <input type="text" class="form-control" name="name_{$ lang[0] $}" ng-model="ctrl.service[idHelper('name',lang[0])]" placeholder="Name in {$ lang[1] $}"
+                                                <label for="{{ idHelper('name',lang[0]) }}">Name</label>
+                                                <input type="text" class="form-control" name="name_{{ lang[0] }}" ng-model="ctrl.service[idHelper('name',lang[0])]" placeholder="Name in {{ lang[1] }}"
                                                     ng-maxlength="256" ng-disabled="lang[0] != 'en'" ng-change="ctrl.generateSlug()">
                                             </div>
                                             <div class="form-group col-xs-6">
-                                                <label for="{$ idHelper('description',lang[0]) $}">Description</label>
-                                                <div ng-if="ctrl.isEditing && lang[0] == 'en'" ckeditor="ctrl.ckeditorOptions()" name="{$  idHelper('description',lang[0])$}"
+                                                <label for="{{ idHelper('description',lang[0]) }}">Description</label>
+                                                <div ng-if="ctrl.isEditing && lang[0] == 'en'" ckeditor="ctrl.ckeditorOptions()" name="{{  idHelper('description',lang[0])}}"
                                                     class="form-control" ng-model="ctrl.service[idHelper('description',lang[0])]"></div>
-                                                <div ng-if="!(ctrl.isEditing && lang[0] == 'en')" name="{$  idHelper('description',lang[0])$}" class="form-control description-field"
+                                                <div ng-if="!(ctrl.isEditing && lang[0] == 'en')" name="{{  idHelper('description',lang[0])}}" class="form-control description-field"
                                                     ng-bind-html="ctrl.service[idHelper('description',lang[0])]"></div>
                                             </div>
                                             <div class="form-group col-xs-6">
-                                                <label for="{$ idHelper('additional_info',lang[0]) $}">Additional Information</label>
-                                                <div ng-if="ctrl.isEditing && lang[0] == 'en'" ckeditor="ctrl.ckeditorOptions()" name="{$  idHelper('additional_info',lang[0])$}"
+                                                <label for="{{ idHelper('additional_info',lang[0]) }}">Additional Information</label>
+                                                <div ng-if="ctrl.isEditing && lang[0] == 'en'" ckeditor="ctrl.ckeditorOptions()" name="{{  idHelper('additional_info',lang[0])}}"
                                                     class="form-control" ng-model="ctrl.service[idHelper('additional_info',lang[0])]"></div>
-                                                <div ng-if="!(ctrl.isEditing && lang[0] == 'en')" name="{$  idHelper('additional_info',lang[0])$}" class="form-control description-field"
+                                                <div ng-if="!(ctrl.isEditing && lang[0] == 'en')" name="{{  idHelper('additional_info',lang[0])}}" class="form-control description-field"
                                                     ng-bind-html="ctrl.service[idHelper('additional_info',lang[0])]"></div>
                                             </div>
                                             <div class="form-group col-xs-12">
-                                                <label for="{$ idHelper('languages_spoken',lang[0]) $}">
+                                                <label for="{{ idHelper('languages_spoken',lang[0]) }}">
                                                     Languages spoken</label>
-                                                <textarea name="{$  idHelper('languages_spoken',lang[0])$}" class="form-control" ng-model="ctrl.service[idHelper('languages_spoken',lang[0])]"
+                                                <textarea name="{{  idHelper('languages_spoken',lang[0])}}" class="form-control" ng-model="ctrl.service[idHelper('languages_spoken',lang[0])]"
                                                     ng-disabled="lang[0] != 'en'"></textarea>
                                             </div>
                                             <div class="form-group col-xs-12">
-                                                <label for="{$ idHelper('address',lang[0]) $}">Address (City)</label>
-                                                <textarea name="{$  idHelper('address',lang[0])$}" class="form-control" ng-model="ctrl.service[idHelper('address_city',lang[0])]"
+                                                <label for="{{ idHelper('address',lang[0]) }}">Address (City)</label>
+                                                <textarea name="{{  idHelper('address',lang[0])}}" class="form-control" ng-model="ctrl.service[idHelper('address_city',lang[0])]"
                                                     ng-disabled="lang[0] != 'en'"></textarea>
                                             </div>
                                             <div class="form-group col-xs-12">
-                                                <label for="{$ idHelper('address',lang[0]) $}">Address (Street)</label>
-                                                <textarea name="{$  idHelper('address',lang[0])$}" class="form-control" ng-model="ctrl.service[idHelper('address',lang[0])]"
+                                                <label for="{{ idHelper('address',lang[0]) }}">Address (Street)</label>
+                                                <textarea name="{{  idHelper('address',lang[0])}}" class="form-control" ng-model="ctrl.service[idHelper('address',lang[0])]"
                                                     ng-disabled="lang[0] != 'en'"></textarea>
                                             </div>
                                             <div class="form-group col-xs-12">
-                                                <label for="{$ idHelper('address_floor',lang[0]) $}">
+                                                <label for="{{ idHelper('address_floor',lang[0]) }}">
                                                     Address (floor / note about address)</label>
-                                                <textarea name="{$  idHelper('address_floor',lang[0])$}" class="form-control" ng-model="ctrl.service[idHelper('address_floor',lang[0])]"
+                                                <textarea name="{{  idHelper('address_floor',lang[0])}}" class="form-control" ng-model="ctrl.service[idHelper('address_floor',lang[0])]"
                                                     ng-disabled="lang[0] != 'en'"></textarea>
                                             </div>
                                         </div>
@@ -157,7 +151,8 @@
                                         ng-disabled="!ctrl.isEditing" ng-change="ctrl.adjustMap()">
                                 </div>
                                 <div class="col-xs-12">
-                                    <service-map service="ctrl.service" default-region="ctrl.providerRegion" control="mapControl" is-editable="ctrl.isEditing" is-create="ctrl.isNew">
+                                    <service-map service="ctrl.service" default-region="ctrl.providerRegion" control="mapControl" is-editable="ctrl.isEditing"
+                                        is-create="ctrl.isNew">
                                     </service-map>
                                 </div>
                             </div>
@@ -174,7 +169,7 @@
                                 <label for="type">Types (max. 4)</label>
                                 <ui-select ng-disabled="!ctrl.isEditing" multiple ng-model="ctrl.service.types" sortable="true" close-on-select="true" required
                                     limit="4">
-                                    <ui-select-match placeholder="Select Types">{$ $item.name $}</ui-select-match>
+                                    <ui-select-match placeholder="Select Types">{{ $item.name }}</ui-select-match>
                                     <ui-select-choices repeat="type in ctrl.serviceTypes | filter: { name: $select.search }">
                                         <div ng-bind-html="type.name | highlight: $select.search"></div>
                                     </ui-select-choices>
@@ -220,7 +215,7 @@
                                 <label for="tags">Tags:</label>
                                 <ui-select tagging="ctrl.transformTag" ng-disabled="!ctrl.isEditing" multiple ng-model="ctrl.service.tags" sortable="true"
                                     close-on-select="true" on-select="ctrl.createNewTag($item.name)">
-                                    <ui-select-match placeholder="select tags">{$ $item.name $}</ui-select-match>
+                                    <ui-select-match placeholder="select tags">{{ $item.name }}</ui-select-match>
                                     <ui-select-choices repeat="tag in ctrl.tags | filter: { name: $select.search }">
                                         <div ng-if="tag.isTag" ng-bind-html="(tag.name | highlight: $select.search) + ' (click to create)'"></div>
                                         <div ng-if="!tag.isTag" ng-bind-html="tag.name + tag.isTag | highlight: $select.search"></div>
@@ -238,14 +233,14 @@
                                 </div>
                                 <div style="margin-top: 5px">
                                     <div class="alert alert-warning form-error" ng-show="serviceForm.file.$error.maxSize && ctrl.isEditing">
-                                        File is too large {$ errorFile.size / 1000000|number:1$}MB: max 1MB.
+                                        File is too large {{ errorFile.size / 1000000|number:1}}MB: max 1MB.
                                     </div>
                                     <div class="alert alert-warning form-error" ng-show="ctrl.errors && ctrl.isEditing">
                                         Only jpg and png images are allowed.
                                     </div>
                                     <img ng-show="serviceForm.file.$valid" ngf-thumbnail="picFile" class="thumb img-responsive">
                                     <button style="margin-top: 5px" class="btn btn-danger" ng-click="picFile = null" ng-show="picFile">Remove</button>
-                                    <img ng-src="{$ ctrl.service.image $}" ng-hide="!ctrl.service.image" class="img-responsive">
+                                    <img ng-src="{{ ctrl.service.image }}" ng-hide="!ctrl.service.image" class="img-responsive">
                                 </div>
                                 <button style="margin-top: 5px" ng-show="ctrl.service.image" type="button" class="btn btn-danger" ng-click="ctrl.removeImage()">Remove image</button>
                             </div>
@@ -274,7 +269,7 @@
                             <div ng-repeat="day in ctrl.days" class="time-picker-row" ng-if="!ctrl.service.opening_time['24/7']">
                                 <div class="col-lg-2 col-xs-12">
                                     <span style="text-transform: capitalize; font-weight: 700">
-                                        {$ day $}
+                                        {{ day }}
                                     </span>
                                 </div>
                                 <div style="display: flex; flex-direction: column">
@@ -336,7 +331,7 @@
                                 </span>
                             </div>
                             <div class="col-xs-12 service-location-block" ng-if="ctrl.serviceConfirmationLogs">
-                                <span class="service-location-question">Last Service Status: {$ ctrl.lastStatus $}.</span>
+                                <span class="service-location-question">Last Service Status: {{ ctrl.lastStatus }}.</span>
                                 <span class="service-location-question"> Do you want to confirm it?
                                     <input type="checkbox" ng-model="ctrl.service.confirmedByAdmin" ng-disabled="!ctrl.isEditing">
                                 </span>
@@ -387,11 +382,11 @@
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="log in ctrl.serviceConfirmationLogs">
-                                        <td>{$ log.id $}</td>
-                                        <td>{$ log.date $}</td>
-                                        <td>{$ log.status $}</td>
-                                        <td>{$ log.sent_to $}</td>
-                                        <td>{$ log.note $}</td>
+                                        <td>{{ log.id }}</td>
+                                        <td>{{ log.date }}</td>
+                                        <td>{{ log.status }}</td>
+                                        <td>{{ log.sent_to }}</td>
+                                        <td>{{ log.note }}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -404,24 +399,53 @@
             <div class="row">
                 <div class="col-xs-12">
                     <div class="box">
-                        <input type="file" id="file" class="hide" trigger-on-change="" change-function="ctrl.uploadFile()" />
-                        <div class="box-footer">
-                            <div class="btn-group pull-right">
-                                <button type="button" class="btn btn-primary" ng-if="!ctrl.isEditing" ng-click="ctrl.startEditing()">Edit
-                                </button>
-                                <button type="button" class="btn btn-primary button-tooltip" ng-if="ctrl.isEditing" ng-click="ctrl.save(picFile)" ng-disabled="serviceForm.$invalid"
-                                    data-old-tooltip="Fill in all required fields">Save
-                                </button>
-                                <button type="button" class="btn btn-danger" ng-if="!ctrl.isEditing  && !ctrl.isNew" ng-click="ctrl.remove()">Delete
-                                </button>
-                                <button type="button" class="btn btn-warning" ng-if="ctrl.isEditing  && !ctrl.isNew" ng-click="ctrl.cancelEditing()">Cancel
-                                </button>
+                        <div class="box-header">
+                            <h3 class="box-title">Contact Information</h3>
+                        </div>
+                        <div class="box-body" read-only-form is-editing="ctrl.isEditing">
+                            <button type="button" class="btn btn-primary" ng-if="ctrl.isEditing" ng-click="ctrl.addContactInformation()">Add
+                            </button>
+                            <div ng-repeat="contactInformation in ctrl.service.contact_informations" class="col-lg-10 col-xs-12">
+                                <div style="display: flex; align-items: center; margin-bottom: 2px">
+                                    <div class="form-group col-xs-3">
+                                        <label for="contactType">Type</label>
+                                        <select class="form-control" name="status" ng-model="contactInformation.type" ng-options="type_id as type_name for (type_id, type_name) in ctrl.contactTypeChoices"></select>
+                                    </div>
+                                    <div class="form-group col-xs-3">
+                                        <label for="contactText">Text</label>
+                                        <input type="text" class="form-control" id="contactText" ng-maxlength="255" placeholder="text" ng-model="contactInformation.text">
+                                    </div>
+                                    <div class="form-group col-xs-3">
+                                        <label for="contactnIndex">Index</label>
+                                        <input type="text" class="form-control" id="contactnIndex" ng-maxlength="255" placeholder="index" ng-model="contactInformation.index">
+                                    </div>
+                                    <div class="form-group col-xs-3">
+                                        <span ng-if="ctrl.isEditing" class="fa fa-times-circle" ng-click="!ctrl.isEditing || ctrl.removeContact($index)" style="color: red"></span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
+
+            <footer-action-bar>
+                <div style="width: 100%">
+                    <button type="button" class="btn btn-warning pull-left" ng-click="ctrl.goBack()">Back</button>
+                    
+                    <div class="btn-group pull-right">
+                        <button type="button" class="btn btn-primary" ng-if="!ctrl.isEditing" ng-click="ctrl.startEditing()">Edit
+                        </button>
+                        <button type="button" class="btn btn-primary button-tooltip" ng-if="ctrl.isEditing" ng-click="ctrl.save(picFile)" ng-disabled="serviceForm.$invalid"
+                            data-old-tooltip="Fill in all required fields">Save
+                        </button>
+                        <button type="button" class="btn btn-danger" ng-if="!ctrl.isEditing  && !ctrl.isNew" ng-click="ctrl.remove()">Delete
+                        </button>
+                        <button type="button" class="btn btn-warning" ng-if="ctrl.isEditing  && !ctrl.isNew" ng-click="ctrl.cancelEditing()">Cancel
+                        </button>
+                    </div>
+                </div>
+            </footer-action-bar>
         </div>
     </section>
 </form>

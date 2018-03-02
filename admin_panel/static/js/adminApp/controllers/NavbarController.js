@@ -6,13 +6,11 @@ angular.module('adminApp')
     .controller('NavbarController', function (AuthService, $cookies, $rootScope, $state) {
         var vm = this;
 
-        $rootScope.user = $cookies.getObject('user');
-
         vm.userUpdate = $rootScope.user;
 
         vm.logout = function(){
             AuthService.logout().then(function(){
-                document.location = '/';
+                document.location = '/logout/';
             });
         };
 

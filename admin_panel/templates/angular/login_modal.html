@@ -29,7 +29,7 @@
         </div>
         <div class="alert alert-danger"
              ng-show="baseController.errorMessage">
-            {$ baseController.errorMessage $}
+            {{ baseController.errorMessage }}
         </div>
         <div class="form-group">
             <div class="col-xs-12 flex-end">
@@ -41,7 +41,7 @@
     <div class="modal-footer">
         <div class="flex-end">
             <button type="submit" class="page-button pull-right button-tooltip" id="submit"
-                    data-old-tooltip="{$ ctrl.errorMessage $}" ng-disabled="ctrl.newPageForm.$invalid">
+                    data-old-tooltip="{{ ctrl.errorMessage }}" ng-disabled="ctrl.newPageForm.$invalid">
                 <i class="fa fa-user" aria-hidden="true"></i><span>Login</span>
             </button>
         </div>
