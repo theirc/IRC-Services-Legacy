@@ -23,7 +23,8 @@ angular.module("adminApp").controller("MenuController", function ($rootScope, $s
 				title: "MENU",
 				items: [{
 						title: "Service Map",
-						sref: "service.private"
+						sref: "service.private",
+						hide: HIDE_NOT_YET_IMPLEMENTED,
 					},
 					{
 						title: "Service Management",
