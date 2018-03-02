@@ -1,11 +1,19 @@
 <div>
     <div class="region-header" ng-click="ctrl.toggleRegion()">
         <region-icon region="ctrl.region" style="margin-right: 5px"></region-icon>
+<<<<<<< HEAD
         <span class="title">{{ ctrl.region.name }}</span>
         <span class="slug">({{ ctrl.selectSectionCount() }} sections)</span>
         <div class="buttons" style="margin-left: auto" ng-click="$event.stopPropagation()">
             <button class="page-button page-button-transparent button-tooltip"
                     id="region-preview-{{ ctrl.region.slug }}"
+=======
+        <span class="title">{$ ctrl.region.name $}</span>
+        <span class="slug">({$ ctrl.selectSectionCount() $} sections)</span>
+        <div class="buttons" style="margin-left: auto" ng-click="$event.stopPropagation()">
+            <button class="page-button page-button-transparent button-tooltip"
+                    id="region-preview-{$ ctrl.region.slug $}"
+>>>>>>> 2b049acd0771738ee856f4a57babe6690c6d8612
                     ui-sref="regionPreview({regionSlug: ctrl.region.slug, languageCode: 'en'})"
                     ng-disabled="!ctrl.region.has_content"
                     data-old-tooltip="Page has no content for preview.">

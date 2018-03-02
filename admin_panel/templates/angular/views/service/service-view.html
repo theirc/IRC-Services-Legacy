@@ -399,6 +399,7 @@
             <div class="row">
                 <div class="col-xs-12">
                     <div class="box">
+<<<<<<< HEAD
                         <div class="box-header">
                             <h3 class="box-title">Contact Information</h3>
                         </div>
@@ -423,6 +424,20 @@
                                         <span ng-if="ctrl.isEditing" class="fa fa-times-circle" ng-click="!ctrl.isEditing || ctrl.removeContact($index)" style="color: red"></span>
                                     </div>
                                 </div>
+=======
+                        <input type="file" id="file" class="hide" trigger-on-change="" change-function="ctrl.uploadFile()" />
+                        <div class="box-footer">
+                            <div class="btn-group pull-right">
+                                <button type="button" class="btn btn-primary" ng-if="!ctrl.isEditing" ng-click="ctrl.startEditing()">Edit
+                                </button>
+                                <button type="button" class="btn btn-primary button-tooltip" ng-if="ctrl.isEditing" ng-click="ctrl.save(picFile)" ng-disabled="serviceForm.$invalid"
+                                    data-old-tooltip="Fill in all required fields">Save
+                                </button>
+                                <button type="button" class="btn btn-danger" ng-if="!ctrl.isEditing  && !ctrl.isNew" ng-click="ctrl.remove()">Delete
+                                </button>
+                                <button type="button" class="btn btn-warning" ng-if="ctrl.isEditing  && !ctrl.isNew" ng-click="ctrl.cancelEditing()">Cancel
+                                </button>
+>>>>>>> 2b049acd0771738ee856f4a57babe6690c6d8612
                             </div>
                         </div>
                     </div>
