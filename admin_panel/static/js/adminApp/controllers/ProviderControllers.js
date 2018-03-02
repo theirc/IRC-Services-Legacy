@@ -17,8 +17,26 @@ angular.module('adminApp')
                 if (!type.length) return '';
                 return type[0].name;
             }),
-            tableUtils.newActionColumn()
+            tableUtils.newColumn('actions').withTitle('Actions').renderWith(function (data, type, full, meta) {
+                var viewButton = `
+                    <a class="btn btn-primary btn-xs" ui-sref="^.open({id: ${full.id}})">
+                        <i class="fa fa-eye"></i>
+                        Open
+                    </a>`;
+                var impersonateButton = `
+                    <a class="btn btn-success btn-xs" ui-sref="^.impersonate({id: ${full.id}})">
+                        <i class="fa fa-user"></i>
+                        Impersonate
+                    </a>
+                `;
+
+                return `<div class="btn-group">
+                    ${viewButton}
+                    ${$scope.user.isSuperuser ? impersonateButton : ''}
+                </div>`;
+            }),
         ];
+
 
         vm.dtInstance = {};
         vm.createLink = '^.create';
@@ -46,9 +64,7 @@ angular.module('adminApp')
         };
 
         vm.impersonate = function () {
-            ProviderService.impersonateProvider(vm.provider.id).then(() => {
-                $rootScope.selectedProvider = vm.provider;
-            });
+            $state.go('provider.impersonate', provider);
         };
 
         vm.exportServices = function () {

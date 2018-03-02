@@ -60,7 +60,6 @@ angular.module('adminApp').controller('LoginController', function (AuthService, 
             vm.getPermissions();
             $cookies.putObject('user', vm.user);
             $cookies.putObject('permissions', $rootScope.permissions);
-            $rootScope.user = vm.user;
             $state.go('home');
         }).catch(() => {
             vm.loginForm.$setPristine();

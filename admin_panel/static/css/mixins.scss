@@ -1,0 +1,83 @@
+$green-accent-color: #00BA50;
+$green-accent-color-dark: #27a442;
+$green-accent-color-light: #59c06c;
+
+$yellow-accent-color: #FFDF0C;
+$red-accent-color: #e54c3a;
+
+$page-background-color: #F3F4F5;
+$page-background-color-dark: #EBECED;
+$button-color: #f5f5f5;
+$button-color-dark: #f2f2f2;
+$navbar-white-color: #FFFFFF;
+$panel-color: #FBFBFB;
+$panel-color-dark: #DDDDDD;
+$divider-color: #EBEBEB;
+$divider-color-dark: #c7c7c7;
+$text-color: #000000;
+$text-color-muted: #565656;
+
+$loading-overlay-background-color: rgba(255, 255, 255, 0.2);
+$loading-overlay-spinner-color: rgba(0, 0, 0, 0.4);
+
+// bootstrap responsive layout breakpoints
+$screen-sm-min: 768px;
+$screen-xs-max: ($screen-sm-min - 1);
+$screen-md-min: 992px;
+$screen-sm-max: ($screen-md-min - 1);
+$screen-lg-min: 1200px;
+$screen-md-max: ($screen-lg-min - 1);
+
+@mixin transition-mixin($property, $duration, $ease) {
+  -webkit-transiton: $property #{$duration}s $ease;
+  -moz-transition: $property #{$duration}s $ease;
+  -ms-transition: $property #{$duration}s $ease;
+  -o-transition: $property #{$duration}s $ease;
+  -transition: $property #{$duration}s $ease;
+  transition: $property #{$duration}s $ease;
+}
+
+@mixin flexbox() {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+}
+
+@mixin align-items($value) {
+  -ms-flex-align: $value;
+  -webkit-box-align: $value;
+  align-items: $value;
+  -webkit-align-items: $value;
+}
+
+@mixin flex($value) {
+  -webkit-box-flex: $value;
+  -webkit-flex: $value;
+  -ms-flex: $value;
+  flex: $value;
+}
+
+@mixin justify-content($value) {
+  justify-content: $value;
+  -webkit-justify-content: $value;
+  -webkit-box-pack: $value;
+}
+
+@mixin flex-direction($value) {
+  @if $value == 'column' {
+    -webkit-box-orient: vertical;
+  } @else {
+    -webkit-box-orient: horizontal;
+  }
+  -webkit-flex-direction: $value;
+  -ms-flex-direction: $value;
+  flex-direction: $value;
+}
+
+@mixin flex-wrap($value) {
+  flex-wrap: $value;
+  -webkit-flex-wrap: $value;
+  -ms-flex-wrap: $value;
+}

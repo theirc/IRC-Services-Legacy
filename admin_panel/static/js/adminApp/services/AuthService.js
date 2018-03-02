@@ -20,10 +20,11 @@ angular.module('adminApp').factory('AuthService', function ($http, $rootScope, $
             sessionStorage.clear();
             localStorage.clear();
 
-            /**
-             * 
-             * TODO Redirect to log in screen
-             */
+            var deferred = $q.defer();
+            var promise = deferred.promise;
+            deferred.resolve();
+
+            return promise;
         },
         update: function (data) {
             return $http({

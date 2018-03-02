@@ -1,0 +1,69 @@
+@import "skin-mixins.scss";
+
+$border-right: #222;
+
+/* skin-black navbar */
+.skin-signpost {
+    //Navbar & Logo
+    .main-header {
+      @include box-shadow(0px 1px 1px rgba(0, 0, 0, 0.05));
+      .navbar-toggle {
+        color: #333;
+      }
+      .navbar-brand {
+        color: #333;
+        border-right: 1px solid $border-right;
+      }
+      .navbar {
+        @include navbar-variant(#111, #fff, #999, #333);
+        > .sidebar-toggle {
+          color: #999;
+          border-right: 1px solid $border-right;
+        }
+        .navbar-nav {
+          > li > a {
+            border-right: 1px solid $border-right;
+          }
+        }
+        .navbar-custom-menu .navbar-nav,
+        .navbar-right {
+          > li {
+            > a {
+              border-left: 1px solid $border-right;
+              border-right-width: 0;
+            }
+          }
+        }
+      }
+      > .logo {
+        @include logo-variant(#000, #eee);
+        border-right: 1px solid #222;
+        @media (max-width: $screen-header-collapse) {
+          @include logo-variant(#000, #eee);
+          border-right: none;
+        }
+      }
+  
+      li.user-header {
+        background-color: #222;
+      }
+    }
+  
+    //Content Header
+    .content-header {
+      background: transparent;
+      box-shadow: none;
+    }
+    //Create the sidebar skin
+    @include skin-dark-sidebar(#fff);
+  
+    .pace {
+      .pace-progress {
+        background: #222;
+      }
+      .pace-activity {
+        border-top-color: #222;
+        border-left-color: #222;
+      }
+    }
+  }

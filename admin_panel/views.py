@@ -4,8 +4,12 @@ from rest_framework.authtoken.models import Token
 from services.models import Provider
 import json
 
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-class LandingPageView(TemplateView):
+
+class LandingPageView(LoginRequiredMixin, TemplateView):
+    login_url = '/login/'
+    redirect_field_name = 'next'
 
     template_name = 'admin_panel/index.html'
 

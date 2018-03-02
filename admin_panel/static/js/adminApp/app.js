@@ -79,6 +79,8 @@ angular
 		$rootScope.languages = languages;
 		$rootScope.serviceLanguages = service_languages;
 		$rootScope.$state = $state;
+		$rootScope.user = user;
+		
 
 		GeoRegionService.getList({
 			level: 1,
@@ -108,7 +110,6 @@ angular
 			servicesChange: hasPermission("services", "change") || isStaff(),
 			servicesDelete: hasPermission("services", "delete") || isStaff(),
 		}, permissions);
-		$rootScope.user = user;
 
 		if (selectedProvider) {
 			$rootScope.selectedProvider = selectedProvider;
@@ -116,20 +117,4 @@ angular
 			$rootScope.selectedProvider = $rootScope.user.providers[0];
 		}
 
-		// Change title based on the `data` object in routes
-		$rootScope.$on("$stateChangeStart", function (event, toState) {
-			var allowAnonymous = toState.data && toState.data.allowAnonymous;
-			if (!allowAnonymous && !$rootScope.user) {
-				event.preventDefault();
-				let demandLocation = window.location.hash;
-
-				if (demandLocation !== "#/") {
-					$state.go("login.next", {
-						next: demandLocation
-					});
-				} else {
-					$state.go("login");
-				}
-			}
-		});
 	});

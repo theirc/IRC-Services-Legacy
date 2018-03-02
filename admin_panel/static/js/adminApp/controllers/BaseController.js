@@ -73,22 +73,15 @@ angular.module("adminApp").controller("BaseController", function ($scope, $rootS
 			$cookies.remove("user");
 			$cookies.remove("permissions");
 
-			//$window.location.href = '/cms';
+			$window.location.href = '/logout/';
 		});
 	};
 
 	vm.language = "en";
 
 	if (!vm.user) {
-		vm.user = $cookies.getObject("user");
-		if (vm.isAuthenticated()) {
-			vm.getPermissions();
-		} else if (userEmail != "AnonymousUser") {
-			vm.logout();
-		}
+		vm.user =  $rootScope.user;
 	}
-
-	$rootScope.user = vm.user;
 
 	vm.isStaging = function () {
 		return $stateParams.environment == "staging";

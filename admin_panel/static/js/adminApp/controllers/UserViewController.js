@@ -25,7 +25,6 @@ angular.module('adminApp').controller('UserViewController', function ($rootScope
                 cookieUser.avatar = resp.data.avatar;
                 cookieUser.name = vm.object.plain().name;
                 cookieUser.surname = vm.object.plain().surname;
-                $rootScope.user = cookieUser;
                 $cookies.putObject('user', cookieUser);
             }, function (resp) {
                 vm.errors = resp.data.non_field_errors[0];
@@ -42,7 +41,6 @@ angular.module('adminApp').controller('UserViewController', function ($rootScope
             vm.object = user;
             cookieUser.name = vm.object.plain().name;
             cookieUser.surname = vm.object.plain().surname;
-            $rootScope.user = cookieUser;
             $cookies.putObject('user', cookieUser);
         });
     };
@@ -60,9 +58,6 @@ angular.module('adminApp').controller('UserViewController', function ($rootScope
             cookieUser.title = response.title;
             cookieUser.position = response.position;
             cookieUser.phone_number = response.phone_number;
-            if (userPlain.email === cookieUser.email) {
-                $rootScope.user = cookieUser;
-            }
             vm.object = user;
             vm.stopEditing();
         });

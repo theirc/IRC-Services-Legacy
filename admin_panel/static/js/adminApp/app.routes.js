@@ -2,7 +2,7 @@
  * Created by reyrodrigues on 1/3/17.
  */
 
-angular.module("adminApp").config(function($stateProvider, moment) {
+angular.module("adminApp").config(function ($stateProvider, moment) {
 	const analyticsContentMinBoundary = moment("2016-09-01");
 	const analyticsVisitorsMinBoundary = moment("2016-09-01");
 	const analyticsHotspotMinBoundary = moment("2017-03-03");
@@ -46,9 +46,9 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 			data: {
 				allowAnonymous: true,
 			},
-			onEnter: function(AuthService) {
-				return AuthService.logout().then(function() {
-					document.location = "/";
+			onEnter: function (AuthService) {
+				return AuthService.logout().then(function () {
+					document.location = "/logout/";
 				});
 			},
 		})
@@ -61,7 +61,7 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 			data: {
 				allowAnonymous: true,
 			},
-			onEnter: function($stateParams, $state, $uibModal) {
+			onEnter: function ($stateParams, $state, $uibModal) {
 				$uibModal
 					.open({
 						templateUrl: "views/user/reset_password.html",
@@ -71,7 +71,7 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 						resolve: {},
 						controller: "ResetPasswordController as ctrl",
 					})
-					.result.finally(function() {});
+					.catch(function () {});
 			},
 		})
 		.state("resetPassword.check", {
@@ -79,7 +79,7 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 			data: {
 				allowAnonymous: true,
 			},
-			onEnter: function($stateParams, $state, $uibModal) {
+			onEnter: function ($stateParams, $state, $uibModal) {
 				$uibModal
 					.open({
 						templateUrl: "views/user/reset_password.html",
@@ -89,7 +89,7 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 						resolve: {},
 						controller: "ResetPasswordController as ctrl",
 					})
-					.result.finally(function() {});
+					.catch(function () {});
 			},
 		})
 		.state("home", {
@@ -110,8 +110,8 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 					template: "<div></div>",
 					controller: ($state, $rootScope) => {
 						/*
-                        * TODO: figure out a default dashboard per user
-                        * */
+						 * TODO: figure out a default dashboard per user
+						 * */
 						let locationPath = window.location.hash;
 						if (locationPath.includes("next=")) {
 							let redirectUrl = locationPath
@@ -132,7 +132,7 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 				},
 			},
 		})
-		
+
 		// Team Management
 		.state("team", {
 			url: "/team",
@@ -147,11 +147,11 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 			},
 			resolve: {},
 		})
-		
+
 
 		/*
-             * Your Apps
-             * */
+		 * Your Apps
+		 * */
 
 		// Services Management
 		.state("service", {
@@ -170,29 +170,31 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 				},
 			},
 			resolve: {
-				provider: function(ProviderService, $rootScope, $q) {
+				provider: function (ProviderService, $rootScope, $q) {
 					var dfd = $q.defer();
-					$rootScope.$watch("selectedProvider", function(value) {
+					$rootScope.$watch("selectedProvider", function (value) {
 						if (value) {
-							ProviderService.get($rootScope.selectedProvider.id).then(function(p) {
+							ProviderService.get($rootScope.selectedProvider.id).then(function (p) {
 								dfd.resolve(p);
 							});
 						}
 					});
 					return dfd.promise;
 				},
-				services: function(ServiceService, $rootScope, $q) {
+				services: function (ServiceService, $rootScope, $q) {
 					var dfd = $q.defer();
-					$rootScope.$watch("selectedProvider", function(value) {
+					$rootScope.$watch("selectedProvider", function (value) {
 						if (value) {
-							ServiceService.get("", { provider: $rootScope.selectedProvider.id }).then(function(p) {
+							ServiceService.get("", {
+								provider: $rootScope.selectedProvider.id
+							}).then(function (p) {
 								dfd.resolve(p);
 							});
 						}
 					});
 					return dfd.promise;
 				},
-				serviceTypes: function(CommonDataService) {
+				serviceTypes: function (CommonDataService) {
 					return CommonDataService.getServiceTypes();
 				},
 				regions: function allRegions(GeoRegionService, $q, $window) {
@@ -200,8 +202,10 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 					if ($window.sessionStorage.allRegions) {
 						dfd.resolve(JSON.parse($window.sessionStorage.allRegions));
 					} else {
-						GeoRegionService.getList({ exclude_geometry: true }).then(function(r) {
-							var regions = r.plain().map(function(r1) {
+						GeoRegionService.getList({
+							exclude_geometry: true
+						}).then(function (r) {
+							var regions = r.plain().map(function (r1) {
 								return {
 									name: r1.name,
 									centroid: r1.centroid,
@@ -230,18 +234,18 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 				},
 			},
 			resolve: {
-				provider: function(ProviderService, $rootScope, $q) {
+				provider: function (ProviderService, $rootScope, $q) {
 					var dfd = $q.defer();
-					$rootScope.$watch("selectedProvider", function(value) {
+					$rootScope.$watch("selectedProvider", function (value) {
 						if (value) {
-							ProviderService.get($rootScope.selectedProvider.id).then(function(p) {
+							ProviderService.get($rootScope.selectedProvider.id).then(function (p) {
 								dfd.resolve(p);
 							});
 						}
 					});
 					return dfd.promise;
 				},
-				serviceTypes: function(CommonDataService) {
+				serviceTypes: function (CommonDataService) {
 					return CommonDataService.getServiceTypes();
 				},
 				regions: function allRegions(GeoRegionService, $q, $window) {
@@ -249,8 +253,10 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 					if ($window.sessionStorage.allRegions) {
 						dfd.resolve(JSON.parse($window.sessionStorage.allRegions));
 					} else {
-						GeoRegionService.getList({ exclude_geometry: true }).then(function(r) {
-							var regions = r.plain().map(function(r1) {
+						GeoRegionService.getList({
+							exclude_geometry: true
+						}).then(function (r) {
+							var regions = r.plain().map(function (r1) {
 								return {
 									name: r1.name,
 									centroid: r1.centroid,
@@ -279,15 +285,15 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 				},
 			},
 			resolve: {
-				provider: function(Restangular, $rootScope) {
+				provider: function (Restangular, $rootScope) {
 					if ($rootScope.selectedProvider) {
 						return Restangular.one("providers", $rootScope.selectedProvider.id).get();
 					} else {
 						var dfd = $q.defer();
-						$rootScope.$watch("selectedProvider", function() {
+						$rootScope.$watch("selectedProvider", function () {
 							Restangular.one("providers", $rootScope.selectedProvider.id)
 								.get()
-								.then(function(p) {
+								.then(function (p) {
 									dfd.resolve(p);
 								});
 						});
@@ -295,10 +301,10 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 						return dfd;
 					}
 				},
-				providers: function(ProviderService, Restangular, $q) {
+				providers: function (ProviderService, Restangular, $q) {
 					var dfd = $q.defer();
-					ProviderService.getList().then(function(p) {
-						var providers = p.plain().map(function(ps) {
+					ProviderService.getList().then(function (p) {
+						var providers = p.plain().map(function (ps) {
 							return {
 								name: ps.name,
 								id: ps.id,
@@ -308,7 +314,7 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 					});
 					return dfd.promise;
 				},
-				serviceTypes: function(CommonDataService) {
+				serviceTypes: function (CommonDataService) {
 					return CommonDataService.getServiceTypes();
 				},
 				regions: function allRegions(GeoRegionService, $q, $window) {
@@ -316,8 +322,10 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 					if ($window.sessionStorage.allRegions) {
 						dfd.resolve(JSON.parse($window.sessionStorage.allRegions));
 					} else {
-						GeoRegionService.getList({ exclude_geometry: true }).then(function(r) {
-							var regions = r.plain().map(function(r1) {
+						GeoRegionService.getList({
+							exclude_geometry: true
+						}).then(function (r) {
+							var regions = r.plain().map(function (r1) {
 								return {
 									name: r1.name,
 									centroid: r1.centroid,
@@ -332,7 +340,7 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 					}
 					return dfd.promise;
 				},
-				service: function(Restangular, $stateParams) {
+				service: function (Restangular, $stateParams) {
 					return Restangular.one("services", $stateParams.serviceId).get();
 				},
 				tags: Restangular => Restangular.all("service-tag").getList(),
@@ -356,11 +364,13 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 				},
 			},
 			resolve: {
-				serviceTypes: function(CommonDataService) {
+				serviceTypes: function (CommonDataService) {
 					return CommonDataService.getServiceTypes();
 				},
-				service: function(Restangular, $stateParams) {
-					return Restangular.one("services").customGET("preview", { id: $stateParams.serviceId });
+				service: function (Restangular, $stateParams) {
+					return Restangular.one("services").customGET("preview", {
+						id: $stateParams.serviceId
+					});
 				},
 			},
 		})
@@ -376,16 +386,16 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 				},
 			},
 			resolve: {
-				provider: function(Restangular, $rootScope) {
+				provider: function (Restangular, $rootScope) {
 					if ($rootScope.selectedProvider) {
 						return Restangular.one("providers", $rootScope.selectedProvider.id).get();
 					} else {
 						var dfd = $q.defer();
-						$rootScope.$watch("selectedProvider", function() {
+						$rootScope.$watch("selectedProvider", function () {
 							conosle.log("changed??", $rootScope.selectedProvider);
 							Restangular.one("providers", $rootScope.selectedProvider.id)
 								.get()
-								.then(function(p) {
+								.then(function (p) {
 									dfd.resolve(p);
 								});
 						});
@@ -393,10 +403,10 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 						return dfd;
 					}
 				},
-				providers: function(ProviderService, Restangular, $q) {
+				providers: function (ProviderService, Restangular, $q) {
 					var dfd = $q.defer();
-					ProviderService.getList().then(function(p) {
-						var providers = p.plain().map(function(ps) {
+					ProviderService.getList().then(function (p) {
+						var providers = p.plain().map(function (ps) {
 							return {
 								name: ps.name,
 								id: ps.id,
@@ -406,7 +416,7 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 					});
 					return dfd.promise;
 				},
-				serviceTypes: function(CommonDataService) {
+				serviceTypes: function (CommonDataService) {
 					return CommonDataService.getServiceTypes();
 				},
 				regions: function allRegions(GeoRegionService, $q, $window) {
@@ -414,8 +424,10 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 					if ($window.sessionStorage.allRegions) {
 						dfd.resolve(JSON.parse($window.sessionStorage.allRegions));
 					} else {
-						GeoRegionService.getList({ exclude_geometry: true }).then(function(r) {
-							var regions = r.plain().map(function(r1) {
+						GeoRegionService.getList({
+							exclude_geometry: true
+						}).then(function (r) {
+							var regions = r.plain().map(function (r1) {
 								return {
 									name: r1.name,
 									centroid: r1.centroid,
@@ -430,7 +442,7 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 					}
 					return dfd.promise;
 				},
-				service: function() {
+				service: function () {
 					return {};
 				},
 				tags: Restangular => Restangular.all("service-tag").getList(),
@@ -441,7 +453,7 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 		})
 		.state("service.duplicate", {
 			url: "/duplicate/:serviceId",
-			onEnter: function($stateParams, $state, $uibModal, ServiceService, toasty) {
+			onEnter: function ($stateParams, $state, $uibModal, ServiceService, toasty) {
 				$uibModal
 					.open({
 						templateUrl: "views/service/service-duplicate.html",
@@ -455,24 +467,24 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 						controller: "ServiceDuplicateController as ctrl",
 					})
 					.result.then(data => {
-						ServiceService.duplicate(data.serviceId, data.newName).then(() => {
+						return ServiceService.duplicate(data.serviceId, data.newName).then(() => {
 							toasty.success({
 								msg: "Service successfully duplicated.",
 								clickToClose: true,
 								showClose: false,
 								sound: false,
 							});
-							$state.reload();
+							$state.go('service.list');
 						});
 					})
-					.result.finally(() => {
-						$state.go("^");
+					.catch(() => {
+						$state.go('service.list');
 					});
 			},
 		})
 		.state("service.archive", {
 			url: "/archive/:serviceId",
-			onEnter: function($stateParams, $state, $uibModal, ServiceService, toasty) {
+			onEnter: function ($stateParams, $state, $uibModal, ServiceService, toasty) {
 				$uibModal
 					.open({
 						templateUrl: "views/service/service-archive.html",
@@ -486,18 +498,18 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 						controller: "ServiceArchiveController as ctrl",
 					})
 					.result.then(serviceId => {
-						ServiceService.archive(serviceId).then(() => {
+						return ServiceService.archive(serviceId).then(() => {
 							toasty.success({
 								msg: "Service successfully archived.",
 								clickToClose: true,
 								showClose: false,
 								sound: false,
 							});
-							$state.reload();
+							$state.go('service.list');
 						});
 					})
-					.result.finally(() => {
-						$state.go("^");
+					.catch(() => {
+						$state.go('service.list');
 					});
 			},
 		})
@@ -540,8 +552,29 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 		})
 
 		/*
-             * Instance Admin
-             * */
+		 * Instance Admin
+		 * */
+
+		.state("settings", {
+			url: "/settings",
+			data: {
+				title: "Account Settings",
+			},
+			views: {
+				"main@": {
+					templateUrl: "views/user/view.html",
+					controller: "UserViewController as ctrl",
+				},
+			},
+			resolve: {
+				user: function (Restangular, $rootScope) {
+					return Restangular.one("users", $rootScope.user.id).get();
+				},
+				groups: function (Restangular) {
+					return Restangular.all("groups").getList();
+				},
+			},
+		})
 
 		// Users Management
 		.state("user", {
@@ -593,10 +626,10 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 				},
 			},
 			resolve: {
-				user: function(Restangular, $stateParams) {
+				user: function (Restangular, $stateParams) {
 					return Restangular.one("users", $stateParams.id).get();
 				},
-				groups: function(Restangular) {
+				groups: function (Restangular) {
 					return Restangular.all("groups").getList();
 				},
 			},
@@ -619,7 +652,7 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 				},
 			},
 			resolve: {
-				providerTypes: function(CommonDataService) {
+				providerTypes: function (CommonDataService) {
 					return CommonDataService.getProviderTypes();
 				},
 			},
@@ -636,20 +669,20 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 				},
 			},
 			resolve: {
-				providerTypes: function(CommonDataService) {
+				providerTypes: function (CommonDataService) {
 					return CommonDataService.getProviderTypes();
 				},
-				serviceAreas: function(CommonDataService) {
+				serviceAreas: function (CommonDataService) {
 					return CommonDataService.getServiceAreas();
 				},
-				systemUsers: function(CommonDataService) {
+				systemUsers: function (CommonDataService) {
 					return CommonDataService.getUsersForLookup();
 				},
-				provider: function(ProviderService, $rootScope, $q) {
+				provider: function (ProviderService, $rootScope, $q) {
 					var dfd = $q.defer();
-					$rootScope.$watch("selectedProvider", function(value) {
+					$rootScope.$watch("selectedProvider", function (value) {
 						if (value) {
-							ProviderService.get($rootScope.selectedProvider.id).then(function(p) {
+							ProviderService.get($rootScope.selectedProvider.id).then(function (p) {
 								dfd.resolve(p);
 							});
 						}
@@ -670,20 +703,20 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 				},
 			},
 			resolve: {
-				providerTypes: function(CommonDataService) {
+				providerTypes: function (CommonDataService) {
 					return CommonDataService.getProviderTypes();
 				},
-				serviceAreas: function(CommonDataService) {
+				serviceAreas: function (CommonDataService) {
 					return CommonDataService.getServiceAreas();
 				},
-				systemUsers: function(CommonDataService) {
+				systemUsers: function (CommonDataService) {
 					return CommonDataService.getUsersForLookup();
 				},
-				provider: function(ProviderService, $rootScope, $q) {
+				provider: function (ProviderService, $rootScope, $q) {
 					var dfd = $q.defer();
-					$rootScope.$watch("selectedProvider", function(value) {
+					$rootScope.$watch("selectedProvider", function (value) {
 						if (value) {
-							ProviderService.get($rootScope.selectedProvider.id).then(function(p) {
+							ProviderService.get($rootScope.selectedProvider.id).then(function (p) {
 								dfd.resolve(p);
 							});
 						}
@@ -704,16 +737,16 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 				},
 			},
 			resolve: {
-				providerTypes: function(CommonDataService) {
+				providerTypes: function (CommonDataService) {
 					return CommonDataService.getProviderTypes();
 				},
-				serviceAreas: function(CommonDataService) {
+				serviceAreas: function (CommonDataService) {
 					return CommonDataService.getServiceAreas();
 				},
-				systemUsers: function(CommonDataService) {
+				systemUsers: function (CommonDataService) {
 					return CommonDataService.getUsersForLookup();
 				},
-				provider: function(ProviderService, $stateParams) {
+				provider: function (ProviderService, $stateParams) {
 					return ProviderService.get($stateParams.id);
 				},
 				regions: function allRegions(GeoRegionService, $q, $window) {
@@ -721,8 +754,10 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 					if ($window.sessionStorage.allRegions) {
 						dfd.resolve(JSON.parse($window.sessionStorage.allRegions));
 					} else {
-						GeoRegionService.getList({ exclude_geometry: true }).then(function(r) {
-							var regions = r.plain().map(function(r1) {
+						GeoRegionService.getList({
+							exclude_geometry: true
+						}).then(function (r) {
+							var regions = r.plain().map(function (r1) {
 								return {
 									name: r1.name,
 									centroid: r1.centroid,
@@ -739,6 +774,24 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 				},
 			},
 		})
+		.state("provider.impersonate", {
+			url: "/:id/impersonate",
+			resolve: {
+				provider: function (ProviderService, $stateParams) {
+					return ProviderService.get($stateParams.id);
+				},
+			},
+			onEnter: ($rootScope, $state, provider, ProviderService) => {
+				if ($rootScope.user.isSuperuser) {
+					ProviderService.impersonateProvider(provider.id).then(() => {
+						$rootScope.selectedProvider = provider;
+						$state.go('service.list');
+					});
+				} else {
+					$state.go('home');
+				}
+			},
+		})
 		.state("provider.create", {
 			url: "/create",
 			data: {
@@ -751,16 +804,16 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 				},
 			},
 			resolve: {
-				providerTypes: function(CommonDataService) {
+				providerTypes: function (CommonDataService) {
 					return CommonDataService.getProviderTypes();
 				},
-				serviceAreas: function(CommonDataService) {
+				serviceAreas: function (CommonDataService) {
 					return CommonDataService.getServiceAreas();
 				},
-				systemUsers: function(CommonDataService) {
+				systemUsers: function (CommonDataService) {
 					return CommonDataService.getUsersForLookup();
 				},
-				provider: function() {
+				provider: function () {
 					return {};
 				},
 				regions: function allRegions(GeoRegionService, $q, $window) {
@@ -768,8 +821,10 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 					if ($window.sessionStorage.allRegions) {
 						dfd.resolve(JSON.parse($window.sessionStorage.allRegions));
 					} else {
-						GeoRegionService.getList({ exclude_geometry: true }).then(function(r) {
-							var regions = r.plain().map(function(r1) {
+						GeoRegionService.getList({
+							exclude_geometry: true
+						}).then(function (r) {
+							var regions = r.plain().map(function (r1) {
 								return {
 									name: r1.name,
 									centroid: r1.centroid,
@@ -817,18 +872,20 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 				},
 			},
 			resolve: {
-				region: function($q) {
+				region: function ($q) {
 					var dfd = $q.defer();
 					dfd.resolve({});
 					return dfd.promise;
 				},
-				allRegions: function(GeoRegionService, $q, $window) {
+				allRegions: function (GeoRegionService, $q, $window) {
 					var dfd = $q.defer();
 					if ($window.sessionStorage.allRegions) {
 						dfd.resolve(JSON.parse($window.sessionStorage.allRegions));
 					} else {
-						GeoRegionService.getList({ exclude_geometry: true }).then(function(r) {
-							var regions = r.plain().map(function(r1) {
+						GeoRegionService.getList({
+							exclude_geometry: true
+						}).then(function (r) {
+							var regions = r.plain().map(function (r1) {
 								return {
 									name: r1.name,
 									centroid: r1.centroid,
@@ -857,16 +914,18 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 				},
 			},
 			resolve: {
-				region: function(GeoRegionService, $stateParams) {
+				region: function (GeoRegionService, $stateParams) {
 					return GeoRegionService.get($stateParams.id);
 				},
-				allRegions: function(GeoRegionService, $q, $window) {
+				allRegions: function (GeoRegionService, $q, $window) {
 					var dfd = $q.defer();
 					if ($window.sessionStorage.allRegions) {
 						dfd.resolve(JSON.parse($window.sessionStorage.allRegions));
 					} else {
-						GeoRegionService.getList({ exclude_geometry: true }).then(function(r) {
-							var regions = r.plain().map(function(r1) {
+						GeoRegionService.getList({
+							exclude_geometry: true
+						}).then(function (r) {
+							var regions = r.plain().map(function (r1) {
 								return {
 									name: r1.name,
 									centroid: r1.centroid,
@@ -883,7 +942,7 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 				},
 			},
 		})
-		
+
 		// Blog
 		.state("blog", {
 			url: "/blog",
@@ -972,12 +1031,12 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 				},
 			},
 			resolve: {
-				object: function($q) {
+				object: function ($q) {
 					var dfd = $q.defer();
 					dfd.resolve({});
 					return dfd.promise;
 				},
-				serviceTypes: function(CommonDataService) {
+				serviceTypes: function (CommonDataService) {
 					return CommonDataService.getServiceTypes();
 				},
 			},
@@ -994,10 +1053,10 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 				},
 			},
 			resolve: {
-				object: function(ServiceTypeService, $stateParams) {
+				object: function (ServiceTypeService, $stateParams) {
 					return ServiceTypeService.get($stateParams.id);
 				},
-				serviceTypes: function(CommonDataService) {
+				serviceTypes: function (CommonDataService) {
 					return CommonDataService.getServiceTypes();
 				},
 			},
@@ -1032,7 +1091,7 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 				},
 			},
 			resolve: {
-				object: function($q) {
+				object: function ($q) {
 					var dfd = $q.defer();
 					dfd.resolve({});
 					return dfd.promise;
@@ -1051,7 +1110,7 @@ angular.module("adminApp").config(function($stateProvider, moment) {
 				},
 			},
 			resolve: {
-				object: function(ProviderTypeService, $stateParams) {
+				object: function (ProviderTypeService, $stateParams) {
 					return ProviderTypeService.get($stateParams.id);
 				},
 			},
