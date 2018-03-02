@@ -4,22 +4,21 @@ from django.conf import settings
 from django.contrib.auth.models import Group
 from django.contrib.sites.shortcuts import get_current_site
 
-from api.serializers import APILoginSerializer, APIRegisterSerializer
 from api.v2 import serializers as serializers_v2
-from django.contrib.auth import get_user_model, login
+from django.contrib.auth import get_user_model, login, logout
 from django.db.transaction import atomic
 from django.urls import reverse
 from django.utils.timezone import now
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAuthenticatedOrReadOnly
 
 from api.v2.serializers import UserAvatarSerializer, EmailSerializer, SecurePasswordCredentialsSerializer, \
-    ResetUserPasswordSerializer, GroupSerializer
+    ResetUserPasswordSerializer, GroupSerializer, APILoginSerializer
 from email_user.models import EmailUser
 from regions.models import GeographicRegion
 from rest_framework import permissions
 from rest_framework import viewsets, mixins
 from rest_framework.authtoken.models import Token
-from rest_framework.decorators import list_route
+from rest_framework.decorators import list_route, detail_route, permission_classes, authentication_classes
 from rest_framework.response import Response
 from .utils import IsSuperUserPermission, StandardResultsSetPagination
 from ..filters import GeographicRegionFilter
@@ -33,6 +32,8 @@ class GroupViewSet(viewsets.ModelViewSet):
     """
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
+
+
 class UserViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.
@@ -92,42 +93,15 @@ class UserViewSet(viewsets.ModelViewSet):
 
         return Response(response)
 
-    @list_route(methods=['POST'])
-    def register(self, request):
-        serializer = APIRegisterSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        with atomic():
-            kwargs = dict()
-            if request.data.get('title', None):
-                kwargs['title'] = request.data['title']
-            if request.data.get('position', None):
-                kwargs['position'] = request.data['position']
-            if request.data.get('phone_number', None):
-                kwargs['phone_number'] = request.data['phone_number']
-            user = get_user_model().objects.create_user(
-                name=request.data['name'],
-                surname=request.data['surname'],
-                email=request.data['email'],
-                password=request.data['password'],
-                is_active=False,
-                **kwargs
-            )
-            if request.data.get('groups', None):
-                user.groups = [Group.objects.get(
-                    name=group['name']) for group in request.data['groups']]
-                user.save()
-            token, created = Token.objects.get_or_create(user=user)
-            activation_url = request.build_absolute_uri(
-                reverse('api-activate')) + '?activation_key='
-            user.send_activation_email(request, activation_url)
-
-        return Response({})
-
     @list_route(methods=['GET'])
+    @authentication_classes([])
+    @permission_classes([])
     def logout(self, request):
         user = request.user
         token, created = Token.objects.get_or_create(user=user)
         token.delete()
+
+        logout(request)
 
         return Response({})
 

@@ -26,7 +26,7 @@ angular
 		"ngMaterial",
 		"angularSpinner",
 	])
-	.config(function($stateProvider, $urlRouterProvider, $interpolateProvider, $httpProvider, $locationProvider, RestangularProvider, $authProvider) {
+	.config(function ($stateProvider, $urlRouterProvider, $interpolateProvider, $httpProvider, $locationProvider, RestangularProvider, $authProvider) {
 
 		$httpProvider.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 		$httpProvider.defaults.xsrfCookieName = "csrftoken";
@@ -35,9 +35,9 @@ angular
 		$httpProvider.interceptors.push("HttpRequestLoadingInterceptor");
 		$locationProvider.hashPrefix("");
 
-        $urlRouterProvider.otherwise("/");
-        
-		RestangularProvider.addResponseInterceptor(function(data, operation) {
+		$urlRouterProvider.otherwise("/");
+
+		RestangularProvider.addResponseInterceptor(function (data, operation) {
 			if (operation === "getList" && data.hasOwnProperty("results")) {
 				data.results._meta = {
 					recordsTotal: data.count,
@@ -51,11 +51,11 @@ angular
 			return data;
 		});
 	})
-	.run(function($window, Restangular, $rootScope, $state, $stateParams, $cookies, staticUrl, languages, service_languages, AuthService, GeoRegionService, ProviderService) {
+	.run(function ($window, Restangular, $rootScope, $state, $stateParams, $cookies, staticUrl, languages, service_languages, user, selectedProvider, permissions, AuthService, GeoRegionService, ProviderService) {
 		Restangular.setBaseUrl($window.API_URL + "/v2/");
 		Restangular.setRequestSuffix("/");
 
-		$rootScope.idHelper = function(name, lang) {
+		$rootScope.idHelper = function (name, lang) {
 			let l = _.clone(lang);
 			if (_.isArray(l)) {
 				l = lang[0];
@@ -63,7 +63,7 @@ angular
 			return name + "_" + l;
 		};
 
-		$rootScope.isRtl = function(lang) {
+		$rootScope.isRtl = function (lang) {
 			let l = _.clone(lang);
 
 			if (_.isArray(l)) {
@@ -72,7 +72,7 @@ angular
 			return ["ar", "fa", "ur"].indexOf(l) > -1;
 		};
 
-		$rootScope.fieldHelper = function(obj, name, lang) {
+		$rootScope.fieldHelper = function (obj, name, lang) {
 			return obj[$rootScope.idHelper(name, lang)];
 		};
 		$rootScope.staticUrl = staticUrl;
@@ -80,44 +80,53 @@ angular
 		$rootScope.serviceLanguages = service_languages;
 		$rootScope.$state = $state;
 
-		$rootScope.$watch("user", function() {
-			if ($rootScope.user) {
-				AuthService.me()
-					.then(function() {
-						ProviderService.myProviders()
-							.then(function(p) {
-								$rootScope.user.providers = p.plain();
-								if ($rootScope.user.providers.length == 1) {
-									$rootScope.selectedProvider = $rootScope.user.providers[0];
-								}
-							})
-							.then(
-								GeoRegionService.getList({ level: 1, exclude_geometry: true }).then(function(c) {
-									$rootScope.countries = c.plain();
-								})
-							);
-					})
-					.catch(function(error) {
-						if (error.status == 401) {
-							return AuthService.logout().then(function() {
-								$cookies.remove("user");
-								$cookies.remove("permissions");
-								$window.location.reload();
-							});
-						}
-					});
-			}
+		GeoRegionService.getList({
+			level: 1,
+			exclude_geometry: true
+		}).then(function (c) {
+			$rootScope.countries = c.plain();
 		});
 
+		var hasPermission = function (p, model, action) {
+				return !!p.filter(function (permission) {
+					if (model == "analytics") {
+						return permission.split("_analytics")[0].split(".")[1] == action;
+					}
+					var perm = permission.split(".")[1].split("_");
+					if (action == perm[0] && model == perm[1]) {
+						return permission;
+					}
+				}).length;
+		}.bind(this, permissions.permissions);
+
+		var isStaff = function (u) {
+			return u && u.isStaff;
+		}.bind(this, user);
+
+		$rootScope.permissions = Object.assign({
+			servicesAdd: hasPermission("services", "add") || isStaff(),
+			servicesChange: hasPermission("services", "change") || isStaff(),
+			servicesDelete: hasPermission("services", "delete") || isStaff(),
+		}, permissions);
+		$rootScope.user = user;
+
+		if (selectedProvider) {
+			$rootScope.selectedProvider = selectedProvider;
+		} else if ($rootScope.user.providers.length == 1) {
+			$rootScope.selectedProvider = $rootScope.user.providers[0];
+		}
+
 		// Change title based on the `data` object in routes
-		$rootScope.$on("$stateChangeStart", function(event, toState) {
+		$rootScope.$on("$stateChangeStart", function (event, toState) {
 			var allowAnonymous = toState.data && toState.data.allowAnonymous;
 			if (!allowAnonymous && !$rootScope.user) {
 				event.preventDefault();
 				let demandLocation = window.location.hash;
 
 				if (demandLocation !== "#/") {
-					$state.go("login.next", { next: demandLocation });
+					$state.go("login.next", {
+						next: demandLocation
+					});
 				} else {
 					$state.go("login");
 				}

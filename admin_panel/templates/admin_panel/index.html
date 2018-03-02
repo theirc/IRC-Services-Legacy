@@ -178,6 +178,10 @@
     angular.module('adminApp').constant('languages', [{% for k, v in LANGUAGES %}['{{ k }}', '{{ v }}']{% if not forloop.last %}, {% endif %}{% endfor %}]);
     angular.module('adminApp').constant('service_languages', [{% for k, v in SERVICE_LANGUAGES %}['{{ k }}', '{{ v }}']{% if not forloop.last %}, {% endif %}{% endfor %}]);
     angular.module('adminApp').constant('userEmail', '{{ request.user }}');
+    angular.module('adminApp').constant('user', JSON.parse('{{ USER|safe }}'));
+    angular.module('adminApp').constant('selectedProvider', JSON.parse('{{ SELECTED_PROVIDER|safe }}'));
+    angular.module('adminApp').constant('permissions', JSON.parse('{{ PERMISSIONS|safe }}'));
+    
 
     $(function () {
         if (window.L && !window.L.geoJSON) {

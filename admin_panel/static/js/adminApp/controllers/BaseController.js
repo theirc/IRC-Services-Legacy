@@ -1,4 +1,4 @@
-angular.module("adminApp").controller("BaseController", function($scope, $rootScope, $state, $stateParams, $window, $cookies, AuthService, userEmail) {
+angular.module("adminApp").controller("BaseController", function ($scope, $rootScope, $state, $stateParams, $window, $cookies, AuthService, userEmail) {
 	var vm = this;
 
 	/**
@@ -7,9 +7,9 @@ angular.module("adminApp").controller("BaseController", function($scope, $rootSc
 	 * @param action: one of ['change', 'add', 'delete']
 	 * @returns filtered permission, use with ng-if
 	 */
-	vm.hasPermission = function(model, action) {
+	vm.hasPermission = function (model, action) {
 		if (vm.user && vm.user.permissions && vm.user.permissions.length) {
-			return !!vm.user.permissions.filter(function(permission) {
+			return !!vm.user.permissions.filter(function (permission) {
 				if (model == "analytics") {
 					return permission.split("_analytics")[0].split(".")[1] == action;
 				}
@@ -21,41 +21,29 @@ angular.module("adminApp").controller("BaseController", function($scope, $rootSc
 		}
 	};
 
-	vm.isStaff = function() {
+	vm.isStaff = function () {
 		return vm.user && vm.user.isStaff;
 	};
 
-	vm.getPermissions = function() {
-		AuthService.getPermissions().then(function(response) {
-			vm.user.permissions = response.data.permissions;
-			$rootScope.permissions = {
-				contentPageAdd: vm.hasPermission("contentpage", "add") || vm.isStaff(),
-				contentPageChange: vm.hasPermission("contentpage", "change") || vm.isStaff(),
-				contentPageDelete: vm.hasPermission("contentpage", "delete") || vm.isStaff(),
-				servicesAdd: vm.hasPermission("services", "add") || vm.isStaff(),
-				servicesChange: vm.hasPermission("services", "change") || vm.isStaff(),
-				servicesDelete: vm.hasPermission("services", "delete") || vm.isStaff(),
-				analyticsServices: vm.hasPermission("analytics", "services") || vm.isStaff(),
-				analyticsContent: vm.hasPermission("analytics", "content") || vm.isStaff(),
-				analyticsVisitors: vm.hasPermission("analytics", "visitors") || vm.isStaff(),
-				analyticsMobile: vm.hasPermission("analytics", "mobile_app") || vm.isStaff(),
-				analyticsSocial: vm.hasPermission("analytics", "social_media") || vm.isStaff(),
-				analyticsHotspots: vm.hasPermission("analytics", "hotspots") || vm.isStaff(),
-				analyticsBalance: vm.hasPermission("analytics", "balance_checker") || vm.isStaff(),
-				analyticsSearch: vm.hasPermission("analytics", "gas_search_tool") || vm.isStaff(),
-			};
-		});
+	vm.getPermissions = function () {
+		vm.user.permissions = $rootScope.permissions;
+
+		$rootScope.permissions = Object.assign({
+			contentPageAdd: vm.hasPermission("contentpage", "add") || vm.isStaff(),
+			servicesChange: vm.hasPermission("services", "change") || vm.isStaff(),
+			servicesDelete: vm.hasPermission("services", "delete") || vm.isStaff(),
+		}, $rootScope.permissions);
 	};
 
-	vm.isAuthenticated = function() {
+	vm.isAuthenticated = function () {
 		if (vm.user && vm.user.isAuthenticated) {
 			return vm.user.isAuthenticated;
 		}
 	};
 
-	vm.login = function() {
+	vm.login = function () {
 		return AuthService.login(vm.user)
-			.then(function(response) {
+			.then(function (response) {
 				delete vm.user.password;
 
 				vm.user.permissions = null;
@@ -69,7 +57,7 @@ angular.module("adminApp").controller("BaseController", function($scope, $rootSc
 				$cookies.putObject("user", vm.user);
 				//$window.location.href = '/cms';
 			})
-			.catch(function() {
+			.catch(function () {
 				vm.loginForm.$setPristine();
 				$cookies.remove("user");
 				$cookies.remove("permissions");
@@ -78,8 +66,8 @@ angular.module("adminApp").controller("BaseController", function($scope, $rootSc
 			});
 	};
 
-	vm.logout = function() {
-		return AuthService.logout().then(function() {
+	vm.logout = function () {
+		return AuthService.logout().then(function () {
 			vm.user = undefined;
 
 			$cookies.remove("user");
@@ -102,7 +90,7 @@ angular.module("adminApp").controller("BaseController", function($scope, $rootSc
 
 	$rootScope.user = vm.user;
 
-	vm.isStaging = function() {
+	vm.isStaging = function () {
 		return $stateParams.environment == "staging";
 	};
 

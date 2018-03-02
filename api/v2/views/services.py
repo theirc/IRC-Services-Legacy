@@ -4,10 +4,9 @@ import logging
 import re
 from admin_panel.utils import push_service_to_transifex, pull_completed_service_from_transifex, \
     get_service_transifex_info
-from api.serializers import CreateProviderSerializer, ProviderSerializer, ProviderTypeSerializer
 from api.utils import generate_translated_fields
 from api.v2 import serializers as serializers_v2
-from api.v2.serializers import ServiceImageSerializer, ServiceAreaSerializer
+from api.v2.serializers import ServiceImageSerializer, ServiceAreaSerializer, CreateProviderSerializer, ProviderSerializer, ProviderTypeSerializer
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 from django.contrib.gis.geos import Point, Polygon
@@ -213,6 +212,12 @@ class ProviderViewSet(viewsets.ModelViewSet):
             "data": base64.b64encode(book_data.read()),
             "content_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         }, content_type="application/json")
+
+    @detail_route(methods=['GET'])
+    def impersonate_provider(self, request, pk):
+        request.session['selected-provider'] = pk
+
+        return Response({})
 
     @detail_route(methods=['post'],
                   permission_classes=[permissions.DjangoObjectPermissions],

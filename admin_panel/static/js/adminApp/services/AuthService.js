@@ -1,4 +1,4 @@
-angular.module('adminApp').factory('AuthService', function ($http, $q, $location, $cookies, apiUrl) {
+angular.module('adminApp').factory('AuthService', function ($http, $rootScope, $q, $location, $cookies, apiUrl) {
     return {
         me: function () {
             return $http({
@@ -14,13 +14,16 @@ angular.module('adminApp').factory('AuthService', function ($http, $q, $location
             });
         },
         logout: function () {
-            var dfd = $q.defer();
+            delete $rootScope.user;
             $cookies.remove('user');
             $cookies.remove('permissions');
             sessionStorage.clear();
-            dfd.resolve({});
+            localStorage.clear();
 
-            return dfd.promise;
+            /**
+             * 
+             * TODO Redirect to log in screen
+             */
         },
         update: function (data) {
             return $http({

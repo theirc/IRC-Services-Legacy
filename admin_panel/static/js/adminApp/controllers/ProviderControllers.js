@@ -46,7 +46,9 @@ angular.module('adminApp')
         };
 
         vm.impersonate = function () {
-            $rootScope.selectedProvider = vm.provider;
+            ProviderService.impersonateProvider(vm.provider.id).then(() => {
+                $rootScope.selectedProvider = vm.provider;
+            });
         };
 
         vm.exportServices = function () {
@@ -66,7 +68,9 @@ angular.module('adminApp')
 
         vm.save = save;
 
-        vm.stOptions = tableUtils.defaultsWithServiceNameAndFilter('ServiceService', {provider: provider.id});
+        vm.stOptions = tableUtils.defaultsWithServiceNameAndFilter('ServiceService', {
+            provider: provider.id
+        });
         vm.stColumns = [
             tableUtils.newColumn('id').withTitle('ID'),
             tableUtils.newColumn('name_en').withTitle('Name (en)')
@@ -88,7 +92,9 @@ angular.module('adminApp')
         function save() {
             if (vm.isNew) {
                 ProviderService.post(vm.object).then(function (o) {
-                    $state.go('^.open', {id: o.id});
+                    $state.go('^.open', {
+                        id: o.id
+                    });
                 });
             } else {
                 vm.object.save();
