@@ -1,7 +1,7 @@
 <section class="content-header" ng-controller="ContentHeaderController as chctrl">
     <h1>
-        {$ chctrl.state.data.title $}
-        <small>{$ ctrl.provider.name_en$}</small>
+        {{ chctrl.state.data.title }}
+        <small>{{ ctrl.provider.name_en}}</small>
         <button type="button" class="btn btn-warning pull-right" ng-click="ctrl.goBack()">Back</button>
     </h1>
 </section>
@@ -22,8 +22,8 @@
                                         <a href=""
                                            ng-click="ctrl.selectedLanguageTab = lang[0]"
                                            data-toggle="tab"
-                                           aria-expanded="true">{$
-                                            lang[1] $}</a>
+                                           aria-expanded="true">{{
+                                            lang[1] }}</a>
                                     </li>
                                 </ul>
                                 <div class="tab-content">
@@ -32,20 +32,20 @@
                                          ng-repeat="lang in languages">
                                         <div class="row">
                                             <div class="form-group col-xs-12">
-                                                <label for="{$ idHelper('name',lang[0]) $}">Name</label>
+                                                <label for="{{ idHelper('name',lang[0]) }}">Name</label>
                                                 <input type="text" class="form-control"
                                                        ng-model="ctrl.provider[idHelper('name',lang[0])]"
-                                                       placeholder="Name in {$ lang[1] $}" ng-maxlength="256"
+                                                       placeholder="Name in {{ lang[1] }}" ng-maxlength="256"
                                                        ng-required="lang[0] == 'en'">
                                             </div>
                                             <div class="form-group col-xs-6">
-                                                <label for="{$ idHelper('description',lang[0]) $}">Description</label>
-                                            <textarea name="{$  idHelper('description',lang[0])$}" class="form-control"
+                                                <label for="{{ idHelper('description',lang[0]) }}">Description</label>
+                                            <textarea name="{{  idHelper('description',lang[0])}}" class="form-control"
                                                       ng-model="ctrl.provider[idHelper('description',lang[0])]"></textarea>
                                             </div>
                                             <div class="form-group col-xs-6">
-                                                <label for="{$ idHelper('address',lang[0]) $}">Address</label>
-                                            <textarea name="{$  idHelper('address',lang[0])$}" class="form-control"
+                                                <label for="{{ idHelper('address',lang[0]) }}">Address</label>
+                                            <textarea name="{{  idHelper('address',lang[0])}}" class="form-control"
                                                       ng-model="ctrl.provider[idHelper('address',lang[0])]"></textarea>
                                             </div>
                                         </div>

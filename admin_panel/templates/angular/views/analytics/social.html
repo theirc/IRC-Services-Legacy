@@ -11,7 +11,7 @@
         <div class="col-lg-3 col-xs-6">
             <div class="small-box bg-blue">
                 <div class="inner">
-                    <h3>{$ ctrl.totalNewFans || 'No data' $}</h3>
+                    <h3>{{ ctrl.totalNewFans || 'No data' }}</h3>
                     <p>Total new page likes in period</p>
                 </div>
                 <div class="icon">
@@ -24,7 +24,7 @@
         <div class="col-lg-3 col-xs-6">
             <div class="small-box bg-green">
                 <div class="inner">
-                    <h3>{$ ctrl.totalViews || 'No data' $}</h3>
+                    <h3>{{ ctrl.totalViews || 'No data' }}</h3>
                     <p>Total page views in period</p>
                 </div>
                 <div class="icon">
@@ -91,12 +91,12 @@
                     <table class="table table-bordered table-striped table-responsive" id="countryTable">
                         <thead>
                             <tr>
-                                <th ng-repeat="header in ctrl.totalFansByCountryTableHeadersData">{$ header $}</th>
+                                <th ng-repeat="header in ctrl.totalFansByCountryTableHeadersData">{{ header }}</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr ng-repeat="country in ctrl.totalFansByCountryTableData | startFrom: ctrl.currentPage * ctrl.pageSize | limitTo: ctrl.pageSize">
-                                <td ng-repeat="(key, value) in country">{$ value $}</td>
+                                <td ng-repeat="(key, value) in country">{{ value }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -104,7 +104,7 @@
                         <button ng-disabled="ctrl.currentPage == 0" ng-click="ctrl.currentPage = ctrl.currentPage - 1" class="btn">
                             Previous
                         </button>
-                        <span style="margin-left: 5px; margin-right: 5px;">{$ ctrl.currentPage + 1 $} / {$ ctrl.numberOfPages(ctrl.totalFansByCountryTableData) $}</span>
+                        <span style="margin-left: 5px; margin-right: 5px;">{{ ctrl.currentPage + 1 }} / {{ ctrl.numberOfPages(ctrl.totalFansByCountryTableData) }}</span>
                         <button ng-disabled="ctrl.currentPage >= ctrl.totalFansByCountryTableData.length / ctrl.pageSize - 1" ng-click="ctrl.currentPage = ctrl.currentPage + 1" class="btn">
                             Next
                         </button>
@@ -133,12 +133,12 @@
                     <table class="table table-bordered table-striped table-responsive" id="languageTable">
                         <thead>
                             <tr>
-                                <th ng-repeat="header in ctrl.totalFansByLanguageTableHeadersData">{$ header $}</th>
+                                <th ng-repeat="header in ctrl.totalFansByLanguageTableHeadersData">{{ header }}</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr ng-repeat="language in ctrl.totalFansByLanguageTableData | startFrom: ctrl.currentPageLang * ctrl.pageSizeLang | limitTo: ctrl.pageSizeLang">
-                                <td ng-repeat="(key, value) in language">{$ value $}</td>
+                                <td ng-repeat="(key, value) in language">{{ value }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -146,7 +146,7 @@
                         <button ng-disabled="ctrl.currentPageLang == 0" ng-click="ctrl.currentPageLang = ctrl.currentPageLang - 1" class="btn">
                             Previous
                         </button>
-                        <span style="margin-left: 5px; margin-right: 5px;">{$ ctrl.currentPageLang + 1 $} / {$ ctrl.numberOfPages(ctrl.totalFansByLanguageTableData) $}</span>
+                        <span style="margin-left: 5px; margin-right: 5px;">{{ ctrl.currentPageLang + 1 }} / {{ ctrl.numberOfPages(ctrl.totalFansByLanguageTableData) }}</span>
                         <button ng-disabled="ctrl.currentPageLang >= ctrl.totalFansByCountryTableData.length / ctrl.pageSize - 1" ng-click="ctrl.currentPageLang = ctrl.currentPageLang + 1" class="btn">
                             Next
                         </button>
@@ -346,21 +346,21 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="post in ctrl.postStats">
-                                <td>{$ post.object_id $}</td>
-                                <td>{$ post.updated | formatDate $}</td>
+                                <td>{{ post.object_id }}</td>
+                                <td>{{ post.updated | formatDate }}</td>
                                 <td>
                                     <md-toolbar style="background-color: transparent; color: black; min-height: 0; font-size: 14px">
                                         <md-tooltip md-direction="bottom" style="font-size: 16px">
-                                            <p class='md-content'>{$ post.message ? post.message : 'There was no post message downloaded' $}</p>
+                                            <p class='md-content'>{{ post.message ? post.message : 'There was no post message downloaded' }}</p>
                                         </md-tooltip>
-                                        <span>{$ post.message.substring(0, 50) $} {$ post.message ? '(...)' : 'no post message found' $}</span>
+                                        <span>{{ post.message.substring(0, 50) }} {{ post.message ? '(...)' : 'no post message found' }}</span>
                                     </md-toolbar>
                                 </td>
-                                <td>{$ post.like_count $}</td>
-                                <td>{$ post.sad_count $}</td>
-                                <td>{$ post.wow_count $}</td>
-                                <td>{$ post.super_count $}</td>
-                                <td>{$ post.angry_count $}</td>
+                                <td>{{ post.like_count }}</td>
+                                <td>{{ post.sad_count }}</td>
+                                <td>{{ post.wow_count }}</td>
+                                <td>{{ post.super_count }}</td>
+                                <td>{{ post.angry_count }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -393,36 +393,36 @@
                                 <th ng-repeat="(key, value) in ctrl.columnDescription">
                                     <md-toolbar style="background-color: transparent; color: black; min-height: 0; font-size: 14px">
                                         <md-tooltip md-direction="bottom" style="font-size: 16px">
-                                            {$ key + ' - ' + value $}
+                                            {{ key + ' - ' + value }}
                                         </md-tooltip>
-                                        <span>{$ key $}</span>
+                                        <span>{{ key }}</span>
                                     </md-toolbar>
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr ng-repeat="ad in ctrl.adsStats">
-                                <td>{$ ad.post_object.object_id $}</td>
-                                <td>{$ ad.post_object.updated | formatDate $}</td>
-                                <td>{$ ad.date | formatDate $}</td>
+                                <td>{{ ad.post_object.object_id }}</td>
+                                <td>{{ ad.post_object.updated | formatDate }}</td>
+                                <td>{{ ad.date | formatDate }}</td>
                                 <td>
                                     <md-toolbar style="background-color: transparent; color: black; min-height: 0; font-size: 14px">
                                         <md-tooltip md-direction="bottom" style="font-size: 16px">
-                                            <p class='md-content'>{$ ad.post_object.message ? ad.post_object.message : 'There was no post message downloaded' $}</p>
+                                            <p class='md-content'>{{ ad.post_object.message ? ad.post_object.message : 'There was no post message downloaded' }}</p>
                                         </md-tooltip>
-                                        <span>{$ ad.post_object.message.substring(0, 50) $} {$ ad.post_object.message ? '(...)' : 'no post message found' $}</span>
+                                        <span>{{ ad.post_object.message.substring(0, 50) }} {{ ad.post_object.message ? '(...)' : 'no post message found' }}</span>
                                     </md-toolbar>
                                 </td>
-                                <td>{$ ad.spend $}</td>
-                                <td>{$ ad.reach $}</td>
-                                <td>{$ ad.clicks $}</td>
-                                <td>{$ ad.impressions $}</td>
-                                <td>{$ ad.cost_per_total_action $}</td>
-                                <td>{$ ad.cpc $}</td>
-                                <td>{$ ad.cpm $}</td>
-                                <td>{$ ad.cpp $}</td>
-                                <td>{$ ad.ctr $}</td>
-                                <td>{$ ad.estimated_ad_recall_rate $}</td>
+                                <td>{{ ad.spend }}</td>
+                                <td>{{ ad.reach }}</td>
+                                <td>{{ ad.clicks }}</td>
+                                <td>{{ ad.impressions }}</td>
+                                <td>{{ ad.cost_per_total_action }}</td>
+                                <td>{{ ad.cpc }}</td>
+                                <td>{{ ad.cpm }}</td>
+                                <td>{{ ad.cpp }}</td>
+                                <td>{{ ad.ctr }}</td>
+                                <td>{{ ad.estimated_ad_recall_rate }}</td>
                             </tr>
                         </tbody>
                     </table>

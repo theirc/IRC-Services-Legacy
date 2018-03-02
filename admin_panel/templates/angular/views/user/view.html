@@ -1,7 +1,7 @@
 <section class="content-header" ng-controller="ContentHeaderController as chctrl">
     <h1>
-        {$ chctrl.state.data.title $}
-        <small>{$ ctrl.object.email $}</small>
+        {{ chctrl.state.data.title }}
+        <small>{{ ctrl.object.email }}</small>
     </h1>
 </section>
 
@@ -80,11 +80,11 @@
                             <div class="avatar-space">
                                 <button ngf-model-invalid="errorFile" ng-model="picFile" type="button" ngf-max-size="1MB" id="avatar" name="avatar" ngf-pattern="'image/*'" ngf-accept="'image/*'" class="btn btn-primary" ngf-select="ctrl.uploadAvatar($file)">Upload file</button>
                                 <button ng-hide="!user.avatar" type="button" class="btn btn-danger" ng-click="ctrl.removeAvatar()">Remove file</button>
-                                <img src="{$ user.avatar $}" ng-hide="!user.avatar" width="45" height="45">
+                                <img src="{{ user.avatar }}" ng-hide="!user.avatar" width="45" height="45">
                                 <span ng-hide="user.avatar">No image uploaded.</span>
                                 <div class="alert alert-warning form-error"
                                      ng-show="userForm.avatar.$error.maxSize || ctrl.errors">
-                                    File is too large {$ errorFile.size / 1000000|number:1$}MB: max 1MB.
+                                    File is too large {{ errorFile.size / 1000000|number:1}}MB: max 1MB.
                                 </div>
                             </div>
                         </div>
@@ -100,7 +100,7 @@
                             <label for="email">Groups</label>
                             <ui-select ng-disabled="!ctrl.isEditing" multiple ng-model="ctrl.object.groups"
                                        sortable="true" close-on-select="true">
-                                <ui-select-match placeholder="select a group">{$ $item.name $}</ui-select-match>
+                                <ui-select-match placeholder="select a group">{{ $item.name }}</ui-select-match>
                                 <ui-select-choices repeat="group in ctrl.groups | filter: {name: $select.search}">
                                     <div ng-bind-html="group.name | highlight: $select.search"></div>
                                 </ui-select-choices>

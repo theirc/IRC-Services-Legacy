@@ -6,7 +6,7 @@
                 <ui-select ng-model="ctrl.networks.selected" title="Choose a network"
                         on-select="ctrl.getData(ctrl.datePicker.startDate, ctrl.datePicker.endDate, $select.selected.network_id)">
                     <ui-select-match placeholder="Select the network">
-                        {$ $select.selected.name $}
+                        {{ $select.selected.name }}
                     </ui-select-match>
                     <ui-select-choices repeat="network in ctrl.networks | filter: { name: $select.search }">
                         <div ng-bind-html="network.name | highlight: $select.search"></div>
@@ -105,15 +105,15 @@
                                         </thead>
                                         <tbody>
                                             <tr ng-repeat="item in ctrl.devices_info">
-                                                <td>{$ item.name $}</td>
-                                                <td>{$ item.model $}</td>
-                                                <td>{$ item.interface $}</td>
-                                                <td>{$ item.status $}</td>
-                                                <td>{$ item.ip $}</td>
-                                                <td>{$ item.gateway $}</td>
-                                                <td>{$ item.publicIp $}</td>
-                                                <td>{$ item.dns $}</td>
-                                                <td>{$ item.usingStaticIp $}</td>
+                                                <td>{{ item.name }}</td>
+                                                <td>{{ item.model }}</td>
+                                                <td>{{ item.interface }}</td>
+                                                <td>{{ item.status }}</td>
+                                                <td>{{ item.ip }}</td>
+                                                <td>{{ item.gateway }}</td>
+                                                <td>{{ item.publicIp }}</td>
+                                                <td>{{ item.dns }}</td>
+                                                <td>{{ item.usingStaticIp }}</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -148,9 +148,9 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="item in ctrl.destination">
-                                <td>{$ item.destination $}</td>
-                                <td>{$ item.flows $}</td>
-                                <td>{$ item.flows_p $}%</td>
+                                <td>{{ item.destination }}</td>
+                                <td>{{ item.flows }}</td>
+                                <td>{{ item.flows_p }}%</td>
                             </tr>
                         </tbody>
                     </table>
@@ -178,9 +178,9 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="item in ctrl.destination">
-                                <td>{$ item.destination $}</td>
-                                <td>{$ item.clients $}</td>
-                                <td>{$ item.clients_p $}%</td>
+                                <td>{{ item.destination }}</td>
+                                <td>{{ item.clients }}</td>
+                                <td>{{ item.clients_p }}%</td>
                             </tr>
                         </tbody>
                     </table>
@@ -231,9 +231,9 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="item in ctrl.usages">
-                                <td>{$ item.app $}</td>
-                                <td>{$ item.usage $}KB</td>
-                                <td>{$ item.usage_p $}%</td>
+                                <td>{{ item.app }}</td>
+                                <td>{{ item.usage }}KB</td>
+                                <td>{{ item.usage_p }}%</td>
                             </tr>
                         </tbody>
                     </table>

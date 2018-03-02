@@ -6,7 +6,7 @@
 
 <section class="content-header" ng-controller="ContentHeaderController as chctrl">
     <h1>
-        {$ chctrl.state.data.title $}
+        {{ chctrl.state.data.title }}
     </h1>
 </section>
 
@@ -31,16 +31,16 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="log in ctrl.confirmationLogs" align="center">
-                                <td>{$ log.id $}</td>
+                                <td>{{ log.id }}</td>
                                 <td>
-                                    <button class="btn btn-primary btn-xs" ui-sref="service.open({serviceId: {$ log.service $} })">
-                                        <span><i class="fa fa-eye" style="padding-right: 5px"></i>Open ({$ log.service $})</span>
+                                    <button class="btn btn-primary btn-xs" ui-sref="service.open({serviceId: {{ log.service }} })">
+                                        <span><i class="fa fa-eye" style="padding-right: 5px"></i>Open ({{ log.service }})</span>
                                     </button>
                                 </td>
-                                <td>{$ log.date $}</td>
-                                <td>{$ log.status $}</td>
-                                <td>{$ log.sent_to $}</td>
-                                <td>{$ log.note $}</td>
+                                <td>{{ log.date }}</td>
+                                <td>{{ log.status }}</td>
+                                <td>{{ log.sent_to }}</td>
+                                <td>{{ log.note }}</td>
                             </tr>
                         </tbody>
                     </table>

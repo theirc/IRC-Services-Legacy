@@ -4,8 +4,8 @@
 
 <section class="content-header" ng-controller="ContentHeaderController as chctrl">
     <h1>
-        Service {$ ctrl.isMapView ? 'Map' : 'List' $}
-        <small>Claimed by: {$ ctrl.provider.name_en$}</small>
+        Service {{ ctrl.isMapView ? 'Map' : 'List' }}
+        <small>Claimed by: {{ ctrl.provider.name_en}}</small>
     </h1>
 </section>
 

@@ -3,14 +3,14 @@
 <div class="service-info-container" ng-class="{'info-above': showServiceInfo, 'below': !showServiceInfo, 'hidden': !showServiceInfo}">
     <div class="service-info-header" ui-sref="service.open({serviceId: serviceInfo.id})">
         <div class="service-info-icon">
-            <i class="fa fa-3x {$ serviceInfo.icon ? serviceInfo.icon : 'fa-map-marker' $}"></i>
+            <i class="fa fa-3x {{ serviceInfo.icon ? serviceInfo.icon : 'fa-map-marker' }}"></i>
         </div>
         <div class="service-info-name">
-            <span>{$ serviceInfo.name $}</span><br>
-            <span>{$ serviceInfo.provider.name $}</span>
+            <span>{{ serviceInfo.name }}</span><br>
+            <span>{{ serviceInfo.provider.name }}</span>
         </div>
     </div>
     <div class="service-info-description">
-        <span>{$ serviceInfo.description $}</span>
+        <span>{{ serviceInfo.description }}</span>
     </div>
 </div>

@@ -1,18 +1,18 @@
 <div ng-class="{'page-selected': ctrl.isActive(ctrl.page), 'page-highlighted': ctrl.page.highlighted}" style="flex:1">
     <div class="page-header"
-         id="page-header-{$ ctrl.page.slug $}"
+         id="page-header-{{ ctrl.page.slug }}"
          ng-click="ctrl.togglePage()">
         <div class="page-header-inner">
-            <i class="fa {$ ctrl.page.icon $}"></i>
-            <span class="title">{$ ctrl.page.translations.en.title || ctrl.page.title || ctrl.page.slug $}</span>
+            <i class="fa {{ ctrl.page.icon }}"></i>
+            <span class="title">{{ ctrl.page.translations.en.title || ctrl.page.title || ctrl.page.slug }}</span>
         </div>
         <div class="buttons" style="align-items: center" ng-click="$event.stopPropagation()">
             <button class="page-button page-button-transparent-green button-tooltip"
                     style="border: none"
                     ng-if="ctrl.page.published && ctrl.isStaging()"
                     ng-disabled="true"
-                    data-old-tooltip="Page was published: {$ ctrl.page.published $} and {$ ctrl.hasChanged(ctrl.page.has_changed) $} been changed since that time.">
-                <span>Published{$ ctrl.getInfo(ctrl.page.has_changed) $}</span>
+                    data-old-tooltip="Page was published: {{ ctrl.page.published }} and {{ ctrl.hasChanged(ctrl.page.has_changed) }} been changed since that time.">
+                <span>Published{{ ctrl.getInfo(ctrl.page.has_changed) }}</span>
             </button>
             <div class="page-icons">
                 <i class="fa fa-window-restore tooltip-icon" data-old-tooltip="Pop up"

@@ -1,7 +1,7 @@
 <section class="content-header" ng-controller="ContentHeaderController as chctrl">
     <h1>
-        {$ chctrl.state.data.title $}
-        <small>{$ ctrl.region.name$}</small>
+        {{ chctrl.state.data.title }}
+        <small>{{ ctrl.region.name}}</small>
     </h1>
 </section>
 <form role="form" name="regionForm">
@@ -58,15 +58,15 @@
                             <div class="nav-tabs-custom">
                                 <ul class="nav nav-tabs">
                                     <li ng-class="{active: ctrl.selectedLanguageTab == (lang[0]||'en')}" ng-repeat="lang in languages">
-                                        <a href="" ng-click="ctrl.selectedLanguageTab = lang[0]" data-toggle="tab" aria-expanded="true">{$ lang[1] $}</a>
+                                        <a href="" ng-click="ctrl.selectedLanguageTab = lang[0]" data-toggle="tab" aria-expanded="true">{{ lang[1] }}</a>
                                     </li>
                                 </ul>
                                 <div class="tab-content">
                                     <div class="tab-pane" ng-class="{active: ctrl.selectedLanguageTab == (lang[0]||'en')}" ng-repeat="lang in languages">
                                         <div class="row">
                                             <div class="form-group col-xs-12">
-                                                <label for="{$ idHelper('title',lang[0]) $}">Title</label>
-                                                <input type="text" class="form-control" ng-model="ctrl.object[idHelper('title',lang[0])]" placeholder="Title in {$ lang[1] $}">
+                                                <label for="{{ idHelper('title',lang[0]) }}">Title</label>
+                                                <input type="text" class="form-control" ng-model="ctrl.object[idHelper('title',lang[0])]" placeholder="Title in {{ lang[1] }}">
                                             </div>
                                         </div>
                                     </div>

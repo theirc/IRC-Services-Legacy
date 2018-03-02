@@ -16,12 +16,12 @@
             </thead>
             <tbody>
             <tr ng-repeat="page in ctrl.outdated">
-                <td>{$ page.translations.en.title $}</td>
-                <td>{$ page.slug $}</td>
+                <td>{{ page.translations.en.title }}</td>
+                <td>{{ page.slug }}</td>
                 <td>
                     <a class="btn btn-primary btn-xs" ng-repeat="region in page.regions" style="margin-right: 5px"
                        ui-sref="pageDetails({environment: 'staging', countrySlug: region.parent_slug || region.slug, regionSlug: region.slug, pageSlug: page.slug})">
-                        {$ region.name $}{$ region.parent_name && ', ' + region.parent_name $}
+                        {{ region.name }}{{ region.parent_name && ', ' + region.parent_name }}
                     </a>
                     <span ng-if="!page.regions.length">Content is not assigned to any region.</span>
                 </td>

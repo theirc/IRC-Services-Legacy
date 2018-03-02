@@ -21,7 +21,7 @@
         <div class="col-lg-3 col-xs-6">
             <div class="small-box bg-green">
                 <div class="inner">
-                    <h3>{$ ctrl.popStats.totalSessionsCount || 0 $}</h3>
+                    <h3>{{ ctrl.popStats.totalSessionsCount || 0 }}</h3>
                     <p>Sessions</p>
                 </div>
                 <div class="icon">
@@ -32,7 +32,7 @@
         <div class="col-lg-3 col-xs-6">
             <div class="small-box bg-blue">
                 <div class="inner">
-                    <h3>{$ ctrl.popStats.totalUsersCount || 0 $}</h3>
+                    <h3>{{ ctrl.popStats.totalUsersCount || 0 }}</h3>
                     <p>Unique users</p>
                 </div>
                 <div class="icon">
@@ -43,7 +43,7 @@
         <div class="col-lg-3 col-xs-6">
             <div class="small-box bg-yellow">
                 <div class="inner">
-                    <h3>{$ ctrl.popStats.bounceRateAverage | number: 2 || 0 $}%</h3>
+                    <h3>{{ ctrl.popStats.bounceRateAverage | number: 2 || 0 }}%</h3>
                     <p>Bounce rate</p>
                 </div>
                 <div class="icon">
@@ -54,7 +54,7 @@
         <div class="col-lg-3 col-xs-6">
             <div class="small-box bg-red">
                 <div class="inner">
-                    <h3>{$ ctrl.popStats.pageviewsPerSessionAverage | number: 2 || 0 $}</h3>
+                    <h3>{{ ctrl.popStats.pageviewsPerSessionAverage | number: 2 || 0 }}</h3>
                     <p>Pageviews / Session</p>
                 </div>
                 <div class="icon">
@@ -65,7 +65,7 @@
         <div class="col-lg-3 col-xs-6">
             <div class="small-box bg-yellow">
                 <div class="inner">
-                    <h3>{$ ctrl.popStats.sessionDurationAverage || 0 $}</h3>
+                    <h3>{{ ctrl.popStats.sessionDurationAverage || 0 }}</h3>
                     <p>Average Session duration</p>
                 </div>
                 <div class="icon">

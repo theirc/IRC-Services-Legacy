@@ -4,7 +4,7 @@
         <span class="logo-mini">
             <b>R</b>.I</span>
         <span class="logo-lg">
-            <img src="{$ staticUrl $}img/logo.png" />
+            <img src="{{ staticUrl }}img/logo.png" />
         </span>
     </a>
 
@@ -32,7 +32,7 @@
                                     <a href="" class="dropdown-provider" ng-click="ctrl.impersonate(p)" style="color: #777; white-space: normal;" ng-style="{
                                        'font-weight': p.id == selectedProvider.id ? 'bold' : 'normal'
                                        }">
-                                        {$ p.name $}
+                                        {{ p.name }}
                                     </a>
                                 </li>
                             </ul>

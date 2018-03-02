@@ -10,7 +10,7 @@
         <div class="col-lg-3 col-xs-6">
             <div class="small-box bg-green">
                 <div class="inner">
-                    <h3>{$ ctrl.analytics.published_count $}</h3>
+                    <h3>{{ ctrl.analytics.published_count }}</h3>
                     <p>Published Content</p>
                 </div>
                 <div class="icon">
@@ -23,7 +23,7 @@
         <div class="col-lg-3 col-xs-6">
             <div class="small-box bg-yellow">
                 <div class="inner">
-                    <h3>{$ ctrl.analytics.outdated_count $}</h3>
+                    <h3>{{ ctrl.analytics.outdated_count }}</h3>
                     <p>Outdated Published Content</p>
                 </div>
                 <div class="icon">
@@ -96,10 +96,10 @@
                         </thead>
                         <tbody>
                         <tr ng-repeat="region in ctrl.analytics.regions">
-                            <td>{$ region.name $}</td>
-                            <td>{$ region.content_count $}</td>
-                            <td>{$ region.subregions $}</td>
-                            <td>{$ region.avg_content_count | number: 1 $}</td>
+                            <td>{{ region.name }}</td>
+                            <td>{{ region.content_count }}</td>
+                            <td>{{ region.subregions }}</td>
+                            <td>{{ region.avg_content_count | number: 1 }}</td>
                         </tr>
                         </tbody>
                     </table>
