@@ -10,7 +10,7 @@ from django.contrib.gis.db import models
 from django.contrib.gis.geos import Point
 from django.contrib.sites.models import Site
 from django.core.exceptions import ValidationError
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db.transaction import atomic
 from django.template.loader import render_to_string
@@ -373,6 +373,7 @@ class Service(TranslatableModel, models.Model):
     # there should be no more than two, one in current status and/or one in some other
     # status.
     STATUS_DRAFT = 'draft'
+    STATUS_PRIVATE = 'private'
     STATUS_CURRENT = 'current'
     STATUS_REJECTED = 'rejected'
     STATUS_CANCELED = 'canceled'
@@ -390,6 +391,9 @@ class Service(TranslatableModel, models.Model):
         (STATUS_CANCELED, _('canceled')),
         # The record is obsolete and we don't want to see it anymore
         (STATUS_ARCHIVED, _('archived')),
+
+        # Show only in the backend
+        (STATUS_PRIVATE, _('private')),
     )
     status = models.CharField(
         _('status'),

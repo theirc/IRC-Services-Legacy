@@ -188,6 +188,7 @@ angular.module('adminApp')
         vm.transifexStatus = "---";
         vm.statusChoices = {
             'draft': 'Draft',
+            'private': 'Private',
             'current': 'Current',
             'rejected': 'Rejected',
             'canceled': 'Canceled',
