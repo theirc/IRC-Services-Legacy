@@ -11,13 +11,19 @@ ADD package.json /code/
 ADD Gulpfile.js /code/
 
 RUN pip install -r requirements.txt
+ENV SSH_PASSWD "root:Docker!"
 
 RUN curl -sL https://deb.nodesource.com/setup_9.x | bash -
-RUN apt-get update \
-        && apt-get update \
-        && apt-get  install -y  `cat /code/apt-packages`
-
+RUN apt-get install -y software-properties-common python-software-properties --fix-missing
+#RUN add-apt-repository ppa:maxmind/ppa
+RUN apt-get update 
+RUN apt-get install -y  `cat /code/apt-packages`
 RUN apt-get install -y nodejs
+#RUN apt-get install libmaxminddb0 libmaxminddb-dev mmdb-bin
+# ssh
+RUN apt-get install -y --no-install-recommends dialog \
+        && apt-get install -y --no-install-recommends openssh-server \
+        && echo "$SSH_PASSWD" | chpasswd 
 
 ADD . /code/
 
@@ -30,13 +36,15 @@ RUN gulp
 RUN python manage.py collectstatic --noinput
 #RUN python manage.py migrate --noinput
 
-# ssh
-ENV SSH_PASSWD "root:Docker!"
-RUN apt-get update \
-        && apt-get install -y --no-install-recommends dialog \
-        && apt-get update \
-        && apt-get install -y --no-install-recommends openssh-server \
-        && echo "$SSH_PASSWD" | chpasswd 
+RUN mkdir /code/geo_db
+RUN curl http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.tar.gz > /code/geo_db/city.tar.gz
+RUN curl http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country.tar.gz > /code/geo_db/country.tar.gz
+RUN tar xvzf /code/geo_db/city.tar.gz
+RUN tar xvzf /code/geo_db/country.tar.gz
+
+RUN mv /code/geo_db/GeoLite2-City_*/*.mmdb /code/geo_db/
+RUN mv /code/geo_db/GeoLite2-Country_*/*.mmdb /code/geo_db/
+
 
 COPY sshd_config /etc/ssh/
 COPY nginx.conf /etc/nginx/sites-enabled/site.conf

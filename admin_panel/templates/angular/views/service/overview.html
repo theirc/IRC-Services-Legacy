@@ -1,4 +1,3 @@
-
 <section class="content-header" ng-controller="ContentHeaderController as chctrl">
     <h1>
         Service {{ ctrl.isMapView ? 'Map' : 'List' }}
@@ -8,19 +7,23 @@
 
 <div class="btn-group" style="padding: 15px 0 0 15px;">
     <button class="btn btn-default" ng-click="ctrl.listView()" style="border-bottom-left-radius: 0;">LIST</button>
-    <button class="btn btn-default"  ng-click="ctrl.mapView()" style="border-bottom-right-radius: 0;">MAP</button>
+    <button class="btn btn-default" ng-click="ctrl.mapView()" style="border-bottom-right-radius: 0;">MAP</button>
 </div>
-
-<div ng-if="!ctrl.isMapView" class="service-overview-list">
-    <div class="box">
-        <div class="box-body table-responsive">
-            <table datatable="" dt-options="ctrl.dtOptions" dt-columns="ctrl.dtColumns"
-                   dt-instance="ctrl.dtInstance" id="example1" class="table table-bordered table-striped">
-            </table>
+<section class="content">
+    <div ng-if="!ctrl.isMapView" >
+        <div class="box">
+            <div class="box-body table-responsive">
+                <table datatable="" dt-options="ctrl.dtOptions" dt-columns="ctrl.dtColumns" dt-instance="ctrl.dtInstance" id="example1" class="table table-bordered table-striped">
+                </table>
+            </div>
         </div>
     </div>
-</div>
+    <div ng-if="ctrl.isMapView">
 
-<div ng-if="ctrl.isMapView" class="service-overview-map">
-    <services-map services="ctrl.services" is-mobile="ctrl.isMobile()" ng-if="ctrl.isMapView"></services-map>
-</div>
+        <div class="box">
+            <div class="box-body" style="height: calc(100vh - 250px);">
+                <services-map services="ctrl.services" is-mobile="ctrl.isMobile()" ng-if="ctrl.isMapView"></services-map>
+            </div>
+        </div>
+    </div>
+</section>
