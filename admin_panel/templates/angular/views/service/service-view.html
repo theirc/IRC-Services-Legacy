@@ -15,10 +15,11 @@
                     <div class="row" read-only-form is-editing="ctrl.isEditing" ng-if="user.isSuperuser">
                         <div class="col-xs-12">
                             <div class="box box-default">
+                                <div class="box-header">
+                                    <h3 class="box-title">Provider</h3>
+                                </div>
                                 <div class="box-body">
                                     <div class="form-group col-xs-12" ng-if="user.isSuperuser && ctrl.isNew">
-                                        <label for="provider">Provider</label>
-
                                         <ui-select ng-model="ctrl.service.provider" theme="bootstrap" ng-disabled="!ctrl.isEditing" ng-change="ctrl.generateSlug()"
                                             ng-required="true">
                                             <ui-select-match placeholder="Select the provider or search for it on the list">{{ $select.selected.name | limitTo: 100 }}</ui-select-match>
@@ -29,7 +30,6 @@
                                     </div>
 
                                     <div class="form-group col-xs-12" ng-if="user.isSuperuser && !ctrl.isNew">
-                                        <label for="provider">Provider</label>
                                         <ui-select ng-model="ctrl.service.provider.id" theme="bootstrap" ng-disabled="!ctrl.isEditing" ng-required="true">
                                             <ui-select-match placeholder="Select the provider or search for it on the list">{{ $select.selected.name | limitTo: 100 }}</ui-select-match>
                                             <ui-select-choices repeat="item.id as item in ctrl.providers | filter: $select.search">
@@ -48,11 +48,10 @@
                             <h3 class="box-title">Translated Fields</h3>
                             <div class="transifex-container pull-right" ng-if="!ctrl.isNew">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-default" ng-if="user.isSuperuser && !ctrl.isNew" ng-click="ctrl.pushToTransifex()" ng-disabled="!ctrl.isEditing">
+                                    <button type="button" class="btn btn-default" ng-if="user.isSuperuser && !ctrl.isNew" ng-click="ctrl.pushToTransifex()">
                                         <i class="fa fa-arrow-up"></i>Push to transifex
                                     </button>
-                                    <button type="button" class="btn btn-default" ng-if="user.isSuperuser && !ctrl.isNew" ng-click="ctrl.pullFromTransifex()"
-                                        ng-disabled="!ctrl.isEditing">
+                                    <button type="button" class="btn btn-default" ng-if="user.isSuperuser && !ctrl.isNew" ng-click="ctrl.pullFromTransifex()">
                                         <i class="fa fa-arrow-down"></i>Pull from transifex
                                     </button>
                                 </div>
@@ -432,7 +431,7 @@
             <footer-action-bar>
                 <div style="width: 100%">
                     <button type="button" class="btn btn-warning pull-left" ng-click="ctrl.goBack()">Back</button>
-                    
+
                     <div class="btn-group pull-right">
                         <button type="button" class="btn btn-primary" ng-if="!ctrl.isEditing" ng-click="ctrl.startEditing()">Edit
                         </button>

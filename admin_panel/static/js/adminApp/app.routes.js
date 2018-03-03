@@ -98,35 +98,18 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 				allowAnonymous: true,
 			},
 			views: {
-				"login@": {
-					template: "<div></div>",
-					controller: ($state, $rootScope) => {
-						if (!$rootScope.user) {
-							$state.go("login");
-						}
-					},
-				},
+
 				"main@": {
 					template: "<div></div>",
 					controller: ($state, $rootScope) => {
 						/*
 						 * TODO: figure out a default dashboard per user
 						 * */
-						let locationPath = window.location.hash;
-						if (locationPath.includes("next=")) {
-							let redirectUrl = locationPath
-								.split("=")[1]
-								.split("%23")
-								.join("#")
-								.split("~2F")
-								.join("/");
-							window.location.assign(redirectUrl);
-						} else {
-							if ($rootScope.user.isSuperuser) {
-								$state.go("provider.list");
-							} else {
-								$state.go("service.list");
-							}
+
+						if ($rootScope.selectedProvider) {
+							$state.go("service.list");
+						} else if($rootScope.isSuperuser) {
+							$state.go("provider.list");
 						}
 					},
 				},
@@ -273,6 +256,83 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 				},
 			},
 		})
+		.state("service.create", {
+			url: "/create",
+			data: {
+				title: "Service Create",
+			},
+			views: {
+				"main@": {
+					templateUrl: "views/service/service-view.html",
+					controller: "ServiceOpenController as ctrl",
+				},
+			},
+			resolve: {
+				provider: function (Restangular, $rootScope) {
+					if ($rootScope.selectedProvider) {
+						return Restangular.one("providers", $rootScope.selectedProvider.id).get();
+					} else {
+						var dfd = $q.defer();
+						$rootScope.$watch("selectedProvider", function () {
+							conosle.log("changed??", $rootScope.selectedProvider);
+							Restangular.one("providers", $rootScope.selectedProvider.id)
+								.get()
+								.then(function (p) {
+									dfd.resolve(p);
+								});
+						});
+
+						return dfd;
+					}
+				},
+				providers: function (ProviderService, Restangular, $q) {
+					var dfd = $q.defer();
+					ProviderService.getList().then(function (p) {
+						var providers = p.plain().map(function (ps) {
+							return {
+								name: ps.name,
+								id: ps.id,
+							};
+						});
+						dfd.resolve(providers);
+					});
+					return dfd.promise;
+				},
+				serviceTypes: function (CommonDataService) {
+					return CommonDataService.getServiceTypes();
+				},
+				regions: function allRegions(GeoRegionService, $q, $window) {
+					var dfd = $q.defer();
+					if ($window.sessionStorage.allRegions) {
+						dfd.resolve(JSON.parse($window.sessionStorage.allRegions));
+					} else {
+						GeoRegionService.getList({
+							exclude_geometry: true
+						}).then(function (r) {
+							var regions = r.plain().map(function (r1) {
+								return {
+									name: r1.name,
+									centroid: r1.centroid,
+									id: r1.id,
+									slug: r1.slug,
+								};
+							});
+
+							$window.sessionStorage.allRegions = JSON.stringify(regions);
+							dfd.resolve(regions);
+						});
+					}
+					return dfd.promise;
+				},
+				service: function () {
+					return {};
+				},
+				tags: Restangular => Restangular.all("service-tag").getList(),
+				confirmationLogs: () => {
+					return {};
+				},
+			},
+		})
 		.state("service.open", {
 			url: "/:serviceId",
 			data: {
@@ -371,83 +431,6 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 					return Restangular.one("services").customGET("preview", {
 						id: $stateParams.serviceId
 					});
-				},
-			},
-		})
-		.state("service.create", {
-			url: "/create",
-			data: {
-				title: "Service Create",
-			},
-			views: {
-				"main@": {
-					templateUrl: "views/service/service-view.html",
-					controller: "ServiceOpenController as ctrl",
-				},
-			},
-			resolve: {
-				provider: function (Restangular, $rootScope) {
-					if ($rootScope.selectedProvider) {
-						return Restangular.one("providers", $rootScope.selectedProvider.id).get();
-					} else {
-						var dfd = $q.defer();
-						$rootScope.$watch("selectedProvider", function () {
-							conosle.log("changed??", $rootScope.selectedProvider);
-							Restangular.one("providers", $rootScope.selectedProvider.id)
-								.get()
-								.then(function (p) {
-									dfd.resolve(p);
-								});
-						});
-
-						return dfd;
-					}
-				},
-				providers: function (ProviderService, Restangular, $q) {
-					var dfd = $q.defer();
-					ProviderService.getList().then(function (p) {
-						var providers = p.plain().map(function (ps) {
-							return {
-								name: ps.name,
-								id: ps.id,
-							};
-						});
-						dfd.resolve(providers);
-					});
-					return dfd.promise;
-				},
-				serviceTypes: function (CommonDataService) {
-					return CommonDataService.getServiceTypes();
-				},
-				regions: function allRegions(GeoRegionService, $q, $window) {
-					var dfd = $q.defer();
-					if ($window.sessionStorage.allRegions) {
-						dfd.resolve(JSON.parse($window.sessionStorage.allRegions));
-					} else {
-						GeoRegionService.getList({
-							exclude_geometry: true
-						}).then(function (r) {
-							var regions = r.plain().map(function (r1) {
-								return {
-									name: r1.name,
-									centroid: r1.centroid,
-									id: r1.id,
-									slug: r1.slug,
-								};
-							});
-
-							$window.sessionStorage.allRegions = JSON.stringify(regions);
-							dfd.resolve(regions);
-						});
-					}
-					return dfd.promise;
-				},
-				service: function () {
-					return {};
-				},
-				tags: Restangular => Restangular.all("service-tag").getList(),
-				confirmationLogs: () => {
-					return {};
 				},
 			},
 		})
@@ -725,6 +708,55 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 				},
 			},
 		})
+		.state("provider.create", {
+			url: "/create",
+			data: {
+				title: "Service Provider Create",
+			},
+			views: {
+				"main@": {
+					templateUrl: "views/provider/view.html",
+					controller: "ProviderOpenController as ctrl",
+				},
+			},
+			resolve: {
+				providerTypes: function (CommonDataService) {
+					return CommonDataService.getProviderTypes();
+				},
+				serviceAreas: function (CommonDataService) {
+					return CommonDataService.getServiceAreas();
+				},
+				systemUsers: function (CommonDataService) {
+					return CommonDataService.getUsersForLookup();
+				},
+				provider: function () {
+					return {};
+				},
+				regions: function allRegions(GeoRegionService, $q, $window) {
+					var dfd = $q.defer();
+					if ($window.sessionStorage.allRegions) {
+						dfd.resolve(JSON.parse($window.sessionStorage.allRegions));
+					} else {
+						GeoRegionService.getList({
+							exclude_geometry: true
+						}).then(function (r) {
+							var regions = r.plain().map(function (r1) {
+								return {
+									name: r1.name,
+									centroid: r1.centroid,
+									id: r1.id,
+									slug: r1.slug,
+								};
+							});
+
+							$window.sessionStorage.allRegions = JSON.stringify(regions);
+							dfd.resolve(regions);
+						});
+					}
+					return dfd.promise;
+				},
+			},
+		})
 		.state("provider.open", {
 			url: "/:id",
 			data: {
@@ -790,55 +822,6 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 				} else {
 					$state.go('home');
 				}
-			},
-		})
-		.state("provider.create", {
-			url: "/create",
-			data: {
-				title: "Service Provider Create",
-			},
-			views: {
-				"main@": {
-					templateUrl: "views/provider/view.html",
-					controller: "ProviderOpenController as ctrl",
-				},
-			},
-			resolve: {
-				providerTypes: function (CommonDataService) {
-					return CommonDataService.getProviderTypes();
-				},
-				serviceAreas: function (CommonDataService) {
-					return CommonDataService.getServiceAreas();
-				},
-				systemUsers: function (CommonDataService) {
-					return CommonDataService.getUsersForLookup();
-				},
-				provider: function () {
-					return {};
-				},
-				regions: function allRegions(GeoRegionService, $q, $window) {
-					var dfd = $q.defer();
-					if ($window.sessionStorage.allRegions) {
-						dfd.resolve(JSON.parse($window.sessionStorage.allRegions));
-					} else {
-						GeoRegionService.getList({
-							exclude_geometry: true
-						}).then(function (r) {
-							var regions = r.plain().map(function (r1) {
-								return {
-									name: r1.name,
-									centroid: r1.centroid,
-									id: r1.id,
-									slug: r1.slug,
-								};
-							});
-
-							$window.sessionStorage.allRegions = JSON.stringify(regions);
-							dfd.resolve(regions);
-						});
-					}
-					return dfd.promise;
-				},
 			},
 		})
 
