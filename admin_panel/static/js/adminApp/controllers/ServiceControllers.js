@@ -473,7 +473,6 @@ angular.module('adminApp')
             return {
                 autoParagraph: false,
                 allowedContent: true,
-                contentsCss: staticUrl + 'css/ckeditor.css',
                 height: 100
             };
         };

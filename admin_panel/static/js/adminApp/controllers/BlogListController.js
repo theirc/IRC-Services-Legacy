@@ -2,7 +2,7 @@
  * This is the dumping ground for all of the controlled list controllers
  * */
 angular.module('adminApp')
-    .controller('BlogListController', GenerateListController('BlogService', (v, i)=> {
+    .controller('BlogListController', GenerateListController('BlogService', (v, i) => {
         let tableUtils = i.get('tableUtils');
         let languages = i.get('languages');
         let DTColumnBuilder = i.get('DTColumnBuilder');
@@ -18,14 +18,14 @@ angular.module('adminApp')
                 }
                 if (data.hasOwnProperty('errors')) {
                     return data.errors;
-                }
-                else {
+                } else {
                     let langDict = _.fromPairs(languages);
-                    return _.map(data, (v, k)=> `${langDict[k]}: ${v.completed}`).join('; ');
+                    return _.map(data, (v, k) => `${langDict[k]}: ${v.completed}`).join('; ');
                 }
             }),
             renderColumn().withOption('width', '200px')
         ];
+
         function renderColumn() {
             return DTColumnBuilder.newColumn(null).withTitle('Actions').notSortable().renderWith(renderActions);
 
@@ -42,5 +42,5 @@ angular.module('adminApp')
         }
 
         v.createLink = false;
-    }))
-;
+        v.dtOptions = v.dtOptions.withOption("order", [[1, "desc"]]);
+    }));
