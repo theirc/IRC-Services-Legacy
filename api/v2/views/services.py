@@ -22,7 +22,7 @@ from rest_framework.decorators import list_route, detail_route
 from rest_framework.exceptions import ValidationError as DRFValidationError
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
-from services.models import Service, Provider, ServiceType, ServiceArea, ServiceTag, ProviderType, ServiceConfirmationLog
+from services.models import Service, Provider, ServiceType, ServiceArea, ServiceTag, ProviderType, ServiceConfirmationLog, ContactInformation
 from .utils import StandardResultsSetPagination
 from ..filters import ServiceFilter, CustomServiceFilter, RelativesServiceFilter, WithParentsServiceFilter
 from django_filters import rest_framework as django_filters
@@ -456,9 +456,10 @@ class ServiceViewSet(viewsets.ModelViewSet):
         new_name = request.query_params.get('new_name')
         if service_id and new_name:
             service_to_copy = Service.objects.prefetch_related(
-                'tags', 'types').get(id=service_id)
+                'tags', 'types').get(id=service_id)            
             tags = service_to_copy.tags.all()
             types = service_to_copy.types.all()
+            contact_informations = service_to_copy.contact_informations.all()
             # Clear service data
             service_to_copy.pk = None
             service_to_copy.slug = None
@@ -475,6 +476,7 @@ class ServiceViewSet(viewsets.ModelViewSet):
             service_to_copy.slug = new_slug
             service_to_copy.tags.add(*tags)
             service_to_copy.types.add(*types)
+            service_to_copy.contact_informations.add(*contact_informations)
             service_to_copy.save()
             return Response({'service_id': service_to_copy.id}, status=201)
         else:
