@@ -448,7 +448,7 @@ ALLOWED_HOSTS = ['*']
 DEBUG = str(os.environ.get('DEBUG', 'False')).lower() == 'true'
 TEMPLATE_DEBUG = DEBUG
 EMAIL_SUBJECT_PREFIX = '[RefugeeInfo] '
-DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'noreply@rescue.org')
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'noreply@signpost.ngo')
 
 SESSION_COOKIE_SECURE = False
 SESSION_COOKIE_HTTPONLY = False
@@ -491,8 +491,9 @@ RESULT_BACKEND = CELERY_RESULT_BACKEND = os.environ.get(
 """
 Service Confirmation Newsletter
 """
-NEWSLETTER_ENABLED = str(os.environ.get(
-    'NEWSLETTER_ENABLED', 'False')).lower() == 'true'
+NEWSLETTER_ENABLED = False
+# str(os.environ.get(
+#     'NEWSLETTER_ENABLED', 'False')).lower() == 'true'
 NEWSLETTER_TEST = str(os.environ.get(
     'NEWSLETTER_TEST', 'False')).lower() == 'true'
 CONFIRM_TIME = os.environ.get('CONFIRM_TIME', 90)

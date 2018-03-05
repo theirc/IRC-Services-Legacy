@@ -36,15 +36,6 @@ RUN gulp
 RUN python manage.py collectstatic --noinput
 #RUN python manage.py migrate --noinput
 
-RUN mkdir /code/geo_db
-RUN curl http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.tar.gz > /code/geo_db/city.tar.gz
-RUN curl http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country.tar.gz > /code/geo_db/country.tar.gz
-RUN tar xvzf /code/geo_db/city.tar.gz
-RUN tar xvzf /code/geo_db/country.tar.gz
-
-RUN mv /code/geo_db/GeoLite2-City_*/*.mmdb /code/geo_db/
-RUN mv /code/geo_db/GeoLite2-Country_*/*.mmdb /code/geo_db/
-
 
 COPY sshd_config /etc/ssh/
 COPY nginx.conf /etc/nginx/sites-enabled/site.conf
