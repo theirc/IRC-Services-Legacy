@@ -95,13 +95,13 @@ angular.module('adminApp')
                     let transifexStatus = '';
                     langs.forEach(function (lang) {
                         if (lang[0] != 'en') {
-                            transifexStatus += `${lang[1]}: ${data[lang[0]]} `;
+                            transifexStatus += `${lang[1]}: ${data[lang[0]] || 'N/A'}<br />`;
                         }
                     });
                     return transifexStatus;
                 }
             }),
-            tableUtils.newServiceActionColumn()
+            tableUtils.newServiceActionColumn().withOption('width', '200px')
         ];
 
         vm.dtInstance = {};
