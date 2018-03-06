@@ -148,7 +148,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 			},
 			views: {
 				"main@": {
-					templateUrl: "views/service/list-view.html",
+					templateUrl: "views/service/private-list.html",
 					controller: "ServicePrivateViewController as ctrl",
 				},
 			},

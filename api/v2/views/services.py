@@ -306,7 +306,6 @@ class PrivateProviderViewSet(FilterByRegionMixin, viewsets.ModelViewSet):
 
 class PrivateServiceViewSet(FilterByRegionMixin, viewsets.ModelViewSet):
     filter_class = ServiceFilter
-
     queryset = Service.objects.select_related(
         'provider',
         'type',
@@ -317,7 +316,6 @@ class PrivateServiceViewSet(FilterByRegionMixin, viewsets.ModelViewSet):
 
     serializer_class = serializers_v2.ServiceSerializer
     pagination_class = StandardResultsSetPagination
-    search_fields = ()
     filter_backends = (django_filters.DjangoFilterBackend ,filters.OrderingFilter, SearchFilter)
 
     def get_queryset(self):

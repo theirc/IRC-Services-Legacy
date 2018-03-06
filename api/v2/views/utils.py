@@ -18,7 +18,7 @@ class StandardResultsSetPagination(pagination.PageNumberPagination):
 class FilterByRegionMixin(object):
     def get_queryset(self):
         qs = super(FilterByRegionMixin, self).get_queryset()
-        if self.request.region:
+        if hasattr(self.request, 'region'):
             return qs.filter(Q(region=self.request.region.id) | Q(region__parent=self.request.region.id) | Q(region__parent__parent=self.request.region.id))
         else:
             return qs

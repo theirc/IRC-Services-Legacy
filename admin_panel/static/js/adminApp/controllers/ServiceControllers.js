@@ -716,8 +716,9 @@ angular
     .controller('ServicePrivateViewController', function (tableUtils, $scope, providers, serviceTypes, regions, $filter, service_languages, ServiceService) {
         let vm = this;
         vm.providers = providers;
+        vm.serviceTypes = serviceTypes;
         let langs = service_languages;
-        vm.dtOptions = tableUtils.defaultsWithServiceNameAndFilterAndSearch('PrivateServiceService');
+        vm.dtOptions = tableUtils.defaultsWithServiceNameAndFilter('PrivateServiceService', {});
         vm.dtColumns = [
             tableUtils
                 .newColumn('id')
@@ -735,26 +736,36 @@ angular
                     return types.map((type) => type.name).join(', ');
                 }),
             tableUtils
+                .newColumn('address_city')
+                .withTitle('City'),
+            tableUtils
                 .newColumn('updated_at')
                 .withTitle('Updated at')
                 .renderWith(function (data) {
                     return $filter('date')(data, 'medium');
-                }),
-            tableUtils
-                .newColumn('region')
-                .withTitle('Region')
-                .renderWith(function (data) {
-                    return data
-                        ? data.name
-                        : '';
-                }),
-            tableUtils
-                .newColumn('status')
-                .withTitle('Status')
-
+                })
         ];
 
+        if ($scope.user.isSuperuser) {
+            vm
+                .dtColumns
+                .push(tableUtils.newServiceActionColumn().withOption('width', '200px'));
+        }
+        
+        vm.reloadOption = (n) => {
+            let o = tableUtils.defaultsWithServiceNameAndFilter('PrivateServiceService', n);
+
+            vm
+                .dtInstance
+                .dataTable
+                .fnSettings()
+                .ajax = o.ajax
+            vm
+                .dtInstance
+                .reloadData();
+        }
         vm.dtInstance = {};
+        vm.searchCriteria = {};
 
         angular.extend($scope, vm);
     });
