@@ -141,6 +141,50 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 			url: "/service",
 			abstract: true,
 		})
+		.state("service.private", {
+			url: "/private",
+			data: {
+				title: "Services",
+			},
+			views: {
+				"main@": {
+					templateUrl: "views/service/list-view.html",
+					controller: "ServicePrivateViewController as ctrl",
+				},
+			},
+			resolve: {
+				providers: function (PrivateProviderService, $rootScope, $q) {
+					return PrivateProviderService.getList().then(r=> r.plain());
+				},
+				serviceTypes: function (CommonDataService) {
+					return CommonDataService.getServiceTypes();
+				},
+				regions: function allRegions(GeoRegionService, $q, $window) {
+					var dfd = $q.defer();
+					if ($window.sessionStorage.allRegions) {
+						dfd.resolve(JSON.parse($window.sessionStorage.allRegions));
+					} else {
+						GeoRegionService.getList({
+							exclude_geometry: true
+						}).then(function (r) {
+							var regions = r.plain().map(function (r1) {
+								return {
+									name: r1.name,
+									centroid: r1.centroid,
+									id: r1.id,
+									slug: r1.slug,
+									level: r1.level,
+								};
+							});
+
+							$window.sessionStorage.allRegions = JSON.stringify(regions);
+							dfd.resolve(regions);
+						});
+					}
+					return dfd.promise;
+				},
+			},
+		})
 		.state("service.dashboard", {
 			url: "/dashboard",
 			data: {
@@ -194,6 +238,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 									centroid: r1.centroid,
 									id: r1.id,
 									slug: r1.slug,
+									level: r1.level,
 								};
 							});
 
@@ -245,6 +290,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 									centroid: r1.centroid,
 									id: r1.id,
 									slug: r1.slug,
+									level: r1.level,
 								};
 							});
 
@@ -315,6 +361,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 									centroid: r1.centroid,
 									id: r1.id,
 									slug: r1.slug,
+									level: r1.level,
 								};
 							});
 
@@ -391,6 +438,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 									centroid: r1.centroid,
 									id: r1.id,
 									slug: r1.slug,
+									level: r1.level,
 								};
 							});
 
@@ -609,6 +657,9 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 				},
 			},
 			resolve: {
+				providers: function (ProviderService, $rootScope, $q) {
+					return ProviderService.getList().then(r=> r.plain());
+				},
 				user: function (Restangular, $stateParams) {
 					return Restangular.one("users", $stateParams.id).get();
 				},
@@ -746,6 +797,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 									centroid: r1.centroid,
 									id: r1.id,
 									slug: r1.slug,
+									level: r1.level,
 								};
 							});
 
@@ -795,6 +847,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 									centroid: r1.centroid,
 									id: r1.id,
 									slug: r1.slug,
+									level: r1.level,
 								};
 							});
 
@@ -874,6 +927,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 									centroid: r1.centroid,
 									id: r1.id,
 									slug: r1.slug,
+									level: r1.level,
 								};
 							});
 
@@ -914,6 +968,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 									centroid: r1.centroid,
 									id: r1.id,
 									slug: r1.slug,
+									level: r1.level,
 								};
 							});
 

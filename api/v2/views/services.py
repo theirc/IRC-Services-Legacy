@@ -23,7 +23,7 @@ from rest_framework.exceptions import ValidationError as DRFValidationError
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from services.models import Service, Provider, ServiceType, ServiceArea, ServiceTag, ProviderType, ServiceConfirmationLog, ContactInformation
-from .utils import StandardResultsSetPagination
+from .utils import StandardResultsSetPagination, FilterByRegionMixin
 from ..filters import ServiceFilter, CustomServiceFilter, RelativesServiceFilter, WithParentsServiceFilter
 from django_filters import rest_framework as django_filters
 
@@ -298,6 +298,34 @@ class ProviderViewSet(viewsets.ModelViewSet):
                 return Response(None, status=204)
         except IntegrityError:
             return Response(errors, status=400)
+
+class PrivateProviderViewSet(FilterByRegionMixin, viewsets.ModelViewSet):
+    queryset = Provider.objects.all()
+    serializer_class = serializers_v2.ProviderSerializer
+    pagination_class = StandardResultsSetPagination
+
+class PrivateServiceViewSet(FilterByRegionMixin, viewsets.ModelViewSet):
+    filter_class = ServiceFilter
+
+    queryset = Service.objects.select_related(
+        'provider',
+        'type',
+        'region',
+        'region__parent',
+        'region__parent__parent'
+    ).prefetch_related('selection_criteria', 'tags', 'types').all()
+
+    serializer_class = serializers_v2.ServiceSerializer
+    pagination_class = StandardResultsSetPagination
+    search_fields = ()
+    filter_backends = (django_filters.DjangoFilterBackend ,filters.OrderingFilter, SearchFilter)
+
+    def get_queryset(self):
+        qs = super(PrivateServiceViewSet, self).get_queryset()
+        qs = qs.filter(status__in=[Service.STATUS_CURRENT, Service.STATUS_PRIVATE])
+        return qs
+        
+
 
 
 class ServiceViewSet(viewsets.ModelViewSet):

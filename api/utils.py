@@ -14,3 +14,4 @@ def generate_translated_fields(field, include_original_field=True):
         fields.append("{}_{}".format(field, k))
 
     return fields
+

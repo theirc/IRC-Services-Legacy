@@ -1,8 +1,9 @@
-angular.module('adminApp').controller('UserViewController', function ($rootScope, $scope, $state, $cookies, user, groups, Restangular, Upload) {
+angular.module('adminApp').controller('UserViewController', function ($rootScope, $scope, $state, $cookies, user, groups, providers, Restangular, Upload) {
     let vm = this;
 
     this.$onInit = function () {
         vm.object = user;
+        vm.providers = providers;
         vm.editOptions = {};
         vm.isNew = !vm.object.hasOwnProperty('id');
         if (vm.isNew) {
@@ -48,6 +49,7 @@ angular.module('adminApp').controller('UserViewController', function ($rootScope
     vm.updateUser = function () {
         vm.errors = null;
         let userPlain = vm.object.plain();
+        console.log(userPlain);
         userPlain.groups = userPlain.groups.map((group) => group.id);
         userPlain.is_staff = userPlain.isStaff;
         delete userPlain.isStaff;
