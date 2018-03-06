@@ -604,6 +604,9 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 				groups: function (Restangular) {
 					return Restangular.all("groups").getList();
 				},
+				providers: ()=>{
+					return [];
+				}
 			},
 		})
 

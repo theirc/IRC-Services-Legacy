@@ -62,30 +62,7 @@
                         </div>
 
                     </div>
-                    <div class="form-group col-xs-6" ng-hide="!ctrl.isNew">
-                        <label for="password">Password: </label>
-                        <input class="form-control" type="password" name="password" ng-model="ctrl.object.password" placeholder="Password" id="password"
-                            ng-required="ctrl.isNew" ng-minlength="6" ng-maxlength="128">
-                        <div class="alert alert-warning form-error" ng-if="userForm.password.$error.minlength || userForm.password.$error.maxlength ||
-                                 userForm.password.$error.required && !userForm.password.$pristine">
-                            Invalid password length
-                        </div>
-                    </div>
-
-                    <div class="form-group col-xs-6" ng-hide="ctrl.object.email !== user.email">
-                        <label for="avatar">Avatar: </label>
-                        <div class="avatar-space">
-                            <button ngf-model-invalid="errorFile" ng-model="picFile" type="button" ngf-max-size="1MB" id="avatar" name="avatar" ngf-pattern="'image/*'"
-                                ngf-accept="'image/*'" class="btn btn-primary" ngf-select="ctrl.uploadAvatar($file)">Upload file</button>
-                            <button ng-hide="!user.avatar" type="button" class="btn btn-danger" ng-click="ctrl.removeAvatar()">Remove file</button>
-                            <img src="{{ user.avatar }}" ng-hide="!user.avatar" width="45" height="45">
-                            <span ng-hide="user.avatar">No image uploaded.</span>
-                            <div class="alert alert-warning form-error" ng-show="userForm.avatar.$error.maxSize || ctrl.errors">
-                                File is too large {{ errorFile.size / 1000000|number:1}}MB: max 1MB.
-                            </div>
-                        </div>
-                    </div>
-
+                    
                     <div class="form-group col-xs-12" ng-hide="!user.isSuperuser">
                         <div class="checkbox">
                             <label>

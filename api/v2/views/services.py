@@ -26,6 +26,7 @@ from services.models import Service, Provider, ServiceType, ServiceArea, Service
 from .utils import StandardResultsSetPagination, FilterByRegionMixin
 from ..filters import ServiceFilter, CustomServiceFilter, RelativesServiceFilter, WithParentsServiceFilter
 from django_filters import rest_framework as django_filters
+from django.db.models import Count
 
 logger = logging.getLogger(__name__)
 import openpyxl
@@ -44,7 +45,7 @@ class ServiceAreaViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
     queryset = ServiceArea.objects.all()
     serializer_class = ServiceAreaSerializer
-    
+
 
 class SearchFilter(filters.SearchFilter):
     def filter_queryset(self, request, queryset, view):
@@ -56,7 +57,8 @@ class SearchFilter(filters.SearchFilter):
             return queryset
 
         pk_list = [o.pk for o in SearchQuerySet().filter(content=params)]
-        preserved = Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(pk_list)])
+        preserved = Case(*[When(pk=pk, then=pos)
+                           for pos, pk in enumerate(pk_list)])
         return queryset.filter(pk__in=pk_list).order_by(preserved)
 
 
@@ -67,14 +69,14 @@ class ProviderViewSet(viewsets.ModelViewSet):
 
     # All the text fields that are used for full-text searches (?search=XXXXX)
     search_fields = generate_translated_fields('name', False) \
-                    + generate_translated_fields('description', False) \
-                    + generate_translated_fields('focal_point_name', False) \
-                    + generate_translated_fields('address', False) \
-                    + generate_translated_fields('type__name', False) \
-                    + ['phone_number'] \
-                    + ['website'] \
-                    + ['number_of_monthly_beneficiaries'] \
-                    + ['focal_point_phone_number'] 
+        + generate_translated_fields('description', False) \
+        + generate_translated_fields('focal_point_name', False) \
+        + generate_translated_fields('address', False) \
+        + generate_translated_fields('type__name', False) \
+        + ['phone_number'] \
+        + ['website'] \
+        + ['number_of_monthly_beneficiaries'] \
+        + ['focal_point_phone_number']
 
     def update(self, request, *args, **kwargs):
         """On change to provider via the API, notify via JIRA"""
@@ -202,7 +204,7 @@ class ProviderViewSet(viewsets.ModelViewSet):
         for row in range(0, len(provider_services)):
             for col in range(0, len(headers)):
                 sheet.cell(column=col + 1, row=row +
-                                               2).value = provider_services[row][headers[col]]
+                           2).value = provider_services[row][headers[col]]
 
         book_data = BytesIO()
         book.save(book_data)
@@ -299,10 +301,12 @@ class ProviderViewSet(viewsets.ModelViewSet):
         except IntegrityError:
             return Response(errors, status=400)
 
+
 class PrivateProviderViewSet(FilterByRegionMixin, viewsets.ModelViewSet):
     queryset = Provider.objects.all()
     serializer_class = serializers_v2.ProviderSerializer
     pagination_class = StandardResultsSetPagination
+
 
 class PrivateServiceViewSet(FilterByRegionMixin, viewsets.ModelViewSet):
     filter_class = ServiceFilter
@@ -316,14 +320,14 @@ class PrivateServiceViewSet(FilterByRegionMixin, viewsets.ModelViewSet):
 
     serializer_class = serializers_v2.ServiceSerializer
     pagination_class = StandardResultsSetPagination
-    filter_backends = (django_filters.DjangoFilterBackend ,filters.OrderingFilter, SearchFilter)
+    filter_backends = (django_filters.DjangoFilterBackend,
+                       filters.OrderingFilter, SearchFilter)
 
     def get_queryset(self):
         qs = super(PrivateServiceViewSet, self).get_queryset()
-        qs = qs.filter(status__in=[Service.STATUS_CURRENT, Service.STATUS_PRIVATE])
+        qs = qs.filter(
+            status__in=[Service.STATUS_CURRENT, Service.STATUS_PRIVATE])
         return qs
-        
-
 
 
 class ServiceViewSet(viewsets.ModelViewSet):
@@ -344,30 +348,31 @@ class ServiceViewSet(viewsets.ModelViewSet):
     serializer_class = serializers_v2.ServiceSerializer
     pagination_class = StandardResultsSetPagination
     search_fields = ()
-    filter_backends = (django_filters.DjangoFilterBackend ,filters.OrderingFilter, SearchFilter)
+    filter_backends = (django_filters.DjangoFilterBackend,
+                       filters.OrderingFilter, SearchFilter)
 
     def get_search_fields(self):
         if 'service-management' in self.request.get_full_path():
             return generate_translated_fields('name', False) \
-                   + generate_translated_fields('type__name', False) \
-                   + ['region__name'] \
-                   + ['status']
+                + generate_translated_fields('type__name', False) \
+                + ['region__name'] \
+                + ['status']
         else:
             return generate_translated_fields('additional_info', False) \
-                   + ['cost_of_service'] \
-                   + generate_translated_fields('description', False) \
-                   + generate_translated_fields('name', False) \
-                   + generate_translated_fields('type__comments', False) \
-                   + generate_translated_fields('type__name', False) \
-                   + generate_translated_fields('provider__description', False) \
-                   + generate_translated_fields('provider__focal_point_name', False) \
-                   + ['provider__focal_point_phone_number'] \
-                   + generate_translated_fields('provider__address', False) \
-                   + generate_translated_fields('provider__name', False) \
-                   + generate_translated_fields('provider__type__name', False) \
-                   + ['provider__phone_number', 'provider__website', 'provider__user__email'] \
-                   + generate_translated_fields('selection_criteria__text', False) \
-                   + ['region__slug', 'tags__name']
+                + ['cost_of_service'] \
+                + generate_translated_fields('description', False) \
+                + generate_translated_fields('name', False) \
+                + generate_translated_fields('type__comments', False) \
+                + generate_translated_fields('type__name', False) \
+                + generate_translated_fields('provider__description', False) \
+                + generate_translated_fields('provider__focal_point_name', False) \
+                + ['provider__focal_point_phone_number'] \
+                + generate_translated_fields('provider__address', False) \
+                + generate_translated_fields('provider__name', False) \
+                + generate_translated_fields('provider__type__name', False) \
+                + ['provider__phone_number', 'provider__website', 'provider__user__email'] \
+                + generate_translated_fields('selection_criteria__text', False) \
+                + ['region__slug', 'tags__name']
 
     def get_queryset(self):
         # Get filter type
@@ -401,7 +406,8 @@ class ServiceViewSet(viewsets.ModelViewSet):
         if self.request.query_params.get('bounds'):
             bounds_query = self.request.query_params.get('bounds')
             if ';' in bounds_query:
-                bounds = [float(a) for x in [b.split(',') for b in bounds_query.split(';')] for a in x]
+                bounds = [float(a) for x in [b.split(',')
+                                             for b in bounds_query.split(';')] for a in x]
             else:
                 bounds = [float(a) for a in bounds_query.split(',')]
 
@@ -482,7 +488,7 @@ class ServiceViewSet(viewsets.ModelViewSet):
         new_name = request.query_params.get('new_name')
         if service_id and new_name:
             service_to_copy = Service.objects.prefetch_related(
-                'tags', 'types').get(id=service_id)            
+                'tags', 'types').get(id=service_id)
             tags = service_to_copy.tags.all()
             types = service_to_copy.types.all()
             contact_informations = service_to_copy.contact_informations.all()
@@ -495,7 +501,7 @@ class ServiceViewSet(viewsets.ModelViewSet):
             # Fill all fragile data
             new_name = re.sub('[\W-]+', '-', new_name.lower())
             new_slug = service_to_copy.region.slug + '_' + \
-                       str(service_to_copy.provider.id) + '_' + new_name
+                str(service_to_copy.provider.id) + '_' + new_name
             services = Service.objects.filter(slug=new_slug)
             if services:
                 new_slug = new_slug + '_' + str(service_to_copy.id)
@@ -549,17 +555,19 @@ class ServiceTypeViewSet(viewsets.ModelViewSet):
     serializer_class = serializers_v2.ServiceTypeSerializer
     pagination_class = StandardResultsSetPagination
 
-
     def get_queryset(self):
         if 'region' in self.request.GET:
             region = self.request.GET['region']
             return self.queryset.filter(
-                Q(service__region__slug=region) |
-                Q(service__region__parent__slug=region) | 
-                Q(service__region__parent__parent__slug=region)
-            ).distinct().order_by('number')
+                (
+                    Q(service__region__slug=region) |
+                    Q(service__region__parent__slug=region) |
+                    Q(service__region__parent__parent__slug=region)
+                ) & Q(service__status=Service.STATUS_CURRENT)
+            ).annotate(service_count=Count('service')).filter(service_count__gt=0).distinct().order_by('number')
         else:
             return self.queryset
+
 
 class CustomServiceTypeViewSet(viewsets.ModelViewSet):
     """
