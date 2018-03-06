@@ -1,7 +1,6 @@
 <section class="content-header" ng-controller="ContentHeaderController as chctrl">
     <h1>
         {{ chctrl.state.data.title }}
-        <small>Claimed by: {{ ctrl.provider.name_en}}</small>
         <a href="" ui-sref="{{ ctrl.createLink }}" ng-if="ctrl.createLink" class="btn btn-success pull-right">Create</a>
     </h1>
 </section>
@@ -11,7 +10,7 @@
         <div class="box">
             <div class="box-body table-responsive">
                 <table datatable="" dt-options="ctrl.dtOptions" dt-columns="ctrl.dtColumns"
-                       dt-instance="ctrl.dtInstance" id="example1" class="table table-bordered table-striped">
+                       dt-instance="ctrl.dtInstance" class="table table-bordered table-striped">
                 </table>
             </div>
         </div>

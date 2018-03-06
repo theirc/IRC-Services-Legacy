@@ -154,22 +154,7 @@ class UserViewSet(viewsets.ModelViewSet):
             return Response(serializer.data)
         return Response(status=403)
 
-    def retrieve(self, request, *args, **kwargs):
-        instance = self.get_object()
-        if request.user.is_superuser or instance == request.user:
-            serializer = self.get_serializer(instance)
-            user = serializer.data
-            return Response({'email': user['email'],
-                             'isStaff': user['is_staff'],
-                             'isSuperuser': user['is_superuser'],
-                             'name': user['name'],
-                             'surname': user['surname'],
-                             'id': user['id'],
-                             'title': user['title'],
-                             'position': user['position'],
-                             'groups': user['groups'],
-                             'phone_number': user['phone_number']})
-        return Response(status=403)
+    
 
 
 class GeographicRegionViewSet(viewsets.ModelViewSet):

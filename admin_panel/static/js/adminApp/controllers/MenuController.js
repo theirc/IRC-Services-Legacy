@@ -22,20 +22,12 @@ angular.module("adminApp").controller("MenuController", function ($rootScope, $s
 		return [{
 				title: "MENU",
 				items: [{
-						title: "Service Map",
+						title: "Services",
 						sref: "service.private",
-						hide: HIDE_NOT_YET_IMPLEMENTED,
 					},
 					{
 						title: "Service Management",
-						active: $state.includes("service"),
-						items: [{
-							title: "Services Overview",
-							sref: "service.dashboard"
-						}, {
-							title: "Services Management",
-							sref: "service.list"
-						}],
+						sref: "service.list",
 						hide: !($rootScope.permissions && $rootScope.permissions.servicesAdd && $rootScope.selectedProvider),
 					},
 				],

@@ -163,6 +163,8 @@ class ServiceFilter(django_filters.FilterSet):
     id = django_filters.NumberFilter()
     closest = SortByDistanceFilter()
     provider = django_filters.NumberFilter('provider__id')
+    address_city = CharAnyLanguageFilter('address_city')
+
 
     class Meta:
         model = Service

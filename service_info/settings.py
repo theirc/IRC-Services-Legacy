@@ -176,6 +176,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.contrib.sites.middleware.CurrentSiteMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'regions.middleware.UserRegionMiddleware',
     'reversion.middleware.RevisionMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware'
 )

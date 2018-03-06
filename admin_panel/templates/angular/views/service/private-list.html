@@ -1,0 +1,60 @@
+<section class="content-header" ng-controller="ContentHeaderController as chctrl">
+    <h1>
+        Services
+    </h1>
+</section>
+
+<section class="content">
+    <div>
+        <div class="box">
+            <div class="box-body">
+                <form class="form" ng-submit="ctrl.reloadOption(ctrl.searchCriteria)">
+                    <div class="row">
+                        <div class="form-group col-xs-12">
+                            <input type="text" class="form-control" ng-model="ctrl.searchCriteria.search" placeholder="Search">
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="form-group col-xs-4">
+                            <label for="">Type</label>
+                            <select class="form-control" ng-model="ctrl.searchCriteria.type_numbers" ng-options="r.id as r.name for r in ctrl.serviceTypes"></select>
+                        </div>
+                        <div class="form-group col-xs-4">
+                            <label for="">Provider</label>
+                            <select class="form-control" ng-model="ctrl.searchCriteria.provider" ng-options="r.id as r.name for r in ctrl.providers"></select>
+                        </div>
+                        <div class="form-group col-xs-4">
+                            <label for="">City</label>
+                            <input type="text" class="form-control" ng-model="ctrl.searchCriteria.address_city" placeholder="City">
+                        </div>
+                    </div>
+
+                </form>
+                <div class="col-xs-12">
+                    <div class="btn-group pull-right">
+                        <button class="btn btn-warning " ng-click="ctrl.searchCriteria = {}">Clear Search</button>
+                        <button class="btn btn-primary " ng-click="ctrl.reloadOption(ctrl.searchCriteria)">Search</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="box">
+            <div class="box-body table-responsive">
+                <table datatable="" dt-options="ctrl.dtOptions" dt-columns="ctrl.dtColumns" dt-instance="ctrl.dtInstance" class="table table-bordered table-striped">
+                </table>
+            </div>
+        </div>
+    </div>
+    <footer-action-bar>
+        <div class="col-xs-12">
+            <div class="btn-group pull-right">
+                    <button class="btn btn-warning " ng-click="ctrl.searchCriteria = {}">Clear Search</button>
+                <button class="btn btn-primary " ng-click="ctrl.reloadOption(ctrl.searchCriteria)">Search</button>
+            </div>
+        </div>
+    </footer-action-bar>
+</section>
