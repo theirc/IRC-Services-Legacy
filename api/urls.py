@@ -30,6 +30,7 @@ urlpatterns = [
     # Wire up our API using automatic URL routing.
     url(r'^', include(router.urls)),
 
+    url(r'^activate/$', view=v2.APIActivationView.as_view(), name='api-activate'),
     url(r'^blog/$', v2.BlogListAPIView.as_view()),
     url(r'^blog/(?P<id>.*)/pull/$', v2.BlogPullAPIView.as_view()),
     url(r'^blog/(?P<id>.*)/push/$', v2.BlogPushAPIView.as_view()),

@@ -657,6 +657,9 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 				user: () => {
 					return {};
 				},
+				providers: function (ProviderService, $rootScope, $q) {
+					return ProviderService.getList().then(r => r.plain());
+				},
 				groups: Restangular => Restangular.all("groups").getList(),
 			},
 		})

@@ -3,7 +3,8 @@ import logging
 from django.conf import settings
 from django.contrib.auth.models import Group
 from django.contrib.sites.shortcuts import get_current_site
-
+from django.views.generic import TemplateView
+from django.shortcuts import redirect
 from api.v2 import serializers as serializers_v2
 from django.contrib.auth import get_user_model, login, logout
 from django.db.transaction import atomic
@@ -12,16 +13,17 @@ from django.utils.timezone import now
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAuthenticatedOrReadOnly
 
 from api.v2.serializers import UserAvatarSerializer, EmailSerializer, SecurePasswordCredentialsSerializer, \
-    ResetUserPasswordSerializer, GroupSerializer, APILoginSerializer
+    ResetUserPasswordSerializer, GroupSerializer, APILoginSerializer, APIRegisterSerializer
 from email_user.models import EmailUser
 from regions.models import GeographicRegion
 from rest_framework import permissions
-from rest_framework import viewsets, mixins
+from rest_framework import viewsets, mixins, parsers, renderers
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import list_route, detail_route, permission_classes, authentication_classes
 from rest_framework.response import Response
 from .utils import IsSuperUserPermission, StandardResultsSetPagination
 from ..filters import GeographicRegionFilter
+from rest_framework.views import APIView
 
 logger = logging.getLogger(__name__)
 
@@ -33,6 +35,40 @@ class GroupViewSet(viewsets.ModelViewSet):
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
 
+
+class APIActivationView(TemplateView):
+    template_name = 'admin_panel/activate.html'
+
+    def get_context_data(self, **kwargs):
+        request = self.request
+        return {
+            "activation_key": request.GET['activation_key']
+        }
+
+    def get(self, request, *args, **kwargs): 
+        activation_key = request.GET.get('activation_key', '')
+        users = get_user_model().objects.filter(activation_key=activation_key)
+        if users.count() == 1:
+            super(APIActivationView, self).get(request, *args, **kwargs)
+        else:
+            return redirect('/')
+        
+
+    def post(self, request):
+        activation_key = request.POST.get('activation_key', '')
+        password = request.POST.get('password', '')
+
+        if activation_key:
+            try:
+                user = get_user_model().objects.activate_user(activation_key=activation_key)
+            except DjangoValidationError as e:  # pragma: no cover
+                pass
+            token, unused = Token.objects.get_or_create(user=user)
+            user.last_login = now()
+            user.set_password(password)
+            user.save()
+
+        return redirect('/')
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -92,6 +128,36 @@ class UserViewSet(viewsets.ModelViewSet):
             response.update({'avatar': settings.MEDIA_URL + str(user.avatar)})
 
         return Response(response)
+
+    @list_route(methods=['POST'])
+    def register(self, request):
+        serializer = APIRegisterSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        with atomic():
+            kwargs = dict()
+            if request.data.get('title', None):
+                kwargs['title'] = request.data['title']
+            if request.data.get('position', None):
+                kwargs['position'] = request.data['position']
+            if request.data.get('phone_number', None):
+                kwargs['phone_number'] = request.data['phone_number']
+            user = get_user_model().objects.create_user(
+                name=request.data['name'],
+                surname=request.data['surname'],
+                email=request.data['email'],
+                is_active=False,
+                **kwargs
+            )
+            if request.data.get('groups', None):
+                user.groups = [Group.objects.get(
+                    name=group['name']) for group in request.data['groups']]
+                user.save()
+            token, created = Token.objects.get_or_create(user=user)
+            activation_url = request.build_absolute_uri(
+                reverse('api-activate')) + '?activation_key='
+            user.send_activation_email(request, activation_url)
+
+        return Response({})
 
     @list_route(methods=['GET'])
     @authentication_classes([])
@@ -153,8 +219,6 @@ class UserViewSet(viewsets.ModelViewSet):
             self.perform_update(serializer)
             return Response(serializer.data)
         return Response(status=403)
-
-    
 
 
 class GeographicRegionViewSet(viewsets.ModelViewSet):

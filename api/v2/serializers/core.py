@@ -340,3 +340,20 @@ class UserPermissionSerializer(serializers.ModelSerializer):
     class Meta:
         model = EmailUser
         fields = ('email', 'permissions')
+
+class APIRegisterSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    name = serializers.CharField()
+    surname = serializers.CharField()
+    title = serializers.CharField(required=False)
+    position = serializers.CharField(required=False)
+    phone_number = serializers.CharField(required=False)
+    groups = serializers.PrimaryKeyRelatedField(many=True, required=False, read_only=True)
+
+    def validate(self, attrs):
+        attrs = super().validate(attrs)
+        User = get_user_model()
+        user = User.objects.filter(email=attrs.get('email'))
+        if user:
+            raise exceptions.ValidationError({'email': 'User with this email already exists'})
+        return attrs

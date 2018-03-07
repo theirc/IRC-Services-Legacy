@@ -7,9 +7,10 @@ angular.module('adminApp').controller('UserViewController', function ($rootScope
         vm.editOptions = {};
         vm.isNew = !vm.object.hasOwnProperty('id');
 
-        vm.object.providers = vm.object.providers.map(p => _.isObject(p) ? p.id : p);
         if (vm.isNew) {
             vm.startEditing();
+        } else {
+            vm.object.providers = vm.object.providers.map(p => _.isObject(p) ? p.id : p);
         }
         vm.groups = groups.plain();
         vm.errors = null;
