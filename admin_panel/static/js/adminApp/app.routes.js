@@ -106,11 +106,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 						 * TODO: figure out a default dashboard per user
 						 * */
 
-						if ($rootScope.selectedProvider) {
-							$state.go("service.list");
-						} else if($rootScope.isSuperuser) {
-							$state.go("provider.list");
-						}
+						$state.go("service.search");
 					},
 				},
 			},
@@ -141,8 +137,8 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 			url: "/service",
 			abstract: true,
 		})
-		.state("service.private", {
-			url: "/private",
+		.state("service.search", {
+			url: "/search",
 			data: {
 				title: "Services",
 			},
@@ -154,15 +150,31 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 			},
 			resolve: {
 				providers: function (PrivateProviderService, $rootScope, $q) {
-					return PrivateProviderService.getList().then(r=> r.plain());
+					return PrivateProviderService.getList().then(r => r.plain());
 				},
 				serviceTypes: function (CommonDataService) {
 					return CommonDataService.getServiceTypes();
 				},
-				regions: function allRegions(GeoRegionService, $q, $window) {
+				serviceStatus: () => {
+					return [{
+						id: 'current',
+						name: 'Current'
+					}, {
+						id: 'private',
+						name: 'Private'
+					}, {
+						id: 'draft',
+						name: 'Draft'
+					}, ]
+				},
+				regions: function allRegions(GeoRegionService, $rootScope, $q, $window) {
+					if (!$rootScope.user.isSuperuser) {
+						return [];
+					}
+
 					var dfd = $q.defer();
 					if ($window.sessionStorage.allRegions) {
-						dfd.resolve(JSON.parse($window.sessionStorage.allRegions));
+						dfd.resolve(JSON.parse($window.sessionStorage.allRegions).filter(r=>r.level === 1));
 					} else {
 						GeoRegionService.getList({
 							exclude_geometry: true
@@ -178,7 +190,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 							});
 
 							$window.sessionStorage.allRegions = JSON.stringify(regions);
-							dfd.resolve(regions);
+							dfd.resolve(regions.filter(r=>r.level === 1));
 						});
 					}
 					return dfd.promise;
@@ -604,7 +616,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 				groups: function (Restangular) {
 					return Restangular.all("groups").getList();
 				},
-				providers: ()=>{
+				providers: () => {
 					return [];
 				}
 			},
@@ -661,7 +673,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 			},
 			resolve: {
 				providers: function (ProviderService, $rootScope, $q) {
-					return ProviderService.getList().then(r=> r.plain());
+					return ProviderService.getList().then(r => r.plain());
 				},
 				user: function (Restangular, $stateParams) {
 					return Restangular.one("users", $stateParams.id).get();

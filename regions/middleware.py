@@ -10,7 +10,6 @@ class UserRegionMiddleware(object):
             regions = providers.values_list('region').distinct()
             if not user.is_superuser and regions.count() == 1:
                 region_id,  = regions.first()
-                print(region_id)
                 request.region = models.GeographicRegion.objects.get(
                     pk=region_id)
 

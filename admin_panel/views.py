@@ -35,6 +35,7 @@ class LandingPageView(LoginRequiredMixin, TemplateView):
             'position': user.position,
             'phone_number': user.phone_number,
             'providers': [{"id": p.id, "name": p.name} for p in user.all_providers],
+            'groups': [{"id": p.id, "name": p.name} for p in user.groups.all()],
         }
         context['USER'] = json.dumps(token)
 

@@ -6,6 +6,8 @@ angular.module('adminApp').controller('UserViewController', function ($rootScope
         vm.providers = providers;
         vm.editOptions = {};
         vm.isNew = !vm.object.hasOwnProperty('id');
+
+        vm.object.providers = vm.object.providers.map(p => _.isObject(p) ? p.id : p);
         if (vm.isNew) {
             vm.startEditing();
         }
@@ -17,7 +19,9 @@ angular.module('adminApp').controller('UserViewController', function ($rootScope
         if (file) {
             Upload.upload({
                 url: 'v2/users/' + vm.object.id + '/',
-                data: {avatar: file},
+                data: {
+                    avatar: file
+                },
                 method: 'PATCH',
             }).then(function (resp) {
                 vm.errors = null;
@@ -34,7 +38,9 @@ angular.module('adminApp').controller('UserViewController', function ($rootScope
     };
 
     vm.removeAvatar = function () {
-        let avatar = {'avatar': null};
+        let avatar = {
+            'avatar': null
+        };
         return vm.object.customPATCH(avatar).then(function (resp) {
             vm.errors = null;
             let cookieUser = $cookies.getObject('user');
@@ -49,18 +55,10 @@ angular.module('adminApp').controller('UserViewController', function ($rootScope
     vm.updateUser = function () {
         vm.errors = null;
         let userPlain = vm.object.plain();
-        console.log(userPlain);
         userPlain.groups = userPlain.groups.map((group) => group.id);
         userPlain.is_staff = userPlain.isStaff;
         delete userPlain.isStaff;
         return vm.object.customPUT(userPlain).then((response) => {
-            let cookieUser = $cookies.getObject('user');
-            cookieUser.name = response.name;
-            cookieUser.surname = response.surname;
-            cookieUser.title = response.title;
-            cookieUser.position = response.position;
-            cookieUser.phone_number = response.phone_number;
-            vm.object = user;
             vm.stopEditing();
         });
     };
@@ -70,7 +68,9 @@ angular.module('adminApp').controller('UserViewController', function ($rootScope
         vm.errors = null;
         if (vm.isNew) {
             Restangular.service('users/register').post(vm.object).then(newUser => {
-                $state.go('user.open', {id: newUser.id});
+                $state.go('user.open', {
+                    id: newUser.id
+                });
             });
         } else {
             vm.updateUser();

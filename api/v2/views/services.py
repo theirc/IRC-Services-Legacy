@@ -24,7 +24,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from services.models import Service, Provider, ServiceType, ServiceArea, ServiceTag, ProviderType, ServiceConfirmationLog, ContactInformation
 from .utils import StandardResultsSetPagination, FilterByRegionMixin
-from ..filters import ServiceFilter, CustomServiceFilter, RelativesServiceFilter, WithParentsServiceFilter
+from ..filters import ServiceFilter, CustomServiceFilter, RelativesServiceFilter, WithParentsServiceFilter, PrivateServiceFilter
 from django_filters import rest_framework as django_filters
 from django.db.models import Count
 
@@ -309,7 +309,7 @@ class PrivateProviderViewSet(FilterByRegionMixin, viewsets.ModelViewSet):
 
 
 class PrivateServiceViewSet(FilterByRegionMixin, viewsets.ModelViewSet):
-    filter_class = ServiceFilter
+    filter_class = PrivateServiceFilter
     queryset = Service.objects.select_related(
         'provider',
         'type',
@@ -325,8 +325,9 @@ class PrivateServiceViewSet(FilterByRegionMixin, viewsets.ModelViewSet):
 
     def get_queryset(self):
         qs = super(PrivateServiceViewSet, self).get_queryset()
-        qs = qs.filter(
-            status__in=[Service.STATUS_CURRENT, Service.STATUS_PRIVATE])
+        if not (hasattr(self.request, 'user') and self.request.user.is_superuser):
+            qs = qs.filter(
+                status__in=[Service.STATUS_CURRENT, Service.STATUS_PRIVATE])
         return qs
 
 

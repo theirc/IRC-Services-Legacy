@@ -1,0 +1,1 @@
+python /code/manage.py update_index
