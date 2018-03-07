@@ -1,5 +1,0 @@
-WAIT=30
-TIMEOUT=900
-ATTEMPTS=10
-    
-/           adminApp

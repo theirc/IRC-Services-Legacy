@@ -169,7 +169,16 @@ class ServiceFilter(django_filters.FilterSet):
     class Meta:
         model = Service
         fields = ['name', 'description',
-                  'additional_info', 'type_name', 'type_numbers', 'id', 'provider']
+                  'additional_info', 'type_name', 'type_numbers', 'id', 'provider', 'status']
+
+
+class PrivateServiceFilter(ServiceFilter):
+    geographic_region = CustomRegionFilter()
+
+    class Meta:
+        model = Service
+        fields = ['name', 'description',
+                  'additional_info', 'type_name', 'type_numbers', 'id', 'provider', 'status']
 
 
 class CustomServiceFilter(ServiceFilter):

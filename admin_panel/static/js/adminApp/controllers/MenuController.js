@@ -22,8 +22,8 @@ angular.module("adminApp").controller("MenuController", function ($rootScope, $s
 		return [{
 				title: "MENU",
 				items: [{
-						title: "Services",
-						sref: "service.private",
+						title: "Search Services",
+						sref: "service.search",
 					},
 					{
 						title: "Service Management",

@@ -9,6 +9,7 @@ ADD apt-packages /code/
 ADD nginx.conf /code/
 ADD package.json /code/
 ADD Gulpfile.js /code/
+ADD cron.sh /code/
 
 RUN pip install -r requirements.txt
 ENV SSH_PASSWD "root:Docker!"
@@ -21,10 +22,14 @@ RUN apt-get install -y  `cat /code/apt-packages`
 RUN apt-get install -y nodejs
 #RUN apt-get install libmaxminddb0 libmaxminddb-dev mmdb-bin
 # ssh
-RUN apt-get install -y --no-install-recommends dialog \
+RUN apt-get install -y --no-install-recommends dialog cron \
         && apt-get install -y --no-install-recommends openssh-server \
         && echo "$SSH_PASSWD" | chpasswd 
 
+ADD commands-cron /etc/crontab
+
+RUN chmod 0644 /etc/crontab  
+RUN touch /var/log/cron.log 
 ADD . /code/
 
 RUN npm install

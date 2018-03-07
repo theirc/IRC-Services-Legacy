@@ -80,6 +80,18 @@ angular.module('adminApp').factory('tableUtils', (DTOptionsBuilder, DTColumnBuil
                 `;
                 }
             },
+            newServiceReadOnlyActionColumn(sref = "^.open") {
+                return DTColumnBuilder.newColumn(null).withTitle('Actions').notSortable().renderWith(renderActions);
+
+                function renderActions(data, type, full, meta) {
+                    return `
+                    <a class="btn btn-primary btn-xs" ui-sref="${sref}({serviceId: ${full.id}})">
+                        <i class="fa fa-eye"></i>
+                        Open
+                    </a>
+                `;
+                }
+            },
             newServiceActionColumn(sref = "^.open", duplicateSref = "^.duplicate", archiveSref = "^.archive") {
                 return DTColumnBuilder.newColumn(null).withTitle('Actions').notSortable().renderWith(renderActions);
 
