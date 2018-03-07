@@ -51,7 +51,7 @@ angular.module('adminApp')
         ];
         vm.editOptions = {};
         vm.isNew = !region.hasOwnProperty('id');
-        vm.object.languages = vm.object.languages_available.split(', ').filter(a => a);
+        vm.object.languages = (vm.object.languages_available || '').split(', ').filter(a => a);
 
 
 
