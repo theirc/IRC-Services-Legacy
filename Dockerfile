@@ -32,7 +32,6 @@ RUN chmod 0644 /etc/crontab
 RUN touch /var/log/cron.log 
 ADD . /code/
 
-RUN service cron reload
 RUN npm install
 RUN npm install gulp
 RUN npm install -g gulp
