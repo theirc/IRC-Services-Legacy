@@ -49,7 +49,7 @@ class APIActivationView(TemplateView):
         activation_key = request.GET.get('activation_key', '')
         users = get_user_model().objects.filter(activation_key=activation_key)
         if users.count() == 1:
-            super(APIActivationView, self).get(request, *args, **kwargs)
+            return super(APIActivationView, self).get(request, *args, **kwargs)
         else:
             return redirect('/')
         
@@ -157,7 +157,7 @@ class UserViewSet(viewsets.ModelViewSet):
                 reverse('api-activate')) + '?activation_key='
             user.send_activation_email(request, activation_url)
 
-        return Response({})
+        return Response(serializers_v2.UserWithGroupSerializer(user).data)
 
     @list_route(methods=['GET'])
     @authentication_classes([])
