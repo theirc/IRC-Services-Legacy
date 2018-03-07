@@ -51,7 +51,7 @@ angular
 			return data;
 		});
 	})
-	.run(function ($window, Restangular, $rootScope, $state, $stateParams, $cookies, staticUrl, languages, service_languages, user, selectedProvider, permissions, AuthService, GeoRegionService, ProviderService) {
+	.run(function ($window, Restangular, $rootScope, $state, $stateParams, $cookies, staticUrl, userRegion, languages, service_languages, user, selectedProvider, permissions, AuthService, GeoRegionService, ProviderService) {
 		Restangular.setBaseUrl($window.API_URL + "/v2/");
 		Restangular.setRequestSuffix("/");
 
@@ -75,12 +75,19 @@ angular
 		$rootScope.fieldHelper = function (obj, name, lang) {
 			return obj[$rootScope.idHelper(name, lang)];
 		};
-		$rootScope.staticUrl = staticUrl;
-		$rootScope.languages = languages;
-		$rootScope.serviceLanguages = service_languages;
-		$rootScope.$state = $state;
 		$rootScope.user = user;
-		
+		$rootScope.staticUrl = staticUrl;
+		$rootScope.userRegion = userRegion;
+		$rootScope.languages = languages;
+
+		if ($rootScope.userRegion && !user.isSuperuser) {
+			let langs = userRegion.languages_available.split(', ').filter(a => a);
+			$rootScope.languages = languages.filter(a => langs.indexOf(a[0]) > -1);
+		}
+
+		$rootScope.serviceLanguages = $rootScope.languages;
+		$rootScope.$state = $state;
+
 
 		GeoRegionService.getList({
 			level: 1,
@@ -90,15 +97,15 @@ angular
 		});
 
 		var hasPermission = function (p, model, action) {
-				return !!p.filter(function (permission) {
-					if (model == "analytics") {
-						return permission.split("_analytics")[0].split(".")[1] == action;
-					}
-					var perm = permission.split(".")[1].split("_");
-					if (action == perm[0] && model == perm[1]) {
-						return permission;
-					}
-				}).length;
+			return !!p.filter(function (permission) {
+				if (model == "analytics") {
+					return permission.split("_analytics")[0].split(".")[1] == action;
+				}
+				var perm = permission.split(".")[1].split("_");
+				if (action == perm[0] && model == perm[1]) {
+					return permission;
+				}
+			}).length;
 		}.bind(this, permissions.permissions);
 
 		var isStaff = function (u) {

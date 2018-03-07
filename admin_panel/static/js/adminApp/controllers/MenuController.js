@@ -28,7 +28,7 @@ angular.module("adminApp").controller("MenuController", function ($rootScope, $s
 					{
 						title: "Service Management",
 						sref: "service.list",
-						hide: !($rootScope.permissions && $rootScope.permissions.servicesAdd && $rootScope.selectedProvider),
+						hide: !((($rootScope.user.groups.filter(g => g.name === 'Provider').length > 0) || $rootScope.user.isSuperuser) && $rootScope.selectedProvider),
 					},
 				],
 			},

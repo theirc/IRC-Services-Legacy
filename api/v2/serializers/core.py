@@ -103,8 +103,8 @@ class ServiceAreaSerializer(RequireOneTranslationMixin,
 
 
 class UserSerializer(serializers.ModelSerializer):
-    managed_providers = sevices_serializers.ProviderSerializer(many=True, read_only=True)
-
+    managed_providers = sevices_serializers.ProviderSerializer(
+        many=True, read_only=True)
 
     class Meta:
         model = EmailUser
@@ -127,7 +127,7 @@ class UserWithGroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = EmailUser
         fields = ('id', 'email', 'groups', 'name', 'surname', 'is_staff', 'is_superuser', 'phone_number', 'title',
-                  'position', 'providers', 'isStaff', 'isSuperuser','managed_providers')
+                  'position', 'providers', 'isStaff', 'isSuperuser', 'managed_providers')
 
 
 class UserAvatarSerializer(serializers.ModelSerializer):
@@ -303,7 +303,7 @@ class GeographicRegionSerializer(serializers.ModelSerializer):
         model = GeographicRegion
         fields = tuple(
             ['id', 'name', 'slug', 'code', 'hidden', 'level', 'geom', 'centroid', 'envelope', 'parent',
-             'parent__name'] +
+             'parent__name', 'languages_available'] +
             generate_translated_fields('title')
         )
 
@@ -326,7 +326,7 @@ class GeographicRegionSerializerNoGeometry(serializers.ModelSerializer):
         model = GeographicRegion
         fields = tuple(
             ['id', 'name', 'slug', 'code', 'hidden', 'level', 'centroid', 'envelope', 'parent',
-             'parent__name'] +
+             'parent__name', 'languages_available'] +
             generate_translated_fields('title')
         )
 
@@ -341,6 +341,7 @@ class UserPermissionSerializer(serializers.ModelSerializer):
         model = EmailUser
         fields = ('email', 'permissions')
 
+
 class APIRegisterSerializer(serializers.Serializer):
     email = serializers.EmailField()
     name = serializers.CharField()
@@ -348,12 +349,14 @@ class APIRegisterSerializer(serializers.Serializer):
     title = serializers.CharField(required=False)
     position = serializers.CharField(required=False)
     phone_number = serializers.CharField(required=False)
-    groups = serializers.PrimaryKeyRelatedField(many=True, required=False, read_only=True)
+    groups = serializers.PrimaryKeyRelatedField(
+        many=True, required=False, read_only=True)
 
     def validate(self, attrs):
         attrs = super().validate(attrs)
         User = get_user_model()
         user = User.objects.filter(email=attrs.get('email'))
         if user:
-            raise exceptions.ValidationError({'email': 'User with this email already exists'})
+            raise exceptions.ValidationError(
+                {'email': 'User with this email already exists'})
         return attrs

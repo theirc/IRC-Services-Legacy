@@ -56,6 +56,7 @@ LANGUAGES = [
     ('el', _('Greek')),
     ('ur', _('Urdu')),
     ('es', _('Spanish')),
+    ('ti', _('Tigrinya')),
 ]
 
 # LANGUAGES used in CMS app

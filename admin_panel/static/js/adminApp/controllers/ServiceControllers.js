@@ -307,7 +307,6 @@ angular
             $rootScope.user.isSuperuser ||
             ($rootScope.user.groups.filter(g => g.name === 'Provider').length > 0 && $rootScope.selectedProvider.id === vm.service.provider.id)
         )
-        console.log($rootScope.user.groups.filter(g => g.name === 'Provider').length, $rootScope.selectedProvider.id, vm.service.provider.id)
         if (vm.canEdit) {
             /*
 Only superusers and service providers have access to the edit functions. Everyone else should see the read only version only.

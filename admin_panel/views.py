@@ -52,4 +52,14 @@ class LandingPageView(LoginRequiredMixin, TemplateView):
             'permissions': list(user.get_all_permissions())
         })
 
+        context['REGION'] = 'false'
+
+        if hasattr(request,'region'):
+            context['REGION'] = json.dumps({
+                'id': request.region.id,
+                'name': request.region.name,
+                'languages_available': request.region.languages_available,
+            })
+
+            
         return context
