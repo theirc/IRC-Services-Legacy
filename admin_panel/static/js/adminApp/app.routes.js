@@ -174,7 +174,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 
 					var dfd = $q.defer();
 					if ($window.sessionStorage.allRegions) {
-						dfd.resolve(JSON.parse($window.sessionStorage.allRegions).filter(r=>r.level === 1));
+						dfd.resolve(JSON.parse($window.sessionStorage.allRegions).filter(r => r.level === 1));
 					} else {
 						GeoRegionService.getList({
 							exclude_geometry: true
@@ -190,7 +190,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 							});
 
 							$window.sessionStorage.allRegions = JSON.stringify(regions);
-							dfd.resolve(regions.filter(r=>r.level === 1));
+							dfd.resolve(regions.filter(r => r.level === 1));
 						});
 					}
 					return dfd.promise;
@@ -326,7 +326,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 				},
 			},
 			resolve: {
-				provider: function (Restangular, $rootScope) {
+				provider: function (Restangular, $rootScope, $q) {
 					if ($rootScope.selectedProvider) {
 						return Restangular.one("providers", $rootScope.selectedProvider.id).get();
 					} else {
@@ -404,7 +404,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 				},
 			},
 			resolve: {
-				provider: function (Restangular, $rootScope) {
+				provider: function (Restangular, $rootScope, $q) {
 					if ($rootScope.selectedProvider) {
 						return Restangular.one("providers", $rootScope.selectedProvider.id).get();
 					} else {
