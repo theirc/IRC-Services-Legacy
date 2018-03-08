@@ -61,53 +61,49 @@
                         <div class="box-body" read-only-form is-editing="ctrl.isEditing">
                             <div class="nav-tabs-custom">
                                 <ul class="nav nav-tabs">
-                                    <li ng-class="{active: ctrl.selectedLanguageTab == (lang[0]||'en')}" ng-repeat="lang in serviceLanguages">
+                                    <li ng-class="{active: ctrl.selectedLanguageTab == (lang[0]||languages[0][0])}" ng-repeat="lang in serviceLanguages">
                                         <a href="" ng-click="ctrl.selectedLanguageTab = lang[0]" data-toggle="tab" aria-expanded="true">{{ lang[1] }}</a>
                                     </li>
                                 </ul>
                                 <div class="tab-content">
-                                    <div class="tab-pane" ng-class="{active: ctrl.selectedLanguageTab == (lang[0]||'en')}" ng-repeat="lang in languages">
+                                    <div class="tab-pane" ng-class="{active: ctrl.selectedLanguageTab == (lang[0]||languages[0][0])}" ng-repeat="lang in languages">
                                         <div class="row">
                                             <div class="form-group col-xs-12">
                                                 <label for="{{ idHelper('name',lang[0]) }}">Name</label>
                                                 <input type="text" class="form-control" name="name_{{ lang[0] }}" ng-model="ctrl.service[idHelper('name',lang[0])]" placeholder="Name in {{ lang[1] }}"
-                                                    ng-maxlength="256" ng-disabled="lang[0] != 'en'" ng-change="ctrl.generateSlug()">
+                                                    ng-maxlength="256"  ng-change="ctrl.generateSlug()">
                                             </div>
                                             <div class="form-group col-xs-6">
                                                 <label for="{{ idHelper('description',lang[0]) }}">Description</label>
-                                                <div ng-if="ctrl.isEditing && lang[0] == 'en'" ckeditor="ctrl.ckeditorOptions()" name="{{  idHelper('description',lang[0])}}"
+                                                <div ng-if="ctrl.isEditing" ckeditor="ctrl.ckeditorOptions()" name="{{  idHelper('description',lang[0])}}"
                                                     class="form-control" ng-model="ctrl.service[idHelper('description',lang[0])]"></div>
-                                                <div ng-if="!(ctrl.isEditing && lang[0] == 'en')" name="{{  idHelper('description',lang[0])}}" class="form-control description-field"
-                                                    ng-bind-html="ctrl.service[idHelper('description',lang[0])]"></div>
                                             </div>
                                             <div class="form-group col-xs-6">
                                                 <label for="{{ idHelper('additional_info',lang[0]) }}">Additional Information</label>
-                                                <div ng-if="ctrl.isEditing && lang[0] == 'en'" ckeditor="ctrl.ckeditorOptions()" name="{{  idHelper('additional_info',lang[0])}}"
+                                                <div ng-if="ctrl.isEditing" ckeditor="ctrl.ckeditorOptions()" name="{{  idHelper('additional_info',lang[0])}}"
                                                     class="form-control" ng-model="ctrl.service[idHelper('additional_info',lang[0])]"></div>
-                                                <div ng-if="!(ctrl.isEditing && lang[0] == 'en')" name="{{  idHelper('additional_info',lang[0])}}" class="form-control description-field"
-                                                    ng-bind-html="ctrl.service[idHelper('additional_info',lang[0])]"></div>
                                             </div>
                                             <div class="form-group col-xs-12">
                                                 <label for="{{ idHelper('languages_spoken',lang[0]) }}">
                                                     Languages spoken</label>
                                                 <textarea name="{{  idHelper('languages_spoken',lang[0])}}" class="form-control" ng-model="ctrl.service[idHelper('languages_spoken',lang[0])]"
-                                                    ng-disabled="lang[0] != 'en'"></textarea>
+                                                    ></textarea>
                                             </div>
                                             <div class="form-group col-xs-12">
                                                 <label for="{{ idHelper('address',lang[0]) }}">Address (City)</label>
                                                 <textarea name="{{  idHelper('address',lang[0])}}" class="form-control" ng-model="ctrl.service[idHelper('address_city',lang[0])]"
-                                                    ng-disabled="lang[0] != 'en'"></textarea>
+                                                    ></textarea>
                                             </div>
                                             <div class="form-group col-xs-12">
                                                 <label for="{{ idHelper('address',lang[0]) }}">Address (Street)</label>
                                                 <textarea name="{{  idHelper('address',lang[0])}}" class="form-control" ng-model="ctrl.service[idHelper('address',lang[0])]"
-                                                    ng-disabled="lang[0] != 'en'"></textarea>
+                                                    ></textarea>
                                             </div>
                                             <div class="form-group col-xs-12">
                                                 <label for="{{ idHelper('address_floor',lang[0]) }}">
                                                     Address (floor / note about address)</label>
                                                 <textarea name="{{  idHelper('address_floor',lang[0])}}" class="form-control" ng-model="ctrl.service[idHelper('address_floor',lang[0])]"
-                                                    ng-disabled="lang[0] != 'en'"></textarea>
+                                                    ></textarea>
                                             </div>
                                         </div>
                                     </div>

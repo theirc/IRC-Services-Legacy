@@ -187,7 +187,7 @@ angular
             if (Object.keys(provider).length !== 0 && service.provider.id == provider.id) {
                 vm.provider = provider;
             } else {
-              //  $rootScope.selectedProvider = service.provider;
+                //  $rootScope.selectedProvider = service.provider;
                 vm.provider = service.provider;
             }
         } else {
@@ -236,7 +236,7 @@ angular
         if (!vm.service.hasOwnProperty('selection_criteria')) {
             vm.service.selection_criteria = [];
         }
-        vm.selectedLanguageTab = 'en';
+        vm.selectedLanguageTab = $scope.languages ? $scope.languages[0][0] : 'en';
         let langs = service_languages;
         vm.isNew = !vm
             .service

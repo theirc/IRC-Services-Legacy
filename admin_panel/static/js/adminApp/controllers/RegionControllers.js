@@ -16,11 +16,11 @@ angular.module('adminApp')
 
         vm.createLink = '^.create';
     })
-    .controller('RegionViewController', function (region, languages, $state, allRegions, GeoRegionService, leafletData) {
+    .controller('RegionViewController', function (region, languages, $rootScope, $state, allRegions, GeoRegionService, leafletData) {
         var vm = this;
         vm.object = region;
         vm.allRegions = allRegions;
-        vm.selectedLanguageTab = 'en';
+        vm.selectedLanguageTab = $rootScope.languages ? $rootScope.languages[0][0] : 'en';
         vm.geojson = {
             data: vm.object.geom,
             style: {
