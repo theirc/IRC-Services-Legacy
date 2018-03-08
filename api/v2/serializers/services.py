@@ -361,7 +361,7 @@ class ServiceSerializer(serializers.ModelSerializer):
         required_translated_fields = ['name', 'description']
 
     def update(self, instance, validated_data):
-        contact_informations = validated_data.pop('contact_informations')
+        contact_informations = validated_data.pop('contact_informations') if 'contact_informations' in validated_data else []
 
         # Separate the objects to be updated and to be created
         to_update = [c for c in contact_informations if c['id']]
@@ -567,7 +567,7 @@ class ServiceCreateSerializer(serializers.ModelSerializer):
         opening_time = self.initial_data.get('opening_time')
         validated_data['opening_time'] = json.dumps(opening_time)
         validated_data['created_at'] = datetime.now()
-        contact_informations = validated_data.pop('contact_informations')
+        contact_informations = validated_data.pop('contact_informations') if 'contact_informations' in validated_data else []
         services = Service.objects.filter(slug=self.initial_data.get('slug'))           
 
         if len(services) > 0:
