@@ -510,7 +510,7 @@ class ServiceCreateSerializer(serializers.ModelSerializer):
     tags = ServiceTagSerializer(many=True)
     opening_time = serializers.SerializerMethodField()
     types = ServiceTypeSerializer(many=True)
-    contact_informations = ContactInformationSerializer(many=True)
+    contact_informations = ContactInformationSerializer(many=True, required=False)
 
     class Meta:
         model = Service
