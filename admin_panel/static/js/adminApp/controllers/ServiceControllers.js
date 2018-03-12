@@ -478,13 +478,13 @@ angular.module('adminApp')
             };
         };
         vm.addContactInformation = () =>{
-            if (!vm.service.contact_informations){
-                vm.service.contact_informations = [];
+            if (!vm.service.contact_information){
+                vm.service.contact_information = [];
             }
-            vm.service.contact_informations.push({'id': null, 'text': '', 'index': vm.service.contact_informations.length, 'type': ''})            
+            vm.service.contact_information.push({'id': null, 'text': '', 'index': vm.service.contact_information.length, 'type': ''})            
         }
         vm.removeContact = (index) =>{
-            vm.service.contact_informations.splice(index,1)
+            vm.service.contact_information.splice(index,1)
         }
     })
     .controller('ServiceConfirmationController', function ($http, $state, $stateParams, service, serviceTypes, apiUrl) {
