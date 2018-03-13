@@ -1,4 +1,5 @@
-angular.module('adminApp')
+angular
+    .module('adminApp')
     .controller('ServiceOverviewController', function (tableUtils, $scope, provider, services, serviceTypes, regions, $filter, $window, ServiceService) {
         let vm = this;
         vm.provider = provider;
@@ -17,8 +18,10 @@ angular.module('adminApp')
             }
         };
 
-        vm.getServiceColor = function(service){
-            return service.status == 'current' ? vm.currentServiceColor : vm.draftServiceColor;
+        vm.getServiceColor = function (service) {
+            return service.status == 'current' ?
+                vm.currentServiceColor :
+                vm.draftServiceColor;
         };
 
         vm.listView = function () {
@@ -33,25 +36,43 @@ angular.module('adminApp')
             return $window.innerWidth <= 991;
         };
 
-        vm.dtOptions = tableUtils.defaultsWithServiceNameAndFilter('ServiceService', {provider: provider.id});
+        vm.dtOptions = tableUtils.defaultsWithServiceNameAndFilter('ServiceService', {
+            provider: provider.id
+        });
         vm.dtColumns = [
-            tableUtils.newColumn('id').withTitle('ID'),
-            tableUtils.newColumn('name_en').withTitle('Name (en)'),
-            tableUtils.newColumn('types').withTitle('Types').renderWith(function (types) {
+            tableUtils
+            .newColumn('id')
+            .withTitle('ID'),
+            tableUtils
+            .newColumn('name_en')
+            .withTitle('Name (en)'),
+            tableUtils
+            .newColumn('types')
+            .withTitle('Types')
+            .renderWith(function (types) {
                 return types.map((type) => type.name).join(', ');
             }),
-            tableUtils.newColumn('updated_at').withTitle('Updated at').renderWith(function (data) {
+            tableUtils
+            .newColumn('updated_at')
+            .withTitle('Updated at')
+            .renderWith(function (data) {
                 return $filter('date')(data, 'medium');
             }),
-            tableUtils.newColumn('region').withTitle('Region').renderWith(function (data) {
+            tableUtils
+            .newColumn('region')
+            .withTitle('Region')
+            .renderWith(function (data) {
                 let region = regions.filter(function (t) {
                     return t.id == data.id;
                 });
 
-                if (!region.length) return '';
+                if (!region.length)
+                    return '';
                 return region[0].name;
             }),
-            tableUtils.newColumn('status').withTitle('Status')
+            tableUtils
+            .newColumn('status')
+            .withTitle('Status')
         ];
 
         vm.dtInstance = {};
@@ -59,49 +80,70 @@ angular.module('adminApp')
 
         angular.extend($scope, vm);
     })
-    .controller('ServiceListController', function (tableUtils, $scope, provider, serviceTypes, regions, $filter,
-                                                   service_languages, ServiceService) {
+    .controller('ServiceListController', function (tableUtils, $scope, provider, serviceTypes, regions, $filter, service_languages, ServiceService) {
         let vm = this;
         vm.provider = provider;
         let langs = service_languages;
         if (provider) {
-            vm.dtOptions = tableUtils.defaultsWithServiceNameAndFilterAndSearch('ServiceManagementService', {provider: provider.id});
+            vm.dtOptions = tableUtils.defaultsWithServiceNameAndFilterAndSearch('ServiceManagementService', {
+                provider: provider.id
+            });
         } else {
             vm.dtOptions = tableUtils.defaultsWithService('ServiceService');
         }
         vm.dtColumns = [
-            tableUtils.newColumn('id').withTitle('ID'),
-            tableUtils.newColumn('name_en').withTitle('Name (en)'),
-            tableUtils.newColumn('types').withTitle('Types').renderWith(function (types) {
+            tableUtils
+            .newColumn('id')
+            .withTitle('ID'),
+            tableUtils
+            .newColumn('name_en')
+            .withTitle('Name (en)'),
+            tableUtils
+            .newColumn('types')
+            .withTitle('Types')
+            .renderWith(function (types) {
                 return types.map((type) => type.name).join(', ');
             }),
-            tableUtils.newColumn('updated_at').withTitle('Updated at').renderWith(function (data) {
+            tableUtils
+            .newColumn('updated_at')
+            .withTitle('Updated at')
+            .renderWith(function (data) {
                 return $filter('date')(data, 'medium');
             }),
-            tableUtils.newColumn('region').withTitle('Region').renderWith(function (data) {
+            tableUtils
+            .newColumn('region')
+            .withTitle('Region')
+            .renderWith(function (data) {
                 let region = regions.filter(function (t) {
                     return t.id == data;
                 });
 
-                if (!region.length) return '';
+                if (!region.length)
+                    return '';
                 return region[0].name;
             }),
-            tableUtils.newColumn('status').withTitle('Status'),
-            tableUtils.newColumn('transifex_status').withTitle('Transifex Status').renderWith(function (data) {
+            tableUtils
+            .newColumn('status')
+            .withTitle('Status'),
+            tableUtils
+            .newColumn('transifex_status')
+            .withTitle('Transifex Status')
+            .renderWith(function (data) {
                 if (data.hasOwnProperty('errors')) {
                     return data.errors;
-                }
-                else {
+                } else {
                     let transifexStatus = '';
                     langs.forEach(function (lang) {
                         if (lang[0] != 'en') {
-                            transifexStatus += `${lang[1]}: ${data[lang[0]]} `;
+                            transifexStatus += `${lang[1]}: ${data[lang[0]] || 'N/A'}<br />`;
                         }
                     });
                     return transifexStatus;
                 }
             }),
-            tableUtils.newServiceActionColumn()
+            tableUtils
+            .newServiceActionColumn()
+            .withOption('width', '200px')
         ];
 
         vm.dtInstance = {};
@@ -115,7 +157,10 @@ angular.module('adminApp')
         vm.newName = '';
 
         vm.confirm = function () {
-            $uibModalInstance.close({serviceId: vm.serviceId, newName: vm.newName});
+            $uibModalInstance.close({
+                serviceId: vm.serviceId,
+                newName: vm.newName
+            });
         };
 
         vm.cancel = function () {
@@ -136,23 +181,24 @@ angular.module('adminApp')
         };
 
     })
-    .controller('ServiceOpenController', function ($rootScope, Restangular, $state, Upload, provider, providers, serviceTypes, regions, $filter,
-    service, tags, ServiceService, leafletData, $window, service_languages, toasty, $scope, webClientUrl, confirmationLogs, DTOptionsBuilder, DTColumnDefBuilder, staticUrl) {
+    .controller('ServiceOpenController', function ($rootScope, Restangular, $state, Upload, provider, providers, serviceTypes, regions, $filter, service, tags, ServiceService, leafletData, $window, service_languages, toasty, $scope, webClientUrl, confirmationLogs, DTOptionsBuilder, DTColumnDefBuilder, staticUrl) {
         let vm = this;
         if (Object.keys(service).length !== 0) {
             if (Object.keys(provider).length !== 0 && service.provider.id == provider.id) {
                 vm.provider = provider;
-            }
-            else {
-                $rootScope.selectedProvider = service.provider;
+            } else {
+                //  $rootScope.selectedProvider = service.provider;
                 vm.provider = service.provider;
             }
-        }
-        else {
+        } else {
             vm.provider = provider;
         }
 
-        vm.providerRegion = regions.filter(function(r) { return r.id === provider.region;});
+        vm.providerRegion = regions.filter(function (r) {
+            return r.id 
+          
+          provider.region;
+        });
 
         vm.providerRegion = vm.providerRegion && vm.providerRegion[0]
         vm.serviceTypes = serviceTypes;
@@ -163,17 +209,28 @@ angular.module('adminApp')
             vm.serviceConfirmationLogs = confirmationLogs.confirmation_logs;
             vm.lastStatus = '';
             if (_.last(_.sortBy(vm.serviceConfirmationLogs, 'id', ))) {
-                vm.lastStatus = _.last(_.sortBy(vm.serviceConfirmationLogs, 'id', )).status;
+                vm.lastStatus = _
+                    .last(_.sortBy(vm.serviceConfirmationLogs, 'id', ))
+                    .status;
             }
             vm.serviceConfirmation = (vm.lastStatus == 'Confirmed');
-            vm.dtOptions = DTOptionsBuilder.newOptions().withOption('order', [[1, 'desc'], [0, 'desc']]);
+            vm.dtOptions = DTOptionsBuilder
+                .newOptions()
+                .withOption('order', [
+                    [
+                        1, 'desc'
+                    ],
+                    [0, 'desc']
+                ]);
             vm.dtColumnDefs = [
-                DTColumnDefBuilder.newColumnDef(1).withOption('type', 'date').renderWith(data => {
+                DTColumnDefBuilder
+                .newColumnDef(1)
+                .withOption('type', 'date')
+                .renderWith(data => {
                     return $filter('date')(data, 'medium');
-                }),
+                })
             ];
-        }
-        else {
+        } else {
             vm.service.confirmedByAdmin = false;
             vm.serviceConfirmation = false;
         }
@@ -181,9 +238,11 @@ angular.module('adminApp')
         if (!vm.service.hasOwnProperty('selection_criteria')) {
             vm.service.selection_criteria = [];
         }
-        vm.selectedLanguageTab = 'en';
+        vm.selectedLanguageTab = $scope.languages ? $scope.languages[0][0] : 'en';
         let langs = service_languages;
-        vm.isNew = !vm.service.hasOwnProperty('id');
+        vm.isNew = !vm
+            .service
+            .hasOwnProperty('id');
         vm.isEditing = vm.isNew;
         vm.transifexStatus = "---";
         vm.statusChoices = {
@@ -195,286 +254,416 @@ angular.module('adminApp')
             'archived': 'Archived'
         };
         vm.contactTypeChoices = {
-            'email':  'Email',
+            'email': 'Email',
             'phone': 'Phone',
             'viber': 'Viber',
             'whatsapp': 'Whatsapp',
             'skype': 'Skype',
             'facebook_messenger': 'Facebook Messenger'
         };
-        vm.days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+        vm.days = [
+            'sunday',
+            'monday',
+            'tuesday',
+            'wednesday',
+            'thursday',
+            'friday',
+            'saturday'
+        ];
         if (vm.isNew || !vm.service.opening_time) {
             vm.service.provider = vm.provider.id;
-            vm.service.region = vm.providerRegion ? vm.providerRegion.id : null;
+            vm.service.region = vm.providerRegion ?
+                vm.providerRegion.id :
+                null;
             vm.service.tags = [];
             vm.service.types = [];
             vm.service.opening_time = {
                 '24/7': false
             }
             for (let day in vm.days) {
-                vm.service.opening_time[vm.days[day]] = [{'open': null, 'close': null}];
+                vm.service.opening_time[vm.days[day]] = [{
+                    'open': null,
+                    'close': null
+                }];
             }
         }
         $scope.mapControl = {};
-        vm.provideLocation = vm.service.location ? true : false;
+        vm.provideLocation = vm.service.location ?
+            true :
+            false;
 
-        leafletData.getMap('service-details-map').then(function (map) {
-            map.scrollWheelZoom.disable();
-        });
+        leafletData
+            .getMap('service-details-map')
+            .then(function (map) {
+                map
+                    .scrollWheelZoom
+                    .disable();
+            });
+
 
         vm.goBack = function () {
-            $state.go('service.list')
-        };
-        vm.startEditing = function () {
-            vm.isEditing = true;
-
-            leafletData.getMap('service-details-map').then(function (map) {
-                map.scrollWheelZoom.enable();
-            });
+            history.go(-1);
         };
 
-        vm.stopEditing = function () {
-            vm.isEditing = false;
+        vm.canEdit = (
+            $rootScope.user.isSuperuser ||
+            ($rootScope.user.groups.filter(g => g.name === 'Provider').length > 0 && $rootScope.selectedProvider.id === vm.service.provider.id)
+        )
+        if (vm.canEdit) {
+            /*
+Only superusers and service providers have access to the edit functions. Everyone else should see the read only version only.
+            */
 
-            leafletData.getMap('service-details-map').then(function (map) {
-                map.scrollWheelZoom.disable();
-            });
-        };
+            vm.startEditing = function () {
+                vm.isEditing = true;
 
-        vm.cancelEditing = function () {
-            vm.stopEditing();
-            $state.reload();
-        };
+                leafletData
+                    .getMap('service-details-map')
+                    .then(function (map) {
+                        map
+                            .scrollWheelZoom
+                            .enable();
+                    });
+            };
 
-        vm.removeImage = function () {
-            let image = {'image': null};
-            return vm.service.customPATCH(image).then(function (resp) {
+            vm.stopEditing = function () {
+                vm.isEditing = false;
+
+                leafletData
+                    .getMap('service-details-map')
+                    .then(function (map) {
+                        map
+                            .scrollWheelZoom
+                            .disable();
+                    });
+            };
+
+            vm.cancelEditing = function () {
+                vm.stopEditing();
                 $state.reload();
-            });
-        };
+            };
 
-        vm.save = function (file) {
-            if (!vm.provideLocation) {
-                vm.service.location = null;
-            }
-
-            if (vm.isNew) {
-                ServiceService.post(vm.service).then(function (s) {
-                    if (file) {
-                        Upload.upload({
-                            url: 'v2/services/' + s.id + '/',
-                            data: {image: file},
-                            method: 'PATCH',
-                        }).then(function () {
-                            vm.errors = false;
-                            $state.go('^.open', {serviceId: s.id});
-                        }).catch(function (e) {
-                            vm.errors = true;
-                        });
-                    } else {
-                        vm.errors = false;
-                        $state.go('^.open', {serviceId: s.id});
-                    }
-                }).catch(function (e) {
-                    vm.errors = true;
-                });
-            } else {
-                vm.service.save().then(function () {
-                    if (file) {
-                        Upload.upload({
-                            url: 'v2/services/' + vm.service.id + '/',
-                            data: {image: file},
-                            method: 'PATCH',
-                        }).then(function () {
-                            vm.isEditing = false;
-                            $state.reload();
-                        }).catch(function (e) {
-                            vm.errors = true;
-                        });
-                    } else {
-                        vm.isEditing = false;
+            vm.removeImage = function () {
+                let image = {
+                    'image': null
+                };
+                return vm
+                    .service
+                    .customPATCH(image)
+                    .then(function (resp) {
                         $state.reload();
-                    }
-                });
-            }
-        };
+                    });
+            };
 
-        vm.remove = function () {
-            if (confirm('Are you sure?')) {
-                vm.service.remove().then(function () {
-                    $state.go('service.list');
-                });
-            }
-        };
-
-        vm.pushToTransifex = function () {
-            ServiceService.pushServiceToTransifex(vm.service.id).then(function (s) {
-                $state.reload();
-                let message;
-                if (s.status == 'New') {
-                    message = `Service has been created in transifex!
-                        <br/>Strings added: ${s.strings_added}`;
+            vm.save = function (file) {
+                if (!vm.provideLocation) {
+                    vm.service.location = null;
                 }
-                else {
-                    message = `Service has been pushed to transifex!
+
+                if (vm.isNew) {
+                    ServiceService
+                        .post(vm.service)
+                        .then(function (s) {
+                            if (file) {
+                                Upload.upload({
+                                        url: 'v2/services/' + s.id + '/',
+                                        data: {
+                                            image: file
+                                        },
+                                        method: 'PATCH'
+                                    })
+                                    .then(function () {
+                                        vm.errors = false;
+                                        $state.go('^.open', {
+                                            serviceId: s.id
+                                        });
+                                    })
+                                    .catch(function (e) {
+                                        vm.errors = true;
+                                    });
+                            } else {
+                                vm.errors = false;
+                                $state.go('^.open', {
+                                    serviceId: s.id
+                                });
+                            }
+                        })
+                        .catch(function (e) {
+                            vm.errors = true;
+                        });
+                } else {
+                    vm
+                        .service
+                        .save()
+                        .then(function () {
+                            if (file) {
+                                Upload.upload({
+                                        url: 'v2/services/' + vm.service.id + '/',
+                                        data: {
+                                            image: file
+                                        },
+                                        method: 'PATCH'
+                                    })
+                                    .then(function () {
+                                        vm.isEditing = false;
+                                        $state.reload();
+                                    })
+                                    .catch(function (e) {
+                                        vm.errors = true;
+                                    });
+                            } else {
+                                vm.isEditing = false;
+                                $state.reload();
+                            }
+                        });
+                }
+            };
+
+            vm.remove = function () {
+                if (confirm('Are you sure?')) {
+                    vm
+                        .service
+                        .remove()
+                        .then(function () {
+                            $state.go('service.list');
+                        });
+                }
+            };
+
+            vm.pushToTransifex = function () {
+                ServiceService
+                    .pushServiceToTransifex(vm.service.id)
+                    .then(function (s) {
+                        $state.reload();
+                        let message;
+                        if (s.status == 'New') {
+                            message = `Service has been created in transifex!
+                        <br/>Strings added: ${s.strings_added}`;
+                        } else {
+                            message = `Service has been pushed to transifex!
                         <br/>Strings added: ${s.strings_added}
                         <br/>Strings updated: ${s.strings_updated}
                         <br/>Strings deleted: ${s.strings_delete}`;
-                }
-                $state.reload();
-                    toasty.success({
-                        title: 'Pushed to transifex!',
-                        msg: message,
-                        clickToClose: true,
-                        showClose: false,
-                        sound: false,
-                        html: true
+                        }
+                        $state.reload();
+                        toasty.success({
+                            title: 'Pushed to transifex!',
+                            msg: message,
+                            clickToClose: true,
+                            showClose: false,
+                            sound: false,
+                            html: true
+                        });
+                    })
+                    .catch(function (e) {
+                        toasty.error({
+                            title: 'Pushed to transifex failed!',
+                            msg: 'An error occurred.',
+                            clickToClose: true,
+                            showClose: false,
+                            sound: false,
+                            html: true
+                        });
                     });
-                }).catch(function (e) {
-                    toasty.error({
-                        title: 'Pushed to transifex failed!',
-                        msg: 'An error occurred.',
-                        clickToClose: true,
-                        showClose: false,
-                        sound: false,
-                        html: true
+                $state.reload();
+            };
+
+            vm.pullFromTransifex = function () {
+                ServiceService
+                    .pullServiceFromTransifex(vm.service.id)
+                    .then(function (s) {
+                        $state.reload();
+                        let message = 'There was no translations for service';
+                        if (s.length > 0) {
+                            message = `Translations in ${s} for service have been pulled from transifex!`;
+                        }
+                        toasty.success({
+                            title: 'Pulled from transifex!',
+                            msg: message,
+                            clickToClose: true,
+                            showClose: false,
+                            sound: false
+                        });
+                    })
+                    .catch(function (e) {
+                        toasty.error({
+                            title: 'Pull from transifex failed!',
+                            msg: 'An error occurred',
+                            clickToClose: true,
+                            showClose: false,
+                            sound: false,
+                            html: true
+                        });
                     });
-                });
-                $state.reload();
-        };
+            };
 
-        vm.pullFromTransifex = function () {
-            ServiceService.pullServiceFromTransifex(vm.service.id).then(function (s) {
-                $state.reload();
-                let message = 'There was no translations for service';
-                if (s.length > 0) {
-                    message = `Translations in ${s} for service have been pulled from transifex!`;
-                }
-                toasty.success({
-                    title: 'Pulled from transifex!',
-                    msg: message,
-                    clickToClose: true,
-                    showClose: false,
-                    sound: false
-                });
-            }).catch(function (e) {
-                toasty.error({
-                    title: 'Pull from transifex failed!',
-                    msg: 'An error occurred',
-                    clickToClose: true,
-                    showClose: false,
-                    sound: false,
-                    html: true
-                });
-            });
-        };
-
-        vm.getTranslationStatus = function () {
-            ServiceService.getServiceTransifexData(vm.service.id).then(function (s) {
-                if (s.hasOwnProperty('data')) {
-                    vm.transifexStatus = s.data;
-                }
-                else if (s.hasOwnProperty('errors')) {
-                    vm.transifexStatus = s.errors;
-                }
-                else {
-                    vm.transifexStatus = '';
-                    langs.forEach(function (lang) {
-                        if (lang[0] != 'en') {
-                            vm.transifexStatus += `${lang[1]}: ${s[lang[0]]} `;
+            vm.getTranslationStatus = function () {
+                ServiceService
+                    .getServiceTransifexData(vm.service.id)
+                    .then(function (s) {
+                        if (s.hasOwnProperty('data')) {
+                            vm.transifexStatus = s.data;
+                        } else if (s.hasOwnProperty('errors')) {
+                            vm.transifexStatus = s.errors;
+                        } else {
+                            vm.transifexStatus = '';
+                            langs.forEach(function (lang) {
+                                if (lang[0] != 'en') {
+                                    vm.transifexStatus += `${lang[1]}: ${s[lang[0]]} `;
+                                }
+                            })
                         }
                     })
+                    .catch(function (e) {});
+            };
+
+            vm.getTranslationStatus();
+
+            vm.generateSlug = function () {
+                let regionSelected = 'undefined';
+                let nameParsed = '';
+                if (vm.isNew) {
+                    if (vm.service.name_en) {
+                        nameParsed = vm
+                            .service
+                            .name_en
+                            .toLowerCase()
+                            .replace(/ /g, '-')
+                            .replace(/[-]+/g, '-')
+                            .replace(/[^\w-]+/g, '');
+                    }
+                    if (vm.service.region) {
+                        regionSelected = regions.find(region => region.id == vm.service.region);
+                    }
+                    vm.service.slug = `${regionSelected.slug}_${vm.service.provider}_${nameParsed}`;
                 }
-            }).catch(function (e) {
-            });
-        };
+            };
 
-        vm.getTranslationStatus();
+            vm.checkIfOnList = function (newTag) {
+                return vm
+                    .service
+                    .tags
+                    .find(element => {
+                        return element.name == newTag;
+                    });
+            };
 
-        vm.generateSlug = function () {
-            let regionSelected = 'undefined';
-            let nameParsed = '';
-            if (vm.isNew) {
-                if (vm.service.name_en) {
-                    nameParsed = vm.service.name_en.toLowerCase().replace(/ /g, '-').replace(/[-]+/g, '-').replace(/[^\w-]+/g, '');
-                }
-                if (vm.service.region) {
-                    regionSelected = regions.find(region => region.id == vm.service.region);
-                }
-                vm.service.slug = `${regionSelected.slug}_${vm.service.provider}_${nameParsed}`;
-            }
-        };
-
-        vm.checkIfOnList = function (newTag) {
-            return vm.service.tags.find( element => { return element.name == newTag; });
-        };
-
-        vm.checkIfExists = (newTag) => {
-            if (newTag) {
-                let object = vm.tags.find( element => { return element.name === newTag; });
-                if (object) {
+            vm.checkIfExists = (newTag) => {
+                if (newTag) {
+                    let object = vm
+                        .tags
+                        .find(element => {
+                            return element.name === newTag;
+                        });
+                    if (object) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                } else {
                     return true;
                 }
-                else {
-                    return false;
+            };
+
+            vm.createNewTag = (newTag) => {
+                if (!vm.checkIfExists(newTag)) {
+                    Restangular
+                        .service('service-tag')
+                        .post({
+                            'name': newTag
+                        })
+                        .then(createdTag => {
+                            vm
+                                .tags
+                                .push({
+                                    'id': createdTag.id,
+                                    'name': createdTag.name
+                                });
+                            let objectToPop = vm
+                                .service
+                                .tags
+                                .filter(element => {
+                                    return element.name == newTag;
+                                });
+                            for (let obj of objectToPop) {
+                                vm
+                                    .service
+                                    .tags
+                                    .splice(vm.service.tags.indexOf(obj), 1);
+                            }
+                            vm
+                                .service
+                                .tags
+                                .push({
+                                    'id': createdTag.id,
+                                    'name': createdTag.name
+                                });
+                        });
+                } else {
+                    let objectToPop = vm
+                        .service
+                        .tags
+                        .filter(element => {
+                            return element.name == newTag;
+                        });
+                    for (let obj of objectToPop) {
+                        vm
+                            .service
+                            .tags
+                            .splice(vm.service.tags.indexOf(obj), 1);
+                    }
+                    vm
+                        .service
+                        .tags
+                        .push(vm.tags.find(element => {
+                            return element.name == newTag;
+                        }));
                 }
-            }
-            else {
-                return true;
-            }
-        };
+            };
 
-        vm.createNewTag = (newTag) => {
-            if (!vm.checkIfExists(newTag)) {
-                Restangular.service('service-tag').post({'name': newTag}).then(createdTag => {
-                    vm.tags.push({'id': createdTag.id, 'name': createdTag.name});
-                    let objectToPop = vm.service.tags.filter(element => { return element.name == newTag; });
-                    for (let obj of objectToPop) {
-                        vm.service.tags.splice(vm.service.tags.indexOf(obj), 1);
-                    }
-                    vm.service.tags.push({'id': createdTag.id, 'name': createdTag.name});
-                });
-            }
-            else {
-                    let objectToPop = vm.service.tags.filter(element => { return element.name == newTag; });
-                    for (let obj of objectToPop) {
-                        vm.service.tags.splice(vm.service.tags.indexOf(obj), 1);
-                    }
-                    vm.service.tags.push(vm.tags.find(element => { return element.name == newTag; }));
-            }
-        };
+            vm.transformTag = (newTag) => {
+                let item = {
+                    'id': newTag,
+                    'name': newTag
+                };
+                return item;
+            };
 
-        vm.transformTag = (newTag) => {
-            let item = {'id': newTag, 'name': newTag};
-            return item;
-        };
+            vm.adjustMap = function () {
+                if (vm.service.location.coordinates[1] || vm.service.location.coordinates[0]) {
+                    $scope
+                        .mapControl
+                        .refreshMapExternal(vm.service.location.coordinates[1], vm.service.location.coordinates[0]);
+                }
+            };
 
-        vm.adjustMap = function () {
-            if (vm.service.location.coordinates[1] || vm.service.location.coordinates[0]) {
-                $scope.mapControl.refreshMapExternal(
-                    vm.service.location.coordinates[1],
-                    vm.service.location.coordinates[0]
-                );
-            }
-        };
+            vm.getPreviewLink = () => {
+                return `${webClientUrl}preview/${vm.service.id}`;
+            };
 
-        vm.getPreviewLink = () => {
-            return `${webClientUrl}preview/${vm.service.id}`;
-        };
+            vm.add_shift = (day) => {
+                vm
+                    .service
+                    .opening_time[day]
+                    .push({
+                        'open': null,
+                        'close': null
+                    });
+            };
 
-        vm.add_shift = (day) => {
-            vm.service.opening_time[day].push({'open': null, 'close': null});
-        };
+            vm.remove_shift = (day, index) => {
+                vm
+                    .service
+                    .opening_time[day]
+                    .splice(index, 1);
+            };
 
-        vm.remove_shift = (day, index) => {
-            vm.service.opening_time[day].splice(index, 1);
-        };
-
-        vm.ckeditorOptions = () => {
-            return {
-                autoParagraph: false,
-                allowedContent: true,
-                height: 100
+            vm.ckeditorOptions = () => {
+                return {
+                    autoParagraph: false,
+                    allowedContent: true,
+                    height: 100
+                };
             };
         };
         vm.addContactInformation = () =>{
@@ -486,10 +675,19 @@ angular.module('adminApp')
         vm.removeContact = (index) =>{
             vm.service.contact_information.splice(index,1)
         }
+
     })
     .controller('ServiceConfirmationController', function ($http, $state, $stateParams, service, serviceTypes, apiUrl) {
         let vm = this;
-        vm.days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+        vm.days = [
+            'sunday',
+            'monday',
+            'tuesday',
+            'wednesday',
+            'thursday',
+            'friday',
+            'saturday'
+        ];
         vm.sendAnnotation = false;
         vm.invalidConfirmationKey = false;
         vm.confirmationSucceeded = false;
@@ -507,7 +705,7 @@ angular.module('adminApp')
             'Address (City)': vm.service.address_city,
             'Address (Street)': vm.service.address,
             'Address (Floor)': vm.service.address_floor,
-            'Address (Country Language)': vm.service.address_in_country_language,
+            'Address (Country Language)': vm.service.address_in_country_language
         };
         vm.service_data['other_info'] = {
             'Phone Number': vm.service.phone_number,
@@ -535,8 +733,7 @@ angular.module('adminApp')
                 }).catch((data) => {
                     vm.invalidConfirmationKey = true;
                 });
-            }
-            else {
+            } else {
                 return $http({
                     method: 'POST',
                     url: apiUrl + '/v2/service_confirm/',
@@ -554,4 +751,69 @@ angular.module('adminApp')
                 });
             }
         };
+    })
+    .controller('ServicePrivateViewController', function (tableUtils, $scope, providers, serviceTypes, serviceStatus, regions, $filter, service_languages, ServiceService) {
+        let vm = this;
+        let langs = service_languages;
+
+        vm.providers = providers;
+        vm.serviceTypes = serviceTypes;
+        vm.regions = regions;
+        vm.serviceStatus = serviceStatus;
+
+        vm.dtOptions = tableUtils.defaultsWithServiceNameAndFilter('PrivateServiceService', {});
+        vm.dtColumns = [
+            tableUtils
+            .newColumn('id')
+            .withTitle('ID'),
+            tableUtils
+            .newColumn('name')
+            .withTitle('Service'),
+            tableUtils
+            .newColumn('provider.name')
+            .withTitle('Provider'),
+            tableUtils
+            .newColumn('types')
+            .withTitle('Types')
+            .renderWith(function (types) {
+                return types.map((type) => type.name).join(', ');
+            }),
+            tableUtils
+            .newColumn('address_city')
+            .withTitle('City'),
+            tableUtils
+            .newColumn('updated_at')
+            .withTitle('Updated at')
+            .renderWith(function (data) {
+                return $filter('date')(data, 'medium');
+            })
+        ];
+
+        if ($scope.user.isSuperuser) {
+            vm
+                .dtColumns
+                .push(tableUtils.newServiceActionColumn().withOption('width', '200px'));
+        } else {
+
+            vm
+                .dtColumns
+                .push(tableUtils.newServiceReadOnlyActionColumn().withOption('width', '100px'));
+        }
+
+        vm.reloadOption = (n) => {
+            let o = tableUtils.defaultsWithServiceNameAndFilter('PrivateServiceService', n);
+
+            vm
+                .dtInstance
+                .dataTable
+                .fnSettings()
+                .ajax = o.ajax
+            vm
+                .dtInstance
+                .reloadData();
+        }
+        vm.dtInstance = {};
+        vm.searchCriteria = {};
+
+        angular.extend($scope, vm);
     });

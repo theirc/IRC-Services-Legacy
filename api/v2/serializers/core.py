@@ -16,11 +16,11 @@ from regions.models import GeographicRegion
 from rest_framework import exceptions, serializers
 from services.models import Service, Provider, ServiceArea
 from . import apps as apps_serializers
+from . import services as sevices_serializers
 
 CAN_EDIT_STATUSES = [Service.STATUS_DRAFT,
                      Service.STATUS_CURRENT, Service.STATUS_REJECTED]
 DRFValidationError = exceptions.ValidationError
-
 
 
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
@@ -103,20 +103,31 @@ class ServiceAreaSerializer(RequireOneTranslationMixin,
 
 
 class UserSerializer(serializers.ModelSerializer):
+    managed_providers = sevices_serializers.ProviderSerializer(
+        many=True, read_only=True)
 
     class Meta:
         model = EmailUser
         fields = ('id', 'email', 'groups', 'name', 'surname', 'is_staff', 'is_superuser', 'phone_number', 'title',
-                  'position')
+                  'position', 'providers', 'managed_providers')
 
 
 class UserWithGroupSerializer(serializers.ModelSerializer):
+    isStaff = serializers.BooleanField(source="is_staff")
+    isSuperuser = serializers.BooleanField(source="is_superuser")
     groups = GroupSerializer(many=True)
+    providers = sevices_serializers.ProviderSerializer(many=True,)
+    managed_providers = sevices_serializers.ProviderSerializer(many=True,)
+
+    def validate(self, attrs):
+        print(self)
+
+        return attrs
 
     class Meta:
         model = EmailUser
         fields = ('id', 'email', 'groups', 'name', 'surname', 'is_staff', 'is_superuser', 'phone_number', 'title',
-                  'position')
+                  'position', 'providers', 'isStaff', 'isSuperuser', 'managed_providers')
 
 
 class UserAvatarSerializer(serializers.ModelSerializer):
@@ -292,7 +303,7 @@ class GeographicRegionSerializer(serializers.ModelSerializer):
         model = GeographicRegion
         fields = tuple(
             ['id', 'name', 'slug', 'code', 'hidden', 'level', 'geom', 'centroid', 'envelope', 'parent',
-             'parent__name'] +
+             'parent__name', 'languages_available'] +
             generate_translated_fields('title')
         )
 
@@ -315,7 +326,7 @@ class GeographicRegionSerializerNoGeometry(serializers.ModelSerializer):
         model = GeographicRegion
         fields = tuple(
             ['id', 'name', 'slug', 'code', 'hidden', 'level', 'centroid', 'envelope', 'parent',
-             'parent__name'] +
+             'parent__name', 'languages_available'] +
             generate_translated_fields('title')
         )
 
@@ -329,3 +340,23 @@ class UserPermissionSerializer(serializers.ModelSerializer):
     class Meta:
         model = EmailUser
         fields = ('email', 'permissions')
+
+
+class APIRegisterSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    name = serializers.CharField()
+    surname = serializers.CharField()
+    title = serializers.CharField(required=False)
+    position = serializers.CharField(required=False)
+    phone_number = serializers.CharField(required=False)
+    groups = serializers.PrimaryKeyRelatedField(
+        many=True, required=False, read_only=True)
+
+    def validate(self, attrs):
+        attrs = super().validate(attrs)
+        User = get_user_model()
+        user = User.objects.filter(email=attrs.get('email'))
+        if user:
+            raise exceptions.ValidationError(
+                {'email': 'User with this email already exists'})
+        return attrs

@@ -49,11 +49,11 @@ angular.module('adminApp')
         vm.provider = provider;
         vm.object = provider;
         vm.providerTypes = providerTypes;
-        vm.selectedLanguageTab = 'en';
+        vm.selectedLanguageTab = $rootScope.languages ? $rootScope.languages[0][0] : 'en';
         vm.isEditing = false;
         vm.allUsers = systemUsers;
         vm.isNew = !vm.object.hasOwnProperty('id');
-        vm.regions = regions;
+        vm.regions = regions.filter(r => r.level === 1);
 
         if (vm.isNew) {
             vm.isEditing = true;

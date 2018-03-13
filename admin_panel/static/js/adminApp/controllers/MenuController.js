@@ -22,21 +22,13 @@ angular.module("adminApp").controller("MenuController", function ($rootScope, $s
 		return [{
 				title: "MENU",
 				items: [{
-						title: "Service Map",
-						sref: "service.private",
-						hide: HIDE_NOT_YET_IMPLEMENTED,
+						title: "Search Services",
+						sref: "service.search",
 					},
 					{
 						title: "Service Management",
-						active: $state.includes("service"),
-						items: [{
-							title: "Services Overview",
-							sref: "service.dashboard"
-						}, {
-							title: "Services Management",
-							sref: "service.list"
-						}],
-						hide: !($rootScope.permissions && $rootScope.permissions.servicesAdd && $rootScope.selectedProvider),
+						sref: "service.list",
+						hide: !((($rootScope.user.groups.filter(g => g.name === 'Provider').length > 0) || $rootScope.user.isSuperuser) && $rootScope.selectedProvider),
 					},
 				],
 			},

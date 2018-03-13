@@ -1,6 +1,19 @@
 from . import models
 
 
+class UserRegionMiddleware(object):
+    @staticmethod
+    def process_request(request):
+        user = request.user
+        if not user.is_anonymous():
+            providers = user.managed_providers.all() | user.providers.all()
+            regions = providers.values_list('region').distinct()
+            if not user.is_superuser and regions.count() == 1:
+                region_id,  = regions.first()
+                request.region = models.GeographicRegion.objects.get(
+                    pk=region_id)
+
+
 class RegionAttributesMiddleware(object):
     @staticmethod
     def process_request(request):
@@ -11,9 +24,11 @@ class RegionAttributesMiddleware(object):
             # We need to encrypt this at a later date
 
             from django.contrib.gis.geos import Point
-            lat, long = [float(x.strip()) for x in x_requested_location.split(',')]
+            lat, long = [float(x.strip())
+                         for x in x_requested_location.split(',')]
             point = Point(long, lat)
-            regions = models.GeographicRegion.objects.filter(geom__contains=point)
+            regions = models.GeographicRegion.objects.filter(
+                geom__contains=point)
             if regions:
                 regions = sorted(regions, key=lambda r: r.level, reverse=True)
                 region = regions[0]

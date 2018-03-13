@@ -46,12 +46,12 @@
                     <div class="box">
                         <div class="box-header">
                             <h3 class="box-title">Translated Fields</h3>
-                            <div class="transifex-container pull-right" ng-if="!ctrl.isNew">
+                            <div class="transifex-container pull-right" ng-if="!ctrl.isNew && user.isSuperuser">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-default" ng-if="user.isSuperuser && !ctrl.isNew" ng-click="ctrl.pushToTransifex()">
+                                    <button type="button" class="btn btn-default" ng-click="ctrl.pushToTransifex()">
                                         <i class="fa fa-arrow-up"></i>Push to transifex
                                     </button>
-                                    <button type="button" class="btn btn-default" ng-if="user.isSuperuser && !ctrl.isNew" ng-click="ctrl.pullFromTransifex()">
+                                    <button type="button" class="btn btn-default" ng-click="ctrl.pullFromTransifex()">
                                         <i class="fa fa-arrow-down"></i>Pull from transifex
                                     </button>
                                 </div>
@@ -61,53 +61,45 @@
                         <div class="box-body" read-only-form is-editing="ctrl.isEditing">
                             <div class="nav-tabs-custom">
                                 <ul class="nav nav-tabs">
-                                    <li ng-class="{active: ctrl.selectedLanguageTab == (lang[0]||'en')}" ng-repeat="lang in serviceLanguages">
+                                    <li ng-class="{active: ctrl.selectedLanguageTab == (lang[0]||languages[0][0])}" ng-repeat="lang in serviceLanguages">
                                         <a href="" ng-click="ctrl.selectedLanguageTab = lang[0]" data-toggle="tab" aria-expanded="true">{{ lang[1] }}</a>
                                     </li>
                                 </ul>
                                 <div class="tab-content">
-                                    <div class="tab-pane" ng-class="{active: ctrl.selectedLanguageTab == (lang[0]||'en')}" ng-repeat="lang in languages">
+                                    <div class="tab-pane" ng-class="{active: ctrl.selectedLanguageTab == (lang[0]||languages[0][0])}" ng-repeat="lang in languages">
                                         <div class="row">
                                             <div class="form-group col-xs-12">
                                                 <label for="{{ idHelper('name',lang[0]) }}">Name</label>
                                                 <input type="text" class="form-control" name="name_{{ lang[0] }}" ng-model="ctrl.service[idHelper('name',lang[0])]" placeholder="Name in {{ lang[1] }}"
-                                                    ng-maxlength="256" ng-disabled="lang[0] != 'en'" ng-change="ctrl.generateSlug()">
+                                                    ng-maxlength="256" ng-change="ctrl.generateSlug()">
                                             </div>
                                             <div class="form-group col-xs-6">
                                                 <label for="{{ idHelper('description',lang[0]) }}">Description</label>
-                                                <div ng-if="ctrl.isEditing && lang[0] == 'en'" ckeditor="ctrl.ckeditorOptions()" name="{{  idHelper('description',lang[0])}}"
-                                                    class="form-control" ng-model="ctrl.service[idHelper('description',lang[0])]"></div>
-                                                <div ng-if="!(ctrl.isEditing && lang[0] == 'en')" name="{{  idHelper('description',lang[0])}}" class="form-control description-field"
-                                                    ng-bind-html="ctrl.service[idHelper('description',lang[0])]"></div>
+                                                <div ng-if="ctrl.isEditing" ckeditor="ctrl.ckeditorOptions()" name="{{  idHelper('description',lang[0])}}" class="form-control"
+                                                    ng-model="ctrl.service[idHelper('description',lang[0])]"></div>
                                             </div>
                                             <div class="form-group col-xs-6">
                                                 <label for="{{ idHelper('additional_info',lang[0]) }}">Additional Information</label>
-                                                <div ng-if="ctrl.isEditing && lang[0] == 'en'" ckeditor="ctrl.ckeditorOptions()" name="{{  idHelper('additional_info',lang[0])}}"
-                                                    class="form-control" ng-model="ctrl.service[idHelper('additional_info',lang[0])]"></div>
-                                                <div ng-if="!(ctrl.isEditing && lang[0] == 'en')" name="{{  idHelper('additional_info',lang[0])}}" class="form-control description-field"
-                                                    ng-bind-html="ctrl.service[idHelper('additional_info',lang[0])]"></div>
+                                                <div ng-if="ctrl.isEditing" ckeditor="ctrl.ckeditorOptions()" name="{{  idHelper('additional_info',lang[0])}}" class="form-control"
+                                                    ng-model="ctrl.service[idHelper('additional_info',lang[0])]"></div>
                                             </div>
                                             <div class="form-group col-xs-12">
                                                 <label for="{{ idHelper('languages_spoken',lang[0]) }}">
                                                     Languages spoken</label>
-                                                <textarea name="{{  idHelper('languages_spoken',lang[0])}}" class="form-control" ng-model="ctrl.service[idHelper('languages_spoken',lang[0])]"
-                                                    ng-disabled="lang[0] != 'en'"></textarea>
+                                                <textarea name="{{  idHelper('languages_spoken',lang[0])}}" class="form-control" ng-model="ctrl.service[idHelper('languages_spoken',lang[0])]"></textarea>
                                             </div>
                                             <div class="form-group col-xs-12">
                                                 <label for="{{ idHelper('address',lang[0]) }}">Address (City)</label>
-                                                <textarea name="{{  idHelper('address',lang[0])}}" class="form-control" ng-model="ctrl.service[idHelper('address_city',lang[0])]"
-                                                    ng-disabled="lang[0] != 'en'"></textarea>
+                                                <textarea name="{{  idHelper('address',lang[0])}}" class="form-control" ng-model="ctrl.service[idHelper('address_city',lang[0])]"></textarea>
                                             </div>
                                             <div class="form-group col-xs-12">
                                                 <label for="{{ idHelper('address',lang[0]) }}">Address (Street)</label>
-                                                <textarea name="{{  idHelper('address',lang[0])}}" class="form-control" ng-model="ctrl.service[idHelper('address',lang[0])]"
-                                                    ng-disabled="lang[0] != 'en'"></textarea>
+                                                <textarea name="{{  idHelper('address',lang[0])}}" class="form-control" ng-model="ctrl.service[idHelper('address',lang[0])]"></textarea>
                                             </div>
                                             <div class="form-group col-xs-12">
                                                 <label for="{{ idHelper('address_floor',lang[0]) }}">
                                                     Address (floor / note about address)</label>
-                                                <textarea name="{{  idHelper('address_floor',lang[0])}}" class="form-control" ng-model="ctrl.service[idHelper('address_floor',lang[0])]"
-                                                    ng-disabled="lang[0] != 'en'"></textarea>
+                                                <textarea name="{{  idHelper('address_floor',lang[0])}}" class="form-control" ng-model="ctrl.service[idHelper('address_floor',lang[0])]"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -290,111 +282,6 @@
                 </div>
             </div>
 
-            <div class="row" read-only-form is-editing="ctrl.isEditing">
-                <div class="col-xs-12">
-                    <div class="box box-default">
-                        <div class="box-header">
-                            <h3 class="box-title">Focal Point - Service Newsletter</h3>
-                        </div>
-                        <div class="box-body">
-                            <div class="form-group col-xs-6">
-                                <label for="focalFirstName">Focal Point First Name</label>
-                                <input type="text" class="form-control" id="focalFirstName" ng-maxlength="255" placeholder="First Name" ng-model="ctrl.service.focal_point_first_name">
-                            </div>
-                            <div class="form-group col-xs-6">
-                                <label for="focalLastName">Focal Point Last Name</label>
-                                <input type="text" class="form-control" id="focalLastName" ng-maxlength="255" placeholder="Last Name" ng-model="ctrl.service.focal_point_last_name">
-                            </div>
-                            <div class="form-group col-xs-6">
-                                <label for="focalEmail">Focal Point Email</label>
-                                <input type="email" class="form-control" id="focalEmail" ng-maxlength="255" placeholder="Email" ng-model="ctrl.service.focal_point_email"
-                                    ng-pattern="/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/">
-                            </div>
-                            <div class="form-group col-xs-12"></div>
-                            <div class="form-group col-xs-6">
-                                <label for="secondFocalFirstName">Second Focal Point First Name</label>
-                                <input type="text" class="form-control" id="secondFocalFirstName" ng-maxlength="255" placeholder="First Name" ng-model="ctrl.service.second_focal_point_first_name">
-                            </div>
-                            <div class="form-group col-xs-6">
-                                <label for="secondFocalLastName">Second Focal Point Last Name</label>
-                                <input type="text" class="form-control" id="secondFocalLastName" ng-maxlength="255" placeholder="Last Name" ng-model="ctrl.service.second_focal_point_last_name">
-                            </div>
-                            <div class="form-group col-xs-6">
-                                <label for="secondFocalEmail">Second Focal Point Email</label>
-                                <input type="email" class="form-control" id="secondFocalEmail" ng-maxlength="255" placeholder="Email" ng-model="ctrl.service.second_focal_point_email"
-                                    ng-pattern="/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/">
-                            </div>
-                            <div class="col-xs-12 service-location-block">
-                                <span class="service-location-question">Do you want to exclude service from Confirmation Newsletter?
-                                    <input type="checkbox" ng-model="ctrl.service.exclude_from_confirmation" ng-disabled="!ctrl.isEditing">
-                                </span>
-                            </div>
-                            <div class="col-xs-12 service-location-block" ng-if="ctrl.serviceConfirmationLogs">
-                                <span class="service-location-question">Last Service Status: {{ ctrl.lastStatus }}.</span>
-                                <span class="service-location-question"> Do you want to confirm it?
-                                    <input type="checkbox" ng-model="ctrl.service.confirmedByAdmin" ng-disabled="!ctrl.isEditing">
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row" read-only-form>
-                <div class="col-xs-12">
-                    <div class="box box-default">
-                        <div class="box-body">
-                            <div class="form-group col-xs-12">
-                                <label for="slug">Slug</label>
-                                <input type="text" class="form-control" id="slug" ng-model="ctrl.service.slug" ng-model-options="{debounce: 500}">
-                                <p>Slug is a unique field. It is used in Transifex to mark the resources for a specified service.
-                                    You can always check the slug in service edit view. The slug contains: region slug, provider
-                                    id and service name with removed special characters. Sometimes, it can contain service
-                                    id at the end.</p>
-                            </div>
-                            <div class="form-group col-xs-12" ng-if="!ctrl.isNew">
-                                <label for="previewLink">Preview Link</label>
-                                <input type="text" class="form-control" id="previewLink" ng-value="ctrl.getPreviewLink()">
-                            </div>
-                        </div>
-                        <!-- /.box-body -->
-                    </div>
-                </div>
-            </div>
-
-            <div class="row" read-only-form ng-if="ctrl.serviceConfirmationLogs">
-                <div class="col-xs-12">
-                    <div class="box box-default">
-                        <div class="box-header">
-                            <h3 class="box-title">Service Confirmation Newsletter Logs</h3>
-                        </div>
-                        <div class="box-body">
-                            <table datatable="" class="table table-bordered table-striped" dt-options="ctrl.dtOptions" dt-column-defs="ctrl.dtColumnDefs">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Date</th>
-                                        <th>Status</th>
-                                        <th>Email sent to</th>
-                                        <th>Note</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="log in ctrl.serviceConfirmationLogs">
-                                        <td>{{ log.id }}</td>
-                                        <td>{{ log.date }}</td>
-                                        <td>{{ log.status }}</td>
-                                        <td>{{ log.sent_to }}</td>
-                                        <td>{{ log.note }}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- /.box-body -->
-                    </div>
-                </div>
-            </div>
-
             <div class="row">
                 <div class="col-xs-12">
                     <div class="box">
@@ -427,8 +314,116 @@
                     </div>
                 </div>
             </div>
+            <div read-only-form is-editing="ctrl.isEditing">
+                <div class="row" ng-if="ctrl.canEdit">
+                    <div class="col-xs-12">
+                        <div class="box box-default">
+                            <div class="box-header">
+                                <h3 class="box-title">Focal Point - Service Newsletter</h3>
+                            </div>
+                            <div class="box-body">
+                                <div class="form-group col-xs-6">
+                                    <label for="focalFirstName">Focal Point First Name</label>
+                                    <input type="text" class="form-control" id="focalFirstName" ng-maxlength="255" placeholder="First Name" ng-model="ctrl.service.focal_point_first_name">
+                                </div>
+                                <div class="form-group col-xs-6">
+                                    <label for="focalLastName">Focal Point Last Name</label>
+                                    <input type="text" class="form-control" id="focalLastName" ng-maxlength="255" placeholder="Last Name" ng-model="ctrl.service.focal_point_last_name">
+                                </div>
+                                <div class="form-group col-xs-6">
+                                    <label for="focalEmail">Focal Point Email</label>
+                                    <input type="email" class="form-control" id="focalEmail" ng-maxlength="255" placeholder="Email" ng-model="ctrl.service.focal_point_email"
+                                        ng-pattern="/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/">
+                                </div>
+                                <div class="form-group col-xs-12"></div>
+                                <div class="form-group col-xs-6">
+                                    <label for="secondFocalFirstName">Second Focal Point First Name</label>
+                                    <input type="text" class="form-control" id="secondFocalFirstName" ng-maxlength="255" placeholder="First Name" ng-model="ctrl.service.second_focal_point_first_name">
+                                </div>
+                                <div class="form-group col-xs-6">
+                                    <label for="secondFocalLastName">Second Focal Point Last Name</label>
+                                    <input type="text" class="form-control" id="secondFocalLastName" ng-maxlength="255" placeholder="Last Name" ng-model="ctrl.service.second_focal_point_last_name">
+                                </div>
+                                <div class="form-group col-xs-6">
+                                    <label for="secondFocalEmail">Second Focal Point Email</label>
+                                    <input type="email" class="form-control" id="secondFocalEmail" ng-maxlength="255" placeholder="Email" ng-model="ctrl.service.second_focal_point_email"
+                                        ng-pattern="/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/">
+                                </div>
+                                <div class="col-xs-12 service-location-block">
+                                    <span class="service-location-question">Do you want to exclude service from Confirmation Newsletter?
+                                        <input type="checkbox" ng-model="ctrl.service.exclude_from_confirmation" ng-disabled="!ctrl.isEditing">
+                                    </span>
+                                </div>
+                                <div class="col-xs-12 service-location-block" ng-if="ctrl.serviceConfirmationLogs">
+                                    <span class="service-location-question">Last Service Status: {{ ctrl.lastStatus }}.</span>
+                                    <span class="service-location-question"> Do you want to confirm it?
+                                        <input type="checkbox" ng-model="ctrl.service.confirmedByAdmin" ng-disabled="!ctrl.isEditing">
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div read-only-form is-editing="ctrl.isEditing">
+                <div class="row" ng-if="ctrl.canEdit">
+                    <div class="col-xs-12">
+                        <div class="box box-default">
+                            <div class="box-body">
+                                <div class="form-group col-xs-12">
+                                    <label for="slug">Slug</label>
+                                    <input type="text" class="form-control" id="slug" ng-model="ctrl.service.slug" ng-model-options="{debounce: 500}">
+                                    <p>Slug is a unique field. It is used in Transifex to mark the resources for a specified
+                                        service. You can always check the slug in service edit view. The slug contains: region
+                                        slug, provider id and service name with removed special characters. Sometimes, it
+                                        can contain service id at the end.</p>
+                                </div>
+                                <div class="form-group col-xs-12" ng-if="!ctrl.isNew">
+                                    <label for="previewLink">Preview Link</label>
+                                    <input type="text" class="form-control" id="previewLink" ng-value="ctrl.getPreviewLink()">
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-            <footer-action-bar>
+            <div read-only-form is-editing="ctrl.isEditing" ng-if="ctrl.serviceConfirmationLogs">
+                <div class="row" ng-if="ctrl.canEdit">
+                    <div class="col-xs-12">
+                        <div class="box box-default">
+                            <div class="box-header">
+                                <h3 class="box-title">Service Confirmation Newsletter Logs</h3>
+                            </div>
+                            <div class="box-body">
+                                <table datatable="" class="table table-bordered table-striped" dt-options="ctrl.dtOptions" dt-column-defs="ctrl.dtColumnDefs">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Date</th>
+                                            <th>Status</th>
+                                            <th>Email sent to</th>
+                                            <th>Note</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="log in ctrl.serviceConfirmationLogs">
+                                            <td>{{ log.id }}</td>
+                                            <td>{{ log.date }}</td>
+                                            <td>{{ log.status }}</td>
+                                            <td>{{ log.sent_to }}</td>
+                                            <td>{{ log.note }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.box-body -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer-action-bar ng-if="ctrl.canEdit">
                 <div style="width: 100%">
                     <button type="button" class="btn btn-warning pull-left" ng-click="ctrl.goBack()">Back</button>
                     <div class="btn-group pull-right">

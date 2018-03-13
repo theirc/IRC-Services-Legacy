@@ -6,136 +6,133 @@
 </section>
 
 <section class="content">
-        <div class="row" ng-form name="userForm" read-only-form is-editing="ctrl.isEditing">
-            <div class="col-xs-12">
-                <div class="box box-default">
-                    <div class="box-body">
-                        <div class="form-group col-xs-12">
-                            <label for="name">Email: </label>
-                            <input type="email" class="form-control" name="email" id="email" ng-disabled="!ctrl.isNew"
-                                   placeholder="Email" ng-required="true" ng-model="ctrl.object.email">
-                            <div class="alert alert-warning form-error" ng-if="userForm.email.$error.required && !userForm.email.$pristine && ctrl.isEditing">
-                                This field is required
-                            </div>
-                            <div class="alert alert-warning form-error" ng-if="userForm.$error.email && !userForm.email.$pristine && ctrl.isEditing">
-                                Invalid email
-                            </div>
+    <div class="row" ng-form name="userForm" read-only-form is-editing="ctrl.isEditing">
+        <div class="col-xs-12">
+            <div class="box box-default">
+                <div class="box-body">
+                    <div class="form-group col-xs-12">
+                        <label for="name">Email: </label>
+                        <input type="email" class="form-control" name="email" id="email" ng-disabled="!ctrl.isNew" placeholder="Email" ng-required="true"
+                            ng-model="ctrl.object.email">
+                        <div class="alert alert-warning form-error" ng-if="userForm.email.$error.required && !userForm.email.$pristine && ctrl.isEditing">
+                            This field is required
                         </div>
-
-                        <div class="form-group col-xs-6">
-                            <label for="name">First Name: </label>
-                            <input type="text" class="form-control" name="name" id="name" ng-maxlength="100" ng-required="true"
-                                   placeholder="First Name" ng-model="ctrl.object.name">
-                            <div class="alert alert-warning form-error" ng-if="userForm.name.$error.required && !userForm.name.$pristine && ctrl.isEditing">
-                                This field is required
-                            </div>
-                            <div class="alert alert-warning form-error" ng-if="userForm.name.$error.maxlength && !userForm.name.$pristine && ctrl.isEditing">
-                                This field is too long.
-                            </div>
-                        </div>
-                        <div class="form-group col-xs-6">
-                            <label for="surname">Last Name: </label>
-                            <input class="form-control" name="surname" ng-model="ctrl.object.surname"
-                                   placeholder="Last Name" id="surname" ng-required="true" ng-maxlength="100">
-                            <div class="alert alert-warning form-error" ng-if="userForm.surname.$error.required && !userForm.surname.$pristine && ctrl.isEditing">
-                                This field is required
-                            </div>
-                            <div class="alert alert-warning form-error" ng-if="userForm.name.$error.maxlength && !userForm.surname.$pristine && ctrl.isEditing">
-                                This field is too long.
-                            </div>
-                        </div>
-                        <div class="form-group col-xs-6">
-                            <label for="title">Title: </label>
-                            <input type="text" class="form-control" id="title"
-                                   placeholder="Title" ng-model="ctrl.object.title">
-                        </div>
-                        <div class="form-group col-xs-6">
-                            <label for="position">Position: </label>
-                            <input class="form-control" name="position" ng-model="ctrl.object.position"
-                                   placeholder="Position" id="position">
-
-                        </div>
-                        <div class="form-group col-xs-6">
-                            <label for="phoneNumber">Phone Number: </label>
-                            <input class="form-control" name="phoneNumber" ng-model="ctrl.object.phone_number"
-                                   placeholder="Phone Number" id="phoneNumber" ng-pattern="/(^[\d+](?!.*--)[\d-]{7,18}[\d])$/">
-                            <div class="alert alert-warning form-error" ng-if="userForm.phoneNumber.$error.pattern && !userForm.phoneNumber.$pristine && ctrl.isEditing">
-                                Invalid phone number format
-                            </div>
-
-                        </div>
-                        <div class="form-group col-xs-6" ng-hide="!ctrl.isNew">
-                            <label for="password">Password: </label>
-                            <input class="form-control" type="password" name="password" ng-model="ctrl.object.password"
-                                   placeholder="Password" id="password" ng-required="ctrl.isNew" ng-minlength="6" ng-maxlength="128">
-                            <div class="alert alert-warning form-error"
-                                 ng-if="userForm.password.$error.minlength || userForm.password.$error.maxlength ||
-                                 userForm.password.$error.required && !userForm.password.$pristine">
-                                Invalid password length
-                            </div>
-                        </div>
-
-                        <div class="form-group col-xs-6" ng-hide="ctrl.object.email !== user.email">
-                            <label for="avatar">Avatar: </label>
-                            <div class="avatar-space">
-                                <button ngf-model-invalid="errorFile" ng-model="picFile" type="button" ngf-max-size="1MB" id="avatar" name="avatar" ngf-pattern="'image/*'" ngf-accept="'image/*'" class="btn btn-primary" ngf-select="ctrl.uploadAvatar($file)">Upload file</button>
-                                <button ng-hide="!user.avatar" type="button" class="btn btn-danger" ng-click="ctrl.removeAvatar()">Remove file</button>
-                                <img src="{{ user.avatar }}" ng-hide="!user.avatar" width="45" height="45">
-                                <span ng-hide="user.avatar">No image uploaded.</span>
-                                <div class="alert alert-warning form-error"
-                                     ng-show="userForm.avatar.$error.maxSize || ctrl.errors">
-                                    File is too large {{ errorFile.size / 1000000|number:1}}MB: max 1MB.
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group col-xs-12" ng-hide="!user.isSuperuser">
-                             <div class="checkbox">
-                                 <label>
-                                     <input type="checkbox" ng-model="ctrl.object.isStaff"> Is Staff
-                                 </label>
-                             </div>
-                         </div>
-                        <div class="form-group col-xs-12" ng-hide="!user.isSuperuser">
-                            <label for="email">Groups</label>
-                            <ui-select ng-disabled="!ctrl.isEditing" multiple ng-model="ctrl.object.groups"
-                                       sortable="true" close-on-select="true">
-                                <ui-select-match placeholder="select a group">{{ $item.name }}</ui-select-match>
-                                <ui-select-choices repeat="group in ctrl.groups | filter: {name: $select.search}">
-                                    <div ng-bind-html="group.name | highlight: $select.search"></div>
-                                </ui-select-choices>
-                            </ui-select>
+                        <div class="alert alert-warning form-error" ng-if="userForm.$error.email && !userForm.email.$pristine && ctrl.isEditing">
+                            Invalid email
                         </div>
                     </div>
+
+                    <div class="form-group col-xs-6">
+                        <label for="name">First Name: </label>
+                        <input type="text" class="form-control" name="name" id="name" ng-maxlength="100" ng-required="true" placeholder="First Name"
+                            ng-model="ctrl.object.name">
+                        <div class="alert alert-warning form-error" ng-if="userForm.name.$error.required && !userForm.name.$pristine && ctrl.isEditing">
+                            This field is required
+                        </div>
+                        <div class="alert alert-warning form-error" ng-if="userForm.name.$error.maxlength && !userForm.name.$pristine && ctrl.isEditing">
+                            This field is too long.
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-6">
+                        <label for="surname">Last Name: </label>
+                        <input class="form-control" name="surname" ng-model="ctrl.object.surname" placeholder="Last Name" id="surname" ng-required="true"
+                            ng-maxlength="100">
+                        <div class="alert alert-warning form-error" ng-if="userForm.surname.$error.required && !userForm.surname.$pristine && ctrl.isEditing">
+                            This field is required
+                        </div>
+                        <div class="alert alert-warning form-error" ng-if="userForm.name.$error.maxlength && !userForm.surname.$pristine && ctrl.isEditing">
+                            This field is too long.
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-6">
+                        <label for="title">Title: </label>
+                        <input type="text" class="form-control" id="title" placeholder="Title" ng-model="ctrl.object.title">
+                    </div>
+                    <div class="form-group col-xs-6">
+                        <label for="position">Position: </label>
+                        <input class="form-control" name="position" ng-model="ctrl.object.position" placeholder="Position" id="position">
+
+                    </div>
+                    <div class="form-group col-xs-6">
+                        <label for="phoneNumber">Phone Number: </label>
+                        <input class="form-control" name="phoneNumber" ng-model="ctrl.object.phone_number" placeholder="Phone Number" id="phoneNumber"
+                            ng-pattern="/(^[\d+](?!.*--)[\d-]{7,18}[\d])$/">
+                        <div class="alert alert-warning form-error" ng-if="userForm.phoneNumber.$error.pattern && !userForm.phoneNumber.$pristine && ctrl.isEditing">
+                            Invalid phone number format
+                        </div>
+
+                    </div>
+                    
+                    <div class="form-group col-xs-12" ng-hide="!user.isSuperuser">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" ng-model="ctrl.object.isStaff"> Is Staff
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-12" ng-hide="!user.isSuperuser">
+                        <label for="email">Groups</label>
+                        <ui-select ng-disabled="!ctrl.isEditing" multiple ng-model="ctrl.object.groups" sortable="true" close-on-select="true">
+                            <ui-select-match placeholder="select a group">{{ $item.name }}</ui-select-match>
+                            <ui-select-choices repeat="group in ctrl.groups | filter: {name: $select.search}">
+                                <div ng-bind-html="group.name | highlight: $select.search"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+
                 </div>
             </div>
         </div>
 
+        <div class="col-xs-12" ng-if="user.isSuperuser && !ctrl.isNew">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Providers</h3>
+                </div>
+                <div class="box-body">
 
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="box">
+                    <div class="form-group col-xs-12">
+                        <label for="email">As Team Member</label>
 
-                    <div class="box-footer">
-                        <div class="btn-group pull-right">
-                            <button type="button" class="btn btn-primary" ng-if="!ctrl.isEditing"
-                                    ng-click="ctrl.startEditing()">Edit
-                            </button>
-                            <button type="button" class="btn btn-primary" ng-if="ctrl.isEditing"
-                                    ng-click="ctrl.save()"
-                                    ng-disabled="userForm.$invalid">
-                                Save
-                            </button>
-                            <button type="button" class="btn btn-danger" ng-hide="ctrl.object.isSuperuser"
-                                    ng-if="!ctrl.isEditing && user.isSuperuser" ng-click="ctrl.remove()">
-                                Delete
-                            </button>
-                            <button type="button" class="btn btn-warning" ng-if="ctrl.isEditing"
-                                    ng-click="ctrl.cancelEditing()">Cancel
-                            </button>
-                        </div>
+                        <ui-select ng-model="ctrl.object.providers" multiple ng-disabled="!ctrl.isEditing">
+                            <ui-select-match placeholder="Select the provider or search for it on the list">{{ $item.name | limitTo: 100 }}</ui-select-match>
+                            <ui-select-choices repeat="item.id as item in ctrl.providers | filter: $select.search">
+                                <div ng-bind-html="item.name | highlight: $select.search"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+
+                    <div class="form-group col-xs-12">
+                        <label for="email">As Admin</label>
+                        <ui-select disabled="disabled" ng-model="ctrl.object.managed_providers" multiple>
+                            <ui-select-match placeholder="Select the provider or search for it on the list">{{ $item.name | limitTo: 100 }}</ui-select-match>
+                            <ui-select-choices repeat="item.id as item in ctrl.providers | filter: $select.search">
+                                <div ng-bind-html="item.name | highlight: $select.search"></div>
+                            </ui-select-choices>
+                        </ui-select>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+
+
+    <footer-action-bar>
+        <div style="width: 100%">
+            <div class="btn-group pull-right">
+                <button type="button" class="btn btn-primary" ng-if="!ctrl.isEditing" ng-click="ctrl.startEditing()">Edit
+                </button>
+                <button type="button" class="btn btn-primary" ng-if="ctrl.isEditing" ng-click="ctrl.save()" ng-disabled="userForm.$invalid">
+                    Save
+                </button>
+                <button type="button" class="btn btn-danger" ng-hide="ctrl.object.isSuperuser" ng-if="!ctrl.isEditing && user.isSuperuser"
+                    ng-click="ctrl.remove()">
+                    Delete
+                </button>
+                <button type="button" class="btn btn-warning" ng-if="ctrl.isEditing" ng-click="ctrl.cancelEditing()">Cancel
+                </button>
+            </div>
+        </div>
+        </div>
+    </footer-action-bar>
 </section>
