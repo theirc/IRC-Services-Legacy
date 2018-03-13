@@ -307,7 +307,7 @@ class ServiceSerializer(serializers.ModelSerializer):
     tags = ServiceTagSerializer(many=True)
     opening_time = serializers.SerializerMethodField()
     types = ServiceTypeSerializer(many=True)
-    contact_informations = ContactInformationSerializer(many=True)
+    contact_information = ContactInformationSerializer(many=True)
 
     class Meta:
         model = Service
@@ -348,7 +348,7 @@ class ServiceSerializer(serializers.ModelSerializer):
                 'second_focal_point_first_name',
                 'second_focal_point_last_name',
                 'exclude_from_confirmation',
-                'contact_informations'
+                'contact_information'
             ] +
             generate_translated_fields('name') +
             generate_translated_fields('address_city') +
@@ -361,11 +361,11 @@ class ServiceSerializer(serializers.ModelSerializer):
         required_translated_fields = ['name', 'description']
 
     def update(self, instance, validated_data):
-        contact_informations = validated_data.pop('contact_informations') if 'contact_informations' in validated_data else []
+        contact_information = validated_data.pop('contact_information') if 'contact_information' in validated_data else []
 
         # Separate the objects to be updated and to be created
-        to_update = [c for c in contact_informations if c['id']]
-        to_create = [c for c in contact_informations if not c['id']]
+        to_update = [c for c in contact_information if c['id']]
+        to_create = [c for c in contact_information if not c['id']]
 
         # Delete all records that are not in the list
         ContactInformation.objects.filter(service=instance).exclude(id__in=[c['id'] for c in to_update]).delete()
@@ -510,7 +510,7 @@ class ServiceCreateSerializer(serializers.ModelSerializer):
     tags = ServiceTagSerializer(many=True)
     opening_time = serializers.SerializerMethodField()
     types = ServiceTypeSerializer(many=True)
-    contact_informations = ContactInformationSerializer(many=True, required=False)
+    contact_information = ContactInformationSerializer(many=True, required=False)
 
     class Meta:
         model = Service
@@ -548,7 +548,7 @@ class ServiceCreateSerializer(serializers.ModelSerializer):
                 'second_focal_point_first_name',
                 'second_focal_point_last_name',
                 'second_focal_point_email',
-                'contact_informations'
+                'contact_information'
             ] +
             generate_translated_fields('name') +
             generate_translated_fields('address_city') +
@@ -567,7 +567,7 @@ class ServiceCreateSerializer(serializers.ModelSerializer):
         opening_time = self.initial_data.get('opening_time')
         validated_data['opening_time'] = json.dumps(opening_time)
         validated_data['created_at'] = datetime.now()
-        contact_informations = validated_data.pop('contact_informations') if 'contact_informations' in validated_data else []
+        contact_information = validated_data.pop('contact_information') if 'contact_information' in validated_data else []
         services = Service.objects.filter(slug=self.initial_data.get('slug'))           
 
         if len(services) > 0:
@@ -596,7 +596,7 @@ class ServiceCreateSerializer(serializers.ModelSerializer):
                                                         sent_to='-')
 
         
-        for contact in contact_informations:
+        for contact in contact_information:
             ContactInformation.objects.create(service=service, **contact)
 
         return service
