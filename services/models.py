@@ -1384,7 +1384,7 @@ class ContactInformation(models.Model):
         to=Service,
         null=True,
         blank=True,
-        related_name='contact_informations'
+        related_name='contact_information'
     )
     EMAIL = 'email'
     PHONE = 'phone'

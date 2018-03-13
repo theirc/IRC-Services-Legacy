@@ -492,7 +492,7 @@ class ServiceViewSet(viewsets.ModelViewSet):
                 'tags', 'types').get(id=service_id)
             tags = service_to_copy.tags.all()
             types = service_to_copy.types.all()
-            contact_informations = service_to_copy.contact_informations.all()
+            contact_information = service_to_copy.contact_information.all()
             # Clear service data
             service_to_copy.pk = None
             service_to_copy.slug = None
@@ -509,7 +509,7 @@ class ServiceViewSet(viewsets.ModelViewSet):
             service_to_copy.slug = new_slug
             service_to_copy.tags.add(*tags)
             service_to_copy.types.add(*types)
-            service_to_copy.contact_informations.add(*contact_informations)
+            service_to_copy.contact_information.add(*contact_information)
             service_to_copy.save()
             return Response({'service_id': service_to_copy.id}, status=201)
         else:

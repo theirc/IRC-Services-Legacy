@@ -195,7 +195,9 @@ angular
         }
 
         vm.providerRegion = regions.filter(function (r) {
-            return r.id === provider.region;
+            return r.id 
+          
+          provider.region;
         });
 
         vm.providerRegion = vm.providerRegion && vm.providerRegion[0]
@@ -663,26 +665,15 @@ Only superusers and service providers have access to the edit functions. Everyon
                     height: 100
                 };
             };
-            vm.addContactInformation = () => {
-                if (!vm.service.contact_informations) {
-                    vm.service.contact_informations = [];
-                }
-                vm
-                    .service
-                    .contact_informations
-                    .push({
-                        'id': null,
-                        'text': '',
-                        'index': vm.service.contact_informations.length,
-                        'type': ''
-                    })
+        };
+        vm.addContactInformation = () =>{
+            if (!vm.service.contact_information){
+                vm.service.contact_information = [];
             }
-            vm.removeContact = (index) => {
-                vm
-                    .service
-                    .contact_informations
-                    .splice(index, 1)
-            }
+            vm.service.contact_information.push({'id': null, 'text': '', 'index': vm.service.contact_information.length, 'type': ''})            
+        }
+        vm.removeContact = (index) =>{
+            vm.service.contact_information.splice(index,1)
         }
 
     })
