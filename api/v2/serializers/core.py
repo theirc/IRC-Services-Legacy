@@ -212,7 +212,7 @@ class ProviderSerializer(serializers.ModelSerializer):
             [
                 'type', 'phone_number', 'website',
                 'focal_point_phone_number',
-                'user', 'number_of_monthly_beneficiaries'
+                'user', 'number_of_monthly_beneficiaries','is_frozen'
             ]
         )
         required_translated_fields = [

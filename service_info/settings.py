@@ -182,6 +182,8 @@ MIDDLEWARE_CLASSES = (
     'debug_toolbar.middleware.DebugToolbarMiddleware'
 )
 
+AUTHENTICATION_BACKENDS = ("service_info.backends.CustomAuthenticationBackend",)
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',

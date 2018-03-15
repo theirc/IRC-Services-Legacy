@@ -27,6 +27,7 @@ from .utils import StandardResultsSetPagination, FilterByRegionMixin
 from ..filters import ServiceFilter, CustomServiceFilter, RelativesServiceFilter, WithParentsServiceFilter, PrivateServiceFilter
 from django_filters import rest_framework as django_filters
 from django.db.models import Count
+from rest_framework.authtoken.models import Token
 
 logger = logging.getLogger(__name__)
 import openpyxl
@@ -80,7 +81,11 @@ class ProviderViewSet(viewsets.ModelViewSet):
 
     def update(self, request, *args, **kwargs):
         """On change to provider via the API, notify via JIRA"""
-        response = super().update(request, *args, **kwargs)
+        response = super().update(request, *args, **kwargs)          
+        provider = Provider.objects.get(id=request.data["id"])
+        if request.data["is_frozen"]:
+            users = [user for user in list([provider.user]) + list(provider.team.all()) if user]
+            Token.objects.filter(user__in=users).delete()           
         return response
 
     @list_route(methods=['get'], permission_classes=[IsAuthenticated])

@@ -136,6 +136,13 @@ class Provider(TranslatableModel, models.Model):
     blank=True
     )
 
+    is_frozen = models.BooleanField(
+        _("is frozen"),
+        blank=False,
+        null=False,
+        default=False,
+    )
+
     @property
     def service_set(self):
         return self.services
