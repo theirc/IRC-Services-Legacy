@@ -27,6 +27,9 @@ from .utils import StandardResultsSetPagination, FilterByRegionMixin
 from ..filters import ServiceFilter, CustomServiceFilter, RelativesServiceFilter, WithParentsServiceFilter, PrivateServiceFilter
 from django_filters import rest_framework as django_filters
 from django.db.models import Count
+from rest_framework.authtoken.models import Token
+from django.contrib.sessions.models import Session
+from django.utils import timezone
 
 logger = logging.getLogger(__name__)
 import openpyxl
@@ -80,8 +83,22 @@ class ProviderViewSet(viewsets.ModelViewSet):
 
     def update(self, request, *args, **kwargs):
         """On change to provider via the API, notify via JIRA"""
-        response = super().update(request, *args, **kwargs)
+        response = super().update(request, *args, **kwargs)          
+        provider = Provider.objects.get(id=request.data["id"])
+        if request.data["is_frozen"]:
+            """ Delete all tokens and sessions for users linked to provider """
+            users = [user for user in list([provider.user]) + list(provider.team.all()) if user]
+            Token.objects.filter(user__in=users).delete()           
+            for user in users:
+                user_sessions = []
+                all_sessions  = Session.objects.filter(expire_date__gte=timezone.now())
+                for session in all_sessions:
+                    session_data = session.get_decoded() 
+                    if str(user.pk) == session_data.get('_auth_user_id'):
+                        user_sessions.append(session.pk)
+                Session.objects.filter(pk__in=user_sessions).delete()                 
         return response
+    
 
     @list_route(methods=['get'], permission_classes=[IsAuthenticated])
     def my_providers(self, request):
