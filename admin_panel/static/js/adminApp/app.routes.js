@@ -410,7 +410,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 						return Restangular.one("providers", $rootScope.selectedProvider.id).get();
 					} else {
 						var dfd = $q.defer();
-						$rootScope.$watch("selectedProvider", function () {
+						$rootScope.$watch("selectedProvider", function (value) {
 							if (value) {
 								Restangular.one("providers", $rootScope.selectedProvider.id)
 									.get()
