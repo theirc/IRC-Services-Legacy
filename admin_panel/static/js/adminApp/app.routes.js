@@ -331,13 +331,14 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 						return Restangular.one("providers", $rootScope.selectedProvider.id).get();
 					} else {
 						var dfd = $q.defer();
-						$rootScope.$watch("selectedProvider", function () {
-							conosle.log("changed??", $rootScope.selectedProvider);
-							Restangular.one("providers", $rootScope.selectedProvider.id)
-								.get()
-								.then(function (p) {
-									dfd.resolve(p);
-								});
+						$rootScope.$watch("selectedProvider", function (value) {
+							if (value) {
+								Restangular.one("providers", $rootScope.selectedProvider.id)
+									.get()
+									.then(function (p) {
+										dfd.resolve(p);
+									});
+							}
 						});
 
 						return dfd;
@@ -410,11 +411,13 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 					} else {
 						var dfd = $q.defer();
 						$rootScope.$watch("selectedProvider", function () {
-							Restangular.one("providers", $rootScope.selectedProvider.id)
-								.get()
-								.then(function (p) {
-									dfd.resolve(p);
-								});
+							if (value) {
+								Restangular.one("providers", $rootScope.selectedProvider.id)
+									.get()
+									.then(function (p) {
+										dfd.resolve(p);
+									});
+							}
 						});
 
 						return dfd;
