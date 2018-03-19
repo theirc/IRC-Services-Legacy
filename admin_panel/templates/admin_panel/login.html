@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Refugee.Info Admin Site</title>
+
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"> {% include "admin_panel/css.html" %} {% block additional-requirements %}{% endblock %}
+</head>
+
+<body class="hold-transition skin-signpost sidebar-mini">
+
+    <div>
+        <div class="main-flex-container">
+            <div class="logo-header">
+                <img src="/public/static/img/logo-admin.png" />
+            </div>
+            <div class="form-container">
+                <div class="box-border">
+                    <p class="text-center">Sign in to start your session</p>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="{% firstof next '/' %}" />
+
+                        <div class="form-group has-feedback">
+                            <input type="email" name="username" class="form-control" id="id_username" placeholder="Email" ng-model="ctrl.user.email"
+                                required>
+                            <i class="fa fa-envelope form-control-feedback input-right-icon"></i>
+                        </div>
+                        <div class="form-group has-feedback">
+                            <input type="password" name="password" class="form-control" id="id_password" placeholder="Password" ng-model="ctrl.user.password"
+                                required>
+                            <i class="fa fa-lock form-control-feedback input-right-icon"></i>
+                        </div>
+                        {%if form.errors%}
+                        <div class="alert alert-danger" ng-show="ctrl.loginErrorMessage">
+                            {{ form.non_field_errors }}
+                        </div>
+                        {%endif%}
+                        <div class="form-group login-buttons-container">
+                            <span></span>
+                            <button type="submit" class="btn login-button" id="login_submit">
+                                Sign In
+                            </button>
+                        </div>
+                    </form>
+                    <p>
+                        <a class="reset-password-link" href="/password_reset">I forgot my password</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>

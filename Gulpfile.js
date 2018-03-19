@@ -10,57 +10,6 @@ var gulp = require('gulp'),
     babel = require('gulp-babel');
 
 
-gulp.task('spp-clean', function () {
-    return del([
-        'provider_portal/static/js/sppApp/app.built.js',
-        'provider_portal/static/js/sppApp/templates.js'
-    ]);
-});
-
-gulp.task('spp-scripts', ['spp-clean', 'spp-templates'], function () {
-    return gulp.src('provider_portal/static/js/sppApp/**/*.js')
-        .pipe(concat('app.built.js'))
-        .pipe(gulp.dest('provider_portal/static/js/sppApp'));
-});
-
-gulp.task('spp-templates', ['spp-clean'], function () {
-    return gulp.src('provider_portal/templates/angular/**/*.html')
-        .pipe(templateCache({
-            module: 'sppApp'
-        }))
-        .pipe(gulp.dest('provider_portal/static/js/sppApp'))
-        ;
-});
-
-gulp.task('cms-clean', function () {
-    return del([
-        'cms/static/css/**/*.css',
-        //'cms/static/js/cmsApp/app.built.js',
-        'cms/static/js/cmsApp/templates.js'
-    ]);
-});
-
-gulp.task('cms-scripts', ['cms-clean', 'cms-templates'], function () {
-    return gulp.src('cms/static/js/cmsApp/**/*.js')
-        .pipe(concat('app.built.js'))
-        .pipe(gulp.dest('cms/static/js/cmsApp'));
-});
-
-gulp.task('cms-templates', ['cms-clean'], function () {
-    return gulp.src('cms/templates/angular/**/*.html')
-        .pipe(templateCache({
-            module: 'adminApp'
-        }))
-        .pipe(gulp.dest('cms/static/js/cmsApp'))
-        ;
-});
-
-gulp.task('cms-sass', ['cms-clean'], function () {
-    return gulp.src(['cms/static/css/**/*.scss', '!cms/static/css/mixins.scss'])
-        .pipe(sass().on('error', sass.logError))
-        .pipe(gulp.dest('cms/static/css/'));
-});
-
 gulp.task('admin-clean', function () {
     return del([
         'admin_panel/static/js/adminApp/app.built.js',
@@ -92,15 +41,15 @@ gulp.task('admin-copy-variables', ['admin-copy-less'], function () {
 });
 gulp.task('admin-less-compile', ['admin-copy-variables'], function () {
     return gulp.src([
-        'admin_panel/static/less/build/less/AdminLTE.less',
-        'admin_panel/static/less/build/less/skins/_all-skins.less',
-        'admin_panel/static/less/content.less',
-        'admin_panel/static/less/overrides.less'
+            'admin_panel/static/less/build/less/AdminLTE.less',
+            'admin_panel/static/less/build/less/skins/_all-skins.less',
+            'admin_panel/static/less/content.less',
+            'admin_panel/static/less/overrides.less'
 
-    ])
-    .pipe(less())
-    .pipe(concat('admin.css'))
-    .pipe(gulp.dest('admin_panel/static/less/'));
+        ])
+        .pipe(less())
+        .pipe(concat('admin.css'))
+        .pipe(gulp.dest('admin_panel/static/less/'));
 });
 
 
@@ -109,27 +58,21 @@ gulp.task('admin-templates', ['admin-clean'], function () {
         .pipe(templateCache({
             module: 'adminApp'
         }))
-        .pipe(gulp.dest('admin_panel/static/js/adminApp'))
-        ;
+        .pipe(gulp.dest('admin_panel/static/js/adminApp'));
 });
 
-gulp.task('admin-scripts', ['admin-templates', 'admin-clean', 'cms-clean', 'cms-templates'], function () {
+gulp.task('admin-scripts', ['admin-templates', 'admin-clean'], function () {
     return gulp.src([
-        'admin_panel/static/js/adminApp/**/*.js',
-        'cms/static/js/cmsApp/**/*.js',
-        '!cms/static/js/cmsApp/app.build.js',
-        '!cms/static/js/cmsApp/app.js',
-
-        'cms/static/js/cmsApp/templates.js'
-    ])
-    .pipe(babel({
-        presets: ['es2015']
-    }))
-    .pipe(concat('app.built.js'))
-    .pipe(gulp.dest('admin_panel/static/js/adminApp'));
+            'admin_panel/static/js/adminApp/**/*.js',
+        ])
+        .pipe(babel({
+            presets: ['es2015']
+        }))
+        .pipe(concat('app.built.js'))
+        .pipe(gulp.dest('admin_panel/static/js/adminApp'));
 });
 
-gulp.task('collect-static', ['cms-scripts', 'spp-scripts', 'admin-scripts'], function (cb) {
+gulp.task('collect-static', ['admin'], function (cb) {
     var python = process.env.PYTHON_EXECUTABLE || 'python';
     exec(python + ' manage.py collectstatic --noinput', function (err, stdout, stderr) {
         console.log(stdout);
@@ -142,29 +85,25 @@ gulp.task('watch', function () {
     return gulp.watch(['admin_panel/**/*.js', 'admin_panel/**/*.html'], ['collect-static']);
 });
 
-gulp.task('admin-no-pre', [], function() {
- return gulp.src([
-        'admin_panel/static/js/adminApp/**/*.js',
-        'cms/static/js/cmsApp/**/*.js',
-        '!cms/static/js/cmsApp/app.build.js',
-        '!cms/static/js/cmsApp/app.js',
+gulp.task('admin-no-pre', [], function () {
+    return gulp.src([
+            'admin_panel/static/js/adminApp/**/*.js',
+            'cms/static/js/cmsApp/**/*.js',
+            '!cms/static/js/cmsApp/app.build.js',
+            '!cms/static/js/cmsApp/app.js',
 
-        'cms/static/js/cmsApp/templates.js'
-    ])
-    .pipe(babel({
-        presets: ['es2015']
-    }))
-    .pipe(concat('app.built.js'))
-    .pipe(gulp.dest('admin_panel/static/js/adminApp'));
+            'cms/static/js/cmsApp/templates.js'
+        ])
+        .pipe(babel({
+            presets: ['es2015']
+        }))
+        .pipe(concat('app.built.js'))
+        .pipe(gulp.dest('admin_panel/static/js/adminApp'));
 });
 
-gulp.task('cms', ['cms-clean', 'cms-scripts', 'cms-templates', 'cms-sass']);
-gulp.task('spp', ['spp-clean', 'spp-scripts', 'spp-templates']);
-gulp.task('admin', ['admin-clean', 
-//'admin-sass',
-// 'admin-less-compile',
- 'admin-scripts', 'admin-templates']);
+gulp.task('admin', ['admin-clean',
+    'admin-sass',
+    'admin-scripts', 'admin-templates'
+]);
 
-//gulp.task('clean', ['cms-clean', 'spp-clean', 'admin-clean']);
 gulp.task('default', ['admin']);
-

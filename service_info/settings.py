@@ -56,6 +56,7 @@ LANGUAGES = [
     ('el', _('Greek')),
     ('ur', _('Urdu')),
     ('es', _('Spanish')),
+    ('ti', _('Tigrinya')),
 ]
 
 # LANGUAGES used in CMS app
@@ -176,9 +177,12 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.contrib.sites.middleware.CurrentSiteMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'regions.middleware.UserRegionMiddleware',
     'reversion.middleware.RevisionMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware'
 )
+
+AUTHENTICATION_BACKENDS = ("service_info.backends.CustomAuthenticationBackend",)
 
 TEMPLATES = [
     {
@@ -319,7 +323,7 @@ SITE_ID = 1
 # Application settings
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': [
-        'rest_framework.filters.DjangoFilterBackend',
+        'django_filters.rest_framework.DjangoFilterBackend',
         'rest_framework.filters.SearchFilter',
         'rest_framework.filters.OrderingFilter',
     ],
@@ -448,7 +452,7 @@ ALLOWED_HOSTS = ['*']
 DEBUG = str(os.environ.get('DEBUG', 'False')).lower() == 'true'
 TEMPLATE_DEBUG = DEBUG
 EMAIL_SUBJECT_PREFIX = '[RefugeeInfo] '
-DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'noreply@rescue.org')
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'noreply@signpost.ngo')
 
 SESSION_COOKIE_SECURE = False
 SESSION_COOKIE_HTTPONLY = False
@@ -491,8 +495,9 @@ RESULT_BACKEND = CELERY_RESULT_BACKEND = os.environ.get(
 """
 Service Confirmation Newsletter
 """
-NEWSLETTER_ENABLED = str(os.environ.get(
-    'NEWSLETTER_ENABLED', 'False')).lower() == 'true'
+NEWSLETTER_ENABLED = False
+# str(os.environ.get(
+#     'NEWSLETTER_ENABLED', 'False')).lower() == 'true'
 NEWSLETTER_TEST = str(os.environ.get(
     'NEWSLETTER_TEST', 'False')).lower() == 'true'
 CONFIRM_TIME = os.environ.get('CONFIRM_TIME', 90)

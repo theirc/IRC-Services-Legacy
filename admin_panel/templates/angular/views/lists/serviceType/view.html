@@ -11,60 +11,28 @@
                 <div class="box-body">
                     <div class="nav-tabs-custom">
                         <ul class="nav nav-tabs">
-                            <li
-                                    ng-class="{active: (!ctrl.selectedLanguageTab && lang[0] =='en') || ctrl.selectedLanguageTab == lang[0]}"
-                                    ng-repeat="lang in languages">
-                                <a href=""
-                                   ng-click="ctrl.selectedLanguageTab = lang[0]"
-                                   data-toggle="tab"
-                                   aria-expanded="true">{$
-                                    lang[1] $}</a>
+                            <li ng-class="{active: (!ctrl.selectedLanguageTab && lang[0] =='en') || ctrl.selectedLanguageTab == lang[0]}" ng-repeat="lang in languages">
+                                <a href="" ng-click="ctrl.selectedLanguageTab = lang[0]" data-toggle="tab" aria-expanded="true">{{ lang[1] }}</a>
                             </li>
                         </ul>
                         <div class="tab-content">
-                            <div class="tab-pane"
-                                 ng-class="{active: (!ctrl.selectedLanguageTab && lang[0] =='en') || ctrl.selectedLanguageTab == lang[0]}"
-                                 ng-repeat="lang in languages">
+                            <div class="tab-pane" ng-class="{active: (!ctrl.selectedLanguageTab && lang[0] =='en') || ctrl.selectedLanguageTab == lang[0]}"
+                                ng-repeat="lang in languages">
                                 <div class="row">
                                     <div class="form-group col-xs-12">
-                                        <label for="{$ idHelper('name',lang[0]) $}">Title</label>
-                                        <input type="text" class="form-control"
-                                               ng-model="ctrl.object[idHelper('name',lang[0])]"
-                                               ng-style="{direction: isRtl(lang) ? 'rtl':'ltr'}"
-                                               placeholder="Name in {$ lang[1] $}">
+                                        <label for="{{ idHelper('name',lang[0]) }}">Title</label>
+                                        <input type="text" class="form-control" ng-model="ctrl.object[idHelper('name',lang[0])]" ng-style="{direction: isRtl(lang) ? 'rtl':'ltr'}"
+                                            placeholder="Name in {{ lang[1] }}">
                                     </div>
                                     <div class="form-group col-xs-12">
-                                        <label for="{$ idHelper('comments',lang[0]) $}">Comments</label>
-                                            <textarea name="{$  idHelper('comments',lang[0])$}" class="form-control"
-                                                      ng-model="ctrl.service[idHelper('comments',lang[0])]"
-                                                      ng-style="{direction: isRtl(lang) ? 'rtl':'ltr'}"
-                                            ></textarea>
+                                        <label for="{{ idHelper('comments',lang[0]) }}">Comments</label>
+                                        <textarea name="{{  idHelper('comments',lang[0])}}" class="form-control" ng-model="ctrl.service[idHelper('comments',lang[0])]"
+                                            ng-style="{direction: isRtl(lang) ? 'rtl':'ltr'}"></textarea>
                                     </div>
                                 </div>
                             </div>
 
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row" read-only-form is-editing="ctrl.isEditing" ng-if="!ctrl.isNew">
-        <div class="col-xs-12">
-            <div class="box">
-                <div class="box-header">
-                    <h3 class="box-title">Service Ordering</h3>
-                </div>
-                <div class="box-body">
-                    <div>
-                        <ul class="service-types-order" dnd-list="ctrl.object.types_ordering" style="max-height: 300px; overflow: auto;" dnd-disable-if="!ctrl.isEditing">
-                            <li ng-repeat="item in ctrl.object.types_ordering"
-                                dnd-draggable="item"
-                                dnd-moved="ctrl.object.types_ordering.splice($index, 1)"
-                                dnd-effect-allowed="move">
-                                {$ item.name $}
-                            </li>
-                        </ul>
                     </div>
                 </div>
             </div>
@@ -80,9 +48,11 @@
                     <div class="form-group col-xs-12">
                         <label for="vector_icon">Icon</label>
                         <div class="input-group">
-                            <span class="input-group-addon"><i class="fa {$ ctrl.object.vector_icon $}"></i></span>
-                            <input type="text" class="form-control input-icon-picker" id="vector_icon" ng-disabled="!ctrl.isEditing"
-                                   placeholder="Icon" ng-model="ctrl.object.vector_icon">
+                            <span class="input-group-addon">
+                                <i class="fa {{ ctrl.object.vector_icon }}"></i>
+                            </span>
+                            <input type="text" class="form-control input-icon-picker" id="vector_icon" ng-disabled="!ctrl.isEditing" placeholder="Icon"
+                                ng-model="ctrl.object.vector_icon">
                         </div>
                     </div>
 
@@ -94,6 +64,24 @@
             </div>
         </div>
     </div>
+    <div class="row" read-only-form is-editing="ctrl.isEditing" ng-if="!ctrl.isNew">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Service Ordering</h3>
+                </div>
+                <div class="box-body">
+                    <div>
+                        <ul class="service-types-order" dnd-list="ctrl.object.types_ordering" style="max-height: 300px; overflow: auto;" dnd-disable-if="!ctrl.isEditing">
+                            <li ng-repeat="item in ctrl.object.types_ordering" dnd-draggable="item" dnd-moved="ctrl.object.types_ordering.splice($index, 1)"
+                                dnd-effect-allowed="move">
+                                {{ item.name }}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div ng-include="'partials/edit-controls.html'"></div>
 </section>
-

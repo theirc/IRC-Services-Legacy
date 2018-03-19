@@ -8,6 +8,8 @@ router = routers.DefaultRouter()
 router.register(r'users', v2.UserViewSet, base_name='user')
 router.register(r'groups', v2.GroupViewSet, base_name='group')
 router.register(r'providers', v2.ProviderViewSet)
+router.register(r'private-services', v2.PrivateServiceViewSet)
+router.register(r'private-providers', v2.PrivateProviderViewSet)
 router.register(r'services', v2.ServiceViewSet)
 router.register(r'service-management', v2.ServiceViewSet)
 router.register(r'confirmation-logs', v2.ConfirmationLogsViewSet)
@@ -28,6 +30,7 @@ urlpatterns = [
     # Wire up our API using automatic URL routing.
     url(r'^', include(router.urls)),
 
+    url(r'^activate/$', view=v2.APIActivationView.as_view(), name='api-activate'),
     url(r'^blog/$', v2.BlogListAPIView.as_view()),
     url(r'^blog/(?P<id>.*)/pull/$', v2.BlogPullAPIView.as_view()),
     url(r'^blog/(?P<id>.*)/push/$', v2.BlogPushAPIView.as_view()),

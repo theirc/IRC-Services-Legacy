@@ -17,8 +17,26 @@ angular.module('adminApp')
                 if (!type.length) return '';
                 return type[0].name;
             }),
-            tableUtils.newActionColumn()
+            tableUtils.newColumn('actions').withTitle('Actions').renderWith(function (data, type, full, meta) {
+                var viewButton = `
+                    <a class="btn btn-primary btn-xs" ui-sref="^.open({id: ${full.id}})">
+                        <i class="fa fa-eye"></i>
+                        Open
+                    </a>`;
+                var impersonateButton = `
+                    <a class="btn btn-success btn-xs" ui-sref="^.impersonate({id: ${full.id}})">
+                        <i class="fa fa-user"></i>
+                        Impersonate
+                    </a>
+                `;
+
+                return `<div class="btn-group">
+                    ${viewButton}
+                    ${$scope.user.isSuperuser ? impersonateButton : ''}
+                </div>`;
+            }),
         ];
+
 
         vm.dtInstance = {};
         vm.createLink = '^.create';
@@ -31,11 +49,11 @@ angular.module('adminApp')
         vm.provider = provider;
         vm.object = provider;
         vm.providerTypes = providerTypes;
-        vm.selectedLanguageTab = 'en';
+        vm.selectedLanguageTab = $rootScope.languages ? $rootScope.languages[0][0] : 'en';
         vm.isEditing = false;
         vm.allUsers = systemUsers;
         vm.isNew = !vm.object.hasOwnProperty('id');
-        vm.regions = regions;
+        vm.regions = regions.filter(r => r.level === 1);
 
         if (vm.isNew) {
             vm.isEditing = true;
@@ -46,7 +64,7 @@ angular.module('adminApp')
         };
 
         vm.impersonate = function () {
-            $rootScope.selectedProvider = vm.provider;
+            $state.go('provider.impersonate', provider);
         };
 
         vm.exportServices = function () {
@@ -66,7 +84,9 @@ angular.module('adminApp')
 
         vm.save = save;
 
-        vm.stOptions = tableUtils.defaultsWithServiceNameAndFilter('ServiceService', {provider: provider.id});
+        vm.stOptions = tableUtils.defaultsWithServiceNameAndFilter('ServiceService', {
+            provider: provider.id
+        });
         vm.stColumns = [
             tableUtils.newColumn('id').withTitle('ID'),
             tableUtils.newColumn('name_en').withTitle('Name (en)')
@@ -88,7 +108,9 @@ angular.module('adminApp')
         function save() {
             if (vm.isNew) {
                 ProviderService.post(vm.object).then(function (o) {
-                    $state.go('^.open', {id: o.id});
+                    $state.go('^.open', {
+                        id: o.id
+                    });
                 });
             } else {
                 vm.object.save();

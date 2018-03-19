@@ -9,25 +9,25 @@
                 <label  ng-if="ctrl.sendAnnotation" for="note">Your annotations about this service:</label>
                 <textarea name="note" ng-if="ctrl.sendAnnotation" class="form-control" type="text" ng-model="ctrl.note" class="confirm-note" style="resize: vertical; margin: 10px 0 10px 0;"></textarea>
                 <div class="btn-group" btn-group  style="display: flex; justify-content: center; margin-bottom: 10px">
-                    <button type="submit" class="btn btn-success">{$ ctrl.sendAnnotation ? 'SUBMIT' : 'CONFIRM' $}</button>
+                    <button type="submit" class="btn btn-success">{{ ctrl.sendAnnotation ? 'SUBMIT' : 'CONFIRM' }}</button>
                     <a class="btn btn-info" ng-if="!ctrl.sendAnnotation" ng-click="ctrl.sendAnnotation = true">ADD NOTE</a>
                     <a class="btn btn-info" ng-if="ctrl.sendAnnotation" ng-click="ctrl.sendAnnotation = false">REMOVE NOTE</a>
                 </div>
             </form>
             <table class="table table-bordered table-responsive table-striped">
                 <tr ng-repeat="(key, value) in ctrl.service_data['general_info']">
-                    <td align="center">{$ key $}</td>
+                    <td align="center">{{ key }}</td>
                     <td align="center" class="confirmation-value-column">
                         <div ng-bind-html="value"></div>
                     </td>
                 </tr>
                 <tr ng-repeat="(key, value) in ctrl.service_data['address']">
-                    <td align="center">{$ key $}</td>
-                    <td align="center" class="confirmation-value-column">{$ value $}</td>
+                    <td align="center">{{ key }}</td>
+                    <td align="center" class="confirmation-value-column">{{ value }}</td>
                 </tr>
                 <tr ng-repeat="(key, value) in ctrl.service_data['other_info']">
-                    <td align="center">{$ key $}</td>
-                    <td align="center" class="confirmation-value-column">{$ value $}</td>
+                    <td align="center">{{ key }}</td>
+                    <td align="center" class="confirmation-value-column">{{ value }}</td>
                 </tr>
                 <tr ng-if="ctrl.service_data['opening_hours']['24/7']">
                     <td align="center">Opening Hours</td>
@@ -37,13 +37,13 @@
                     <td colspan="2" align="center">Opening Hours</td>
                 </tr>
                 <tr ng-if="!ctrl.service_data['opening_hours']['24/7']" ng-repeat="day in ctrl.days">
-                    <td align="center">{$ day.toUpperCase() $}</td>
+                    <td align="center">{{ day.toUpperCase() }}</td>
                     <td align="center">
                         <p ng-repeat="shift in ctrl.service_data['opening_hours'][day]">
-                            <span ng-if="shift['open'] && shift['close']">{$ shift['open'] | formatTime $}</span>
+                            <span ng-if="shift['open'] && shift['close']">{{ shift['open'] | formatTime }}</span>
                             <span ng-if="shift['open'] && shift['close']"> - </span>
-                            <span ng-if="shift['open'] && shift['close']">{$ shift['close'] | formatTime $}</span>
-                            <span ng-if="!shift['open'] && !shift['close'] && $first && $last">{$ 'CLOSED' $}</span>
+                            <span ng-if="shift['open'] && shift['close']">{{ shift['close'] | formatTime }}</span>
+                            <span ng-if="!shift['open'] && !shift['close'] && $first && $last">{{ 'CLOSED' }}</span>
                         </p>
                     </td>
                 </tr>

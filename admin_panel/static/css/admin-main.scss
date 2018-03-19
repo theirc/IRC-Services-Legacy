@@ -1,4 +1,4 @@
-@import "../../../cms/static/css/mixins";
+@import "mixins.scss";
 
 $toolbar-green-color: #4aad44;
 $text-color-white: #fafafa;
@@ -462,15 +462,6 @@ div.hotspot-right-panel {
   }
 }
 
-.leaflet-container img {
-  margin-top: -41px;
-  margin-left: -12.5px;
-}
-
-.leaflet-popup-pane {
-  margin-top: -41px;
-}
-
 .devices-map-tab {
   display: flex !important;
   justify-content: center !important;
@@ -643,4 +634,8 @@ md-tooltip {
     display: block;
     padding: 10px 15px;
     margin-bottom: -1px;
+}
+
+.service-details-map {
+  height: 400px;
 }

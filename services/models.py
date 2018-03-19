@@ -10,7 +10,7 @@ from django.contrib.gis.db import models
 from django.contrib.gis.geos import Point
 from django.contrib.sites.models import Site
 from django.core.exceptions import ValidationError
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db.transaction import atomic
 from django.template.loader import render_to_string
@@ -134,6 +134,13 @@ class Provider(TranslatableModel, models.Model):
     related_name='providers',
     null=True,
     blank=True
+    )
+
+    is_frozen = models.BooleanField(
+        _("is frozen"),
+        blank=False,
+        null=False,
+        default=False,
     )
 
     @property
@@ -373,6 +380,7 @@ class Service(TranslatableModel, models.Model):
     # there should be no more than two, one in current status and/or one in some other
     # status.
     STATUS_DRAFT = 'draft'
+    STATUS_PRIVATE = 'private'
     STATUS_CURRENT = 'current'
     STATUS_REJECTED = 'rejected'
     STATUS_CANCELED = 'canceled'
@@ -390,6 +398,9 @@ class Service(TranslatableModel, models.Model):
         (STATUS_CANCELED, _('canceled')),
         # The record is obsolete and we don't want to see it anymore
         (STATUS_ARCHIVED, _('archived')),
+
+        # Show only in the backend
+        (STATUS_PRIVATE, _('private')),
     )
     status = models.CharField(
         _('status'),
@@ -527,7 +538,7 @@ class Service(TranslatableModel, models.Model):
 
     confirmation_key = models.CharField(max_length=255, default='')
     newsletter_valid_emails = models.CharField(max_length=255, default='')
-    exclude_from_confirmation = models.BooleanField(default=False)
+    exclude_from_confirmation = models.BooleanField(default=False)    
 
     def get_api_url(self):
         return reverse('service-detail', args=[self.id])
@@ -1373,3 +1384,47 @@ class RequestForService(models.Model):
     def get_admin_edit_url(self):
         """Return the PATH part of the URL to edit this object in the admin"""
         return reverse('admin:services_requestforservice_change', args=[self.id])
+
+class ContactInformation(models.Model):        
+    service = models.ForeignKey(
+        verbose_name=_("Service"),
+        to=Service,
+        null=True,
+        blank=True,
+        related_name='contact_information'
+    )
+    EMAIL = 'email'
+    PHONE = 'phone'
+    VIBER = 'viber'
+    WHATSAPP = 'whatsapp'
+    SKYPE = 'skype'
+    FACEBOOK_MESSENGER = 'facebook_messenger'
+    TYPE_CHOICES = (        
+        (EMAIL, _('Email')),
+        (PHONE, _('Phone')),
+        (VIBER, _('Viber')),
+        (WHATSAPP, _('Whatsapp')),
+        (SKYPE, _('Skype')),
+        (FACEBOOK_MESSENGER, _('Facebook Messenger')),
+    )
+    type = models.CharField(
+        max_length=20,
+        choices=TYPE_CHOICES,
+        blank=True,
+        null=True,
+        default=None
+    )    
+    text = models.CharField(
+        max_length=256)
+
+    index = models.SmallIntegerField(
+        validators=[
+            MinValueValidator(0),            
+            MaxValueValidator(1000000)
+        ],
+        default=0,
+        blank=False,
+        null=False,
+    )
+
+    

@@ -4,7 +4,7 @@
         <span class="logo-mini">
             <b>R</b>.I</span>
         <span class="logo-lg">
-            <img src="{$ staticUrl $}img/logo.png" />
+            <img src="{{ staticUrl }}img/logo.png" />
         </span>
     </a>
 
@@ -13,10 +13,21 @@
         <a href="" class="sidebar-toggle visible-xs visible-sm" data-toggle="offcanvas" role="button">
             <span class="sr-only">Toggle navigation</span>
         </a>
+
+        <div style="float: left;display: flex; flex-direction: row;align-items: center; height: 50px; margin-left: 5px;">
+            <h1 style="
+            padding: 0;
+            margin: 0;
+            color: white;
+            font-size: 200%;
+            flex: 1;">
+                {{ selectedProvider.name}}
+            </h1>
+        </div>
+
         <!-- Navbar Right Menu -->
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
-                <!-- User Account Menu -->
                 <li class="dropdown messages-menu" ng-if="user.providers.length > 1">
                     <a href="" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                         <i class="fa fa-institution"></i>
@@ -32,7 +43,7 @@
                                     <a href="" class="dropdown-provider" ng-click="ctrl.impersonate(p)" style="color: #777; white-space: normal;" ng-style="{
                                        'font-weight': p.id == selectedProvider.id ? 'bold' : 'normal'
                                        }">
-                                        {$ p.name $}
+                                        {{ p.name }}
                                     </a>
                                 </li>
                             </ul>

@@ -36,7 +36,6 @@ urlpatterns = [
                   url(r'^reset/done/$', password_reset_complete,
                       name='password_reset_complete'),
                   url(r'^export/(?P<signature>.*)/$', export_view, name='export'),
-                  url(r'^logout/$', logout_view, name='logout'),
                   url(r'^ckeditor/', include('ckeditor_uploader.urls')),
 
                   url(r'^e/(?P<environment>[0-9A-Za-z]+)/v2/', include('api.urls')),

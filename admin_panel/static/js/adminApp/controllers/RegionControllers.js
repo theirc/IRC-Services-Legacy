@@ -16,11 +16,11 @@ angular.module('adminApp')
 
         vm.createLink = '^.create';
     })
-    .controller('RegionViewController', function (region, $state, allRegions, GeoRegionService, leafletData) {
+    .controller('RegionViewController', function (region, languages, $rootScope, $state, allRegions, GeoRegionService, leafletData) {
         var vm = this;
         vm.object = region;
         vm.allRegions = allRegions;
-        vm.selectedLanguageTab = 'en';
+        vm.selectedLanguageTab = $rootScope.languages ? $rootScope.languages[0][0] : 'en';
         vm.geojson = {
             data: vm.object.geom,
             style: {
@@ -32,13 +32,27 @@ angular.module('adminApp')
                 fillOpacity: 0.7
             }
         };
-        vm.levels = [
-            {id: 1, name: 'Country'},
-            {id: 2, name: 'Region'},
-            {id: 3, name: 'Camp / City'}
+        vm.languages = languages.map(l => ({
+            id: l[0],
+            name: l[1],
+        }));
+        vm.levels = [{
+                id: 1,
+                name: 'Country'
+            },
+            {
+                id: 2,
+                name: 'Region'
+            },
+            {
+                id: 3,
+                name: 'Camp / City'
+            }
         ];
         vm.editOptions = {};
         vm.isNew = !region.hasOwnProperty('id');
+        vm.object.languages = (vm.object.languages_available || '').split(', ').filter(a => a);
+
 
 
         if (vm.isNew) {
@@ -70,7 +84,10 @@ angular.module('adminApp')
 
                 map.fitBounds(bounds);
                 vm.object.geom.coordinates.forEach(function (c) {
-                    L.geoJSON({type: 'Polygon', coordinates: c}, {
+                    L.geoJSON({
+                        type: 'Polygon',
+                        coordinates: c
+                    }, {
                         onEachFeature: function (feature, layer) {
                             editableLayers.addLayer(layer);
                         }
@@ -93,7 +110,8 @@ angular.module('adminApp')
                 vm.object.geom = {
                     coordinates: featureJSON.features.map(function (f) {
                         return f.geometry.coordinates;
-                    }), type: 'MultiPolygon'
+                    }),
+                    type: 'MultiPolygon'
                 };
             });
 
@@ -103,7 +121,8 @@ angular.module('adminApp')
                 vm.object.geom = {
                     coordinates: featureJSON.features.map(function (f) {
                         return f.geometry.coordinates;
-                    }), type: 'MultiPolygon'
+                    }),
+                    type: 'MultiPolygon'
                 };
             });
 
@@ -113,7 +132,8 @@ angular.module('adminApp')
                 vm.object.geom = {
                     coordinates: featureJSON.features.map(function (f) {
                         return f.geometry.coordinates;
-                    }), type: 'MultiPolygon'
+                    }),
+                    type: 'MultiPolygon'
                 };
             });
 
@@ -126,9 +146,12 @@ angular.module('adminApp')
         vm.cancelEditing = cancelEditing;
 
         function save() {
+            vm.object.languages_available = vm.object.languages.map(l => l).join(', ');
             if (vm.isNew) {
                 GeoRegionService.post(vm.object).then(function (o) {
-                    $state.go('region.open', {id: o.id});
+                    $state.go('region.open', {
+                        id: o.id
+                    });
                 });
             } else {
                 vm.object.save();
@@ -173,5 +196,4 @@ angular.module('adminApp')
 
             });
         }
-    })
-;
+    });

@@ -8,6 +8,10 @@ angular.module('adminApp').controller('ServiceTypeViewController', function (Ser
         vm.canDelete = true;
         vm.object.types_ordering = serviceTypes;
 
+        if (vm.isNew) {
+            vm.object.color = '#FFFFFF';
+        }
+
         vm.save = save;
         vm.remove = remove;
         vm.startEditing = startEditing;
@@ -53,7 +57,9 @@ angular.module('adminApp').controller('ServiceTypeViewController', function (Ser
         vm.object.vector_icon = angular.element('.input-icon-picker').val();
         if (vm.isNew) {
             ServiceTypeService.post(vm.object).then(function (o) {
-                $state.go('^.open', {id: o.id});
+                $state.go('^.open', {
+                    id: o.id
+                });
                 toasty.success({
                     msg: 'Record Successfully Saved!',
                     clickToClose: true,

@@ -175,6 +175,13 @@ class EmailUser(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
+    @property
+    def all_providers(self):
+        return self.managed_providers.all() | self.providers.all()
+
+    def get_providers(self): 
+        return self.providers.all()
+
     # Enforce unique email address, case-insensitive
     def save(self, *args, **kwargs):
         others = type(self).objects.filter(email__iexact=self.email)

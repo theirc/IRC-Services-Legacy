@@ -6,7 +6,6 @@ angular.module('adminApp').directive('ckInline', function (staticUrl) {
                 disableAutoInline: true,
                 autoParagraph: false,
                 allowedContent: true,
-                contentsCss: staticUrl + 'css/ckeditor.css',
                 enterMode: 2
             });
             if (!ngModel) return;
