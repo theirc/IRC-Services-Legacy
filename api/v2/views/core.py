@@ -233,6 +233,13 @@ class GeographicRegionViewSet(viewsets.ModelViewSet):
             return serializers_v2.GeographicRegionSerializerNoGeometry
         else:
             return serializers_v2.GeographicRegionSerializer
+    
+    def get_queryset(self):
+        qs = super(GeographicRegionViewSet, self).get_queryset()
+        if (hasattr(self.request, 'parent')):
+            qs = qs.filter(
+                parent=self.request.parent)
+        return qs
 
 
 class UserPermissionViewSet(viewsets.ReadOnlyModelViewSet):
