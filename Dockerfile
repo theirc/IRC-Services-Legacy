@@ -9,7 +9,7 @@ ADD apt-packages /code/
 ADD nginx.conf /code/
 ADD package.json /code/
 ADD Gulpfile.js /code/
-ADD cron.sh /code/
+#ADD cron.sh /code/
 
 RUN pip install -r requirements.txt
 ENV SSH_PASSWD "root:Docker!"
