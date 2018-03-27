@@ -1,5 +1,9 @@
 @import "mixins.scss";
 
+.iconpicker-search {
+  padding: 0;
+}
+
 div.modal.fade.in {
   padding: 0 !important;
 }

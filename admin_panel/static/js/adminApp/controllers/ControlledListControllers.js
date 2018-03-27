@@ -3,8 +3,7 @@
  * */
 angular.module('adminApp')
     .controller('ServiceTypeListController', GenerateListController('ServiceTypeService'))
-    .controller('ServiceTypeOpenController', GenerateOpenController('ServiceTypeService',(v, i)=>{
-    }))
+   
 
     .controller('ProviderTypeListController', GenerateListController('ProviderTypeService'))
     .controller('ProviderTypeOpenController', GenerateOpenController('ProviderTypeService',(v, i)=>{
