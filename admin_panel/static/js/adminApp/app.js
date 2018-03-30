@@ -25,6 +25,7 @@ angular
 		"color.picker",
 		"ngMaterial",
 		"angularSpinner",
+		'pascalprecht.translate'
 	])
 	.config(function ($stateProvider, $urlRouterProvider, $interpolateProvider, $httpProvider, $locationProvider, RestangularProvider, $authProvider) {
 

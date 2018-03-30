@@ -265,7 +265,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 		.state("service.list", {
 			url: "/list",
 			data: {
-				title: "Service list",
+				title: "SERVICE_LIST",
 			},
 			views: {
 				"main@": {
@@ -317,7 +317,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 		.state("service.create", {
 			url: "/create",
 			data: {
-				title: "Service Create",
+				title: "SERVICE_CREATE",
 			},
 			views: {
 				"main@": {

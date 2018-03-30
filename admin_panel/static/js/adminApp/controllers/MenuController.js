@@ -3,7 +3,7 @@
  */
 
 const HIDE_NOT_YET_IMPLEMENTED = true;
-angular.module("adminApp").controller("MenuController", function ($rootScope, $state) {
+angular.module("adminApp").controller("MenuController", function ($rootScope, $state, $filter) {
 	var vm = this;
 	var updateMenu = function () {
 		vm.menuItems = getMenuItems();
@@ -22,40 +22,40 @@ angular.module("adminApp").controller("MenuController", function ($rootScope, $s
 		return [{
 				title: "MENU",
 				items: [{
-						title: "Search Services",
+						title: $filter('translate')('SERVICE_SEARCH'),
 						sref: "service.search",
 					},
 					{
-						title: "Service Management",
+						title: $filter('translate')('SERVICE_MANAGEMENT'),
 						sref: "service.list",
 						hide: !((($rootScope.user.groups.filter(g => g.name === 'Provider').length > 0) || $rootScope.user.isSuperuser) && $rootScope.selectedProvider),
 					},
 				],
 			},
 			{
-				title: "PROFILE",
+				title: $filter('translate')('PROFILE'),
 				items: [{
-					title: "Account Settings",
+					title: $filter('translate')('ACCOUNT_SETTINGS'),
 					sref: "settings",
 					active: $state.includes("settings"),
 				}, ],
 			},
 			{
-				title: "REFUGEE.INFO ADMIN",
+				title: $filter('translate')('REFUGEE_ADMIN'),
 				items: [{
-						title: "Blog Entry Translations",
+						title: $filter('translate')('BLOG_ENTRY_TRANSLATIONS'),
 						sref: "blog.list",
 						active: $state.includes("blog"),
 					},
 
 					{
-						title: "Service Newsletter",
+						title: $filter('translate')('SERVICE_NEWSLETTER'),
 						active: $state.includes("newsletter"),
 						items: [{
-							title: "Newsletter Logs",
+							title: $filter('translate')('NEWSLETTER_LOGS'),
 							sref: "newsletter.logs"
 						}, {
-							title: "Newsletter Settings",
+							title: $filter('translate')('NEWSLETTER_SETTINGS'),
 							sref: "newsletter.settings"
 						}],
 						hide: !$rootScope.user.isSuperuser,
@@ -64,32 +64,32 @@ angular.module("adminApp").controller("MenuController", function ($rootScope, $s
 				hide: !$rootScope.user.isSuperuser,
 			},
 			{
-				title: "SYSTEM ADMIN",
+				title: $filter('translate')('SYSTEM_ADMIN'),
 				items: [{
-						title: "User Management",
+						title: $filter('translate')('USER_MANAGEMENT'),
 						sref: "user.list",
 						active: $state.includes("user")
 					},
 					{
-						title: "Service Provider Management",
+						title: $filter('translate')('SERVICE_PROVIDER_MANAGEMENT'),
 						sref: "provider.list",
 						active: $state.includes("provider"),
 					},
 					{
-						title: "Geographic Regions",
+						title: $filter('translate')('GEOGRAPHIC_REGIONS'),
 						sref: "region.list",
 						active: $state.includes("region")
 					},
 					{
-						title: "Controlled Lists Management",
+						title: $filter('translate')('CONTROLLED_LISTS_MANAGEMENT'),
 						active: $state.includes("lists"),
 						items: [{
-								title: "Service Types",
+								title: $filter('translate')('SERVICES_TYPES'),
 								sref: "lists.serviceType.list",
 								active: $state.includes("lists.serviceType"),
 							},
 							{
-								title: "Provider Types",
+								title: $filter('translate')('PROVIDER_TYPES'),
 								sref: "lists.providerType.list",
 								active: $state.includes("lists.providerType"),
 							},
