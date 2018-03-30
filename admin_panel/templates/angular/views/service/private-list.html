@@ -47,7 +47,7 @@
                         <button class="btn btn-warning " ng-click="ctrl.searchCriteria = {}">Clear Search</button>
                         <button class="btn btn-primary " ng-click="ctrl.reloadOption(ctrl.searchCriteria)">Search</button>
                         <button class="btn btn-primary " ng-click="ctrl.showMap(ctrl.searchCriteria)">Show Map</button>
-                        <button class="btn btn-primary " ng-show="ctrl.isMapMode" click="ctrl.hideMap()">Hide Map</button>
+                        <button class="btn btn-primary " ng-show="ctrl.isMapMode" ng-click="ctrl.isMapMode = false">Hide Map</button>
                     </div>
                 </div>
 

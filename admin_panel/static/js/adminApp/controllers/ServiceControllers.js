@@ -819,18 +819,15 @@ Only superusers and service providers have access to the edit functions. Everyon
 
         vm.infoDiv.update =  (service) => {
             if (!this._div){
-                this._div = L.DomUtil.create('div', 'hidden');
-                leafletData.getMap().then(function (map) {                    
-                    this.addTo(map);
-                });
-                
+                vm.infoDiv._div = L.DomUtil.create('div', 'hidden');                
             }
             if (!service) {
-                this._div.innerHTML = ('<b>' + $filter('translate')('NO_SERVICES_INFO', { siteName: scope.$root.translatedSiteName }) + '</b>');
+                vm.infoDiv._div.innerHTML = ('<b>' + $filter('translate')('NO_SERVICES_INFO', { siteName: scope.$root.translatedSiteName }) + '</b>');
             } else {
-                this._div.innerHTML = '<b>' + service.name + '</b><br/>' + $filter('limitTo')(service.description, 250);
+                vm.infoDiv._div.innerHTML = '<b>' + service.name + '</b><br/>' + $filter('limitTo')(service.description, 250);
             }
-            this._div.className = 'service-info-control';
+            vm.infoDiv._div.className = 'service-info-control';
+            vm.infoDiv.addTo(leafletData.getMap());
         };
 
         vm.showInfo = (e) => {
@@ -842,13 +839,8 @@ Only superusers and service providers have access to the edit functions. Everyon
                 vm.infoDiv._div.className = 'hidden';
             }            
         };
-        vm.hideMap = () =>{
-            vm.isMapMode = false;
-        }
 
-        vm.showMap = (n) => {
-            let o = tableUtils.defaultsWithServiceNameAndFilter('PrivateServiceService', n);            
-             
+        vm.showMap = (n) => {             
             $http({
                 method: 'GET',
                 url: apiUrl + '/v2/private-services/',
@@ -868,6 +860,9 @@ Only superusers and service providers have access to the edit functions. Everyon
                 vm.invalidConfirmationKey = true;
             });            
         }
+        vm.hideMap = () =>{
+            vm.isMapMode = false;
+        }
         vm.drawServices = (map, services, isMobile) => {
             vm.markers.clearLayers();
             services.forEach(function(service) {
@@ -879,17 +874,24 @@ Only superusers and service providers have access to the edit functions. Everyon
                         prefix: 'fa'
                         /*markerColor: ctrl.getServiceColor(service)*/
                     });
+                    
+                    
                     var marker = L.marker([lat, lng], {
                         service: service,
                         icon: serviceIcon
-                    });
-                    marker.on({
-                        mouseover: vm.showInfo,
-                        mouseout: vm.hideDiv,
-                        click: (e) => {
-                            vm.showInfo
-                            //$state.go('service.open',{serviceId: e.target.options.service.id});
+                    }).bindPopup('<div><b>' + service.name + '</b><br/>' + service.description.substr(0,250) +'</div>',{autoPan: false});
+                    marker.on('mouseover', 
+                        function(e){
+                            e.target.openPopup()
                         }
+                    );
+                    marker.on('mouseout', 
+                        function(e){
+                            e.target.closePopup()
+                        }
+                    );
+                    marker.on('click', function (e) {
+                        $state.go('service.open',{serviceId: e.target.options.service.id});
                     });
                     vm.markers.addLayer(marker);
                 }
