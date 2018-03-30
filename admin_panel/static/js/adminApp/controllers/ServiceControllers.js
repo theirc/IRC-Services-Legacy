@@ -757,7 +757,7 @@ Only superusers and service providers have access to the edit functions. Everyon
             }
         };
     })
-    .controller('ServicePrivateViewController', function (tableUtils, $scope, providers, serviceTypes, serviceStatus, regions, $filter, service_languages, ServiceService, $http, apiUrl, leafletData, $state) {
+    .controller('ServicePrivateViewController', function (tableUtils, $scope, providers, serviceTypes, serviceStatus, regions, $filter, service_languages, ServiceService,$http, apiUrl, leafletData, $state) {
         let vm = this;
         let langs = service_languages;
 
@@ -765,6 +765,8 @@ Only superusers and service providers have access to the edit functions. Everyon
         vm.serviceTypes = serviceTypes;
         vm.regions = regions;
         vm.serviceStatus = serviceStatus;
+        vm.searchResults = [];
+        vm.isMapMode = false;
 
         vm.dtOptions = tableUtils.defaultsWithServiceNameAndFilter('PrivateServiceService', {});
         vm.dtColumns = [
@@ -817,6 +819,95 @@ Only superusers and service providers have access to the edit functions. Everyon
                 .dtInstance
                 .reloadData();
         }
+        vm.markers = new L.FeatureGroup();
+        vm.infoDiv = L.control();        
+
+        vm.infoDiv.update =  (service) => {
+            if (!this._div){
+                vm.infoDiv._div = L.DomUtil.create('div', 'hidden');                
+            }
+            if (!service) {
+                vm.infoDiv._div.innerHTML = ('<b>' + $filter('translate')('NO_SERVICES_INFO', { siteName: scope.$root.translatedSiteName }) + '</b>');
+            } else {
+                vm.infoDiv._div.innerHTML = '<b>' + service.name + '</b><br/>' + $filter('limitTo')(service.description, 250);
+            }
+            vm.infoDiv._div.className = 'service-info-control';
+            vm.infoDiv.addTo(leafletData.getMap());
+        };
+
+        vm.showInfo = (e) => {
+            vm.infoDiv.update(e ? e.target.options.service : null);
+        };
+
+        vm.hideDiv = () => {
+            if(vm.infoDiv._div){
+                vm.infoDiv._div.className = 'hidden';
+            }            
+        };
+
+        vm.showMap = (n) => {             
+            $http({
+                method: 'GET',
+                url: apiUrl + '/v2/private-services/',
+                params: n
+            }).then((data) => {
+                vm.confirmationSucceeded = true;
+                vm.searchResults = data.data;
+                vm.isMapMode = true;
+                leafletData
+                    .getMap('search-map')
+                    .then(function (map) {
+                        vm.drawServices(map, vm.searchResults, false);
+                        map.invalidateSize();                        
+                });
+                
+            }).catch((data) => {
+                vm.invalidConfirmationKey = true;
+            });            
+        }
+        vm.hideMap = () =>{
+            vm.isMapMode = false;
+        }
+        vm.drawServices = (map, services, isMobile) => {
+            vm.markers.clearLayers();
+            services.forEach(function(service) {
+                if (service.location) {
+                    var lat = service.location.coordinates[1];
+                    var lng = service.location.coordinates[0];
+                    var serviceIcon = L.VectorMarkers.icon({
+                        icon: 'fa-pointer',
+                        prefix: 'fa'
+                        /*markerColor: ctrl.getServiceColor(service)*/
+                    });
+                    
+                    
+                    var marker = L.marker([lat, lng], {
+                        service: service,
+                        icon: serviceIcon
+                    }).bindPopup('<div><b>' + service.name + '</b><br/>' + service.description.substr(0,250) +'</div>',{autoPan: false});
+                    marker.on('mouseover', 
+                        function(e){
+                            e.target.openPopup()
+                        }
+                    );
+                    marker.on('mouseout', 
+                        function(e){
+                            e.target.closePopup()
+                        }
+                    );
+                    marker.on('click', function (e) {
+                        $state.go('service.open',{serviceId: e.target.options.service.id});
+                    });
+                    vm.markers.addLayer(marker);
+                }
+            });
+
+            if (services.length > 0) {
+                map.addLayer(vm.markers);
+                map.fitBounds(vm.markers.getBounds(), {padding: [25, 25]});
+            }
+        };
+        
         vm.dtInstance = {};
         vm.searchCriteria = {};
 
