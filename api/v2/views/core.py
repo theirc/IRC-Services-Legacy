@@ -24,6 +24,7 @@ from rest_framework.response import Response
 from .utils import IsSuperUserPermission, StandardResultsSetPagination
 from ..filters import GeographicRegionFilter
 from rest_framework.views import APIView
+from django.db.models.query_utils import Q
 
 logger = logging.getLogger(__name__)
 
@@ -238,7 +239,8 @@ class GeographicRegionViewSet(viewsets.ModelViewSet):
         qs = super(GeographicRegionViewSet, self).get_queryset()
         if (hasattr(self.request, 'parent')):
             qs = qs.filter(
-                parent=self.request.parent)
+                Q(parent=self.request.parent | Q(parent__parent=self.request.parent)
+                )
         return qs
 
 
