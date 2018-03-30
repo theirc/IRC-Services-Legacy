@@ -20,7 +20,7 @@ class LandingPageView(LoginRequiredMixin, TemplateView):
         host = request.META['HTTP_HOST'].split(':')[0]
         SITE_CONFIG = getattr(settings, 'SITE_CONFIG', {})
         
-        site_settings = {}
+        site_settings = SITE_CONFIG.get('all', {})
         for k in SITE_CONFIG.keys():
             if k in host:
                 site_settings = SITE_CONFIG[k]

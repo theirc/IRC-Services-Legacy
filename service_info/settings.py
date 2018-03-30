@@ -537,6 +537,9 @@ SITE_CONFIG = {
     "cuentanos.org": {
         "CHAT_ENABLED": True,
         "CHAT_APP_ID": 'uchonpxg',
+    },
+    "all": {
+        
     }
 }
 
