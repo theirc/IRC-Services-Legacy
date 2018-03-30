@@ -537,9 +537,15 @@ SITE_CONFIG = {
     "cuentanos.org": {
         "CHAT_ENABLED": True,
         "CHAT_APP_ID": 'uchonpxg',
+        "INTERCOM_SECRET": os.environ.get('CN_INTERCOM_SECRET', '')
+    },
+    "localhost": {
+        "CHAT_ENABLED": True,
+        "CHAT_APP_ID": 'uchonpxg',
+        "INTERCOM_SECRET": os.environ.get('CN_INTERCOM_SECRET', '')
     },
     "all": {
-        
+
     }
 }
 

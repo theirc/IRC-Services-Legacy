@@ -45,7 +45,10 @@
                 <div class="col-xs-12">
                     <div class="btn-group pull-right">
                         <button class="btn btn-warning " ng-click="ctrl.searchCriteria = {}">Clear Search</button>
-                        <button class="btn btn-primary " ng-click="ctrl.reloadOption(ctrl.searchCriteria)">Search</button>
+                        <button class="btn btn-primary " ng-hide="ctrl.isMapMode" ng-click="ctrl.reloadOption(ctrl.searchCriteria)">Search</button>
+                        <button class="btn btn-primary " ng-show="ctrl.isMapMode" ng-click="ctrl.showMap(ctrl.searchCriteria)">Search</button>
+                        <button class="btn btn-primary " ng-hide="ctrl.isMapMode" ng-click="ctrl.showMap(ctrl.searchCriteria)">Show Map</button>
+                        <button class="btn btn-primary " ng-show="ctrl.isMapMode" ng-click="ctrl.isMapMode = false; ctrl.reloadOption(ctrl.searchCriteria)">Hide Map</button>
                     </div>
                 </div>
 
@@ -54,9 +57,14 @@
     </div>
     <div>
         <div class="box">
-            <div class="box-body table-responsive">
+            <div class="box-body table-responsive" ng-show="!ctrl.isMapMode">
                 <table datatable="" dt-options="ctrl.dtOptions" dt-columns="ctrl.dtColumns" dt-instance="ctrl.dtInstance" class="table table-bordered table-striped">
                 </table>
+            </div>
+            <div class="box-body" ng-show="ctrl.isMapMode" style="min-width: 70%;min-height: calc(100vh - 470px);">
+                <leaflet defaults="{
+                    tileLayer: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                    maxZoom: 14}" id="search-map" height="calc(100vh - 470px)"></leaflet>
             </div>
         </div>
     </div>
@@ -64,7 +72,8 @@
         <div class="col-xs-12">
             <div class="btn-group pull-right">
                 <button class="btn btn-warning " ng-click="ctrl.searchCriteria = {}">Clear Search</button>
-                <button class="btn btn-primary " ng-click="ctrl.reloadOption(ctrl.searchCriteria)">Search</button>
+                <button class="btn btn-primary " ng-hide="ctrl.isMapMode" ng-click="ctrl.reloadOption(ctrl.searchCriteria)">Search</button>
+                <button class="btn btn-primary " ng-show="ctrl.isMapMode" ng-click="ctrl.showMap(ctrl.searchCriteria)">Search</button>
             </div>
         </div>
     </footer-action-bar>
