@@ -158,7 +158,7 @@ class UserViewSet(viewsets.ModelViewSet):
                 reverse('api-activate')) + '?activation_key='
             user.send_activation_email(request, activation_url)
 
-        return Response(serializers_v2.UserWithGroupSerializer(user).data)
+        return Response(serializers_v2.UserWithGroupSerializer(user, context={'request': request}).data)
 
     @list_route(methods=['GET'])
     @authentication_classes([])

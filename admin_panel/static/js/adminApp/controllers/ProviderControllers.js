@@ -19,21 +19,20 @@ angular.module('adminApp')
             }),
             tableUtils.newColumn('actions').withTitle('Actions').renderWith(function (data, type, full, meta) {
                 var viewButton = `
-                    <a class="btn btn-primary btn-xs" ui-sref="^.open({id: ${full.id}})">
+                    <a class="btn btn-primary btn-xs btn-block" ui-sref="^.open({id: ${full.id}})">
                         <i class="fa fa-eye"></i>
                         Open
                     </a>`;
                 var impersonateButton = `
-                    <a class="btn btn-success btn-xs" ui-sref="^.impersonate({id: ${full.id}})">
+                    <a class="btn btn-success btn-xs btn-block" ui-sref="^.impersonate({id: ${full.id}})">
                         <i class="fa fa-user"></i>
                         Impersonate
                     </a>
                 `;
 
-                return `<div class="btn-group">
+                return `
                     ${viewButton}
-                    ${$scope.user.isSuperuser ? impersonateButton : ''}
-                </div>`;
+                    ${$scope.user.isSuperuser ? impersonateButton : ''}`;
             }),
         ];
 

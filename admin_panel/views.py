@@ -17,9 +17,19 @@ class LandingPageView(LoginRequiredMixin, TemplateView):
         request = self.request
         user = request.user
 
+        host = request.META['HTTP_HOST'].split(':')[0]
+        SITE_CONFIG = getattr(settings, 'SITE_CONFIG', {})
+        
+        site_settings = {}
+        for k in SITE_CONFIG.keys():
+            if k in host:
+                site_settings = SITE_CONFIG[k]
+                break
+
         context = super(LandingPageView, self).get_context_data(**kwargs)
         context['WEB_CLIENT_URL'] = getattr(settings, 'WEB_CLIENT_URL', '')
         context['SERVICE_LANGUAGES'] = settings.LANGUAGES
+        context['SITE_SETTINGS'] = site_settings
 
         token, x = Token.objects.get_or_create(user=user)
         token = {

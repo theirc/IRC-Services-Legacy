@@ -195,9 +195,7 @@ angular
         }
 
         vm.providerRegion = regions.filter(function (r) {
-            return r.id 
-          
-          provider.region;
+            return r.id === provider.region;
         });
 
         vm.providerRegion = vm.providerRegion && vm.providerRegion[0]
@@ -286,6 +284,8 @@ angular
                     'close': null
                 }];
             }
+
+            console.log(vm.service);
         }
         $scope.mapControl = {};
         vm.provideLocation = vm.service.location ?
@@ -307,7 +307,7 @@ angular
 
         vm.canEdit = (
             $rootScope.user.isSuperuser ||
-            ($rootScope.user.groups.filter(g => g.name === 'Provider').length > 0 && $rootScope.selectedProvider.id === vm.service.provider.id)
+            ($rootScope.user.groups.filter(g => g.name === 'Provider').length > 0 && ($rootScope.selectedProvider.id === vm.service.provider.id || vm.isNew))
         )
         if (vm.canEdit) {
             /*
@@ -666,14 +666,19 @@ Only superusers and service providers have access to the edit functions. Everyon
                 };
             };
         };
-        vm.addContactInformation = () =>{
-            if (!vm.service.contact_information){
+        vm.addContactInformation = () => {
+            if (!vm.service.contact_information) {
                 vm.service.contact_information = [];
             }
-            vm.service.contact_information.push({'id': null, 'text': '', 'index': vm.service.contact_information.length, 'type': ''})            
+            vm.service.contact_information.push({
+                'id': null,
+                'text': '',
+                'index': vm.service.contact_information.length,
+                'type': ''
+            })
         }
-        vm.removeContact = (index) =>{
-            vm.service.contact_information.splice(index,1)
+        vm.removeContact = (index) => {
+            vm.service.contact_information.splice(index, 1)
         }
 
     })
@@ -752,7 +757,7 @@ Only superusers and service providers have access to the edit functions. Everyon
             }
         };
     })
-    .controller('ServicePrivateViewController', function (tableUtils, $scope, providers, serviceTypes, serviceStatus, regions, $filter, service_languages, ServiceService) {
+    .controller('ServicePrivateViewController', function (tableUtils, $scope, providers, serviceTypes, serviceStatus, regions, $filter, service_languages, ServiceService, $http, apiUrl, leafletData, $state) {
         let vm = this;
         let langs = service_languages;
 

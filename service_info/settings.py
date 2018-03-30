@@ -331,7 +331,7 @@ REST_FRAMEWORK = {
     # by default.  (We'll alter this as needed on a few specific
     # views.)
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissions'
+        'rest_framework.permissions.IsAuthenticated'
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'api.auth.ServiceInfoTokenAuthentication',
@@ -532,6 +532,13 @@ GHOST_TAG_MAP = dict([k.split(':') for k in os.environ.get(
 
 INTERNAL_IPS = [
 ]
+
+SITE_CONFIG = {
+    "cuentanos.org": {
+        "CHAT_ENABLED": True,
+        "CHAT_APP_ID": 'uchonpxg',
+    }
+}
 
 try:
     from .local_settings import *

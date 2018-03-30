@@ -156,7 +156,7 @@
                 <div class="col-xs-12">
                     <div class="box box-default">
                         <div class="box-body">
-                            <div class="form-group col-xs-6" ng-if="user.isStaff">
+                            <div class="form-group col-xs-6">
                                 <label for="type">Types (max. 4)</label>
                                 <ui-select ng-disabled="!ctrl.isEditing" multiple ng-model="ctrl.service.types" sortable="true" close-on-select="true" required
                                     limit="4">
@@ -194,15 +194,15 @@
                                 <input type="text" class="form-control" id="facebookPage" placeholder="Facebook Page" ng-model="ctrl.service.facebook_page"
                                     ng-maxlength="255">
                             </div>
-                            <div class="form-group col-xs-6" ng-if="user.isStaff">
+                            <div class="form-group col-xs-6">
                                 <label for="costOfService">Cost of Service</label>
                                 <textarea name="costOfService" class="form-control" ng-model="ctrl.service.cost_of_service"></textarea>
                             </div>
-                            <div class="form-group col-xs-6" ng-if="user.isStaff">
+                            <div class="form-group col-xs-6">
                                 <label for="status">Status</label>
                                 <select class="form-control" name="status" ng-model="ctrl.service.status" ng-options="status_id as status_name for (status_id, status_name) in ctrl.statusChoices"></select>
                             </div>
-                            <div class="form-group col-xs-12" ng-if="user.isStaff">
+                            <div class="form-group col-xs-6">
                                 <label for="tags">Tags:</label>
                                 <ui-select tagging="ctrl.transformTag" ng-disabled="!ctrl.isEditing" multiple ng-model="ctrl.service.tags" sortable="true"
                                     close-on-select="true" on-select="ctrl.createNewTag($item.name)">
@@ -365,7 +365,7 @@
                     </div>
                 </div>
             </div>
-            <div read-only-form is-editing="ctrl.isEditing">
+            <div read-only-form is-editing="ctrl.isEditing" ng-if="user.isSuperuser">
                 <div class="row" ng-if="ctrl.canEdit">
                     <div class="col-xs-12">
                         <div class="box box-default">
@@ -389,7 +389,7 @@
                 </div>
             </div>
 
-            <div read-only-form is-editing="ctrl.isEditing" ng-if="ctrl.serviceConfirmationLogs">
+            <div read-only-form is-editing="ctrl.isEditing" ng-if="user.isSuperuser">
                 <div class="row" ng-if="ctrl.canEdit">
                     <div class="col-xs-12">
                         <div class="box box-default">

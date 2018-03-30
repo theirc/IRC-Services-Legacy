@@ -344,8 +344,9 @@ class PrivateServiceViewSet(FilterByRegionMixin, viewsets.ModelViewSet):
     def get_queryset(self):
         qs = super(PrivateServiceViewSet, self).get_queryset()
         if not (hasattr(self.request, 'user') and self.request.user.is_superuser):
-            qs = qs.filter(
-                status__in=[Service.STATUS_CURRENT, Service.STATUS_PRIVATE])
+            providers = self.request.user.all_providers
+            qs = qs.filter(Q(status__in=[Service.STATUS_CURRENT]) | Q(
+                status__in=[Service.STATUS_PRIVATE], provider__in=providers))
         return qs
 
 
