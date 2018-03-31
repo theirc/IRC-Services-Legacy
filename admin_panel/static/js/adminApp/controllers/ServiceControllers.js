@@ -307,7 +307,7 @@ angular
 
         vm.canEdit = (
             $rootScope.user.isSuperuser ||
-            ($rootScope.user.groups.filter(g => g.name === 'Provider').length > 0 && ($rootScope.selectedProvider.id === vm.service.provider.id || vm.isNew))
+            ($rootScope.user.groups.filter(g => g.name === 'Providers').length > 0 && ($rootScope.selectedProvider.id === vm.service.provider.id || vm.isNew))
         )
         if (vm.canEdit) {
             /*

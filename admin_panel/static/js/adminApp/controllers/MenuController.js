@@ -28,17 +28,24 @@ angular.module("adminApp").controller("MenuController", function ($rootScope, $s
 					{
 						title: "Service Management",
 						sref: "service.list",
-						hide: !((($rootScope.user.groups.filter(g => g.name === 'Provider').length > 0) || $rootScope.user.isSuperuser) && $rootScope.selectedProvider),
+						hide: !((($rootScope.user.groups.filter(g => g.name === 'Providers').length > 0) || $rootScope.user.isSuperuser) && $rootScope.selectedProvider),
 					},
 				],
 			},
 			{
 				title: "PROFILE",
 				items: [{
-					title: "Account Settings",
-					sref: "settings",
-					active: $state.includes("settings"),
-				}, ],
+						title: "Account Settings",
+						sref: "settings",
+						active: $state.includes("settings"),
+
+					},
+					{
+						title: "Provider Settings",
+						sref: "provider.openMe",
+						hide: !((($rootScope.user.groups.filter(g => g.name === 'Providers').length > 0) || $rootScope.user.isSuperuser) && $rootScope.selectedProvider),
+					},
+				],
 			},
 			{
 				title: "REFUGEE.INFO ADMIN",

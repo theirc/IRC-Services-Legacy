@@ -104,6 +104,11 @@ angular.module('adminApp')
             $state.reload();
         };
 
+        vm.canEdit = (
+            $rootScope.user.isSuperuser ||
+            ($rootScope.user.groups.filter(g => g.name === 'Providers').length > 0 && ($rootScope.selectedProvider.id === vm.provider.id ))
+        )
+
         function save() {
             if (vm.isNew) {
                 ProviderService.post(vm.object).then(function (o) {
