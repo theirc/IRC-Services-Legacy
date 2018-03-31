@@ -17,9 +17,9 @@ class LandingPageView(LoginRequiredMixin, TemplateView):
     template_name = 'admin_panel/index.html'
 
     def get_context_data(self, **kwargs):
+        context = super(LandingPageView, self).get_context_data(**kwargs)
         request = self.request
         user = request.user
-        site = get_current_site(request)
 
         host = request.META['HTTP_HOST'].split(':')[0]
         SITE_CONFIG = getattr(settings, 'SITE_CONFIG', {})
@@ -38,11 +38,9 @@ class LandingPageView(LoginRequiredMixin, TemplateView):
                     site_settings['CHAT_DIGEST'] = str(digest)
                 break
 
-        context = super(LandingPageView, self).get_context_data(**kwargs)
         context['WEB_CLIENT_URL'] = getattr(settings, 'WEB_CLIENT_URL', '')
         context['SERVICE_LANGUAGES'] = settings.LANGUAGES
         context['SITE_SETTINGS'] = site_settings
-        context['site'] = site
 
         token, x = Token.objects.get_or_create(user=user)
         token = {

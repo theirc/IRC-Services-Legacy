@@ -24,6 +24,7 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _, activate, get_language
+from django.contrib.sites.shortcuts import get_current_site
 
 from rest_framework.authtoken.models import Token
 import six
@@ -133,7 +134,8 @@ class EmailUser(AbstractBaseUser, PermissionsMixin):
     ])
     title = models.CharField(max_length=100, blank=True, null=True)
     position = models.CharField(max_length=100, blank=True, null=True)
-    avatar = models.ImageField(upload_to=get_upload_path, blank=True, null=True)
+    avatar = models.ImageField(
+        upload_to=get_upload_path, blank=True, null=True)
     google = models.CharField(max_length=200, blank=True, null=True)
     facebook = models.CharField(max_length=200, blank=True, null=True)
     is_staff = models.BooleanField(
@@ -146,7 +148,8 @@ class EmailUser(AbstractBaseUser, PermissionsMixin):
                     'active. Unselect this instead of deleting accounts.'))
     date_joined = models.DateTimeField(_('date joined'), default=now)
 
-    activation_key = models.CharField(_('activation key'), max_length=40, default='')
+    activation_key = models.CharField(
+        _('activation key'), max_length=40, default='')
 
     language = models.CharField(
         _('language'),
@@ -179,7 +182,7 @@ class EmailUser(AbstractBaseUser, PermissionsMixin):
     def all_providers(self):
         return self.managed_providers.all() | self.providers.all()
 
-    def get_providers(self): 
+    def get_providers(self):
         return self.providers.all()
 
     # Enforce unique email address, case-insensitive
@@ -188,7 +191,8 @@ class EmailUser(AbstractBaseUser, PermissionsMixin):
         if self.pk:
             others = others.exclude(pk=self.pk)
         if others.exists():
-            raise ValidationError(_("User emails must be unique without regard to case."))
+            raise ValidationError(
+                _("User emails must be unique without regard to case."))
         super().save(*args, **kwargs)
 
     def get_api_url(self):
@@ -210,12 +214,13 @@ class EmailUser(AbstractBaseUser, PermissionsMixin):
         return self.email
 
     def create_activation_key(self):
-        salt = hashlib.sha1(six.text_type(random.random()).encode('ascii')).hexdigest()[:5]
+        salt = hashlib.sha1(six.text_type(
+            random.random()).encode('ascii')).hexdigest()[:5]
         salt = salt.encode('ascii')
         email = self.email
         if isinstance(email, six.text_type):
             username = email.encode('utf-8')
-        return hashlib.sha1(salt+username).hexdigest()
+        return hashlib.sha1(salt + username).hexdigest()
 
     def has_valid_activation_key(self):
         return not self.is_active and self.activation_key and self.activation_key != self.ACTIVATED
@@ -223,7 +228,8 @@ class EmailUser(AbstractBaseUser, PermissionsMixin):
     def set_password(self, raw_password):
         min_length = getattr(settings, 'MINIMUM_PASSWORD_LENGTH', None)
         if min_length and len(raw_password) < min_length:
-            msg = _("Password is too short. It must have at least {min_length} characters.")
+            msg = _(
+                "Password is too short. It must have at least {min_length} characters.")
             raise ValidationError(msg.format(min_length=min_length))
         super().set_password(raw_password)
 
@@ -283,10 +289,12 @@ class EmailUser(AbstractBaseUser, PermissionsMixin):
         # can overwrite some of the values like user
         # if django.contrib.auth.context_processors.auth is used
         self.activation_key = self.create_activation_key()
+        site = get_current_site(request)
+        
         ctx_dict.update({
             'user': self,
             'activation_link': base_activation_link + self.activation_key,
-            'site': 'Refugee Info',
+            'site': site.name,
         })
         self.send_email_to_user(ctx_dict,
                                 'registration/activation_email_subject.txt',
@@ -367,7 +375,8 @@ class EmailUser(AbstractBaseUser, PermissionsMixin):
 
             message_txt = render_to_string(message_text_template, ctx_dict)
             try:
-                message_html = render_to_string(message_html_template, ctx_dict)
+                message_html = render_to_string(
+                    message_html_template, ctx_dict)
             except TemplateDoesNotExist:
                 message_html = None
 
@@ -394,7 +403,8 @@ class EmailUser(AbstractBaseUser, PermissionsMixin):
 
             message_txt = render_to_string(message_text_template, ctx_dict)
             try:
-                message_html = render_to_string(message_html_template, ctx_dict)
+                message_html = render_to_string(
+                    message_html_template, ctx_dict)
             except TemplateDoesNotExist:
                 message_html = None
 

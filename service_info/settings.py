@@ -203,7 +203,8 @@ TEMPLATES = [
                     'django.template.context_processors.csrf',
                     'django.template.context_processors.request',
                     'django.contrib.messages.context_processors.messages',
-                    'django.template.context_processors.request'
+                    'django.template.context_processors.request',
+                    'service_info.context_processors.site',
                 ),
             'loaders':
                 (

@@ -41,10 +41,11 @@ class APIActivationView(TemplateView):
     template_name = 'admin_panel/activate.html'
 
     def get_context_data(self, **kwargs):
+        context = super(APIActivationView, self).get_context_data(**kwargs)
         request = self.request
-        return {
-            "activation_key": request.GET['activation_key']
-        }
+        context['activation_key'] = request.GET['activation_key']
+
+        return context
 
     def get(self, request, *args, **kwargs): 
         activation_key = request.GET.get('activation_key', '')
@@ -62,7 +63,7 @@ class APIActivationView(TemplateView):
         if activation_key:
             try:
                 user = get_user_model().objects.activate_user(activation_key=activation_key)
-            except DjangoValidationError as e:  # pragma: no cover
+            except Exception as e:  # pragma: no cover
                 pass
             token, unused = Token.objects.get_or_create(user=user)
             user.last_login = now()
@@ -82,7 +83,7 @@ class UserViewSet(viewsets.ModelViewSet):
     def get_serializer_class(self):
         if getattr(self, 'action') in ('retrieve', 'list'):
             return serializers_v2.UserWithGroupSerializer
-        return super().get_serializer_class()
+        return super(UserViewSet, self).get_serializer_class()
 
     def get_permissions(self):
         if getattr(self, 'action') in ('retrieve', 'me', 'logout', 'partial_update', 'update'):
