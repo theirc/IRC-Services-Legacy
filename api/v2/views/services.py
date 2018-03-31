@@ -332,9 +332,7 @@ class PrivateServiceViewSet(FilterByRegionMixin, viewsets.ModelViewSet):
         'provider',
         'type',
         'region',
-        'region__parent',
-        'region__parent__parent'
-    ).prefetch_related('selection_criteria', 'tags', 'types').all()
+    ).prefetch_related('selection_criteria', 'tags', 'types', 'contact_information').all()
 
     serializer_class = serializers_v2.ServiceSerializer
     pagination_class = StandardResultsSetPagination
@@ -361,9 +359,7 @@ class ServiceViewSet(viewsets.ModelViewSet):
         'provider',
         'type',
         'region',
-        'region__parent',
-        'region__parent__parent'
-    ).prefetch_related('selection_criteria', 'tags', 'types').all()
+    ).prefetch_related('selection_criteria', 'tags', 'types', 'contact_information').all()
 
     serializer_class = serializers_v2.ServiceSerializer
     pagination_class = StandardResultsSetPagination
