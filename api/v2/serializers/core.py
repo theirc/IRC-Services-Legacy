@@ -108,7 +108,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = EmailUser
-        fields = ('id', 'email', 'groups', 'name', 'surname', 'is_staff', 'is_superuser', 'phone_number', 'title',
+        fields = ('id', 'email', 'groups', 'name', 'surname', 'is_staff', 'language', 'is_superuser', 'phone_number', 'title',
                   'position', 'providers', 'managed_providers')
 
 
@@ -126,7 +126,7 @@ class UserWithGroupSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = EmailUser
-        fields = ('id', 'email', 'groups', 'name', 'surname', 'is_staff', 'is_superuser', 'phone_number', 'title',
+        fields = ('id', 'email', 'groups', 'name', 'surname', 'is_staff', 'is_superuser', 'language',  'phone_number', 'title',
                   'position', 'providers', 'isStaff', 'isSuperuser', 'managed_providers')
 
 
@@ -212,7 +212,7 @@ class ProviderSerializer(serializers.ModelSerializer):
             [
                 'type', 'phone_number', 'website',
                 'focal_point_phone_number',
-                'user', 'number_of_monthly_beneficiaries','is_frozen'
+                'user', 'number_of_monthly_beneficiaries', 'is_frozen'
             ]
         )
         required_translated_fields = [

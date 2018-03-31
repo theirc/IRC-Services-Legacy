@@ -45,14 +45,15 @@
                         </div>
                     </div>
                     <div class="form-group col-xs-6">
+                        <label for="language">Language: </label>
+                        <select class="form-control" name="language" ng-model="ctrl.object.language" ng-options="item.id as item.name for item in ctrl.languages"
+                            required></select>
+                    </div>
+                    <div class="form-group col-xs-6">
                         <label for="title">Title: </label>
                         <input type="text" class="form-control" id="title" placeholder="Title" ng-model="ctrl.object.title">
                     </div>
-                    <div class="form-group col-xs-6">
-                        <label for="position">Position: </label>
-                        <input class="form-control" name="position" ng-model="ctrl.object.position" placeholder="Position" id="position">
 
-                    </div>
                     <div class="form-group col-xs-6">
                         <label for="phoneNumber">Phone Number: </label>
                         <input class="form-control" name="phoneNumber" ng-model="ctrl.object.phone_number" placeholder="Phone Number" id="phoneNumber"
@@ -62,7 +63,7 @@
                         </div>
 
                     </div>
-                    
+
                     <div class="form-group col-xs-12" ng-hide="!user.isSuperuser">
                         <div class="checkbox">
                             <label>

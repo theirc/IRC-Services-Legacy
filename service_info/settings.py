@@ -179,8 +179,11 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'regions.middleware.UserRegionMiddleware',
     'reversion.middleware.RevisionMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware'
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'service_info.middleware.ActivateUserLanguageMiddleware',
 )
+
+
 
 AUTHENTICATION_BACKENDS = ("service_info.backends.CustomAuthenticationBackend",)
 

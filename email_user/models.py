@@ -346,7 +346,6 @@ class EmailUser(AbstractBaseUser, PermissionsMixin):
         return key
 
     def send_password_reset_email(self, base_url, site):
-        print('HERE>!?!?!?!?')
         ctx_dict = {
             'user': self,
             'reset_link': base_url + self.get_password_reset_key(),
@@ -365,7 +364,6 @@ class EmailUser(AbstractBaseUser, PermissionsMixin):
         user, translating if we know their preferred language.
         """
         cur_language = get_language()
-        print('HERE>!?!?!?!?')
         
         try:
             if self.language:
