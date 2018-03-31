@@ -3,6 +3,7 @@ from service_info import settings
 from rest_framework.authtoken.models import Token
 from services.models import Provider
 from django.contrib.auth.mixins import LoginRequiredMixin
+from  django.contrib.sites.shortcuts import get_current_site
 
 import json
 import hmac
@@ -18,6 +19,7 @@ class LandingPageView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         request = self.request
         user = request.user
+        site = get_current_site(request)
 
         host = request.META['HTTP_HOST'].split(':')[0]
         SITE_CONFIG = getattr(settings, 'SITE_CONFIG', {})
@@ -40,6 +42,7 @@ class LandingPageView(LoginRequiredMixin, TemplateView):
         context['WEB_CLIENT_URL'] = getattr(settings, 'WEB_CLIENT_URL', '')
         context['SERVICE_LANGUAGES'] = settings.LANGUAGES
         context['SITE_SETTINGS'] = site_settings
+        context['site'] = site
 
         token, x = Token.objects.get_or_create(user=user)
         token = {

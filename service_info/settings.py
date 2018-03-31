@@ -318,8 +318,6 @@ LOGGING = {
     }
 }
 
-SITE_ID = 1
-
 
 # Application settings
 REST_FRAMEWORK = {
@@ -348,7 +346,7 @@ REST_FRAMEWORK = {
 AUTH_USER_MODEL = 'email_user.EmailUser'
 
 # Just use admin login view for now
-LOGIN_URL = 'admin:login'
+LOGIN_URL = '/login/'
 
 # How many days a new user has to activate their account
 # by following the link in their new account email message.

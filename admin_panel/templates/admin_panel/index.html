@@ -11,7 +11,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Refugee.Info Admin Site</title>
+    <title>{{ site.name }} CMS</title>
 
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     {% include "admin_panel/css.html" %}
@@ -126,6 +126,7 @@
 <script type="text/javascript">
     window.API_URL = '{{ API_URL }}';
     window.STATIC_URL = '{{ STATIC_URL }}';
+    angular.module('adminApp').constant('logoName', '{{ site.domain }}.tb.png');
     angular.module('adminApp').constant('apiUrl', '{{ API_URL }}');
     angular.module('adminApp').constant('staticUrl', '{{ STATIC_URL }}');
     angular.module('adminApp').constant('webClientUrl', '{{ WEB_CLIENT_URL }}');
