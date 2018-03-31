@@ -24,7 +24,7 @@
                         {% csrf_token %}
                         <input type="hidden" name="activation_key" value="{% firstof activation_key '' %}" />
 
-                        <div class="form-group has-feedback">
+                        <div class="form-group">
                             <input type="text" name="email" class="form-control" id="id_email" placeholder="{% trans 'Email address:' %}" required>
                         </div>
 
