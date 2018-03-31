@@ -266,6 +266,7 @@ INSTALLED_APPS = (
 
     'services.templatetags.newsletter_extras',
     'debug_toolbar',
+    'django_filters',
 )
 
 MIGRATION_MODULES = {
@@ -337,7 +338,7 @@ REST_FRAMEWORK = {
         'api.auth.ServiceInfoTokenAuthentication',
         # Remove session auth for now, as it doesn't seem to be compatible with
         # token auth when both frontend and backend are on the same port
-        # 'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
     ),
     # LimitOffsetPagination allows the caller to control pagination.
     # We won't paginate by default.
@@ -531,6 +532,7 @@ GHOST_TAG_MAP = dict([k.split(':') for k in os.environ.get(
     'GHOST_TAG_MAP', 'ur:urdu;fa:farsi;ar:arabic;fr:french').split(';')])
 
 INTERNAL_IPS = [
+    '127.0.0.1'
 ]
 
 SITE_CONFIG = {
