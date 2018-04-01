@@ -47,14 +47,13 @@ class APIActivationView(TemplateView):
 
         return context
 
-    def get(self, request, *args, **kwargs): 
+    def get(self, request, *args, **kwargs):
         activation_key = request.GET.get('activation_key', '')
         users = get_user_model().objects.filter(activation_key=activation_key)
         if users.count() == 1:
             return super(APIActivationView, self).get(request, *args, **kwargs)
         else:
             return redirect('/')
-        
 
     def post(self, request):
         activation_key = request.POST.get('activation_key', '')
@@ -71,6 +70,7 @@ class APIActivationView(TemplateView):
             user.save()
 
         return redirect('/')
+
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -131,6 +131,18 @@ class UserViewSet(viewsets.ModelViewSet):
 
         return Response(response)
 
+    @detail_route(methods=['GET'])
+    def resend_activation_email(self, request, pk=None):
+        if pk:
+            user = self.get_queryset().get(pk=pk)
+            if not user.is_active:
+                activation_url = request.build_absolute_uri(
+                    reverse('api-activate')
+                ) + '?activation_key='
+                user.send_activation_email(request, activation_url)
+
+        return Response({})
+
     @list_route(methods=['POST'])
     def register(self, request):
         serializer = APIRegisterSerializer(data=request.data)
@@ -147,6 +159,7 @@ class UserViewSet(viewsets.ModelViewSet):
                 name=request.data['name'],
                 surname=request.data['surname'],
                 email=request.data['email'],
+                language=request.data.get('language', None),
                 is_active=False,
                 **kwargs
             )
@@ -235,12 +248,13 @@ class GeographicRegionViewSet(viewsets.ModelViewSet):
             return serializers_v2.GeographicRegionSerializerNoGeometry
         else:
             return serializers_v2.GeographicRegionSerializer
-    
+
     def get_queryset(self):
         qs = super(GeographicRegionViewSet, self).get_queryset()
         if (hasattr(self.request, 'parent')):
-            qs = qs.filter(Q(parent=self.request.parent) | Q(parent__parent=self.request.parent))
-        
+            qs = qs.filter(Q(parent=self.request.parent) |
+                           Q(parent__parent=self.request.parent))
+
         return qs
 
 

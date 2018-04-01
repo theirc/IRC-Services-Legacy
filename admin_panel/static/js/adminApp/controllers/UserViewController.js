@@ -82,6 +82,11 @@ angular.module('adminApp').controller('UserViewController', function ($rootScope
         }
     };
 
+    vm.resendActivationEmail = function () {
+        vm.errors = null;
+        Restangular.one('users', vm.object.id).getList('resend_activation_email').then(() => {});
+    };
+
     vm.startEditing = function () {
         vm.isEditing = true;
     };
