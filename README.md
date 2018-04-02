@@ -54,6 +54,7 @@ Installing
 ### Running tests
     ./manage.py test --liveserver=localhost:8000
 
+
 ### Running Celery
 
 ##### Set environment variable DJANGO_SETTINGS_MODULE pointing to service_info.settings:
