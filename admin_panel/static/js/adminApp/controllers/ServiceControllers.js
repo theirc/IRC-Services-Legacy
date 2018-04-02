@@ -1,6 +1,6 @@
 angular
     .module('adminApp')
-    .controller('ServiceOverviewController', function (tableUtils, $scope, provider, services, serviceTypes, regions, $filter, $window, ServiceService) {
+    .controller('ServiceOverviewController', function (tableUtils, $scope, provider, services, serviceTypes, regions, $filter, $window, ServiceService, selectedLanguage) {
         let vm = this;
         vm.provider = provider;
         vm.services = services;
@@ -43,9 +43,7 @@ angular
             tableUtils
             .newColumn('id')
             .withTitle('ID'),
-            tableUtils
-            .newColumn('name_en')
-            .withTitle('Name (en)'),
+            tableUtils.newColumn(`name_${selectedLanguage}`).withTitle(`Name (${selectedLanguage})`),
             tableUtils
             .newColumn('types')
             .withTitle('Types')
@@ -80,7 +78,7 @@ angular
 
         angular.extend($scope, vm);
     })
-    .controller('ServiceListController', function (tableUtils, $scope, provider, serviceTypes, regions, $filter, service_languages, ServiceService) {
+    .controller('ServiceListController', function (tableUtils, $scope, provider, serviceTypes, regions, $filter, service_languages, ServiceService, selectedLanguage) {
         let vm = this;
         vm.provider = provider;
         let langs = service_languages;
@@ -95,9 +93,7 @@ angular
             tableUtils
             .newColumn('id')
             .withTitle('ID'),
-            tableUtils
-            .newColumn('name_en')
-            .withTitle('Name (en)'),
+            tableUtils.newColumn(`name_${selectedLanguage}`).withTitle(`Name (${selectedLanguage})`),
             tableUtils
             .newColumn('types')
             .withTitle('Types')
@@ -125,26 +121,31 @@ angular
             tableUtils
             .newColumn('status')
             .withTitle('Status'),
-            tableUtils
-            .newColumn('transifex_status')
-            .withTitle('Transifex Status')
-            .renderWith(function (data) {
-                if (data.hasOwnProperty('errors')) {
-                    return data.errors;
-                } else {
-                    let transifexStatus = '';
-                    langs.forEach(function (lang) {
-                        if (lang[0] != 'en') {
-                            transifexStatus += `${lang[1]}: ${data[lang[0]] || 'N/A'}<br />`;
-                        }
-                    });
-                    return transifexStatus;
-                }
-            }),
-            tableUtils
-            .newServiceActionColumn()
-            .withOption('width', '200px')
+
         ];
+        if ($scope.user.isSuperuser) {
+            vm.dtColumns.push(
+                tableUtils
+                .newColumn('transifex_status')
+                .withTitle('Transifex Status')
+                .renderWith(function (data) {
+                    if (data.hasOwnProperty('errors')) {
+                        return data.errors;
+                    } else {
+                        let transifexStatus = '';
+                        langs.forEach(function (lang) {
+                            if (lang[0] != 'en') {
+                                transifexStatus += `${lang[1]}: ${data[lang[0]] || 'N/A'}<br />`;
+                            }
+                        });
+                        return transifexStatus;
+                    }
+                }));
+        }
+
+        vm.dtColumns.push(tableUtils
+            .newServiceActionColumn()
+            .withOption('width', '200px'));
 
         vm.dtInstance = {};
         vm.createLink = '^.create';
@@ -757,7 +758,7 @@ Only superusers and service providers have access to the edit functions. Everyon
             }
         };
     })
-    .controller('ServicePrivateViewController', function (tableUtils, $scope, providers, serviceTypes, serviceStatus, regions, $filter, service_languages, ServiceService, $http, apiUrl, leafletData, $state) {
+    .controller('ServicePrivateViewController', function (tableUtils, $scope, providers, serviceTypes, serviceStatus, regions, $filter, service_languages, ServiceService, $http, apiUrl, leafletData, $state, selectedLanguage) {
         let vm = this;
         let langs = service_languages;
 
@@ -774,10 +775,10 @@ Only superusers and service providers have access to the edit functions. Everyon
             .newColumn('id')
             .withTitle('ID'),
             tableUtils
-            .newColumn('name')
+            .newColumn(`name_${selectedLanguage}`)
             .withTitle('Service'),
             tableUtils
-            .newColumn('provider.name')
+            .newColumn(`provider.name_${selectedLanguage}`)
             .withTitle('Provider'),
             tableUtils
             .newColumn('types')
@@ -786,7 +787,7 @@ Only superusers and service providers have access to the edit functions. Everyon
                 return types.map((type) => type.name).join(', ');
             }),
             tableUtils
-            .newColumn('address_city')
+            .newColumn(`address_city_${selectedLanguage}`)
             .withTitle('City'),
             tableUtils
             .newColumn('updated_at')

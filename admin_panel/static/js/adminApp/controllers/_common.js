@@ -3,7 +3,7 @@
  */
 
 function GenerateListController(serviceName, and, columns) {
-    return ['tableUtils', '$injector', function (tableUtils, $injector) {
+    return ['tableUtils', '$injector', 'selectedLanguage', function (tableUtils, $injector, selectedLanguage) {
         var vm = this;
 
         vm.dtOptions = tableUtils.defaultsWithServiceName(serviceName);
@@ -17,7 +17,8 @@ function GenerateListController(serviceName, and, columns) {
 
             vm.dtColumns = [
                 tableUtils.newLinkColumn('id', 'ID'),
-                tableUtils.newLinkColumn('name_en', 'Name (English)'),
+                tableUtils.newColumn(`name_${selectedLanguage}`).withTitle(`Name (${selectedLanguage})`),
+
                 tableUtils.newActionColumn()
             ];
         }
@@ -29,6 +30,7 @@ function GenerateListController(serviceName, and, columns) {
         }
     }];
 }
+
 function GenerateOpenController(serviceName, and) {
     return [serviceName, 'object', 'toasty', '$state', '$injector', function (service, object, toasty, $state, $injector) {
         let vm = this;
@@ -52,14 +54,16 @@ function GenerateOpenController(serviceName, and) {
         function save() {
             if (vm.isNew) {
                 service.post(vm.object).then(function (o) {
-                    $state.go('^.open', {id: o.id});
+                    $state.go('^.open', {
+                        id: o.id
+                    });
                     toasty.success({
                         msg: 'Record Successfully Saved!',
                         clickToClose: true,
                         showClose: false,
                         sound: false
                     });
-                }).catch(e=> console.log(e));
+                }).catch(e => console.log(e));
             } else {
                 vm.object.save().then(() => {
                     toasty.success({
@@ -68,7 +72,7 @@ function GenerateOpenController(serviceName, and) {
                         showClose: false,
                         sound: false
                     });
-                }).catch(e=> console.log(e));
+                }).catch(e => console.log(e));
             }
 
             vm.stopEditing();
@@ -81,14 +85,14 @@ function GenerateOpenController(serviceName, and) {
                     $state.go('^.list');
                 } else {
                     vm.object.remove().then(function () {
-                            $state.go('^.list');
-                            toasty.success({
-                                msg: 'Record Successfully Deleted!',
-                                clickToClose: true,
-                                showClose: false,
-                                sound: false
-                            });
-                        }).catch(e=> console.log(e));
+                        $state.go('^.list');
+                        toasty.success({
+                            msg: 'Record Successfully Deleted!',
+                            clickToClose: true,
+                            showClose: false,
+                            sound: false
+                        });
+                    }).catch(e => console.log(e));
                 }
                 vm.stopEditing();
             }

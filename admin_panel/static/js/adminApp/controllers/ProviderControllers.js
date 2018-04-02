@@ -2,13 +2,12 @@
  * Created by reyrodrigues on 1/2/17.
  */
 angular.module('adminApp')
-    .controller('ProviderListController', function (tableUtils, $scope, ProviderService, providerTypes) {
+    .controller('ProviderListController', function (tableUtils, $scope, ProviderService, providerTypes,selectedLanguage) {
         var vm = this;
         vm.dtOptions = tableUtils.defaultsWithServiceNameAndFilterAndSearch('ProviderService');
         vm.dtColumns = [
             tableUtils.newColumn('id').withTitle('ID'),
-            tableUtils.newLinkColumn('name_en', 'Name (English)'),
-            tableUtils.newLinkColumn('name_ar', 'Name (Arabic)'),
+            tableUtils.newColumn(`name_${selectedLanguage}`).withTitle(`Name (${selectedLanguage})`),
             tableUtils.newColumn('type').withTitle('Type').renderWith(function (data) {
                 var type = providerTypes.filter(function (t) {
                     return t.id == data;
@@ -42,7 +41,7 @@ angular.module('adminApp')
 
         angular.extend($scope, vm);
     })
-    .controller('ProviderOpenController', function ($scope, systemUsers, ProviderService, tableUtils, $rootScope, regions, provider, providerTypes, $state) {
+    .controller('ProviderOpenController', function ($scope, systemUsers, ProviderService, tableUtils, $rootScope, regions, provider, providerTypes, $state, selectedLanguage) {
         var vm = this;
 
         vm.provider = provider;
@@ -88,7 +87,7 @@ angular.module('adminApp')
         });
         vm.stColumns = [
             tableUtils.newColumn('id').withTitle('ID'),
-            tableUtils.newColumn('name_en').withTitle('Name (en)')
+            tableUtils.newColumn(`name_${selectedLanguage}`).withTitle(`Name (${selectedLanguage})`)
         ];
 
         vm.startEditing = function () {

@@ -442,8 +442,6 @@ class ServiceManagementSerializer(serializers.ModelSerializer):
                 'id',
                 'slug',
                 'url',
-                'name',
-                'name_en',
                 'region',
                 'status',
                 'location',
@@ -456,7 +454,7 @@ class ServiceManagementSerializer(serializers.ModelSerializer):
                 'email',
                 'website',
                 'facebook_page'
-            ]
+            ] + generate_translated_fields('name')
         )
 
     def get_transifex_status(self, obj):
