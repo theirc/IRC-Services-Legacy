@@ -1,4 +1,4 @@
-{% load static %}
+{% load i18n static %}
 <!DOCTYPE html>
 <html>
 
@@ -15,25 +15,28 @@
     <div>
         <div class="main-flex-container">
             <div class="logo-header">
-                <img src="/public/static/img/{{site.domain}}.wb.png" />
+                    <img src="/public/static/img/{{site.domain}}.wb.png" />
             </div>
             <div class="form-container">
                 <div class="box-border">
-                    <p class="text-center">Please set up a password for your account.</p>
+                    <p class="text-center">{% trans "Forgotten your password? Enter your email address below, and we'll email instructions for setting a new one." %}</p>
                     <form method="POST">
                         {% csrf_token %}
                         <input type="hidden" name="activation_key" value="{% firstof activation_key '' %}" />
 
                         <div class="form-group">
-                            <input type="password" name="password" class="form-control" id="id_password" placeholder="Password" required>
+                            <input type="text" name="email" class="form-control" id="id_email" placeholder="{% trans 'Email address:' %}" required>
                         </div>
-                        <div class="form-group">
-                            <input type="password" name="confirm_password" class="form-control" id="confirm_password" placeholder="Password" required>
+
+                        {%if form.errors%}
+                        <div class="alert alert-danger" ng-show="ctrl.loginErrorMessage">
+                            {{ form.non_field_errors }}
                         </div>
+                        {%endif%}
                         <div class="form-group login-buttons-container">
                             <span></span>
                             <button type="submit" class="btn login-button" id="login_submit">
-                                Save
+                                {% trans 'Reset my password' %}
                             </button>
                         </div>
                     </form>
@@ -41,7 +44,6 @@
             </div>
         </div>
     </div>
-
 
 </body>
 

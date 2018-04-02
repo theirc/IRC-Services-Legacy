@@ -51,7 +51,7 @@ angular
 			return data;
 		});
 	})
-	.run(function ($window, Restangular, $rootScope, $state, $stateParams, $cookies, staticUrl, userRegion, languages, service_languages, user, selectedProvider, permissions, AuthService, GeoRegionService, ProviderService) {
+	.run(function ($window, Restangular, $rootScope, $state, $stateParams, $cookies, logoName, staticUrl, userRegion, languages, service_languages, user, selectedProvider, permissions, AuthService, GeoRegionService, ProviderService) {
 		Restangular.setBaseUrl($window.API_URL + "/v2/");
 		Restangular.setRequestSuffix("/");
 
@@ -75,6 +75,7 @@ angular
 		$rootScope.fieldHelper = function (obj, name, lang) {
 			return obj[$rootScope.idHelper(name, lang)];
 		};
+		$rootScope.logoName = logoName;
 		$rootScope.user = user;
 		$rootScope.staticUrl = staticUrl;
 		$rootScope.userRegion = userRegion;

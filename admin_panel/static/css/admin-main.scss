@@ -20,7 +20,8 @@ div.modal-content {
 }
 
 .btn.btn-default,
-span.ui-select-match-item.btn.btn-default.btn-xs.btn-primary {
+span.ui-select-match-item.btn.btn-default.btn-xs.btn-primary
+ {
   background-color: $toolbar-green-color;
   color: $text-color-white;
   &:hover, &:focus, &:active {

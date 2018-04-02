@@ -179,8 +179,11 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'regions.middleware.UserRegionMiddleware',
     'reversion.middleware.RevisionMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware'
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'service_info.middleware.ActivateUserLanguageMiddleware',
 )
+
+
 
 AUTHENTICATION_BACKENDS = ("service_info.backends.CustomAuthenticationBackend",)
 
@@ -203,7 +206,8 @@ TEMPLATES = [
                     'django.template.context_processors.csrf',
                     'django.template.context_processors.request',
                     'django.contrib.messages.context_processors.messages',
-                    'django.template.context_processors.request'
+                    'django.template.context_processors.request',
+                    'service_info.context_processors.site',
                 ),
             'loaders':
                 (
@@ -266,6 +270,7 @@ INSTALLED_APPS = (
 
     'services.templatetags.newsletter_extras',
     'debug_toolbar',
+    'django_filters',
 )
 
 MIGRATION_MODULES = {
@@ -317,8 +322,6 @@ LOGGING = {
     }
 }
 
-SITE_ID = 1
-
 
 # Application settings
 REST_FRAMEWORK = {
@@ -331,13 +334,13 @@ REST_FRAMEWORK = {
     # by default.  (We'll alter this as needed on a few specific
     # views.)
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissions'
+        'rest_framework.permissions.IsAuthenticated'
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'api.auth.ServiceInfoTokenAuthentication',
         # Remove session auth for now, as it doesn't seem to be compatible with
         # token auth when both frontend and backend are on the same port
-        # 'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
     ),
     # LimitOffsetPagination allows the caller to control pagination.
     # We won't paginate by default.
@@ -347,7 +350,7 @@ REST_FRAMEWORK = {
 AUTH_USER_MODEL = 'email_user.EmailUser'
 
 # Just use admin login view for now
-LOGIN_URL = 'admin:login'
+LOGIN_URL = '/login/'
 
 # How many days a new user has to activate their account
 # by following the link in their new account email message.
@@ -531,7 +534,24 @@ GHOST_TAG_MAP = dict([k.split(':') for k in os.environ.get(
     'GHOST_TAG_MAP', 'ur:urdu;fa:farsi;ar:arabic;fr:french').split(';')])
 
 INTERNAL_IPS = [
+    '127.0.0.1'
 ]
+
+SITE_CONFIG = {
+    "cuentanos.org": {
+        "CHAT_ENABLED": True,
+        "CHAT_APP_ID": 'uchonpxg',
+        "INTERCOM_SECRET": os.environ.get('CN_INTERCOM_SECRET', '')
+    },
+    "localhost": {
+        "CHAT_ENABLED": True,
+        "CHAT_APP_ID": 'uchonpxg',
+        "INTERCOM_SECRET": os.environ.get('CN_INTERCOM_SECRET', '')
+    },
+    "all": {
+
+    }
+}
 
 try:
     from .local_settings import *

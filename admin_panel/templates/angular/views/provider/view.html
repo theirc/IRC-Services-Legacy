@@ -82,13 +82,13 @@
                                 <label for="website">Website</label>
                                 <input type="text" class="form-control" id="website" placeholder="Website" ng-model="ctrl.provider.website" ng-maxlength="255">
                             </div>
-                            <div class="form-group col-xs-6" ng-if="user.isStaff">
+                            <div class="form-group col-xs-6" ng-if="user.isSuperuser">
                                 <label for="region">Country</label>
                                 <select class="form-control" name="region" ng-model="ctrl.provider.region" ng-options="region.id as region.name for region in ctrl.regions"></select>
                             </div>
-                            <div class="form-group col-xs-6">
+                            <div class="form-group col-xs-6" ng-if="user.isSuperuser">
                                 <label for="is_frozen">Freeze Provider (disable user login)</label>
-                                <input type="checkbox" id="is_frozen"  ng-model="ctrl.provider.is_frozen">
+                                <input type="checkbox" id="is_frozen" ng-model="ctrl.provider.is_frozen">
                             </div>
                         </div>
                         <!-- /.box-body -->
@@ -122,13 +122,13 @@
                         </button>
                     </div>
                     <div class="btn-group pull-right">
-                        <button type="button" class="btn btn-primary" ng-if="!ctrl.isEditing && user.isSuperuser" ng-click="ctrl.startEditing()">Edit
+                        <button type="button" class="btn btn-primary" ng-if="!ctrl.isEditing && ctrl.canEdit" ng-click="ctrl.startEditing()">Edit
                         </button>
-                        <button type="button" class="btn btn-primary button-tooltip" ng-if="ctrl.isEditing && user.isSuperuser" ng-click="ctrl.save()"
+                        <button type="button" class="btn btn-primary button-tooltip" ng-if="ctrl.isEditing && ctrl.canEdit" ng-click="ctrl.save()"
                             ng-disabled="ctrl.form.$invalid" data-old-tooltip="Fill in all required fields">
                             Save
                         </button>
-                        <button type="button" class="btn btn-warning" ng-if="ctrl.isEditing && user.isSuperuser && !ctrl.isNew" ng-click="ctrl.cancelEditing()">Cancel
+                        <button type="button" class="btn btn-warning" ng-if="ctrl.isEditing && ctrl.canEdit && !ctrl.isNew" ng-click="ctrl.cancelEditing()">Cancel
                         </button>
                     </div>
                 </div>

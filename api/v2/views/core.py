@@ -24,6 +24,7 @@ from rest_framework.response import Response
 from .utils import IsSuperUserPermission, StandardResultsSetPagination
 from ..filters import GeographicRegionFilter
 from rest_framework.views import APIView
+from django.db.models.query_utils import Q
 
 logger = logging.getLogger(__name__)
 
@@ -40,19 +41,19 @@ class APIActivationView(TemplateView):
     template_name = 'admin_panel/activate.html'
 
     def get_context_data(self, **kwargs):
+        context = super(APIActivationView, self).get_context_data(**kwargs)
         request = self.request
-        return {
-            "activation_key": request.GET['activation_key']
-        }
+        context['activation_key'] = request.GET['activation_key']
 
-    def get(self, request, *args, **kwargs): 
+        return context
+
+    def get(self, request, *args, **kwargs):
         activation_key = request.GET.get('activation_key', '')
         users = get_user_model().objects.filter(activation_key=activation_key)
         if users.count() == 1:
             return super(APIActivationView, self).get(request, *args, **kwargs)
         else:
             return redirect('/')
-        
 
     def post(self, request):
         activation_key = request.POST.get('activation_key', '')
@@ -61,7 +62,7 @@ class APIActivationView(TemplateView):
         if activation_key:
             try:
                 user = get_user_model().objects.activate_user(activation_key=activation_key)
-            except DjangoValidationError as e:  # pragma: no cover
+            except Exception as e:  # pragma: no cover
                 pass
             token, unused = Token.objects.get_or_create(user=user)
             user.last_login = now()
@@ -69,6 +70,7 @@ class APIActivationView(TemplateView):
             user.save()
 
         return redirect('/')
+
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -81,7 +83,7 @@ class UserViewSet(viewsets.ModelViewSet):
     def get_serializer_class(self):
         if getattr(self, 'action') in ('retrieve', 'list'):
             return serializers_v2.UserWithGroupSerializer
-        return super().get_serializer_class()
+        return super(UserViewSet, self).get_serializer_class()
 
     def get_permissions(self):
         if getattr(self, 'action') in ('retrieve', 'me', 'logout', 'partial_update', 'update'):
@@ -129,6 +131,18 @@ class UserViewSet(viewsets.ModelViewSet):
 
         return Response(response)
 
+    @detail_route(methods=['GET'])
+    def resend_activation_email(self, request, pk=None):
+        if pk:
+            user = self.get_queryset().get(pk=pk)
+            if not user.is_active:
+                activation_url = request.build_absolute_uri(
+                    reverse('api-activate')
+                ) + '?activation_key='
+                user.send_activation_email(request, activation_url)
+
+        return Response({})
+
     @list_route(methods=['POST'])
     def register(self, request):
         serializer = APIRegisterSerializer(data=request.data)
@@ -145,6 +159,7 @@ class UserViewSet(viewsets.ModelViewSet):
                 name=request.data['name'],
                 surname=request.data['surname'],
                 email=request.data['email'],
+                language=request.data.get('language', None),
                 is_active=False,
                 **kwargs
             )
@@ -157,7 +172,7 @@ class UserViewSet(viewsets.ModelViewSet):
                 reverse('api-activate')) + '?activation_key='
             user.send_activation_email(request, activation_url)
 
-        return Response(serializers_v2.UserWithGroupSerializer(user).data)
+        return Response(serializers_v2.UserWithGroupSerializer(user, context={'request': request}).data)
 
     @list_route(methods=['GET'])
     @authentication_classes([])
@@ -233,6 +248,14 @@ class GeographicRegionViewSet(viewsets.ModelViewSet):
             return serializers_v2.GeographicRegionSerializerNoGeometry
         else:
             return serializers_v2.GeographicRegionSerializer
+
+    def get_queryset(self):
+        qs = super(GeographicRegionViewSet, self).get_queryset()
+        if (hasattr(self.request, 'parent')):
+            qs = qs.filter(Q(parent=self.request.parent) |
+                           Q(parent__parent=self.request.parent))
+
+        return qs
 
 
 class UserPermissionViewSet(viewsets.ReadOnlyModelViewSet):
