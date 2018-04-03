@@ -17,6 +17,7 @@ function GenerateListController(serviceName, and, columns) {
 
             vm.dtColumns = [
                 tableUtils.newLinkColumn('id', 'ID'),
+                tableUtils.newColumn(`name`).withTitle(`Name`).notSortable(),
                 tableUtils.newColumn(`name_${selectedLanguage}`).withTitle(`Name (${selectedLanguage})`),
 
                 tableUtils.newActionColumn()
