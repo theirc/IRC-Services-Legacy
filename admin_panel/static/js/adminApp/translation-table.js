@@ -309,10 +309,10 @@ angular.module("adminApp").config(function($translateProvider){
         NEWSLETTER_LOGS: 'Registros de Newsletter',
         NEWSLETTER_SETTINGS: 'Configuración de Newsletter',
         SYSTEM_ADMIN: 'Administrar Sistema',
-        USER_MANAGEMENT: 'Administración de Usuario',
-        SERVICE_PROVIDER_MANAGEMENT: 'Administración de Proveedores de Servicios',
+        USER_MANAGEMENT: 'Admin. de Usuario',
+        SERVICE_PROVIDER_MANAGEMENT: 'Admin. de Proveedores',
         GEOGRAPHIC_REGIONS: 'Regiones Geográficas',
-        CONTROLLED_LISTS_MANAGEMENT: 'Administración de listas controladas',
+        CONTROLLED_LISTS_MANAGEMENT: 'Admin. de listas controladas',
         SERVICES_TYPES: 'Tipos de Servicios',
         PROVIDER_TYPES: 'Tipos de Proveedores',
 
