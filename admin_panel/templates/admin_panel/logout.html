@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Refugee.Info Admin Site</title>
+    <title>{{'LOGIN_TITLE'| translate}}</title>
 
     {% include "admin_panel/css.html" %} {% block additional-requirements %}{% endblock %}
 </head>
@@ -17,11 +17,11 @@
                 <img src="/public/static/img/logo-admin.png">
             </div>
             <div>
-                <h1>You've been logged out!</h1>
+                <h1>{{'BEEN_LOGGED_OUT'| translate}}</h1>
             </div>
             <div>
-                <h2>Click
-                    <a href="/">here</a> to go back to the application</h2>
+                <h2>{{'CLICK'| translate}}
+                    <a href="/">{{'HERE'| translate}}</a> {{'GO_BACK_APPLICATION'| translate}}</h2>
             </div>
         </div>
     </div>

@@ -20,8 +20,8 @@
                     <div class="box-body">
                         <div compile="ctrl.newsletterlHtmls[mail_type]"></div>
                         <div class="buttons-right">
-                            <button type="button" class="btn btn-primary ng-scope" ng-click="ctrl.reset(mail_type)">Reset</button>
-                            <button type="button" class="btn btn-primary ng-scope" ng-click="ctrl.save(mail_type)">Save</button>
+                            <button type="button" class="btn btn-primary ng-scope" ng-click="ctrl.reset(mail_type)">{{ NEWSLETTER_RESET | translate }}</button>
+                            <button type="button" class="btn btn-primary ng-scope" ng-click="ctrl.save(mail_type)">{{ NEWSLETTER_SAVE | translate }}</button>
                         </div>
                     </div>
                 </div>

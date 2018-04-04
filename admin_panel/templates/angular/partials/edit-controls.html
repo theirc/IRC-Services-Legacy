@@ -2,14 +2,14 @@
     <div style="width: 100%">
         <div class="btn-group pull-left">
             <button type="button" class="btn btn-danger" ng-if="ctrl.canDelete && !ctrl.isEditing && !ctrl.isNew" ng-click="ctrl.remove()">
-                Delete
+                {{ DELETE | translate }}
             </button>
         </div>
         <div class="btn-group pull-right">
-            <button type="button" class="btn btn-primary" ng-if="!ctrl.isEditing" ng-click="ctrl.startEditing()">Edit
+            <button type="button" class="btn btn-primary" ng-if="!ctrl.isEditing" ng-click="ctrl.startEditing()">{{ EDIT | translate }}
             </button>
             <button type="button" class="btn btn-primary" ng-if="ctrl.isEditing" ng-click="ctrl.save()">
-                Save
+                {{ SAVE | translate }}
             </button>
             <button type="button" class="btn btn-warning" ng-if="ctrl.isEditing" ng-click="ctrl.cancelEditing ? ctrl.cancelEditing() : ctrl.stopEditing()">Cancel
             </button>

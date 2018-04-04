@@ -6,12 +6,12 @@
         <div class="box-border" ng-if="!ctrl.invalidConfirmationKey && !ctrl.confirmationSucceeded">
             <form name="ctrl.confirmForm"
                   ng-submit="ctrl.confirm()">
-                <label  ng-if="ctrl.sendAnnotation" for="note">Your annotations about this service:</label>
+                <label  ng-if="ctrl.sendAnnotation" for="note">{{ YOUR_ANNOTATIONS_ABOUT_SERVICE | translate }}</label>
                 <textarea name="note" ng-if="ctrl.sendAnnotation" class="form-control" type="text" ng-model="ctrl.note" class="confirm-note" style="resize: vertical; margin: 10px 0 10px 0;"></textarea>
                 <div class="btn-group" btn-group  style="display: flex; justify-content: center; margin-bottom: 10px">
-                    <button type="submit" class="btn btn-success">{{ ctrl.sendAnnotation ? 'SUBMIT' : 'CONFIRM' }}</button>
-                    <a class="btn btn-info" ng-if="!ctrl.sendAnnotation" ng-click="ctrl.sendAnnotation = true">ADD NOTE</a>
-                    <a class="btn btn-info" ng-if="ctrl.sendAnnotation" ng-click="ctrl.sendAnnotation = false">REMOVE NOTE</a>
+                    <button type="submit" class="btn btn-success">{{ ctrl.sendAnnotation ? SUBMIT : CONFIRM | translate }}</button>
+                    <a class="btn btn-info" ng-if="!ctrl.sendAnnotation" ng-click="ctrl.sendAnnotation = true">{{ ADD_NOTE | translate }}</a>
+                    <a class="btn btn-info" ng-if="ctrl.sendAnnotation" ng-click="ctrl.sendAnnotation = false">{{ REMOVE_NOTE | translate }}</a>
                 </div>
             </form>
             <table class="table table-bordered table-responsive table-striped">
@@ -30,11 +30,11 @@
                     <td align="center" class="confirmation-value-column">{{ value }}</td>
                 </tr>
                 <tr ng-if="ctrl.service_data['opening_hours']['24/7']">
-                    <td align="center">Opening Hours</td>
-                    <td align="center">Service is open 24/7</td>
+                    <td align="center">{{ OPENING_HOURS | translate }}</td>
+                    <td align="center">{{ SERVICE_IS_OPEN_24_7 | TRANSLATE }}</td>
                 </tr>
                 <tr ng-if="!ctrl.service_data['opening_hours']['24/7']">
-                    <td colspan="2" align="center">Opening Hours</td>
+                    <td colspan="2" align="center">{{ OPENING_HOURS | translate }} </td>
                 </tr>
                 <tr ng-if="!ctrl.service_data['opening_hours']['24/7']" ng-repeat="day in ctrl.days">
                     <td align="center">{{ day.toUpperCase() }}</td>
@@ -43,15 +43,15 @@
                             <span ng-if="shift['open'] && shift['close']">{{ shift['open'] | formatTime }}</span>
                             <span ng-if="shift['open'] && shift['close']"> - </span>
                             <span ng-if="shift['open'] && shift['close']">{{ shift['close'] | formatTime }}</span>
-                            <span ng-if="!shift['open'] && !shift['close'] && $first && $last">{{ 'CLOSED' }}</span>
+                            <span ng-if="!shift['open'] && !shift['close'] && $first && $last">{{ SERVICE_CLOSED | translate }}</span>
                         </p>
                     </td>
                 </tr>
             </table>
         </div>
         <div class="box-border confirmation-info-container" ng-if="ctrl.invalidConfirmationKey || ctrl.confirmationSucceeded">
-            <span ng-if="ctrl.invalidConfirmationKey" class="confirmation-info">Your Confirmation Key is invalid or already has been used!</span>
-            <span ng-if="ctrl.confirmationSucceeded" class="confirmation-info">Thank you for your confirmation!</span>
+            <span ng-if="ctrl.invalidConfirmationKey" class="confirmation-info">{{ CONFIRMATION_KEY_INVALID | translate}}</span>
+            <span ng-if="ctrl.confirmationSucceeded" class="confirmation-info">{{ THANK_YOU_FOR_YOUR_CONFIRMATION | translate}}</span>
         </div>
     </div>
 </div>

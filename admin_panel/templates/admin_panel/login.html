@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Refugee.Info Admin Site</title>
+    <title> {{'LOGIN_TITLE'| translate}}</title>
 
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"> {% include "admin_panel/css.html" %} {% block additional-requirements %}{% endblock %}
 </head>
@@ -19,18 +19,18 @@
             </div>
             <div class="form-container">
                 <div class="box-border">
-                    <p class="text-center">Sign in to start your session</p>
+                    <p class="text-center">{{ 'SIGN_IN' | translate}}</p>
                     <form method="POST">
                         {% csrf_token %}
                         <input type="hidden" name="next" value="{% firstof next '/' %}" />
 
                         <div class="form-group has-feedback">
-                            <input type="email" name="username" class="form-control" id="id_username" placeholder="Email" ng-model="ctrl.user.email"
+                            <input type="email" name="username" class="form-control" id="id_username" placeholder="{{ 'EMAIL' | translate}}" ng-model="ctrl.user.email"
                                 required>
                             <i class="fa fa-envelope form-control-feedback input-right-icon"></i>
                         </div>
                         <div class="form-group has-feedback">
-                            <input type="password" name="password" class="form-control" id="id_password" placeholder="Password" ng-model="ctrl.user.password"
+                            <input type="password" name="password" class="form-control" id="id_password" placeholder="{{ 'PASSWORD' | translate}}" ng-model="ctrl.user.password"
                                 required>
                             <i class="fa fa-lock form-control-feedback input-right-icon"></i>
                         </div>
@@ -47,7 +47,7 @@
                         </div>
                     </form>
                     <p>
-                        <a class="reset-password-link" href="/password_reset">I forgot my password</a>
+                        <a class="reset-password-link" href="/password_reset">{{ 'FORGOT_PASSWORD' | translate}}</a>
                     </p>
                 </div>
             </div>

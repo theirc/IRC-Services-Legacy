@@ -11,7 +11,7 @@
     <nav class="navbar navbar-static-top" role="navigation" ng-controller="NavbarController as ctrl">
         <!-- Sidebar toggle button-->
         <a href="" class="sidebar-toggle visible-xs visible-sm" data-toggle="offcanvas" role="button">
-            <span class="sr-only">Toggle navigation</span>
+            <span class="sr-only">{{ TOGGLE_NAVIGATION | translate}}</span>
         </a>
 
         <div style="float: left;display: flex; flex-direction: row;align-items: center; height: 50px; margin-left: 5px;">
@@ -35,7 +35,7 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li class="footer">
-                            <a href="#">Select a provider from the list below.</a>
+                            <a href="#">{{ SELECT_PROVIDER_FROM_LIST | translate}}</a>
                         </li>
                         <li>
                             <ul class="menu">
@@ -59,10 +59,10 @@
                         <li>
                             <ul class="menu">
                                 <li>
-                                    <a ui-sref="settings" ui-sref-active="active">Profile</a>
+                                    <a ui-sref="settings" ui-sref-active="active">{{ PROFILE | translate }}</a>
                                 </li>
                                 <li>
-                                    <a href="" ng-click="ctrl.logout()">Sign out
+                                    <a href="" ng-click="ctrl.logout()">{{ SIGN_OUT | translate }}
                                     </a>
                                 </li>
                             </ul>
