@@ -6,7 +6,7 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">Translated Fields</h3>
+                    <h3 class="box-title">{{ TRANSLATED_FIELD | translate}}</h3>
                 </div>
                 <div class="box-body">
                     <div class="nav-tabs-custom">
@@ -26,7 +26,7 @@
                                  ng-repeat="lang in languages">
                                 <div class="row">
                                     <div class="form-group col-xs-12">
-                                        <label for="{{ idHelper('name',lang[0]) }}">Title</label>
+                                        <label for="{{ idHelper('name',lang[0]) }}">{{ APP_TITLE | translate }}</label>
                                         <input type="text" class="form-control"
                                                ng-model="ctrl.object[idHelper('name',lang[0])]"
                                                placeholder="Name in {{ lang[1] }}">
@@ -45,22 +45,22 @@
             <div class="box box-primary">
                 <div class="box-body">
                     <div class="form-group col-xs-12">
-                        <label for="app_base_url">App Slug</label>
+                        <label for="app_base_url">{{ APP_SLUG | translate }}</label>
                         <input type="text" class="form-control" id="slug"
                                placeholder="Slug" ng-model="ctrl.object.slug">
                     </div>
                     <div class="form-group col-xs-12">
-                        <label for="app_base_url">App Url</label>
+                        <label for="app_base_url">{{ APP_URL | translate }}</label>
                         <input type="text" class="form-control" id="app_base_url"
                                placeholder="App" ng-model="ctrl.object.app_base_url">
                     </div>
                     <div class="form-group col-xs-12">
-                        <label for="app_base_url">Web Url</label>
+                        <label for="app_base_url">{{ WEB_URL | translate }}</label>
                         <input type="text" class="form-control" id="web_base_url"
                                placeholder="Web" ng-model="ctrl.object.web_base_url">
                     </div>
                     <div class="form-group col-xs-12">
-                        <label for="app_base_url">Light Url</label>
+                        <label for="app_base_url">{{ LIGHT_URL | translate }}</label>
                         <input type="text" class="form-control" id="light_base_url"
                                placeholder="Light" ng-model="ctrl.object.light_base_url">
                     </div>
@@ -73,12 +73,12 @@
             <div class="box box-primary">
                 <div class="box-body">
                     <div class="form-group col-xs-12" read-only-form is-editing="ctrl.isEditing">
-                        <label for="api_base_url">API Url</label>
+                        <label for="api_base_url">{{ API_URL | translate }}</label>
                         <input type="text" class="form-control" id="api_base_url"
                                placeholder="API Url" ng-model="ctrl.object.api_base_url">
                     </div>
                     <div class="form-group col-xs-12">
-                        <label for="authentication_token">Auth Token</label>
+                        <label for="authentication_token">{{ AUTH_TOKEN | translate }}</label>
                         <input type="text" class="form-control" id="authentication_token"
                                placeholder="Auth Token" readonly ng-model="ctrl.object.authentication_token">
                     </div>

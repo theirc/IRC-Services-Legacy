@@ -19,7 +19,7 @@
             </div>
             <div class="form-container">
                 <div class="box-border">
-                    <p class="text-center">Please set up a password for your account.</p>
+                    <p class="text-center">{{'PLEASE_SETUP_PASSWORD' | translate}}</p>
                     <form method="POST">
                         {% csrf_token %}
                         <input type="hidden" name="activation_key" value="{% firstof activation_key '' %}" />
@@ -33,7 +33,7 @@
                         <div class="form-group login-buttons-container">
                             <span></span>
                             <button type="submit" class="btn login-button" id="login_submit">
-                                Save
+                                {{'SAVE' | translate}}
                             </button>
                         </div>
                     </form>

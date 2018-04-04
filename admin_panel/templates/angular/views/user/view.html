@@ -11,55 +11,55 @@
             <div class="box box-default">
                 <div class="box-body">
                     <div class="form-group col-xs-12">
-                        <label for="name">Email: </label>
+                        <label for="name">{{ USER_EMAIL | translate }} </label>
                         <input type="email" class="form-control" name="email" id="email" ng-disabled="!ctrl.isNew" placeholder="Email" ng-required="true"
                             ng-model="ctrl.object.email">
                         <div class="alert alert-warning form-error" ng-if="userForm.email.$error.required && !userForm.email.$pristine && ctrl.isEditing">
-                            This field is required
+                            {{ USER_FIELD_REQUIRED | translate }}
                         </div>
                         <div class="alert alert-warning form-error" ng-if="userForm.$error.email && !userForm.email.$pristine && ctrl.isEditing">
-                            Invalid email
+                            {{ USER_INVALID_EMAIL | translate }}
                         </div>
                     </div>
 
                     <div class="form-group col-xs-6">
-                        <label for="name">First Name: </label>
-                        <input type="text" class="form-control" name="name" id="name" ng-maxlength="100" ng-required="true" placeholder="First Name"
+                        <label for="name">{{ USER_FIRST_NAME | translate }}: </label>
+                        <input type="text" class="form-control" name="name" id="name" ng-maxlength="100" ng-required="true" placeholder="{{ USER_FIRST_NAME | translate }}"
                             ng-model="ctrl.object.name">
                         <div class="alert alert-warning form-error" ng-if="userForm.name.$error.required && !userForm.name.$pristine && ctrl.isEditing">
-                            This field is required
+                            {{ USER_FIELD_REQUIRED | translate }}
                         </div>
                         <div class="alert alert-warning form-error" ng-if="userForm.name.$error.maxlength && !userForm.name.$pristine && ctrl.isEditing">
-                            This field is too long.
+                            {{ USER_FIELD_TOO_LONG | translate }}
                         </div>
                     </div>
                     <div class="form-group col-xs-6">
-                        <label for="surname">Last Name: </label>
-                        <input class="form-control" name="surname" ng-model="ctrl.object.surname" placeholder="Last Name" id="surname" ng-required="true"
+                        <label for="surname">{{USER_LAST_NAME | translate }}: </label>
+                        <input class="form-control" name="surname" ng-model="ctrl.object.surname" placeholder="{{USER_LAST_NAME | translate }}" id="surname" ng-required="true"
                             ng-maxlength="100">
                         <div class="alert alert-warning form-error" ng-if="userForm.surname.$error.required && !userForm.surname.$pristine && ctrl.isEditing">
-                            This field is required
+                            {{ USER_FIELD_REQUIRED | translate }}
                         </div>
                         <div class="alert alert-warning form-error" ng-if="userForm.name.$error.maxlength && !userForm.surname.$pristine && ctrl.isEditing">
-                            This field is too long.
+                            {{ USER_FIELD_TOO_LONG | translate }}
                         </div>
                     </div>
                     <div class="form-group col-xs-6">
-                        <label for="language">Language: </label>
+                        <label for="language">{{ USER_LANGUAGE | translate }}: </label>
                         <select class="form-control" name="language" ng-model="ctrl.object.language" ng-options="item.id as item.name for item in ctrl.languages"
                             required></select>
                     </div>
                     <div class="form-group col-xs-6">
-                        <label for="title">Title: </label>
-                        <input type="text" class="form-control" id="title" placeholder="Title" ng-model="ctrl.object.title">
+                        <label for="title">{{ USER_TITLE | translate }}: </label>
+                        <input type="text" class="form-control" id="title" placeholder="{{ USER_TITLE | translate }}" ng-model="ctrl.object.title">
                     </div>
 
                     <div class="form-group col-xs-6">
-                        <label for="phoneNumber">Phone Number: </label>
-                        <input class="form-control" name="phoneNumber" ng-model="ctrl.object.phone_number" placeholder="Phone Number" id="phoneNumber"
+                        <label for="phoneNumber">{{ USER_PHONE_NUMBER | translate }}: </label>
+                        <input class="form-control" name="phoneNumber" ng-model="ctrl.object.phone_number" placeholder="{{ USER_PHONE_NUMBER | translate }}" id="phoneNumber"
                             ng-pattern="/(^[\d+](?!.*--)[\d-]{7,18}[\d])$/">
                         <div class="alert alert-warning form-error" ng-if="userForm.phoneNumber.$error.pattern && !userForm.phoneNumber.$pristine && ctrl.isEditing">
-                            Invalid phone number format
+                            {{ USER_INVALID_PHONE_NUMBER | translate }}
                         </div>
 
                     </div>
@@ -67,12 +67,12 @@
                     <div class="form-group col-xs-12" ng-hide="!user.isSuperuser">
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" ng-model="ctrl.object.isStaff"> Is Staff
+                                <input type="checkbox" ng-model="ctrl.object.isStaff"> {{ USER_IS_STAFF | translate }}
                             </label>
                         </div>
                     </div>
                     <div class="form-group col-xs-12" ng-hide="!user.isSuperuser">
-                        <label for="email">Groups</label>
+                        <label for="email">{{ USER_GROUPS | translate }}</label>
                         <ui-select ng-disabled="!ctrl.isEditing" multiple ng-model="ctrl.object.groups" sortable="true" close-on-select="true">
                             <ui-select-match placeholder="select a group">{{ $item.name }}</ui-select-match>
                             <ui-select-choices repeat="group in ctrl.groups | filter: {name: $select.search}">
@@ -88,15 +88,15 @@
         <div class="col-xs-12" ng-if="user.isSuperuser && !ctrl.isNew">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">Providers</h3>
+                    <h3 class="box-title">{{ USER_PROVIDERS | translate}}</h3>
                 </div>
                 <div class="box-body">
 
                     <div class="form-group col-xs-12">
-                        <label for="email">As Team Member</label>
+                        <label for="email">{{ USER_AS_TEAM_MEMBER | translate }}</label>
 
                         <ui-select ng-model="ctrl.object.providers" multiple ng-disabled="!ctrl.isEditing">
-                            <ui-select-match placeholder="Select the provider or search for it on the list">{{ $item.name | limitTo: 100 }}</ui-select-match>
+                            <ui-select-match placeholder="{{ USER_SELECT_PROVIDER | translate }}">{{ $item.name | limitTo: 100 }}</ui-select-match>
                             <ui-select-choices repeat="item.id as item in ctrl.providers | filter: $select.search">
                                 <div ng-bind-html="item.name | highlight: $select.search"></div>
                             </ui-select-choices>
@@ -104,9 +104,9 @@
                     </div>
 
                     <div class="form-group col-xs-12">
-                        <label for="email">As Admin</label>
+                        <label for="email">{{ USER_AS_ADMIN | translate }}</label>
                         <ui-select disabled="disabled" ng-model="ctrl.object.managed_providers" multiple>
-                            <ui-select-match placeholder="Select the provider or search for it on the list">{{ $item.name | limitTo: 100 }}</ui-select-match>
+                            <ui-select-match placeholder="{{ USER_SELECT_PROVIDER | translate }}">{{ $item.name | limitTo: 100 }}</ui-select-match>
                             <ui-select-choices repeat="item.id as item in ctrl.providers | filter: $select.search">
                                 <div ng-bind-html="item.name | highlight: $select.search"></div>
                             </ui-select-choices>
@@ -128,13 +128,14 @@
                 <button type="button" class="btn btn-primary" ng-if="!ctrl.isEditing" ng-click="ctrl.startEditing()">Edit
                 </button>
                 <button type="button" class="btn btn-primary" ng-if="ctrl.isEditing" ng-click="ctrl.save()" ng-disabled="userForm.$invalid">
-                    Save
+                    {{ SAVE | translate }}
                 </button>
                 <button type="button" class="btn btn-danger" ng-hide="ctrl.object.isSuperuser" ng-if="!ctrl.isEditing && user.isSuperuser"
                     ng-click="ctrl.remove()">
-                    Delete
+                    {{ DELETE | translate }}
                 </button>
-                <button type="button" class="btn btn-warning" ng-if="ctrl.isEditing" ng-click="ctrl.cancelEditing()">Cancel
+                <button type="button" class="btn btn-warning" ng-if="ctrl.isEditing" ng-click="ctrl.cancelEditing()">
+                    {{ CANCEL | translate }}
                 </button>
             </div>
         </div>

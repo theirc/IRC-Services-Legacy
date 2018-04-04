@@ -19,7 +19,7 @@
             </div>
             <div class="form-container">
                 <div class="box-border">
-                    <p class="text-center">Sign in to start your session</p>
+                    <p class="text-center">{{ 'SIGN_IN' | translate}}</p>
                     <form method="POST">
                         {% csrf_token %}
                         <input type="hidden" name="next" value="{% firstof next '/' %}" />
