@@ -53,11 +53,11 @@ angular
 		});
 	})
 	.run(function ($window, Restangular, $rootScope, $state, $stateParams, $cookies, logoName, staticUrl, userRegion, languages, 
-		service_languages, user, selectedProvider, permissions, AuthService, GeoRegionService, ProviderService,selectedLanguage) {
+		service_languages, user, selectedProvider, permissions, AuthService, GeoRegionService, ProviderService,selectedLanguage, $translate) {
 		Restangular.setBaseUrl($window.API_URL + "/v2/");
 		Restangular.setRequestSuffix("/");
 		moment.locale(selectedLanguage);
-
+		$translate.use(selectedLanguage);
 		$rootScope.idHelper = function (name, lang) {
 			let l = _.clone(lang);
 			if (_.isArray(l)) {

@@ -1,11 +1,11 @@
 <div class="modal-header">
-    <h3>{{ LOGIN_MODAL_TITLE | translate }}</h3>
+    <h3>{{ 'LOGIN_MODAL_TITLE' | translate }}</h3>
 </div>
 <form class="form-horizontal" name="baseController.loginForm"
       ng-submit="baseController.loginForm.$valid && baseController.login()">
     <div class="modal-body">
         <div class="form-group">
-            <label class="control-label col-xs-3">{{ LOGIN_MODAL_EMAIL | translate }}:</label>
+            <label class="control-label col-xs-3">{{ 'LOGIN_MODAL_EMAIL' | translate }}:</label>
             <div class="col-xs-9">
                 <input type="text" name="email" class="form-control" required ng-model="baseController.user.email"/>
             </div>
@@ -13,11 +13,11 @@
 
         <div class="alert alert-danger"
              ng-show="baseController.loginForm.email.$dirty && baseController.loginForm.email.$error.required">
-            {{ LOGIN_MODAL_EMAIL_REQUIRED | translate }}
+            {{ 'LOGIN_MODAL_EMAIL_REQUIRED' | translate }}
         </div>
 
         <div class="form-group">
-            <label class="control-label col-xs-3">{{ LOGIN_MODAL_PASSWORD | translate }}:</label>
+            <label class="control-label col-xs-3">{{ 'LOGIN_MODAL_PASSWORD' | translate }}:</label>
             <div class="col-xs-9">
                 <input type="password" name="password" class="form-control"
                        required ng-model="baseController.user.password"/>
@@ -25,7 +25,7 @@
         </div>
         <div class="alert alert-danger"
              ng-show="baseController.loginForm.password.$dirty && baseController.loginForm.password.$error.required">
-            {{ LOGIN_MODAL_PASSWORD_REQUIRED | translate }}
+            {{ 'LOGIN_MODAL_PASSWORD_REQUIRED' | translate }}
         </div>
         <div class="alert alert-danger"
              ng-show="baseController.errorMessage">
@@ -42,7 +42,7 @@
         <div class="flex-end">
             <button type="submit" class="page-button pull-right button-tooltip" id="submit"
                     data-old-tooltip="{{ ctrl.errorMessage }}" ng-disabled="ctrl.newPageForm.$invalid">
-                <i class="fa fa-user" aria-hidden="true"></i><span>{{ LOGIN_MODAL_LOGIN | translate }}</span>
+                <i class="fa fa-user" aria-hidden="true"></i><span>{{ 'LOGIN_MODAL_LOGIN' | translate }}</span>
             </button>
         </div>
     </div>

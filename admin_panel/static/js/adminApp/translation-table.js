@@ -568,7 +568,7 @@ angular.module("adminApp").config(function($translateProvider){
         USER_EMAIL: 'Email:',
         USER_FIELD_REQUIRED: 'Este campo es requerido',
         USER_INVALID_EMAIL: 'Email no válido',
-        USER_FIRST_NAME: 'Namombre',
+        USER_FIRST_NAME: 'Nombre',
         USER_LAST_NAME: 'Apellido',
         USER_FIELD_TOO_LONG: 'El campo es muy largo',
         USER_TITLE: 'Título',

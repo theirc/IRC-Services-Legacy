@@ -1,4 +1,4 @@
-{% load static %}
+{% load static i18n %}
 <!DOCTYPE html>
 <html>
 
@@ -17,11 +17,11 @@
                     <img src="/public/static/img/{{site.domain}}.wb.png" />
             </div>
             <div>
-                <h1>{{'BEEN_LOGGED_OUT'| translate}}</h1>
+                <h1>{% trans 'You\'ve been logged out!'%}</h1>
             </div>
             <div>
-                <h2>{{'CLICK'| translate}}
-                    <a href="/">{{'HERE'| translate}}</a> {{'GO_BACK_APPLICATION'| translate}}</h2>
+                <h2>{% trans 'Click '%}
+                    <a href="/">{% trans 'here' %}</a> {% trans 'to go back to the application' %}</h2>
             </div>
         </div>
     </div>
