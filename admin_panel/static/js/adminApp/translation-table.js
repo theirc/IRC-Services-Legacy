@@ -290,19 +290,7 @@ angular.module("adminApp").config(function($translateProvider){
         LOGIN_MODAL_EMAIL_REQUIRED: 'Email is required.',
         LOGIN_MODAL_PASSWORD: 'password',
         LOGIN_MODAL_PASSWORD_REQUIRED: 'Password is required.',
-        LOGIN_MODAL_LOGIN: 'Login',
-
-
-
-        
-
-
-        
-
-
-
-
-        
+        LOGIN_MODAL_LOGIN: 'Login'
         
     });
 
@@ -351,9 +339,253 @@ angular.module("adminApp").config(function($translateProvider){
 
         //Logout
         BEEN_LOGGED_OUT: 'Ha salido de la aplicación!',
-        CLICK: 'Haga Click',
+        CLICK: 'Click',
         HERE: 'aquí',
         GO_BACK_APPLICATION: 'para volver a la aplicación',
+
+        //Activate
+        PLEASE_SETUP_PASSWORD: 'Por favor ingrese una contraseña para su cuenta.',
+        SAVE: 'Grabar',
+
+        //Index
+        INDEX_TITLE: 'Sitio de Administración de Refugee.Info',
+
+        //Page
+        PAGE_WAS_PUBLISHED: 'La página ha sido publicada:',
+        PUBLISHED: 'Publicada',
+
+        //Region
+        PREVIEW: 'previsualizar',
+
+        //Edit controls
+        DELETE: 'Borrar',
+        EDIT: 'Editar',
+        SAVE: 'Grabar',
+        CANCEL: 'Cancelar',
+
+        //Header
+        BACK: 'Volver',
+
+        //Mavbar
+        TOGGLE_NAVIGATION: 'Alternar Navigación',
+        SELECT_PROVIDER_FROM_LIST: 'Seleccionar un Proveedor de la lista debajo',
+        SIGN_OUT: 'Salir',
+
+        //RightSideBar
+        RECENT_ACTIVITY: 'Actividad Reciente',
+        LANGDONS_BIRTHDAY: 'Langdon\'s Birthday',
+        TASKS_PROGRESS: 'Tasks Progress',
+        STATS_TAB_CONTENT: 'Contenido de pestaña estadísticas',
+        GENERAL_SETTINGS: 'Configuración General',
+        REPORT_PANEL_USAGE: 'Uso del panel de Reporte',
+
+        //Timepicker
+        FROM: 'Desde',
+        TO: 'Hasta:',
+
+        //App
+        TRANSLATED_FIELD: 'Campos traducidos',
+        APP_TITLE: 'Título',
+        APP_SLUG: 'App Slug',
+        APP_URL: 'App Url',
+        WEB_URL: 'Web Url',
+        LIGHT_URL: 'Light Url',
+        API_URL: 'API Url',
+        AUTH_TOKEN: 'Auth Token',
+
+        //ProviderType
+        NAME: 'Nombre',
+
+        //ServiceType
+        SERVICE_TITLE: 'Título',
+        COMMENTS: 'Commentarioss',
+        METADATA: 'Metadata',
+        ICON: 'Ícono',
+        COLOR: 'Color',
+        SERVICE_ORDERING: 'Orden de Servicio',
+
+        //Newsletter
+        SERVICE_CONFIRMATION_NEWSLETTER_LOGS: 'Service Confirmation Newsletter Logs',
+        LOG_ID: 'Log ID',
+        SERVICE: 'Serviio',
+        DATE: 'Fecha',
+        STATUS: 'Estado',
+        EMAIL_SENT_TO: 'Email enviado a ',
+        NOTE: 'Nota',
+        OPEN: 'Abierto',
+        NEWSLETTER_RESET: 'Reset',
+        NEWSLETTER_SAVE: 'Grabar',
+
+        //PROVIDER
+        PROVIDER_NAME: 'Nombre',
+        PROVIDER_DESCRIPTION: 'Descripción',
+        PROVIDER_ADDRESS: 'Dirección',
+        PROVIDER_TYPE: 'Tipo',
+        PROVIDER_ADMINISTRATOR: 'Administrador',
+        PROVIDER_PHONE_NUMBER: 'Número de Teléfono',
+        PROVIDER_WEBSITE: 'Sitio Web',
+        PROVIDER_COUNTRY: 'País',
+        PROVIDER_FREEZE: 'Congelar Provedor (deshabilitar login de usuarios)',
+        PROVIDER_SERVICES: 'Servicios',
+        PROVIDER_IMPERSONATE: 'Personificar',
+        PROVIDER_EXPORT_SERVICES: 'Exportar Servicios',
+        PROVIDER_IMPORT_SERVICES: 'Importar Servicios',
+        PROVIDER_EDIT: 'Editar',
+        PROVIDER_SAVE: 'Grabar',
+        PROVIDER_CANCEL:  'Cancelar',
+
+        //Region
+        REGION_NAME: 'Nombre',
+        REGION_SLUG: 'Slug',
+        REGION_PARENT: 'Padre',
+        REGION_LEVEL: 'Nivel',
+        REGION_CODE: 'Código',
+        REGION_IS_HIDDEN: 'Es oculto',
+        REGION_LANGUAGES: 'Idiomas',
+        REGION_TITLE: 'Título',
+        REGION_OUTLINE: 'Delimitar Region',
+
+        //Service Overview
+        OVERVIEW: 'Servicio',
+        CLAIMED_BY: 'Reclamado por :',
+        OVERVIEW_LIST: 'LISTA',
+        OVERVIEW_MAP: 'MAPA',
+
+        //Service Archive
+        ARCHIVE_SERVICE: 'Servicio de Archivo',
+        ARE_YOU_SURE_ARCHIVE: 'Esta seguro de querer archivar este Servicio?:',
+        ARCHIVE_CANCEL: 'No, cancelar',
+        ARCHIVE_YES: 'Si, archivar',
+
+        //Service Confirm
+        YOUR_ANNOTATIONS_ABOUT_SERVICE: 'Sus anotaciones sobre este servicio:',
+        SUBMIT: 'Enviar',
+        CONFIRM: 'CONFIRMAR',
+        ADD_NOTE: 'AGREGAR NOTA',
+        REMOVE_NOTE: 'QUITAR NOTA',
+        OPENING_HOURS: 'Horario de atención',
+        SERVICE_IS_OPEN_24_7: 'Servicio abierto 24/7',
+        SERVICE_CLOSED: 'CERRADO',
+        CONFIRMATION_KEY_INVALID: 'Su clave de confirmación es inválida o ya ha sido utilizada!',
+        THANK_YOU_FOR_YOUR_CONFIRMATION: 'Gracias por su confirmación!',
+
+        //Service Duplicate
+        DUPLICATE_SERVICE: 'Duplicar Servicio',
+        ARE_YOU_SURE_WANT_DUPLICATE: 'Esta seguro de querer duplicar este servicio? Por favor ingrese nuevo nombre:',
+        DUPLICATE_NO: 'No, cancelar',
+        DUPLICATE_YES: 'Si, duplicar',
+
+        //Service View
+        SERVICE_PROVIDER: 'Proveedor',
+        SELECT_PROVIDER: 'Seleccionar el Proveedor o búsquelo en la lista',
+        PUSH_TO_TRANSIFEX: 'Enviar a transifex',
+        PULL_FROM_TRANSIFEX: 'Recibir de transifex',
+        TRANSIFEX_STATUS: 'Estado Transifex:',
+        SERVICE_NAME: 'Nombre',
+        SERVICE_DESCRIPTION: 'Descripción',
+        SERVICE_ADDITIONAL_INFORMATION:'Información Adicional',
+        SERVICE_LANGUAGES_SPOKEN: 'Idiomas hablados',
+        SERVICE_ADDRESS_CITY: 'Dirección (Ciudad)',
+        SERVICE_ADDRESS_STREET: 'Dirección (Calle)',
+        SERVICE_ADDRESS_FLOOR: 'Dirección (piso / nora sobre la dirección)',
+        SERVICE_ADDRESS_COUNTRY_LANGUAGE: 'Dirección en idioma local (campo no traducible)',
+        SERVICE_EXACT_LOCATION: 'Ubicación exacta.',
+        SERVICE_WANT_SET_LOCATION: 'Quiere establecer la ubicación del servicio?',
+        SERVICE_PROVIDE_EXACT_LOCATION: 'Puede proveer la ubicación exacta (latitud y longitud) del servicio provisto (o hacer click en la ubicación deseada en el mapa).</p>',
+        SERVICE_LATITUDE: 'Latitud',
+        SERVICE_LONGITUDE: 'Longitud',
+        SERVICE_TYPES : 'Tipos (max. 4)',
+        SERVICE_REGION: 'Región',
+        SERVICE_PHONE_NUMBER: 'Número de teléfono',
+        SERVICE_EMAIL: 'Email',
+        SERVICE_WEBSITE: 'Sitio Web',
+        SERVICE_FACEBOOK: 'Página de Facebook',
+        SERVICE_COST_SERVICE: 'Costo del Servicio',
+        SERVICE_STATUS: 'Estado',
+        SERVICE_TAGS: 'Etiquetas:',
+        SERVICE_CLICK_TO_CREATE: ' (click para crear)',
+        SERVICE_IMAGE: 'Imagen:',
+        SERVICE_UPLOAD_IMAGE: 'Subir una imagen',
+        SERVICE_FILE_TOO_LARGE: 'Archivo demasiado grande ',  
+        SERVICE_FILE_MAX: 'MB: max 1MB',      
+        SERVICE_ONLY_JPG: 'Solo se permiten imágenes jpn y png.',
+        SERVICE_REMOVE: 'Quitas',
+        SERVICE_REMOVE_IMAGE: 'Quitar imagen',
+        SERVICE_OPEN_27_7: 'El servicio estś disponible 24/7:',
+        SERVICE_LEAVE_EMPTY_IF_CLOSED_THAT_DAY: 'Dejar vacío si el servicio está cerrado ese día.',
+        SERVICE_CONTACT_INFORMATION: 'Información de Contacto',
+        SERVICE_TYPE: 'Tipo',
+        SERVICE_TEXT: 'Texto',
+        SERVICE_INDEX: 'Índice',
+        SERVICE_FOCAL_POINT: 'Focal Point - Newsletter del Servicio',
+        SERVICE_FOCAL_FIRST_NAME: 'Focal Point Nombre',
+        SERVICE_FOCAL_LAST_NAME: 'Focal Point Apellido',
+        SERVICE_FOCAL_EMAIL: 'Focal Point Email',
+        SERVICE_SECOND_FOCAL_FIRST_NAME: 'Segundo Focal Point Nombre',
+        SERVICE_SECOND_FOCAL_LAST_NAME: 'Segundo Focal Point Apellido',
+        SERVICE_SECOND_FOCAL_EMAIL: 'Segundo Focal Point Email',
+        SERVICE_EXCLUDE_FROM_CONFIRMATION: '¿Quiere excluir el servicio del Newsletter de confirmación?',
+        SERVICE_LAST_STATUS: 'Último estado del Servicio:',
+        SERVICE_WANT_TO_CONFIRM: '¿Quiere confirmarlo?',
+        SERVICE_SLUG: 'Slug',
+        SERVICE_SLUG_IS_UNIQUE_FIELD: 'Slug es un campo único. Es usado en Transifex para marcar los recursos para un servicio específico. Puede chequear el slug en Editar Servicio. El slug contiene: slug de región, id de proveedor y nombre del servicio con caracteres especiales removidos. A veces, puede contener el id del servicio al final.', 
+        SERVICE_PREVIEW_LINK: 'Link de previsualización',
+        SERVICE_TABLE_ID: 'ID',
+        SERVICE_TABLE_DATE: 'Fecha',
+        SERVICE_TABLE_STATUS: 'Estado',
+        SERVICE_TABLE_EMAIL: 'Email enviado a',
+        SERVICE_TABLE_NOTE: 'Nota',
+
+        //User list
+        DATA_TABLE_FULL_FEATURES: 'Tabla de datos con todas las características',
+
+        //User Login
+        USER_SIGN_IN: 'Regístrese para iniciar sesión',
+        USER_REMEMBER_ME: 'Recuérdame',
+        USER_SIGN_IN: 'Iniciar Sesión',
+        USER_FORGOT_PASSWORD: 'Olvide mi contraseña',
+
+        //User Reset Password
+        PASSWORD_RESET: 'Resetear contraseña',
+        PASSWORD_FORGOTTEN: '¿Olvidó su contraseña?',
+        PASSWORD_ENTER_EMAIL_ADDRESS: 'Ingrese su dirección de email debajo, y le enviaremos un email con instrucciones para resetearlo.',
+        PASSWORD_ENTER_EMAIL_TO_RESET: 'ingrese su email para resetear contraseña.',
+        PASSWORD_EMAIL: 'Email',
+        PASSWORD_BACK_TO_LOGIN: 'Volver al Log In',
+        PASSWORD_SEND_RESET_EMAIL: 'Enviar email de reset',
+        PASSWORD_PLEASE_CONTACT_US: 'Por favor contáctenos si tiene algún inconveniente reseteando su contraseña.',
+        PASSWORD_HAVE_SENT_EMAIL: 'Le hemos enviado un email. Por favor contáctenos si no lo recibe en unos minutos.',
+        PASSWORD_WILL_BE_REDIRECTED: 'Será redirigido en 5 segundos...',
+        PASSWORD_ENTER_NEW_TWICE: 'Ingrese la nueva contraseña dos veces.',
+        PASSWORD_NEW: 'Nueva contraseña',
+        PASSWORD_NEW_AGAIN: 'Nueva contraseña (otra vez)',
+        PASSWORD_BACK_TO_LOGIN: 'Volver al Log In',
+        
+        //User view
+        USER_EMAIL: 'Email:',
+        USER_FIELD_REQUIRED: 'Este campo es requerido',
+        USER_INVALID_EMAIL: 'Email no válido',
+        USER_FIRST_NAME: 'Namombre',
+        USER_LAST_NAME: 'Apellido',
+        USER_FIELD_TOO_LONG: 'El campo es muy largo',
+        USER_TITLE: 'Título',
+        USER_POSITION: 'Posición',
+        USER_PHONE_NUMBER: 'Número de teléfono',
+        USER_INVALID_PHONE_NUMBER: 'Formato de número no válido',
+        USER_IS_STAFF: 'Es Staff',
+        USER_GROUPS: 'Grupos',
+        USER_PROVIDERS: 'Proveedores',
+        USER_AS_TEAM_MEMBER: 'Como Miembro de Equipo',
+        USER_SELECT_PROVIDER: 'Seleccion el proveedor o búsquelo en la lista',
+        USER_AS_ADMIN: 'Como Administrador',
+
+        //Login modal
+        LOGIN_MODAL_TITLE: 'Ingrese a la administración de Refugee.Info',
+        LOGIN_MODAL_EMAIL: 'email',
+        LOGIN_MODAL_EMAIL_REQUIRED: 'El Email es requerido.',
+        LOGIN_MODAL_PASSWORD: 'contraseña',
+        LOGIN_MODAL_PASSWORD_REQUIRED: 'Contraseña requerida.',
+        LOGIN_MODAL_LOGIN: 'Iniciar sesión'
         
     });
 
