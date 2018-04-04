@@ -5,7 +5,7 @@ from django.core.exceptions import PermissionDenied
 class CustomAuthenticationBackend(object):
     def authenticate(self, username=None, password=None):
         try:
-            user = EmailUser.objects.get(email=username)  
+            user = EmailUser.objects.get(email__iexact=username)  
             is_valid = user.check_password(password)
             if not is_valid:
                 raise PermissionDenied
