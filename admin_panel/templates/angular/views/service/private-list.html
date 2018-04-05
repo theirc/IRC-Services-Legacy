@@ -30,7 +30,7 @@
                         </div>
                     </div>
                     <div class="row" ng-if="user.isSuperuser">
-                        <div class="form-group col-xs-4">
+                        <div class="form-group col-xs-4" ng-if="!user.region">
                             <label for=""> {{'REGION'| translate}} </label>
                             <select class="form-control" ng-model="ctrl.searchCriteria.geographic_region" ng-options="r.slug as r.name for r in ctrl.regions"></select>
                         </div>

@@ -2,8 +2,8 @@ angular.module('adminApp')
     .controller('RegionListController', function (tableUtils) {
         var vm = this;
 
-        vm.dtOptions = tableUtils.defaultsWithServiceName('GeoRegionService');
-
+        vm.dtOptions = tableUtils.defaultsWithServiceNameAndFilterAndSearch('GeoRegionService');
+        
         vm.dtColumns = [
             tableUtils.newColumn('id').withTitle('ID'),
             tableUtils.newLinkColumn('name', 'Name'),

@@ -43,6 +43,12 @@
                                 </div>
                                 <!-- /.tab-content -->
                             </div>
+
+
+                            <div class="form-group col-xs-12" ng-if="user.isStaff">
+                                <label for="region">{{ 'PROVIDER_COUNTRY' | translate }}</label>
+                                <select class="form-control" name="region" ng-model="ctrl.provider.region" ng-options="region.id as region.name for region in ctrl.regions"></select>
+                            </div>
                         </div>
 
                     </div>
@@ -53,25 +59,12 @@
                 <div class="col-xs-12">
                     <div class="box box-default">
                         <div class="box-body">
-                            <div class="form-group col-xs-6" ng-if="user.isStaff">
+                            <div class="form-group col-xs-12" ng-if="user.isStaff">
                                 <label for="type">{{ 'PROVIDER_TYPE' | translate }}</label>
                                 <select class="form-control" name="type" ng-model="ctrl.provider.type" ng-options="type.id as type.name for type in ctrl.providerTypes"
                                     required>
                                     <option value=""></option>
                                 </select>
-                            </div>
-                            <div class="form-group col-xs-6" ng-if="user.isStaff">
-                                <label for="user">{{ 'PROVIDER_ADMINISTRATOR' | translate }}</label>
-                                <div class="input-group" ng-if="ctrl.provider.user">
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-danger" type="button" ng-click="ctrl.provider.user = null">
-                                            <i class="fa fa-trash"></i>
-                                        </button>
-                                    </span>
-                                    <select class="form-control" disabled="disabled" name="user" ng-model="ctrl.provider.user" ng-options="user.id as user.email for user in ctrl.allUsers"></select>
-                                </div>
-                                <select class="form-control" name="user" ng-model="ctrl.provider.user" ng-options="user.id as user.email for user in ctrl.allUsers"
-                                    ng-if="!ctrl.provider.user"></select>
                             </div>
                             <div class="form-group col-xs-6">
                                 <label for="phoneNumber">{{ 'PROVIDER_PHONE_NUMBER' | translate }}</label>
@@ -80,15 +73,21 @@
                             </div>
                             <div class="form-group col-xs-6">
                                 <label for="website">{{ 'PROVIDER_WEBSITE' | translate }}</label>
-                                <input type="text" class="form-control" id="website" placeholder="Website" ng-model="ctrl.provider.website" ng-maxlength="255">
-                            </div>
-                            <div class="form-group col-xs-6" ng-if="user.isStaff">
-                                <label for="region">{{ 'PROVIDER_COUNTRY' | translate }}</label>
-                                <select class="form-control" name="region" ng-model="ctrl.provider.region" ng-options="region.id as region.name for region in ctrl.regions"></select>
+                                <input type="text" class="form-control" id="website" placeholder="{{ 'PROVIDER_WEBSITE' | translate }}" ng-model="ctrl.provider.website"
+                                    ng-maxlength="255">
                             </div>
                             <div class="form-group col-xs-6">
-                                <label for="is_frozen">{{ 'PROVIDER_FREEZE' | translate }}</label>
-                                <input type="checkbox" id="is_frozen"  ng-model="ctrl.provider.is_frozen">
+                                <label for="facebook">{{ 'PROVIDER_FACEBOOK' | translate }}</label>
+                                <input type="text" class="form-control" id="facebook" placeholder="Facebook" ng-model="ctrl.provider.facebook" ng-maxlength="255">
+                            </div>
+                            <div class="form-group col-xs-6">
+                                <label for="twitter">{{ 'PROVIDER_TWITTER' | translate }}</label>
+                                <input type="text" class="form-control" id="twitter" placeholder="Twitter" ng-model="ctrl.provider.twitter" ng-maxlength="255">
+                            </div>
+                            <div class="form-group col-xs-6" ng-if="user.isSuperuser">
+                                <label for="is_frozen">{{ 'PROVIDER_FREEZE' | translate }}
+                                    <input type="checkbox" id="is_frozen" ng-model="ctrl.provider.is_frozen">
+                                </label>
                             </div>
                         </div>
                         <!-- /.box-body -->
@@ -122,21 +121,13 @@
                         </button>
                     </div>
                     <div class="btn-group pull-right">
-<<<<<<< HEAD
-                        <button type="button" class="btn btn-primary" ng-if="!ctrl.isEditing && ctrl.canEdit" ng-click="ctrl.startEditing()">Edit
-=======
-                        <button type="button" class="btn btn-primary" ng-if="!ctrl.isEditing && user.isSuperuser" ng-click="ctrl.startEditing()">{{ 'PROVIDER_EDIT' | translate }}
->>>>>>> d615f550023343fd652e382195c0608111973c77
+                        <button type="button" class="btn btn-primary" ng-if="!ctrl.isEditing && ctrl.canEdit" ng-click="ctrl.startEditing()">{{ 'PROVIDER_EDIT' | translate }}
                         </button>
                         <button type="button" class="btn btn-primary button-tooltip" ng-if="ctrl.isEditing && ctrl.canEdit" ng-click="ctrl.save()"
                             ng-disabled="ctrl.form.$invalid" data-old-tooltip="Fill in all required fields">
                             {{ 'PROVIDER_SAVE' | translate }}
                         </button>
-<<<<<<< HEAD
-                        <button type="button" class="btn btn-warning" ng-if="ctrl.isEditing && ctrl.canEdit && !ctrl.isNew" ng-click="ctrl.cancelEditing()">Cancel
-=======
-                        <button type="button" class="btn btn-warning" ng-if="ctrl.isEditing && user.isSuperuser && !ctrl.isNew" ng-click="ctrl.cancelEditing()">{{ 'PROVIDER_CANCEL' | translate }}
->>>>>>> d615f550023343fd652e382195c0608111973c77
+                        <button type="button" class="btn btn-warning" ng-if="ctrl.isEditing && ctrl.canEdit && !ctrl.isNew" ng-click="ctrl.cancelEditing()">{{ 'PROVIDER_CANCEL' | translate }}
                         </button>
                     </div>
                 </div>

@@ -11,6 +11,7 @@ from django.db.transaction import atomic
 from django.urls import reverse
 from django.utils.timezone import now
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAuthenticatedOrReadOnly
+from api.utils import generate_translated_fields
 
 from api.v2.serializers import UserAvatarSerializer, EmailSerializer, SecurePasswordCredentialsSerializer, \
     ResetUserPasswordSerializer, GroupSerializer, APILoginSerializer, APIRegisterSerializer
@@ -242,6 +243,7 @@ class GeographicRegionViewSet(viewsets.ModelViewSet):
     serializer_class = serializers_v2.GeographicRegionSerializer
     pagination_class = StandardResultsSetPagination
     filter_class = GeographicRegionFilter
+    search_fields = ['name'] + generate_translated_fields('title', False)
 
     def get_serializer_class(self):
         if 'exclude_geometry' in self.request.GET:

@@ -143,6 +143,21 @@ class Provider(TranslatableModel, models.Model):
         default=False,
     )
 
+
+    facebook = models.CharField(
+        _("facebook"),
+        max_length=255,
+        blank=True,
+        default=''
+    )
+
+    twitter = models.CharField(
+        _("twitter"),
+        max_length=255,
+        blank=True,
+        default=''
+    )
+
     @property
     def service_set(self):
         return self.services

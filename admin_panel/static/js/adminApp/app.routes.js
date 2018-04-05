@@ -167,33 +167,12 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 						name: 'Draft'
 					}, ]
 				},
-				regions: function allRegions(GeoRegionService, $rootScope, $q, $window) {
+				regions: function (GeoRegionService, $rootScope, $q, $window) {
 					if (!$rootScope.user.isSuperuser) {
 						return [];
 					}
 
-					var dfd = $q.defer();
-					if ($window.sessionStorage.allRegions) {
-						dfd.resolve(JSON.parse($window.sessionStorage.allRegions).filter(r => r.level === 1));
-					} else {
-						GeoRegionService.getList({
-							exclude_geometry: true
-						}).then(function (r) {
-							var regions = r.plain().map(function (r1) {
-								return {
-									name: r1.name,
-									centroid: r1.centroid,
-									id: r1.id,
-									slug: r1.slug,
-									level: r1.level,
-								};
-							});
-
-							$window.sessionStorage.allRegions = JSON.stringify(regions);
-							dfd.resolve(regions.filter(r => r.level === 1));
-						});
-					}
-					return dfd.promise;
+					return allRegions(GeoRegionService, $q, $window)
 				},
 			},
 		})
@@ -236,30 +215,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 				serviceTypes: function (CommonDataService) {
 					return CommonDataService.getServiceTypes();
 				},
-				regions: function allRegions(GeoRegionService, $q, $window) {
-					var dfd = $q.defer();
-					if ($window.sessionStorage.allRegions) {
-						dfd.resolve(JSON.parse($window.sessionStorage.allRegions));
-					} else {
-						GeoRegionService.getList({
-							exclude_geometry: true
-						}).then(function (r) {
-							var regions = r.plain().map(function (r1) {
-								return {
-									name: r1.name,
-									centroid: r1.centroid,
-									id: r1.id,
-									slug: r1.slug,
-									level: r1.level,
-								};
-							});
-
-							$window.sessionStorage.allRegions = JSON.stringify(regions);
-							dfd.resolve(regions);
-						});
-					}
-					return dfd.promise;
-				},
+				regions: allRegions,
 			},
 		})
 		.state("service.list", {
@@ -288,30 +244,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 				serviceTypes: function (CommonDataService) {
 					return CommonDataService.getServiceTypes();
 				},
-				regions: function allRegions(GeoRegionService, $q, $window) {
-					var dfd = $q.defer();
-					if ($window.sessionStorage.allRegions) {
-						dfd.resolve(JSON.parse($window.sessionStorage.allRegions));
-					} else {
-						GeoRegionService.getList({
-							exclude_geometry: true
-						}).then(function (r) {
-							var regions = r.plain().map(function (r1) {
-								return {
-									name: r1.name,
-									centroid: r1.centroid,
-									id: r1.id,
-									slug: r1.slug,
-									level: r1.level,
-								};
-							});
-
-							$window.sessionStorage.allRegions = JSON.stringify(regions);
-							dfd.resolve(regions);
-						});
-					}
-					return dfd.promise;
-				},
+				regions: allRegions,
 			},
 		})
 		.state("service.create", {
@@ -360,30 +293,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 				serviceTypes: function (CommonDataService) {
 					return CommonDataService.getServiceTypes();
 				},
-				regions: function allRegions(GeoRegionService, $q, $window) {
-					var dfd = $q.defer();
-					if ($window.sessionStorage.allRegions) {
-						dfd.resolve(JSON.parse($window.sessionStorage.allRegions));
-					} else {
-						GeoRegionService.getList({
-							exclude_geometry: true
-						}).then(function (r) {
-							var regions = r.plain().map(function (r1) {
-								return {
-									name: r1.name,
-									centroid: r1.centroid,
-									id: r1.id,
-									slug: r1.slug,
-									level: r1.level,
-								};
-							});
-
-							$window.sessionStorage.allRegions = JSON.stringify(regions);
-							dfd.resolve(regions);
-						});
-					}
-					return dfd.promise;
-				},
+				regions: allRegions,
 				service: function () {
 					return {};
 				},
@@ -439,30 +349,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 				serviceTypes: function (CommonDataService) {
 					return CommonDataService.getServiceTypes();
 				},
-				regions: function allRegions(GeoRegionService, $q, $window) {
-					var dfd = $q.defer();
-					if ($window.sessionStorage.allRegions) {
-						dfd.resolve(JSON.parse($window.sessionStorage.allRegions));
-					} else {
-						GeoRegionService.getList({
-							exclude_geometry: true
-						}).then(function (r) {
-							var regions = r.plain().map(function (r1) {
-								return {
-									name: r1.name,
-									centroid: r1.centroid,
-									id: r1.id,
-									slug: r1.slug,
-									level: r1.level,
-								};
-							});
-
-							$window.sessionStorage.allRegions = JSON.stringify(regions);
-							dfd.resolve(regions);
-						});
-					}
-					return dfd.promise;
-				},
+				regions: allRegions,
 				service: function (Restangular, $stateParams) {
 					return Restangular.one("services", $stateParams.serviceId).get();
 				},
@@ -621,7 +508,14 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 				},
 				providers: () => {
 					return [];
-				}
+				},
+				regions: function (GeoRegionService, $rootScope, $q, $window) {
+					if (!$rootScope.user.isSuperuser) {
+						return [];
+					}
+
+					return allRegions(GeoRegionService, $q, $window)
+				},
 			},
 		})
 
@@ -687,6 +581,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 				groups: function (Restangular) {
 					return Restangular.all("groups").getList();
 				},
+				regions: allRegions,
 			},
 		})
 
@@ -807,30 +702,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 				provider: function () {
 					return {};
 				},
-				regions: function allRegions(GeoRegionService, $q, $window) {
-					var dfd = $q.defer();
-					if ($window.sessionStorage.allRegions) {
-						dfd.resolve(JSON.parse($window.sessionStorage.allRegions));
-					} else {
-						GeoRegionService.getList({
-							exclude_geometry: true
-						}).then(function (r) {
-							var regions = r.plain().map(function (r1) {
-								return {
-									name: r1.name,
-									centroid: r1.centroid,
-									id: r1.id,
-									slug: r1.slug,
-									level: r1.level,
-								};
-							});
-
-							$window.sessionStorage.allRegions = JSON.stringify(regions);
-							dfd.resolve(regions);
-						});
-					}
-					return dfd.promise;
-				},
+				regions: allRegions,
 			},
 		})
 		.state("provider.open", {
@@ -857,30 +729,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 				provider: function (ProviderService, $stateParams) {
 					return ProviderService.get($stateParams.id);
 				},
-				regions: function allRegions(GeoRegionService, $q, $window) {
-					var dfd = $q.defer();
-					if ($window.sessionStorage.allRegions) {
-						dfd.resolve(JSON.parse($window.sessionStorage.allRegions));
-					} else {
-						GeoRegionService.getList({
-							exclude_geometry: true
-						}).then(function (r) {
-							var regions = r.plain().map(function (r1) {
-								return {
-									name: r1.name,
-									centroid: r1.centroid,
-									id: r1.id,
-									slug: r1.slug,
-									level: r1.level,
-								};
-							});
-
-							$window.sessionStorage.allRegions = JSON.stringify(regions);
-							dfd.resolve(regions);
-						});
-					}
-					return dfd.promise;
-				},
+				regions: allRegions,
 			},
 		})
 		.state("provider.impersonate", {
@@ -937,30 +786,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 					dfd.resolve({});
 					return dfd.promise;
 				},
-				allRegions: function (GeoRegionService, $q, $window) {
-					var dfd = $q.defer();
-					if ($window.sessionStorage.allRegions) {
-						dfd.resolve(JSON.parse($window.sessionStorage.allRegions));
-					} else {
-						GeoRegionService.getList({
-							exclude_geometry: true
-						}).then(function (r) {
-							var regions = r.plain().map(function (r1) {
-								return {
-									name: r1.name,
-									centroid: r1.centroid,
-									id: r1.id,
-									slug: r1.slug,
-									level: r1.level,
-								};
-							});
-
-							$window.sessionStorage.allRegions = JSON.stringify(regions);
-							dfd.resolve(regions);
-						});
-					}
-					return dfd.promise;
-				},
+				allRegions: allRegions
 			},
 		})
 		.state("region.open", {
@@ -978,30 +804,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 				region: function (GeoRegionService, $stateParams) {
 					return GeoRegionService.get($stateParams.id);
 				},
-				allRegions: function (GeoRegionService, $q, $window) {
-					var dfd = $q.defer();
-					if ($window.sessionStorage.allRegions) {
-						dfd.resolve(JSON.parse($window.sessionStorage.allRegions));
-					} else {
-						GeoRegionService.getList({
-							exclude_geometry: true
-						}).then(function (r) {
-							var regions = r.plain().map(function (r1) {
-								return {
-									name: r1.name,
-									centroid: r1.centroid,
-									id: r1.id,
-									slug: r1.slug,
-									level: r1.level,
-								};
-							});
-
-							$window.sessionStorage.allRegions = JSON.stringify(regions);
-							dfd.resolve(regions);
-						});
-					}
-					return dfd.promise;
-				},
+				allRegions: allRegions,
 			},
 		})
 
@@ -1178,3 +981,28 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 			},
 		})
 });
+
+function allRegions(GeoRegionService, $q, $window) {
+	var dfd = $q.defer();
+	if ($window.sessionStorage.allRegions) {
+		dfd.resolve(JSON.parse($window.sessionStorage.allRegions));
+	} else {
+		GeoRegionService.getList({
+			exclude_geometry: true
+		}).then(function (r) {
+			var regions = r.plain().map(function (r1) {
+				return {
+					name: r1.name,
+					centroid: r1.centroid,
+					id: r1.id,
+					slug: r1.slug,
+					level: r1.level,
+				};
+			});
+
+			$window.sessionStorage.allRegions = JSON.stringify(regions);
+			dfd.resolve(regions);
+		});
+	}
+	return dfd.promise;
+};

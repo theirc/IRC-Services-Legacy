@@ -52,8 +52,8 @@ angular
 			return data;
 		});
 	})
-	.run(function ($window, Restangular, $rootScope, $state, $stateParams, $cookies, logoName, staticUrl, userRegion, languages, 
-		service_languages, user, selectedProvider, permissions, AuthService, GeoRegionService, ProviderService,selectedLanguage, $translate) {
+	.run(function ($window, Restangular, $rootScope, $state, $stateParams, $cookies, logoName, staticUrl, userRegion, languages,
+		service_languages, user, selectedProvider, permissions, AuthService, GeoRegionService, ProviderService, selectedLanguage, $translate) {
 		Restangular.setBaseUrl($window.API_URL + "/v2/");
 		Restangular.setRequestSuffix("/");
 		moment.locale(selectedLanguage);
@@ -82,7 +82,7 @@ angular
 		$rootScope.user = user;
 		$rootScope.staticUrl = staticUrl;
 		$rootScope.userRegion = userRegion;
-		$rootScope.languages = languages;
+		$rootScope.languages = _.sortBy(languages, (l) => l[0] !== selectedLanguage);
 
 		if ($rootScope.userRegion && !user.isSuperuser) {
 			let langs = userRegion.languages_available.split(', ').filter(a => a);

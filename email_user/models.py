@@ -28,6 +28,7 @@ from django.contrib.sites.shortcuts import get_current_site
 
 from rest_framework.authtoken.models import Token
 import six
+from regions import models as region_models
 
 
 SHA1_RE = re.compile('^[a-f0-9]{40}$')
@@ -158,6 +159,8 @@ class EmailUser(AbstractBaseUser, PermissionsMixin):
         default='',
         blank=True,
     )
+
+    region = models.ForeignKey(region_models.GeographicRegion, related_name='+', null=True, blank=True)
 
     objects = EmailUserManager()
 

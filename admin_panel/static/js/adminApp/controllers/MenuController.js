@@ -3,7 +3,7 @@
  */
 
 const HIDE_NOT_YET_IMPLEMENTED = true;
-angular.module("adminApp").controller("MenuController", function ($rootScope, $state, $filter) {
+angular.module("adminApp").controller("MenuController", function ($rootScope, $state, $filter, siteName) {
 	var vm = this;
 	var updateMenu = function () {
 		vm.menuItems = getMenuItems();
@@ -40,7 +40,7 @@ angular.module("adminApp").controller("MenuController", function ($rootScope, $s
 					active: $state.includes("settings"),
 				},
 				{
-					title: $filter('translate')('ACCOUNT_SETTINGS'),
+					title: $filter('translate')('PROVIDER_SETTINGS'),
 					sref: "provider.openMe",
 					hide: !((($rootScope.user.groups.filter(g => g.name === 'Providers').length > 0) || $rootScope.user.isSuperuser) && $rootScope.selectedProvider),
 				},
@@ -67,7 +67,7 @@ angular.module("adminApp").controller("MenuController", function ($rootScope, $s
 						hide: !$rootScope.user.isSuperuser,
 					},
 				],
-				hide: !$rootScope.user.isSuperuser,
+				hide: !$rootScope.user.isSuperuser || $rootScope.user.region,
 			},
 			{
 				title: $filter('translate')('SYSTEM_ADMIN'),
