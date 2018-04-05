@@ -2,172 +2,189 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-04 15:15+0000\n"
+"POT-Creation-Date: 2018-04-04 15:05+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Last-Translator: Signpost Generico <signpost.generic+transifex@gmail.com>, 2018\n"
+"Language-Team: Spanish (https://www.transifex.com/refugeeinfo/teams/56242/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: admin_panel/templates/admin_panel/activate.html:23
 msgid "Please set up a password for your account."
-msgstr ""
+msgstr "Por favor, introduzca una contraseña para su cuenta"
 
 #: admin_panel/templates/admin_panel/activate.html:29
 #: admin_panel/templates/admin_panel/login.html:31 email_user/forms.py:79
 msgid "Password"
-msgstr ""
+msgstr "Contraseña"
 
 #: admin_panel/templates/admin_panel/activate.html:32
 msgid "Confirm Password"
-msgstr ""
+msgstr "Confirme su contraseña"
 
 #: admin_panel/templates/admin_panel/login.html:22
 msgid "Sign in to start your session"
-msgstr ""
+msgstr "Regístrese para iniciar sesión"
 
 #: admin_panel/templates/admin_panel/login.html:28 email_user/forms.py:23
 #: services/models.py:1403
 msgid "Email"
-msgstr ""
+msgstr "Correo electrónico"
 
 #: admin_panel/templates/admin_panel/login.html:41
 #: admin_panel/templates/admin_panel/reset_complete.html:23
 msgid "Log in"
-msgstr ""
+msgstr "Inicie sesión"
 
 #: admin_panel/templates/admin_panel/login.html:46
 msgid "Forgotten your password or username?"
-msgstr ""
+msgstr "¿Ha olvidado su contraseña o nombre de usuario?"
 
 #: admin_panel/templates/admin_panel/logout.html:20
 msgid "You\\"
-msgstr ""
+msgstr "Usted\\"
 
 #: admin_panel/templates/admin_panel/logout.html:23
 msgid "Click "
-msgstr ""
+msgstr "Click"
 
 #: admin_panel/templates/admin_panel/logout.html:24
 msgid "here"
-msgstr ""
+msgstr "aquí"
 
 #: admin_panel/templates/admin_panel/logout.html:24
 msgid "to go back to the application"
-msgstr ""
+msgstr "para volver a la aplicación"
 
 #: admin_panel/templates/admin_panel/reset_complete.html:20
 msgid "Your password has been set.  You may go ahead and log in now."
-msgstr ""
+msgstr "Su contraseña ha sido enviada. Puede seguir adelante y entrar ahora."
 
 #: admin_panel/templates/admin_panel/reset_confirm.html:26
 msgid ""
 "Please enter your new password twice so we can verify you typed it in "
 "correctly."
 msgstr ""
+"Por favor, introduzca su nueva contraseña dos veces para verificar que la ha"
+" escrito correctamente. "
 
 #: admin_panel/templates/admin_panel/reset_confirm.html:34
 msgid "New password:"
-msgstr ""
+msgstr "Nueva contraseña:"
 
 #: admin_panel/templates/admin_panel/reset_confirm.html:39
 msgid "Confirm password:"
-msgstr ""
+msgstr "Confirme contraseña:"
 
 #: admin_panel/templates/admin_panel/reset_confirm.html:53
 msgid "Change my password"
-msgstr ""
+msgstr "Cambiar mi contraseña"
 
 #: admin_panel/templates/admin_panel/reset_confirm.html:61
 msgid ""
 "The password reset link was invalid, possibly because it has already been "
 "used.  Please request a new password reset."
 msgstr ""
+"El enlace de restablecimiento de contraseña no es válido, posiblemente "
+"porque ya ha sido usado. Por favor, solicite un restablecimiento para una "
+"nueva contraseña. "
 
 #: admin_panel/templates/admin_panel/reset_done.html:20
 msgid ""
-"We've emailed you instructions for setting your password, if an account "
-"exists with the email you  entered. You should receive them shortly."
+"We’ve emailed you instructions for setting your password. If an account "
+"exists with the email you entered, you should receive them shortly."
 msgstr ""
+"Hemos enviado un correo con instrucciones para connfigurar su contraseña. Si"
+" existe un cuenta con el correo electrónico ingresado, deberá recibirlas "
+"pronto. "
 
 #: admin_panel/templates/admin_panel/reset_done.html:22
 msgid ""
 "If you don't receive an email, please make sure you've entered the address "
 "you registered with, and check your spam folder."
 msgstr ""
+"Si no recibe un correo, por favor, asegúrese de que ha introducido la "
+"dirección con la que se registró y revisé su carpeta de spam."
 
 #: admin_panel/templates/admin_panel/reset_form.html:22
 msgid ""
 "Forgotten your password? Enter your email address below, and we'll email "
 "instructions for setting a new one."
 msgstr ""
+"¿Olvidó su contraseña? Ingrese su dirección de correo electrónico y le "
+"mandaremos un correo con las instrucciones para configurar una nueva. "
 
 #: admin_panel/templates/admin_panel/reset_form.html:28
 msgid "Email address:"
-msgstr ""
+msgstr "Dirección de correo electrónico:"
 
 #: admin_panel/templates/admin_panel/reset_form.html:39
 msgid "Reset my password"
-msgstr ""
+msgstr "Restablecer mi contraseña:"
 
 #: api/renderers.py:27 services/models.py:1157
 msgid "Name"
-msgstr ""
+msgstr "Nombre"
 
 #: api/v2/serializers/core.py:52
 msgid "User account is disabled."
-msgstr ""
+msgstr "Cuenta de usuario está deshabilitada."
 
 #: api/v2/serializers/core.py:55
 msgid "Unable to log in with provided credentials."
-msgstr ""
+msgstr "No se puede iniciar sesión con las credenciales proporcionadas."
 
 #: api/v2/serializers/core.py:81 api/v2/serializers/services.py:58
 #: services/models.py:672 services/models.py:675
 msgid "This field is required."
-msgstr ""
+msgstr "Este campo es requerido."
 
 #: api/v2/serializers/services.py:124 email_user/forms.py:18
 msgid "A user with that email already exists."
-msgstr ""
+msgstr "Ya existe un usuario con ese correo electrónico."
 
 #: email_user/admin.py:30
 msgid "Permissions"
-msgstr ""
+msgstr "Permisos"
 
 #: email_user/admin.py:32
 msgid "Important dates"
-msgstr ""
+msgstr "Fechas importantes"
 
 #: email_user/admin.py:53
 #, python-brace-format
 msgid "Unable to activate user '{email}': {error}."
-msgstr ""
+msgstr "Imposible activar usuario '{email}': {error}"
 
 #: email_user/admin.py:62
 msgid "The account was activated successfully. Email has been sent to user."
 msgstr ""
+"La cuenta fue acitvada exitosamente. Se ha enviado un correo al usuario."
 
 #: email_user/forms.py:19
 msgid "The two password fields didn't match."
-msgstr ""
+msgstr "Los campos de las dos contraseñas no coinciden."
 
 #: email_user/forms.py:24
 msgid "Required. 255 characters or fewer. Letters, digits and @/./+/-/_ only."
 msgstr ""
+"Obligatorio. 255 caracteres o menos. Letras, dígitos y @/./+/-/_ únicamente."
+" "
 
 #: email_user/forms.py:27
 msgid "This value may contain only letters, numbers and @/./+/-/_ characters."
 msgstr ""
+"Este valor puede contener sólo letras, números y los siguientes caracteres "
+"@/./+/-/_"
 
 #: email_user/forms.py:80
 msgid ""
@@ -175,88 +192,99 @@ msgid ""
 "password, but you can change the password using <a href=\"password/\">this "
 "form</a>."
 msgstr ""
+"Las contraseñas no se almacenan, así que no hay manera de ver la contraseña "
+"de este usuario, pero puede cambiar la contraseña usando <a "
+"href=\"password/\">este formulario</a>. "
 
 #: email_user/models.py:45
 msgid "Users must have an email address"
-msgstr ""
+msgstr "Los usuarios deben tener una dirección de correo electrónico"
 
 #: email_user/models.py:81
 msgid "Activation key is invalid or has already been used."
-msgstr ""
+msgstr "La clave de activación no es válida o ya ha sido usada."
 
 #: email_user/models.py:124 services/models.py:497
 msgid "email address"
-msgstr ""
+msgstr "dirección de correo electrónico"
 
 #: email_user/models.py:142
 msgid "staff status"
-msgstr ""
+msgstr "estado del perfil"
 
 #: email_user/models.py:143
 msgid "Designates whether the user can log into this admin site."
 msgstr ""
+"Designe si el usuario puede iniciar sesión como administrador del sitio."
 
 #: email_user/models.py:146
 msgid "active"
-msgstr ""
+msgstr "activo"
 
 #: email_user/models.py:147
 msgid ""
 "Designates whether this user should be treated as active. Unselect this "
 "instead of deleting accounts."
 msgstr ""
+"Designar el entorno que el usuario tendrá activo. Desactivar en lugar de "
+"eliminar. "
 
 #: email_user/models.py:149
 msgid "date joined"
-msgstr ""
+msgstr "fecha en la que se unió"
 
 #: email_user/models.py:152
 msgid "activation key"
-msgstr ""
+msgstr "clave de activación"
 
 #: email_user/models.py:155
 msgid "language"
-msgstr ""
+msgstr "idioma"
 
 #: email_user/models.py:156
 msgid "User's preferred language."
-msgstr ""
+msgstr "Idioma preferido del usuario"
 
 #: email_user/models.py:165
 msgid "user"
-msgstr ""
+msgstr "usuario"
 
 #: email_user/models.py:195
 msgid "User emails must be unique without regard to case."
 msgstr ""
+"El correo electrónico de los usuarios debe ser único sin consideración del "
+"caso"
 
 #: email_user/models.py:232
 #, python-brace-format
 msgid "Password is too short. It must have at least {min_length} characters."
 msgstr ""
+"Contraseña muy corta. Esta debe tener al menos {min_length} caracteres."
 
 #: email_user/templates/email_user/password_reset_email.html:2
 msgid ""
 "You're receiving this email because you requested a password reset for your\n"
 "        user account at Refugee.Info Admin."
 msgstr ""
+"Usted está recibiendo este mensaje porque solicitó restablecer una "
+"contraseña para su cuenta de usuario en Refugee.Info Admin."
 
 #: email_user/templates/email_user/password_reset_email.html:5
 msgid "Please go to the following page and choose a new password:"
-msgstr ""
+msgstr "Por favor, vaya a la siguiente página y elija una nueva contraseña:"
 
 #: email_user/templates/email_user/password_reset_email.html:11
 msgid "Your username is your email address:"
-msgstr ""
+msgstr "Su nombre de usuario es su dirección de correo electrónico:"
 
 #: email_user/templates/email_user/password_reset_email.html:14
 msgid "Thanks for using our site!"
-msgstr ""
+msgstr "¡Gracias por usar nuestro sitio!"
 
 #: email_user/templates/email_user/password_reset_email.html:16
 #, python-format
 msgid "The %(site_name)s team"
-msgstr ""
+msgstr "El equipo de %(site_name)s"
 
 #: email_user/templates/email_user/password_reset_email.txt:2
 msgid ""
@@ -265,12 +293,18 @@ msgid ""
 "password of an account at admin.refugee.info.\n"
 "If this wasn't you, please ignore this email.\n"
 msgstr ""
+"\n"
+"Usted (o alguien haciéndose pasar por usted) ha solicitado restablecer la\n"
+"contraseña de una cuenta en admin.refugee.info.\n"
+"Si no fue usted, por favor, ignore este correo electrónico.\n"
 
 #: email_user/templates/email_user/password_reset_email.txt:7
 msgid ""
 "\n"
 "To reset the password, please click the following link:\n"
 msgstr ""
+"\n"
+"Para restablecer la contraseña, haga clic en el siguiente enlace:\n"
 
 #: email_user/templates/email_user/password_reset_email.txt:13
 msgid ""
@@ -278,25 +312,29 @@ msgid ""
 "Sincerely,\n"
 "Refugee.Info Management\n"
 msgstr ""
+"\n"
+"Sinceramente,\n"
+"Gestión de Refugee.Info\n"
 
 #: email_user/templates/email_user/password_reset_subject.txt:2
 msgid "Password reset on Refugee.Info Admin"
-msgstr ""
+msgstr "Restablecer la contraseña en Refugee.Info Admin"
 
 #: email_user/templates/registration/activation_email.html:6
 msgid "registration"
-msgstr ""
+msgstr "registro"
 
 #: email_user/templates/registration/activation_email.html:11
 #, python-format
 msgid ""
 "\n"
-"    You (or someone pretending to be you) have asked to register an account "
-"at\n"
+"    You (or someone pretending to be you) have asked to register an account at\n"
 "    %(site)s.  If this wasn't you, please ignore this email\n"
 "    and your address will be removed from our records.\n"
 "    "
 msgstr ""
+"\n"
+"Usted (o alguien haciéndose pasar por usted) ha solicitado registrar una cuenta en 1%(site)s. Si no fue usted, por favor, ignore este mensaje y su dirección será eliminada de nuestros registros. "
 
 #: email_user/templates/registration/activation_email.html:18
 msgid ""
@@ -304,6 +342,9 @@ msgid ""
 "    To activate this account, please click the following link:\n"
 "    "
 msgstr ""
+"\n"
+"    Para activar esta cuenta, haga clic en el siguiente enlace:\n"
+"    "
 
 #: email_user/templates/registration/activation_email.html:29
 #, python-format
@@ -313,6 +354,10 @@ msgid ""
 "    %(site)s Management\n"
 "    "
 msgstr ""
+"\n"
+"    Sinceramente,\n"
+"    Gestión de%(site)s \n"
+"    "
 
 #: email_user/templates/registration/activation_email.txt:2
 #, python-format
@@ -322,12 +367,18 @@ msgid ""
 "%(site)s.  If this wasn't you, please ignore this email\n"
 "and your address will be removed from our records.\n"
 msgstr ""
+"\n"
+"Usted (o alguien que pretende ser usted) ha solicitado registrar una cuenta en\n"
+"%(site)s. Si no fue usted, ignore este correo electrónico\n"
+"y su dirección será eliminada de nuestros registros.\n"
 
 #: email_user/templates/registration/activation_email.txt:7
 msgid ""
 "\n"
 "To activate this account, please click the following link:\n"
 msgstr ""
+"\n"
+"Para activar esta cuenta, haga clic en el siguiente enlace:\n"
 
 #: email_user/templates/registration/activation_email.txt:13
 #, python-format
@@ -336,1075 +387,51 @@ msgid ""
 "Sincerely,\n"
 "%(site)s Management\n"
 msgstr ""
+"\n"
+"Sinceramente,\n"
+"Gestión de%(site)s\n"
 
 #: email_user/templates/registration/activation_email_subject.txt:1
 msgid "Account activation on"
-msgstr ""
+msgstr "Activación de la cuenta"
 
 #: regions/models.py:90 regions/models.py:288
 #, python-brace-format
 msgid "Title in {LANGUAGE_NAME}"
-msgstr ""
-
-#: regions/models.py:99
-msgid "Country"
-msgstr ""
-
-#: regions/models.py:100 services/models.py:133
-msgid "Region"
-msgstr ""
-
-#: regions/models.py:101
-msgid "City"
-msgstr ""
-
-#: regions/models.py:116
-msgid "Comma separated values of languages available in this region"
-msgstr ""
-
-#: regions/models.py:121
-msgid "Comma separated values of code of siblings visible from this region"
-msgstr ""
-
-#: regions/models.py:298
-msgid "Used to sort the important information"
-msgstr ""
-
-#: service_info/settings.py:51
-msgid "English"
-msgstr ""
-
-#: service_info/settings.py:52
-msgid "Arabic"
-msgstr ""
-
-#: service_info/settings.py:53
-msgid "Persian"
-msgstr ""
-
-#: service_info/settings.py:54
-msgid "French"
-msgstr ""
-
-#: service_info/settings.py:55
-msgid "German"
-msgstr ""
-
-#: service_info/settings.py:56
-msgid "Greek"
-msgstr ""
-
-#: service_info/settings.py:57
-msgid "Urdu"
-msgstr ""
-
-#: service_info/settings.py:58
-msgid "Spanish"
-msgstr ""
+msgstr "Título en {LANGUAGE_NAME}"
 
 #: service_info/settings.py:59
 msgid "Tigrinya"
-msgstr ""
+msgstr "Tigrinya"
 
 #: service_info/templates/admin/submit_line.html:5
 msgid "Save"
-msgstr ""
+msgstr "Guardar"
 
 #: service_info/templates/admin/submit_line.html:8
 msgid "Delete"
-msgstr ""
+msgstr "Borrar"
 
 #: service_info/templates/admin/submit_line.html:10
 msgid "Save as new"
-msgstr ""
+msgstr "Guardar como nuevo"
 
 #: service_info/templates/admin/submit_line.html:11
 msgid "Save and add another"
-msgstr ""
+msgstr "Guardar y agregar otro"
 
 #: service_info/templates/admin/submit_line.html:12
 msgid "Save and continue editing"
-msgstr ""
+msgstr "Guardar y continuar editando"
 
 #: service_info/templates/admin/submit_line.html:13
 msgid "Save and reject"
-msgstr ""
+msgstr "Guardar y rechazar"
 
 #: service_info/templates/admin/submit_line.html:14
 msgid "Save and approve"
-msgstr ""
+msgstr "Guardar y aprobar"
 
 #: service_info/templates/admin/submit_line.html:15
 msgid "Activate provider account"
-msgstr ""
-
-#: service_info/templates/aldryn_faq/includes/question_list.html:42
-msgid "Category"
-msgstr ""
-
-#: service_info/templates/aldryn_faq/includes/question_list.html:46
-#: service_info/templates/aldryn_faq/plugins/category_list.html:13
-msgid "No entry found."
-msgstr ""
-
-#: service_info/templates/aldryn_faq/includes/question_list.html:52
-#: service_info/templates/aldryn_faq/question_detail.html:47
-msgid "Back to Category"
-msgstr ""
-
-#: service_info/templates/aldryn_faq/question_list.html:13
-msgid "Back to Overview"
-msgstr ""
-
-#: service_info/templates/aldryn_forms/email_notifications/emails/notification.body.html:9
-#: service_info/templates/aldryn_forms/email_notifications/emails/notification.body.txt:8
-#: service_info/templates/aldryn_forms/emails/notification.body.html:3
-#: service_info/templates/aldryn_forms/emails/notification.body.txt:2
-#: service_info/templates/aldryn_forms/emails/user/notification.body.txt:5
-#, python-format
-msgid "Form name: %(form_name)s"
-msgstr ""
-
-#: service_info/templates/aldryn_forms/email_notifications/emails/notification.subject.txt:1
-#: service_info/templates/aldryn_forms/emails/notification.subject.txt:1
-#: service_info/templates/aldryn_forms/emails/user/notification.subject.txt:1
-#, python-format
-msgid "[Form submission] %(form_name)s"
-msgstr ""
-
-#: service_info/templates/aldryn_forms/fields/filefield.html:7
-msgid "Upload"
-msgstr ""
-
-#: service_info/templates/aldryn_forms/form.html:21
-#, python-format
-msgid ""
-"Thank you for submitting your information, you will be <a href="
-"\"%(form_success_url)s\">redirected shortly</a>."
-msgstr ""
-
-#: service_info/templates/aldryn_newsblog/article_detail.html:21
-#: service_info/templates/aldryn_newsblog/includes/pagination.html:6
-#: service_info/templates/aldryn_search/includes/pagination.html:8
-msgid "Previous"
-msgstr ""
-
-#: service_info/templates/aldryn_newsblog/article_detail.html:23
-msgid "Back to List"
-msgstr ""
-
-#: service_info/templates/aldryn_newsblog/article_detail.html:25
-#: service_info/templates/aldryn_newsblog/includes/pagination.html:30
-#: service_info/templates/aldryn_search/includes/pagination.html:30
-msgid "Next"
-msgstr ""
-
-#: service_info/templates/aldryn_newsblog/article_list.html:10
-#: service_info/templates/aldryn_newsblog/plugins/archive.html:23
-#: service_info/templates/aldryn_newsblog/plugins/related_articles.html:13
-msgid "No items available"
-msgstr ""
-
-#: service_info/templates/aldryn_newsblog/includes/article-card.html:37
-#: service_info/templates/aldryn_newsblog/includes/search_results.html:16
-#: service_info/templates/aldryn_search/includes/search_items.html:17
-msgid "Read More"
-msgstr ""
-
-#: service_info/templates/aldryn_newsblog/includes/search_results.html:25
-msgid "No articles found"
-msgstr ""
-
-#: service_info/templates/aldryn_newsblog/includes/search_results.html:28
-msgid ""
-"There were no results for your search. Please check your spelling and try "
-"again."
-msgstr ""
-
-#: service_info/templates/aldryn_newsblog/plugins/article_search.html:10
-msgid "Keyword"
-msgstr ""
-
-#: service_info/templates/aldryn_newsblog/plugins/article_search.html:11
-msgid "Keyword search"
-msgstr ""
-
-#: service_info/templates/aldryn_newsblog/plugins/article_search.html:12
-msgid "Go"
-msgstr ""
-
-#: service_info/templates/aldryn_newsblog/plugins/authors.html:13
-msgid "No authors available"
-msgstr ""
-
-#: service_info/templates/aldryn_newsblog/plugins/categories.html:7
-#: service_info/templates/aldryn_newsblog/plugins/tags.html:7
-msgid "All"
-msgstr ""
-
-#: service_info/templates/aldryn_newsblog/plugins/related_articles.html:10
-msgid "by"
-msgstr ""
-
-#: service_info/templates/aldryn_search/includes/search_items.html:26
-msgid "No results"
-msgstr ""
-
-#: service_info/templates/aldryn_search/includes/search_items.html:29
-msgid "No results found for"
-msgstr ""
-
-#: service_info/templates/aldryn_search/search_results.html:10
-msgid "results"
-msgstr ""
-
-#: service_info/templates/cms/base-mini.html:81
-#: service_info/templates/cms/base.html:89
-msgid "Rate This Page"
-msgstr ""
-
-#: service_info/templates/cms/base-mini.html:100
-#: service_info/templates/cms/base.html:108
-msgid "Captcha Verification"
-msgstr ""
-
-#: service_info/templates/cms/base-mini.html:124
-#: service_info/templates/cms/base.html:172
-msgid "Search for Services Nearby"
-msgstr ""
-
-#: service_info/templates/cms/base-mini.html:132
-#: service_info/templates/cms/base.html:185
-msgid "International Rescue Committee Information Portal"
-msgstr ""
-
-#: service_info/templates/cms/base-mini.html:134
-#: service_info/templates/cms/base.html:187
-msgid "Privacy"
-msgstr ""
-
-#: service_info/templates/cms/base-mini.html:135
-#: service_info/templates/cms/base.html:188
-msgid "Github"
-msgstr ""
-
-#: service_info/templates/cms/base-mini.html:136
-#: service_info/templates/cms/base.html:189
-msgid "Created by the International Rescue Committee"
-msgstr ""
-
-#: service_info/templates/cms/base-mini.html:140
-#: service_info/templates/cms/base.html:193
-msgid "IRC Info Portal"
-msgstr ""
-
-#: service_info/templates/cms/base-mini.html:141
-#: service_info/templates/cms/base.html:194
-msgid "Created by the IRC"
-msgstr ""
-
-#: service_info/templates/cms/base.html:119
-msgid "Error submitting rating"
-msgstr ""
-
-#: service_info/templates/cms/base.html:120
-msgid ""
-"\n"
-"                  There was an error submitting your page rating.\n"
-"                  Please check your connection and try again.\n"
-"                "
-msgstr ""
-
-#: service_info/templates/cms/base.html:175
-msgid "Services"
-msgstr ""
-
-#: service_info/templates/cms/includes/language-chooser.html:5
-#: service_info/templates/cms/includes/menu.html:41
-#: service_info/templates/cms/includes/mini/language-chooser-mini.html:5
-#: service_info/templates/cms/includes/mini/menu-mini.html:31
-msgid "Choose Language"
-msgstr ""
-
-#: service_info/templates/cms/includes/menu.html:47
-#: service_info/templates/cms/includes/mini/menu-mini.html:37
-#: service_info/templates/cms/includes/mini/menu-mini.html:39
-msgid "Logout"
-msgstr ""
-
-#: service_info/templates/email/service_approved_body.html:3
-#: service_info/templates/email/service_approved_body.txt:2
-#: service_info/templates/email/service_rejection_body.html:3
-#: service_info/templates/email/service_rejection_body.txt:2
-#, python-format
-msgid "Dear %(provider_name)s"
-msgstr ""
-
-#: service_info/templates/email/service_approved_body.html:7
-#, python-format
-msgid ""
-"\n"
-"Your service %(service_name)s has been vetted and approved by International "
-"Rescue Committee staff.\n"
-"  It has been published on the following link: <a href=\"%(service_link)s\">"
-"%(service_link)s</a>\n"
-msgstr ""
-
-#: service_info/templates/email/service_approved_body.html:14
-#: service_info/templates/email/service_approved_body.txt:8
-#: service_info/templates/email/service_rejection_body.html:14
-#: service_info/templates/email/service_rejection_body.txt:8
-msgid "For more information please contact support at info@refugee.info"
-msgstr ""
-
-#: service_info/templates/email/service_approved_body.html:15
-#: service_info/templates/email/service_approved_body.txt:9
-#: service_info/templates/email/service_rejection_body.html:15
-#: service_info/templates/email/service_rejection_body.txt:9
-msgid "Thanks for your submission."
-msgstr ""
-
-#: service_info/templates/email/service_approved_body.html:19
-#: service_info/templates/email/service_approved_body.txt:11
-#: service_info/templates/email/service_rejection_body.html:19
-#: service_info/templates/email/service_rejection_body.txt:11
-msgid "Best Regards"
-msgstr ""
-
-#: service_info/templates/email/service_approved_body.html:23
-#: service_info/templates/email/service_approved_body.txt:13
-#: service_info/templates/email/service_rejection_body.html:23
-#: service_info/templates/email/service_rejection_body.txt:13
-msgid "Refugee Info"
-msgstr ""
-
-#: service_info/templates/email/service_approved_body.html:25
-#: service_info/templates/email/service_approved_body.txt:15
-#: service_info/templates/email/service_rejection_body.html:25
-#: service_info/templates/email/service_rejection_body.txt:15
-msgid "Support:"
-msgstr ""
-
-#: service_info/templates/email/service_approved_body.txt:3
-#, python-format
-msgid ""
-"\n"
-"Your service %(service_name)s has been vetted and approved by International "
-"Rescue Committee staff.\n"
-"It has been published on the following link: <a href=\"%(service_link)s\">"
-"%(service_link)s</a>\n"
-msgstr ""
-
-#: service_info/templates/email/service_approved_subject.txt:1
-msgid "Service has been approved"
-msgstr ""
-
-#: service_info/templates/email/service_rejection_body.html:7
-#, python-format
-msgid ""
-"\n"
-"Your service %(service_name)s has been vetted and rejected by International "
-"Rescue Committee staff.\n"
-"  It is available to edit on the following link: <a href=\"%(service_link)s"
-"\">%(service_link)s</a>\n"
-msgstr ""
-
-#: service_info/templates/email/service_rejection_body.txt:3
-#, python-format
-msgid ""
-"\n"
-"Your service %(service_name)s has been vetted and rejected by International "
-"Rescue Committee staff.\n"
-" It is available to edit on the following link:: <a href=\"%(service_link)s"
-"\">%(service_link)s</a>\n"
-msgstr ""
-
-#: service_info/templates/email/service_rejection_subject.txt:1
-msgid "Service has been rejected"
-msgstr ""
-
-#: service_info/templates/gis/googlemaps.html:7
-msgid ""
-"You can type an address, a place name, or even a latitude and longitude into "
-"the search box (e.g. \"33.8869, 35.5131\")."
-msgstr ""
-
-#: services/admin.py:97
-msgid "Address"
-msgstr ""
-
-#: services/admin.py:103
-msgid "Description and Additional Information"
-msgstr ""
-
-#: services/admin.py:110
-#, python-brace-format
-msgid "Hours (all times in time zone {timezone})"
-msgstr ""
-
-#: services/admin.py:122
-msgid "Location"
-msgstr ""
-
-#: services/admin.py:125
-msgid "Image"
-msgstr ""
-
-#: services/admin.py:144
-msgid "Only services in draft status may be approved"
-msgstr ""
-
-#: services/admin.py:152 services/admin.py:192
-#, python-brace-format
-msgid "Unable to approve service '{name}': {error}."
-msgstr ""
-
-#: services/admin.py:158
-msgid "Services have been approved"
-msgstr ""
-
-#: services/admin.py:160
-msgid "Approve new or changed service"
-msgstr ""
-
-#: services/admin.py:166
-msgid "Only services in draft status may be rejected"
-msgstr ""
-
-#: services/admin.py:174 services/admin.py:207
-#, python-brace-format
-msgid "Unable to reject service '{name}': {error}."
-msgstr ""
-
-#: services/admin.py:180
-msgid "Services have been rejected"
-msgstr ""
-
-#: services/admin.py:182
-msgid "Reject new or changed service"
-msgstr ""
-
-#: services/admin.py:201
-msgid "The service was approved successfully."
-msgstr ""
-
-#: services/admin.py:216
-msgid "The service was rejected successfully."
-msgstr ""
-
-#: services/admin.py:225
-msgid "no image"
-msgstr ""
-
-#: services/forms.py:123
-#, python-format
-msgid "There is no service type with English name %r"
-msgstr ""
-
-#: services/forms.py:145
-#, python-format
-msgid "There is no service area with English name %r"
-msgstr ""
-
-#: services/import_export.py:211
-msgid "Unable to open spreadsheet file; is it an Excel spreadsheet?"
-msgstr ""
-
-#: services/import_export.py:223
-#, python-format
-msgid "Errors in sheet %s:"
-msgstr ""
-
-#: services/import_export.py:236
-#, python-format
-msgid "Row %d"
-msgstr ""
-
-#: services/import_export.py:271
-#, python-format
-msgid "Spreadsheet file should contain 3 sheets, this one has %d"
-msgstr ""
-
-#: services/import_export.py:281
-msgid "First sheet has no data."
-msgstr ""
-
-#. Translators: do NOT translate text inside {braces}
-#: services/import_export.py:287
-#, python-brace-format
-msgid "First sheet has wrong name, expected {expected}, got {actual}"
-msgstr ""
-
-#: services/import_export.py:291
-#, python-format
-msgid "First sheet has wrong headers, expected %s"
-msgstr ""
-
-#: services/import_export.py:307
-#, python-format
-msgid "%d is not a provider this user may delete"
-msgstr ""
-
-#: services/import_export.py:310
-#, python-format
-msgid "%d is not a provider this user may import"
-msgstr ""
-
-#: services/import_export.py:314
-msgid "Only staff may delete providers"
-msgstr ""
-
-#: services/import_export.py:319
-msgid "Non-staff users may not create new providers"
-msgstr ""
-
-#: services/import_export.py:328 services/import_export.py:396
-#: services/import_export.py:449
-#, python-format
-msgid "%s is not a valid ID"
-msgstr ""
-
-#: services/import_export.py:334
-#, python-format
-msgid "There is no provider with id=%s"
-msgstr ""
-
-#: services/import_export.py:361 services/import_export.py:428
-msgid "Second sheet has no data."
-msgstr ""
-
-#. Translators: do NOT translate text inside {braces}
-#: services/import_export.py:367
-#, python-brace-format
-msgid "Second sheet has wrong name, expected {expected}, got {actual}"
-msgstr ""
-
-#: services/import_export.py:385
-#, python-format
-msgid "%d is not a service this user may delete"
-msgstr ""
-
-#: services/import_export.py:388
-#, python-format
-msgid "%d is not a service this user may import"
-msgstr ""
-
-#: services/import_export.py:401
-#, python-format
-msgid "No service with id=%s"
-msgstr ""
-
-#: services/import_export.py:410
-msgid "Non-staff users may not create services for other providers"
-msgstr ""
-
-#. Translators: do NOT translate text inside {braces}
-#: services/import_export.py:434
-#, python-brace-format
-msgid "Third sheet has wrong name, expected {expected}, got {actual}"
-msgstr ""
-
-#: services/import_export.py:455
-#, python-format
-msgid "No selection criterion with id = %s"
-msgstr ""
-
-#: services/import_export.py:474
-msgid ""
-"Selection criterion refers to service with ID or name {name!r} that is not "
-"in the 2nd sheet. Choices: {list1!r} or {list2!r}"
-msgstr ""
-
-#. Translators: Provider name
-#: services/models.py:31 services/models.py:57 services/models.py:180
-#: services/models.py:304
-#, python-brace-format
-msgid "Name in {LANGUAGE_NAME}"
-msgstr ""
-
-#. Translators: Provider description
-#: services/models.py:65
-#, python-brace-format
-msgid "description in {LANGUAGE_NAME}"
-msgstr ""
-
-#: services/models.py:70
-#, python-brace-format
-msgid "focal point name in {LANGUAGE_NAME}"
-msgstr ""
-
-#: services/models.py:77
-#, python-brace-format
-msgid "provider address in {LANGUAGE_NAME}"
-msgstr ""
-
-#: services/models.py:85 services/models.py:452 services/models.py:1125
-#: services/models.py:1359
-msgid "type"
-msgstr ""
-
-#: services/models.py:88 services/models.py:370
-msgid "phone number"
-msgstr ""
-
-#: services/models.py:96 services/models.py:491
-msgid "website"
-msgstr ""
-
-#: services/models.py:103
-msgid "Team"
-msgstr ""
-
-#: services/models.py:109
-msgid "Admin"
-msgstr ""
-
-#: services/models.py:115
-msgid "number of targeted beneficiaries monthly"
-msgstr ""
-
-#: services/models.py:124
-msgid "focal point phone number"
-msgstr ""
-
-#: services/models.py:140
-msgid "is frozen"
-msgstr ""
-
-#: services/models.py:189
-msgid "parent area"
-msgstr ""
-
-#: services/models.py:190
-msgid "the area that contains this area"
-msgstr ""
-
-#: services/models.py:223
-msgid "selection criteria"
-msgstr ""
-
-#: services/models.py:227
-msgid "Selection criterion must have text in at least one language"
-msgstr ""
-
-#: services/models.py:241 services/models.py:1138
-#, python-brace-format
-msgid "name in {LANGUAGE_NAME}"
-msgstr ""
-
-#: services/models.py:247
-#, python-brace-format
-msgid "comments in {LANGUAGE_NAME}"
-msgstr ""
-
-#: services/models.py:258
-msgid "icon"
-msgstr ""
-
-#: services/models.py:262
-msgid "Vector Icon"
-msgstr ""
-
-#: services/models.py:295
-msgid "tag name"
-msgstr ""
-
-#: services/models.py:300
-msgid "This field has to be unique"
-msgstr ""
-
-#. Translators: Service description
-#: services/models.py:311
-#, python-brace-format
-msgid "Description in {LANGUAGE_NAME}"
-msgstr ""
-
-#. Translators: Service description
-#: services/models.py:317
-#, python-brace-format
-msgid "Address (city) in {LANGUAGE_NAME}"
-msgstr ""
-
-#. Translators: Service description
-#: services/models.py:324
-#, python-brace-format
-msgid "Address (street) in {LANGUAGE_NAME}"
-msgstr ""
-
-#: services/models.py:330
-#, python-brace-format
-msgid "Additional information in {LANGUAGE_NAME}"
-msgstr ""
-
-#: services/models.py:339
-#, python-brace-format
-msgid "Languages spoken in {LANGUAGE_NAME}"
-msgstr ""
-
-#: services/models.py:345
-msgid "Address in country language"
-msgstr ""
-
-#: services/models.py:349
-msgid "provider"
-msgstr ""
-
-#: services/models.py:355 services/models.py:1355
-msgid "area of service"
-msgstr ""
-
-#: services/models.py:359
-msgid "cost of service"
-msgstr ""
-
-#: services/models.py:364
-msgid "mobile service"
-msgstr ""
-
-#: services/models.py:374
-msgid "Use ISO phone numbers with no spaces, ex: +3815551234"
-msgstr ""
-
-#: services/models.py:390
-msgid "draft"
-msgstr ""
-
-#: services/models.py:393
-msgid "current"
-msgstr ""
-
-#: services/models.py:395
-msgid "rejected"
-msgstr ""
-
-#: services/models.py:398
-msgid "canceled"
-msgstr ""
-
-#: services/models.py:400
-msgid "archived"
-msgstr ""
-
-#: services/models.py:403
-msgid "private"
-msgstr ""
-
-#: services/models.py:406
-msgid "status"
-msgstr ""
-
-#: services/models.py:413
-msgid ""
-"If a service record represents a modification of another service record, "
-"this field links to that other record."
-msgstr ""
-
-#: services/models.py:421
-msgid "location"
-msgstr ""
-
-#: services/models.py:460
-msgid "types"
-msgstr ""
-
-#: services/models.py:469
-msgid ""
-"Upload an image file (GIF, JPEG, PNG, WebP) with a square aspect ratio "
-"(Width equal to Height). The image size should be at least 1280 x 1280 for "
-"best results. SVG files are not supported."
-msgstr ""
-
-#: services/models.py:480
-msgid "service tags"
-msgstr ""
-
-#: services/models.py:482
-msgid "Specific tags for this service."
-msgstr ""
-
-#: services/models.py:485
-msgid "Link to facebook page"
-msgstr ""
-
-#: services/models.py:677
-msgid "Only services in draft status may be approved."
-msgstr ""
-
-#: services/models.py:720
-msgid "Only services in draft status may be rejected."
-msgstr ""
-
-#: services/models.py:824
-msgid "Confirmation key is invalid or has already been used."
-msgstr ""
-
-#: services/models.py:837
-msgid "Confirmed"
-msgstr ""
-
-#: services/models.py:838
-msgid "Pending"
-msgstr ""
-
-#: services/models.py:839
-msgid "Pending after reminder"
-msgstr ""
-
-#: services/models.py:840
-msgid "Pending after unconfirmed reminder"
-msgstr ""
-
-#: services/models.py:841
-msgid "Service needs update"
-msgstr ""
-
-#: services/models.py:842
-msgid "Error occurred during email sending"
-msgstr ""
-
-#: services/models.py:843
-msgid "Focal point added"
-msgstr ""
-
-#: services/models.py:871
-msgid "Provider updated their information"
-msgstr ""
-
-#: services/models.py:872
-msgid "New service submitted by provider"
-msgstr ""
-
-#: services/models.py:873
-msgid "Change to existing service submitted by provider"
-msgstr ""
-
-#: services/models.py:874
-msgid "Provider canceled a draft service"
-msgstr ""
-
-#: services/models.py:875
-msgid "Provider canceled a current service"
-msgstr ""
-
-#: services/models.py:876
-msgid "Provider superseded a previous draft"
-msgstr ""
-
-#: services/models.py:877
-msgid "Staff approved a new or changed service"
-msgstr ""
-
-#: services/models.py:878
-msgid "Staff rejected a new or changed service"
-msgstr ""
-
-#: services/models.py:879
-msgid "User submitted feedback"
-msgstr ""
-
-#: services/models.py:880
-msgid "User submitted request for service."
-msgstr ""
-
-#: services/models.py:904
-msgid "update type"
-msgstr ""
-
-#: services/models.py:909
-msgid "JIRA issue"
-msgstr ""
-
-#: services/models.py:1119 services/models.py:1120 services/models.py:1121
-#: services/models.py:1122
-msgid "service_base"
-msgstr ""
-
-#: services/models.py:1148
-msgid "nationalities"
-msgstr ""
-
-#: services/models.py:1161
-msgid "Phone Number"
-msgstr ""
-
-#: services/models.py:1169
-msgid "Nationality"
-msgstr ""
-
-#: services/models.py:1176
-msgid "Area of residence"
-msgstr ""
-
-#: services/models.py:1183 services/models.py:1390
-msgid "Service"
-msgstr ""
-
-#: services/models.py:1189
-msgid "Was service delivered?"
-msgstr ""
-
-#: services/models.py:1195 services/models.py:1365
-msgid ""
-"How would you rate the quality of the service you received (from 1 to 5, "
-"where 5 is the highest rating possible)?"
-msgstr ""
-
-#: services/models.py:1208
-msgid ""
-"Did you receive a clear explanation for why the service you sought was not "
-"delivered to you?"
-msgstr ""
-
-#: services/models.py:1215
-msgid "No explanation"
-msgstr ""
-
-#: services/models.py:1216
-msgid "Explanation was not clear"
-msgstr ""
-
-#: services/models.py:1217
-msgid "Explanation was not fair"
-msgstr ""
-
-#: services/models.py:1218
-msgid "Clear and appropriate explanation"
-msgstr ""
-
-#: services/models.py:1223
-msgid ""
-"How long did you wait for the service to be delivered, after contacting the "
-"service provider?"
-msgstr ""
-
-#: services/models.py:1230
-msgid "Less than 1 hour"
-msgstr ""
-
-#: services/models.py:1231
-msgid "Up to 2 days"
-msgstr ""
-
-#: services/models.py:1232
-msgid "3-7 days"
-msgstr ""
-
-#: services/models.py:1233
-msgid "1-2 weeks"
-msgstr ""
-
-#: services/models.py:1234
-msgid "More than 2 weeks"
-msgstr ""
-
-#: services/models.py:1238
-msgid ""
-"How do you rate your satisfaction with the time that you waited for the "
-"service to be delivered (from 1 to 5, where 5 is the highest rating "
-"possible)?"
-msgstr ""
-
-#: services/models.py:1251
-msgid ""
-"Did you experience difficulties contacting the provider of the service you "
-"needed?"
-msgstr ""
-
-#: services/models.py:1255
-msgid "No"
-msgstr ""
-
-#: services/models.py:1256
-msgid "Did not know how to contact them"
-msgstr ""
-
-#: services/models.py:1257
-msgid "Tried to contact them by phone but received no response"
-msgstr ""
-
-#: services/models.py:1258
-msgid ""
-"Tried to contact them in person but received no response or did not find "
-"their office"
-msgstr ""
-
-#: services/models.py:1260
-msgid "Contacted them but response was unhelpful"
-msgstr ""
-
-#: services/models.py:1261
-msgid "Other"
-msgstr ""
-
-#: services/models.py:1266
-msgid "Other difficulties contacting the service provider"
-msgstr ""
-
-#: services/models.py:1271
-msgid ""
-"How would you rate your satisfaction with the staff of the organization that "
-"provided services to you, (from 1 to 5, where 5 is the highest rating "
-"possible)?"
-msgstr ""
-
-#: services/models.py:1283
-msgid "Other comments"
-msgstr ""
-
-#: services/models.py:1288
-msgid "I want my feedback to be anonymous to the service provider"
-msgstr ""
-
-#: services/models.py:1297
-msgid ""
-"Quality field is required if you answered 'Yes' to 'Was the service you "
-"sought delivered to you?'."
-msgstr ""
-
-#: services/models.py:1301
-msgid ""
-"An answer is required to 'How long did you wait for the service to be "
-"delivered, after contacting the service provider?' if you answered 'Yes' to "
-"'Was the service you sought delivered to you?'."
-msgstr ""
-
-#: services/models.py:1307
-msgid ""
-"An answer is required to 'How do you rate your satisfaction with the time "
-"that you waited for the service to be delivered?' if you answered 'Yes' to "
-"'Was the service you sought delivered to you?'."
-msgstr ""
-
-#: services/models.py:1315
-msgid ""
-"An answer is required to 'Did you receive a clear explanation for why the "
-"service you sought was not delivered to you?' if you answered 'No' to 'Was "
-"the service you sought delivered to you?'."
-msgstr ""
-
-#: services/models.py:1322
-msgid ""
-"An answer is required to 'Other difficulties contacting the service "
-"provider' if you answered 'Other' to 'Did you experience difficulties "
-"contacting the provider of the service you needed?'"
-msgstr ""
-
-#: services/models.py:1404
-msgid "Phone"
-msgstr ""
-
-#: services/models.py:1405
-msgid "Viber"
-msgstr ""
-
-#: services/models.py:1406
-msgid "Whatsapp"
-msgstr ""
-
-#: services/models.py:1407
-msgid "Skype"
-msgstr ""
-
-#: services/models.py:1408
-msgid "Facebook Messenger"
-msgstr ""
+msgstr "Activar cuenta de proveedor"
