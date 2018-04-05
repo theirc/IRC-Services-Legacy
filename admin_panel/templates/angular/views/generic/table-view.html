@@ -1,7 +1,7 @@
 <section class="content-header" ng-controller="ContentHeaderController as chctrl">
     <h1>
-        {{ chctrl.state.data.title }}
-        <a href="" ui-sref="{{ ctrl.createLink }}" ng-if="ctrl.createLink" class="btn btn-success pull-right">Create</a>
+        {{ chctrl.state.data.title | translate }}
+        <a href="" ui-sref="{{ ctrl.createLink }}" ng-if="ctrl.createLink" class="btn btn-success pull-right">{{ 'CREATE' | translate}}</a>
 
     </h1>
 </section>

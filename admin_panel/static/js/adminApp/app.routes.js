@@ -396,7 +396,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 		.state("service.open", {
 			url: "/:serviceId",
 			data: {
-				title: "Service Details",
+				title: "SERVICE_DETAILS",
 			},
 			views: {
 				"main@": {
@@ -474,7 +474,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 			url: "/confirm/:serviceId/:confirmationKey",
 			data: {
 				allowAnonymous: true,
-				title: "Service Confirmation",
+				title: "SERVICE_CONFIRMATION",
 			},
 			views: {
 				"main@": {
@@ -568,7 +568,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 		.state("newsletter.logs", {
 			url: "/logs",
 			data: {
-				title: "Newsletter Logs",
+				title: "NEWSLETTER_LOGS",
 			},
 			views: {
 				"main@": {
@@ -584,7 +584,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 		.state("newsletter.settings", {
 			url: "/settings",
 			data: {
-				title: "Newsletter Settings",
+				title: "NEWSLETTER_SETTINGS",
 			},
 			views: {
 				"main@": {
@@ -604,7 +604,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 		.state("settings", {
 			url: "/settings",
 			data: {
-				title: "Account Settings",
+				title: "ACCOUNT_SETTINGS",
 			},
 			views: {
 				"main@": {
@@ -633,7 +633,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 		.state("user.list", {
 			url: "/",
 			data: {
-				title: "System Users",
+				title: "SYSTEM_USERS",
 			},
 			views: {
 				"main@": {
@@ -648,7 +648,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 		.state("user.create", {
 			url: "/create",
 			data: {
-				title: "Create System User",
+				title: "CREATE_SYSTEM_USER",
 			},
 			views: {
 				"main@": {
@@ -669,7 +669,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 		.state("user.open", {
 			url: "/:id",
 			data: {
-				title: "System User",
+				title: "SYSTEM_USER",
 			},
 			views: {
 				"main@": {
@@ -698,7 +698,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 		.state("provider.list", {
 			url: "/",
 			data: {
-				title: "Service Providers",
+				title: "SERVICE_PROVIDERS",
 			},
 			views: {
 				"main@": {
@@ -715,7 +715,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 		.state("provider.openMe", {
 			url: "/me",
 			data: {
-				title: "Service Provider",
+				title: "PROVIDER_SETTINGS",
 			},
 			views: {
 				"main@": {
@@ -749,7 +749,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 		.state("provider.dashboard", {
 			url: "/dashboard",
 			data: {
-				title: "Service Provider Dashboard",
+				title: "SERVICE_PROVIDER_DASHBOARD",
 			},
 			views: {
 				"main@": {
@@ -783,7 +783,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 		.state("provider.create", {
 			url: "/create",
 			data: {
-				title: "Service Provider Create",
+				title: "SERVICE_PROVIDER_CREATE",
 			},
 			views: {
 				"main@": {
@@ -833,7 +833,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 		.state("provider.open", {
 			url: "/:id",
 			data: {
-				title: "Service Provider",
+				title: "SERVICE_PROVIDER",
 			},
 			views: {
 				"main@": {
@@ -907,7 +907,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 		.state("region.list", {
 			url: "/",
 			data: {
-				title: "Geographic Regions",
+				title: "GEOGRAPHIC_REGIONS",
 			},
 			views: {
 				"main@": {
@@ -920,7 +920,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 		.state("region.create", {
 			url: "/create",
 			data: {
-				title: "Create Geographic Region",
+				title: "CREATE_GEOGRAPHIC_REGIONS",
 			},
 			views: {
 				"main@": {
@@ -963,7 +963,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 		.state("region.open", {
 			url: "/:id",
 			data: {
-				title: "Geographic Region",
+				title: "GEOGRAPHIC_REGION",
 			},
 			views: {
 				"main@": {
@@ -1010,7 +1010,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 		.state("blog.list", {
 			url: "/",
 			data: {
-				title: "Blog Entry Translations",
+				title: "BLOG_ENTRY_TRANSLATIONS",
 			},
 			views: {
 				"main@": {
@@ -1068,7 +1068,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 		.state("lists.serviceType.list", {
 			url: "/",
 			data: {
-				title: "Service Types",
+				title: "SERVICES_TYPES",
 			},
 			views: {
 				"main@": {
@@ -1081,7 +1081,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 		.state("lists.serviceType.create", {
 			url: "/create",
 			data: {
-				title: "New Service Type",
+				title: "NEW_SERVICE_TYPE",
 			},
 			views: {
 				"main@": {
@@ -1103,7 +1103,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 		.state("lists.serviceType.open", {
 			url: "/:id",
 			data: {
-				title: "Service Type",
+				title: "SERVICE_TYPE_TITLE",
 			},
 			views: {
 				"main@": {
@@ -1128,7 +1128,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 		.state("lists.providerType.list", {
 			url: "/",
 			data: {
-				title: "Provider Types",
+				title: "PROVIDER_TYPES",
 			},
 			views: {
 				"main@": {
@@ -1141,7 +1141,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 		.state("lists.providerType.create", {
 			url: "/create",
 			data: {
-				title: "New Provider Type",
+				title: "NEW_PROVIDER_TYPE",
 			},
 			views: {
 				"main@": {
@@ -1160,7 +1160,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 		.state("lists.providerType.open", {
 			url: "/:id",
 			data: {
-				title: "Provider Type",
+				title: "PROVIDER_TYPE_TITLE",
 			},
 			views: {
 				"main@": {

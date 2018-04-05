@@ -1,6 +1,6 @@
 <section class="content-header" ng-controller="ContentHeaderController as chctrl">
     <h1>
-        {{ chctrl.state.data.title }}
+        {{ chctrl.state.data.title | translate }}
         <small>{{ ctrl.provider.name_en}}</small>
         <button type="button" class="btn btn-warning pull-right" ng-click="ctrl.goBack()">{{ BACK | translate }}</button>
     </h1>
@@ -122,13 +122,13 @@
                         </button>
                     </div>
                     <div class="btn-group pull-right">
-                        <button type="button" class="btn btn-primary" ng-if="!ctrl.isEditing && user.isSuperuser" ng-click="ctrl.startEditing()">{{ PROVIDER_EDIT | translate }}
+                        <button type="button" class="btn btn-primary" ng-if="!ctrl.isEditing && user.isSuperuser" ng-click="ctrl.startEditing()">{{ 'PROVIDER_EDIT' | translate }}
                         </button>
                         <button type="button" class="btn btn-primary button-tooltip" ng-if="ctrl.isEditing && user.isSuperuser" ng-click="ctrl.save()"
                             ng-disabled="ctrl.form.$invalid" data-old-tooltip="Fill in all required fields">
                             {{ PROVIDER_SAVE | translate }}
                         </button>
-                        <button type="button" class="btn btn-warning" ng-if="ctrl.isEditing && user.isSuperuser && !ctrl.isNew" ng-click="ctrl.cancelEditing()">{{ PROVIDER_CANCEL | translate }}
+                        <button type="button" class="btn btn-warning" ng-if="ctrl.isEditing && user.isSuperuser && !ctrl.isNew" ng-click="ctrl.cancelEditing()">{{ 'PROVIDER_CANCEL' | translate }}
                         </button>
                     </div>
                 </div>

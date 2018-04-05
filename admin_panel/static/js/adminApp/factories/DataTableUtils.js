@@ -1,4 +1,4 @@
-angular.module('adminApp').factory('tableUtils', (DTOptionsBuilder, DTColumnBuilder, $compile, $injector, $rootScope) => {
+angular.module('adminApp').factory('tableUtils', (DTOptionsBuilder, DTColumnBuilder, $compile, $injector, $rootScope, $filter) => {
     let scope = $rootScope.$new();
     var generator = (scope = {}) => {
         return {
@@ -69,7 +69,7 @@ angular.module('adminApp').factory('tableUtils', (DTOptionsBuilder, DTColumnBuil
 
             },
             newActionColumn(sref = "^.open") {
-                return DTColumnBuilder.newColumn(null).withTitle('Actions').notSortable().renderWith(renderActions);
+                return DTColumnBuilder.newColumn(null).withTitle($filter('translate')('TABLE_ACTIONS')).notSortable().renderWith(renderActions);
 
                 function renderActions(data, type, full, meta) {
                     return `
@@ -81,7 +81,7 @@ angular.module('adminApp').factory('tableUtils', (DTOptionsBuilder, DTColumnBuil
                 }
             },
             newServiceReadOnlyActionColumn(sref = "^.open") {
-                return DTColumnBuilder.newColumn(null).withTitle('Actions').notSortable().renderWith(renderActions);
+                return DTColumnBuilder.newColumn(null).withTitle($filter('translate')('TABLE_ACTIONS')).notSortable().renderWith(renderActions);
 
                 function renderActions(data, type, full, meta) {
                     return `
@@ -93,19 +93,18 @@ angular.module('adminApp').factory('tableUtils', (DTOptionsBuilder, DTColumnBuil
                 }
             },
             newServiceActionColumn(sref = "^.open", duplicateSref = "^.duplicate", archiveSref = "^.archive") {
-                return DTColumnBuilder.newColumn(null).withTitle('Actions').notSortable().renderWith(renderActions);
+                return DTColumnBuilder.newColumn(null).withTitle($filter('translate')('TABLE_ACTIONS')).notSortable().renderWith(renderActions);
 
                 function renderActions(data, type, full, meta) {
                     return `
-                    <div class="btn-group">
-                        <a class="btn btn-danger btn-xs" ui-sref="${archiveSref}({serviceId: ${full.id}})">
-                            <span><i class="fa fa-archive" style="padding-right: 5px"></i>Archive</span>
+                        <a class="btn btn-danger btn-xs btn-block" ui-sref="${archiveSref}({serviceId: ${full.id}})">
+                            <span><i class="fa fa-archive" style="padding-right: 5px"></i>${$filter('translate')('TABLE_ARCHIVE')}</span>
                         </a>
-                        <a class="btn btn-primary btn-xs" ui-sref="${sref}({serviceId: ${full.id}})">
-                            <span><i class="fa fa-eye" style="padding-right: 5px"></i>Edit</span>
+                        <a class="btn btn-primary btn-xs btn-block" ui-sref="${sref}({serviceId: ${full.id}})">
+                            <span><i class="fa fa-eye" style="padding-right: 5px"></i>${$filter('translate')('TABLE_EDIT')}</span>
                         </a>
-                        <a class="btn btn-warning btn-xs" ui-sref="${duplicateSref}({serviceId: ${full.id}})">
-                            <span><i class="fa fa-files-o" style="padding-right: 5px"></i>Duplicate</span>
+                        <a class="btn btn-warning btn-xs btn-block" ui-sref="${duplicateSref}({serviceId: ${full.id}})">
+                            <span><i class="fa fa-files-o" style="padding-right: 5px"></i>${$filter('translate')('TABLE_DUPLICATE')}</span>
                         </a>
                     </div>
                 `;

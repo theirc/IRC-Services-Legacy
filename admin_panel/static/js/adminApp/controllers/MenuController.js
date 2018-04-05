@@ -38,7 +38,13 @@ angular.module("adminApp").controller("MenuController", function ($rootScope, $s
 					title: $filter('translate')('ACCOUNT_SETTINGS'),
 					sref: "settings",
 					active: $state.includes("settings"),
-				}, ],
+				},
+				{
+					title: $filter('translate')('PROVIDER_SETTINGS'),
+					sref: "provider.openMe",
+					hide: !((($rootScope.user.groups.filter(g => g.name === 'Providers').length > 0) || $rootScope.user.isSuperuser) && $rootScope.selectedProvider),
+				},
+			 ],
 			},
 			{
 				title: $filter('translate')('REFUGEE_ADMIN'),

@@ -1,6 +1,6 @@
 <section class="content-header" ng-controller="ContentHeaderController as chctrl">
     <h1>
-        {{ chctrl.state.data.title }}
+        {{ chctrl.state.data.title | translate }}
         <small>{{ ctrl.object.email }}</small>
     </h1>
 </section>
@@ -73,7 +73,7 @@
                     <div class="form-group col-xs-12" ng-hide="!user.isSuperuser">
                         <label for="email">{{ USER_GROUPS | translate }}</label>
                         <ui-select ng-disabled="!ctrl.isEditing" multiple ng-model="ctrl.object.groups" sortable="true" close-on-select="true">
-                            <ui-select-match placeholder="select a group">{{ $item.name }}</ui-select-match>
+                            <ui-select-match placeholder="{{ USER_SELECT_GROUP | translate }}">{{ $item.name }}</ui-select-match>
                             <ui-select-choices repeat="group in ctrl.groups | filter: {name: $select.search}">
                                 <div ng-bind-html="group.name | highlight: $select.search"></div>
                             </ui-select-choices>
@@ -120,7 +120,7 @@
     <footer-action-bar>
         <div style="width: 100%">
             <div class="btn-group pull-right">
-                <button type="button" class="btn btn-primary" ng-if="!ctrl.isEditing" ng-click="ctrl.startEditing()">Edit
+                <button type="button" class="btn btn-primary" ng-if="!ctrl.isEditing" ng-click="ctrl.startEditing()"> {{ 'EDIT' | translate }}
                 </button>
                 <button type="button" class="btn btn-primary" ng-if="ctrl.isEditing" ng-click="ctrl.save()" ng-disabled="userForm.$invalid">
                     {{ SAVE | translate }}

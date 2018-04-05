@@ -1,6 +1,6 @@
 <section class="content-header" ng-controller="ContentHeaderController as chctrl">
     <h1>
-        {{ chctrl.state.data.title }}
+        {{ chctrl.state.data.title | translate }}
         <small>{{ ctrl.object.name}}</small>
         <a type="button" class="btn btn-warning pull-right" ui-sref="^.list">{{ BACK | translate }}</a>
     </h1>
