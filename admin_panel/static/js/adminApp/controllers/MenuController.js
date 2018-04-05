@@ -67,7 +67,7 @@ angular.module("adminApp").controller("MenuController", function ($rootScope, $s
 						hide: !$rootScope.user.isSuperuser,
 					},
 				],
-				hide: !$rootScope.user.isSuperuser || !('refugee.info'.indexOf($rootScope.user.site.domain) > -1),
+				hide: !$rootScope.user.isSuperuser || !($rootScope.user.site.domain.indexOf('refugee.info') > -1),
 			},
 			{
 				title: $filter('translate')('SYSTEM_ADMIN'),
