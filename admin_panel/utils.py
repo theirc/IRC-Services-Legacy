@@ -104,7 +104,11 @@ def pull_blog_from_transifex(slug, language):
 
     body = "".join(line.strip() for line in body.split("\n"))
     body = body.replace(">\n\n",">\n")
-    md = re.sub(r"\n{2,10}>\n{2,10}", "\n>\n", html2text.html2text(str(body)), flags=re.M)
+    md = re.sub(r"\n{2,10}>\n{2,10}", "\n>\n",
+                html2text.html2text(str(body)), flags=re.M)
+    md = re.sub(r"(\[[^\]]+\]\([^\n]+)(\n+)([^\n\)]+\))", r"\1\3", md, flags=re.M)
+    md = re.sub(r"([^\s!]+)(\[[^\]]+\])", r"\1 \2", md, flags=re.M)
+    md = re.sub(r"([^\)]+\))([^\s\.\,]+)", r"\1 \2", md, flags=re.M)
 
     mobiledoc = json.loads("""{"version":"0.3.1","markups":[],"atoms":[],"cards":[["card-markdown",{"cardName":"card-markdown","markdown":""}]],"sections":[[10,0]]}""")
     mobiledoc['cards'][0][1]['markdown'] = md
