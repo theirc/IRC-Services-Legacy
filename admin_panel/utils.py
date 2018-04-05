@@ -29,12 +29,13 @@ def push_blog_post_to_transifex(blog_post):
         fetch_format = "https://www.transifex.com/api/2/project/{project}/resource/{slug}/"
         post_format = "https://www.transifex.com/api/2/project/{project}/resources/"
 
-        r = requests.get(fetch_format.format(**transifex_url_data), auth=(user, password))
+        r = requests.get(fetch_format.format(
+            **transifex_url_data), auth=(user, password))
 
         is_new = r.status_code == 404
 
-        html = "<html><head><title>{title}</title></head><body>{html}</body></html>".format(**blog_post)
-        html = cms_utils.parse_html_for_translation(html)
+        html = "<html><head><title>{title}</title></head><body>{html}</body></html>".format(
+            **blog_post)
 
         payload = {
             "content": html,
@@ -83,34 +84,20 @@ def pull_blog_from_transifex(slug, language):
     fetch_format = "https://www.transifex.com/api/2/project/{project}/resource/{slug}/translation/{language}/" \
                    "?mode=default"
 
-    r = requests.get(fetch_format.format(**transifex_url_data), auth=(user, password))
+    r = requests.get(fetch_format.format(
+        **transifex_url_data), auth=(user, password))
 
     translation = r.json()
-    html = cms_utils.parse_html_for_content(translation['content'])
-    html = "\n".join(line.strip() for line in html.split("\n"))
+    html = translation['content']
     soup = BeautifulSoup(html)
     title = "".join([str(a) for a in soup.title])
-    items = list(str(c) for c in soup.body.children if str(c) != '\n')
-    previous_p = None
-    body = ""
-    for i in items:
-        if '<p>' not in i:
-            previous_p = "<p>" + i if not previous_p else previous_p + i
-        else:
-            if previous_p:
-                body += previous_p + '</p>'
-                previous_p = None
-            body += i
+    body = str(soup.body)
 
     body = "".join(line.strip() for line in body.split("\n"))
-    body = body.replace(">\n\n",">\n")
-    md = re.sub(r"\n{2,10}>\n{2,10}", "\n>\n",
-                html2text.html2text(str(body)), flags=re.M)
-    md = re.sub(r"(\[[^\]]+\]\([^\n]+)(\n+)([^\n\)]+\))", r"\1\3", md, flags=re.M)
-    md = re.sub(r"([^\s!]+)(\[[^\]]+\])", r"\1 \2", md, flags=re.M)
-    md = re.sub(r"([^\)]+\))([^\s\.\,]+)", r"\1 \2", md, flags=re.M)
+    md = html2text.html2text(str(body), bodywidth=1e4)
 
-    mobiledoc = json.loads("""{"version":"0.3.1","markups":[],"atoms":[],"cards":[["card-markdown",{"cardName":"card-markdown","markdown":""}]],"sections":[[10,0]]}""")
+    mobiledoc = json.loads(
+        """{"version":"0.3.1","markups":[],"atoms":[],"cards":[["card-markdown",{"cardName":"card-markdown","markdown":""}]],"sections":[[10,0]]}""")
     mobiledoc['cards'][0][1]['markdown'] = md
     return {
         "slug": "{}-{}".format(slug, language),
@@ -132,7 +119,8 @@ def get_blog_transifex_info(slug):
     }
     fetch_format = "https://www.transifex.com/api/2/project/{project}/resource/{slug}/stats/"
 
-    transifex = requests.get(fetch_format.format(**transifex_url_data), auth=(user, password))
+    transifex = requests.get(fetch_format.format(
+        **transifex_url_data), auth=(user, password))
 
     if transifex.status_code == 200:
         return transifex.json()
@@ -164,7 +152,8 @@ def push_service_to_transifex(id):
         fetch_format = "https://www.transifex.com/api/2/project/{project}/resource/{slug}/"
         post_format = "https://www.transifex.com/api/2/project/{project}/resources/"
 
-        r = requests.get(fetch_format.format(**transifex_url_data), auth=(user, password))
+        r = requests.get(fetch_format.format(
+            **transifex_url_data), auth=(user, password))
 
         is_new = r.status_code == 404
 
@@ -214,7 +203,8 @@ def get_service_transifex_info(id):
     }
     fetch_format = "https://www.transifex.com/api/2/project/{project}/resource/{slug}/stats/"
 
-    logger.info("Trying to request: %s" % fetch_format.format(**transifex_url_data))
+    logger.info("Trying to request: %s" %
+                fetch_format.format(**transifex_url_data))
     logger.info("With creds: %s %s" % (user, password))
 
     return requests.get(fetch_format.format(**transifex_url_data), auth=(user, password))
@@ -261,10 +251,12 @@ def pull_from_transifex(id, language, project=settings.TRANSIFEX_SERVICES_PROJEC
     fetch_format = "https://www.transifex.com/api/2/project/{project}/resource/{slug}/translation/{language}/" \
                    "?mode=default"
 
-    logger.info("Trying to request: %s" % fetch_format.format(**transifex_url_data))
+    logger.info("Trying to request: %s" %
+                fetch_format.format(**transifex_url_data))
     logger.info("With creds: %s %s" % (user, password))
 
-    r = requests.get(fetch_format.format(**transifex_url_data), auth=(user, password))
+    r = requests.get(fetch_format.format(
+        **transifex_url_data), auth=(user, password))
 
     translation = r.json()
 
