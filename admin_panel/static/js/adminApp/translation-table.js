@@ -18,6 +18,7 @@ angular.module("adminApp").config(function($translateProvider){
         CONTROLLED_LISTS_MANAGEMENT: 'Controlled List Management',
         SERVICES_TYPES: 'Service Categories',
         PROVIDER_TYPES: 'Provider Types',
+        SITE: 'Site',
 
         //Search Services page
         SERVICES: 'Services',
@@ -395,6 +396,7 @@ angular.module("adminApp").config(function($translateProvider){
         LIGHT_URL: 'Light Url',
         API_URL: 'API Url',
         AUTH_TOKEN: 'Auth Token',
+        SITE: 'Sitio',
 
         //ProviderType
         NAME: 'Nombre',

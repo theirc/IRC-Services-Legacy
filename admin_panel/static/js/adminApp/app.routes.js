@@ -516,6 +516,9 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 
 					return allRegions(GeoRegionService, $q, $window)
 				},
+				sites: function (CommonDataService) {
+					return CommonDataService.getSites();
+				},
 			},
 		})
 
@@ -580,6 +583,9 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 				},
 				groups: function (Restangular) {
 					return Restangular.all("groups").getList();
+				},
+				sites: function (CommonDataService) {
+					return CommonDataService.getSites();
 				},
 				regions: allRegions,
 			},
@@ -786,7 +792,10 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 					dfd.resolve({});
 					return dfd.promise;
 				},
-				allRegions: allRegions
+				sites: function (CommonDataService) {
+					return CommonDataService.getSites();
+				},
+				allRegions: allRegions,
 			},
 		})
 		.state("region.open", {
@@ -803,6 +812,9 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 			resolve: {
 				region: function (GeoRegionService, $stateParams) {
 					return GeoRegionService.get($stateParams.id);
+				},
+				sites: function (CommonDataService) {
+					return CommonDataService.getSites();
 				},
 				allRegions: allRegions,
 			},

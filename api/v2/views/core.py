@@ -26,8 +26,17 @@ from .utils import IsSuperUserPermission, StandardResultsSetPagination
 from ..filters import GeographicRegionFilter
 from rest_framework.views import APIView
 from django.db.models.query_utils import Q
+from django.contrib.sites.models import Site
 
 logger = logging.getLogger(__name__)
+
+
+class SiteViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    queryset = Site.objects.all()
+    serializer_class = serializers_v2.SiteSerializer
 
 
 class GroupViewSet(viewsets.ModelViewSet):
