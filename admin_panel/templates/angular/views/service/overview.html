@@ -1,13 +1,13 @@
 <section class="content-header" ng-controller="ContentHeaderController as chctrl">
     <h1>
-        Service {{ ctrl.isMapView ? 'Map' : 'List' }}
-        <small>Claimed by: {{ ctrl.provider.name_en}}</small>
+        {{ 'OVERVIEW' | translate }} {{ ctrl.isMapView ? 'Map' : 'List' }}
+        <small>{{ 'CLAIMED_BY' | translate }} {{ ctrl.provider.name_en}}</small>
     </h1>
 </section>
 
 <div class="btn-group" style="padding: 15px 0 0 15px;">
-    <button class="btn btn-default" ng-click="ctrl.listView()" style="border-bottom-left-radius: 0;">LIST</button>
-    <button class="btn btn-default" ng-click="ctrl.mapView()" style="border-bottom-right-radius: 0;">MAP</button>
+    <button class="btn btn-default" ng-click="ctrl.listView()" style="border-bottom-left-radius: 0;">{{ 'OVERVIEW_LIST' | translate }}</button>
+    <button class="btn btn-default" ng-click="ctrl.mapView()" style="border-bottom-right-radius: 0;">{{ 'OVERVIEW_MAP' | translate }}</button>
 </div>
 <section class="content">
     <div ng-if="!ctrl.isMapView" >

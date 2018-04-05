@@ -2,7 +2,7 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
@@ -10,163 +10,181 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-04-04 15:05+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Last-Translator: Signpost Generico <signpost.generic+transifex@gmail.com>, 2018\n"
+"Language-Team: Spanish (https://www.transifex.com/refugeeinfo/teams/56242/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: admin_panel/templates/admin_panel/activate.html:23
 msgid "Please set up a password for your account."
-msgstr ""
+msgstr "Por favor, introduzca una contraseña para su cuenta"
 
 #: admin_panel/templates/admin_panel/activate.html:29
 #: admin_panel/templates/admin_panel/login.html:31 email_user/forms.py:79
 msgid "Password"
-msgstr ""
+msgstr "Contraseña"
 
 #: admin_panel/templates/admin_panel/activate.html:32
 msgid "Confirm Password"
-msgstr ""
+msgstr "Confirme su contraseña"
 
 #: admin_panel/templates/admin_panel/login.html:22
 msgid "Sign in to start your session"
-msgstr ""
+msgstr "Regístrese para iniciar sesión"
 
 #: admin_panel/templates/admin_panel/login.html:28 email_user/forms.py:23
 #: services/models.py:1403
 msgid "Email"
-msgstr ""
+msgstr "Correo electrónico"
 
 #: admin_panel/templates/admin_panel/login.html:41
 #: admin_panel/templates/admin_panel/reset_complete.html:23
 msgid "Log in"
-msgstr ""
+msgstr "Inicie sesión"
 
 #: admin_panel/templates/admin_panel/login.html:46
 msgid "Forgotten your password or username?"
-msgstr ""
+msgstr "¿Ha olvidado su contraseña o nombre de usuario?"
 
 #: admin_panel/templates/admin_panel/logout.html:20
 msgid "You\\"
-msgstr ""
+msgstr "Usted\\"
 
 #: admin_panel/templates/admin_panel/logout.html:23
 msgid "Click "
-msgstr ""
+msgstr "Click"
 
 #: admin_panel/templates/admin_panel/logout.html:24
 msgid "here"
-msgstr ""
+msgstr "aquí"
 
 #: admin_panel/templates/admin_panel/logout.html:24
 msgid "to go back to the application"
-msgstr ""
+msgstr "para volver a la aplicación"
 
 #: admin_panel/templates/admin_panel/reset_complete.html:20
 msgid "Your password has been set.  You may go ahead and log in now."
-msgstr ""
+msgstr "Su contraseña ha sido enviada. Puede seguir adelante y entrar ahora."
 
 #: admin_panel/templates/admin_panel/reset_confirm.html:26
 msgid ""
 "Please enter your new password twice so we can verify you typed it in "
 "correctly."
 msgstr ""
+"Por favor, introduzca su nueva contraseña dos veces para verificar que la ha"
+" escrito correctamente. "
 
 #: admin_panel/templates/admin_panel/reset_confirm.html:34
 msgid "New password:"
-msgstr ""
+msgstr "Nueva contraseña:"
 
 #: admin_panel/templates/admin_panel/reset_confirm.html:39
 msgid "Confirm password:"
-msgstr ""
+msgstr "Confirme contraseña:"
 
 #: admin_panel/templates/admin_panel/reset_confirm.html:53
 msgid "Change my password"
-msgstr ""
+msgstr "Cambiar mi contraseña"
 
 #: admin_panel/templates/admin_panel/reset_confirm.html:61
 msgid ""
 "The password reset link was invalid, possibly because it has already been "
 "used.  Please request a new password reset."
 msgstr ""
+"El enlace de restablecimiento de contraseña no es válido, posiblemente "
+"porque ya ha sido usado. Por favor, solicite un restablecimiento para una "
+"nueva contraseña. "
 
 #: admin_panel/templates/admin_panel/reset_done.html:20
 msgid ""
 "We’ve emailed you instructions for setting your password. If an account "
 "exists with the email you entered, you should receive them shortly."
 msgstr ""
+"Hemos enviado un correo con instrucciones para connfigurar su contraseña. Si"
+" existe un cuenta con el correo electrónico ingresado, deberá recibirlas "
+"pronto. "
 
 #: admin_panel/templates/admin_panel/reset_done.html:22
 msgid ""
 "If you don't receive an email, please make sure you've entered the address "
 "you registered with, and check your spam folder."
 msgstr ""
+"Si no recibe un correo, por favor, asegúrese de que ha introducido la "
+"dirección con la que se registró y revisé su carpeta de spam."
 
 #: admin_panel/templates/admin_panel/reset_form.html:22
 msgid ""
 "Forgotten your password? Enter your email address below, and we'll email "
 "instructions for setting a new one."
 msgstr ""
+"¿Olvidó su contraseña? Ingrese su dirección de correo electrónico y le "
+"mandaremos un correo con las instrucciones para configurar una nueva. "
 
 #: admin_panel/templates/admin_panel/reset_form.html:28
 msgid "Email address:"
-msgstr ""
+msgstr "Dirección de correo electrónico:"
 
 #: admin_panel/templates/admin_panel/reset_form.html:39
 msgid "Reset my password"
-msgstr ""
+msgstr "Restablecer mi contraseña:"
 
 #: api/renderers.py:27 services/models.py:1157
 msgid "Name"
-msgstr ""
+msgstr "Nombre"
 
 #: api/v2/serializers/core.py:52
 msgid "User account is disabled."
-msgstr ""
+msgstr "Cuenta de usuario está deshabilitada."
 
 #: api/v2/serializers/core.py:55
 msgid "Unable to log in with provided credentials."
-msgstr ""
+msgstr "No se puede iniciar sesión con las credenciales proporcionadas."
 
 #: api/v2/serializers/core.py:81 api/v2/serializers/services.py:58
 #: services/models.py:672 services/models.py:675
 msgid "This field is required."
-msgstr ""
+msgstr "Este campo es requerido."
 
 #: api/v2/serializers/services.py:124 email_user/forms.py:18
 msgid "A user with that email already exists."
-msgstr ""
+msgstr "Ya existe un usuario con ese correo electrónico."
 
 #: email_user/admin.py:30
 msgid "Permissions"
-msgstr ""
+msgstr "Permisos"
 
 #: email_user/admin.py:32
 msgid "Important dates"
-msgstr ""
+msgstr "Fechas importantes"
 
 #: email_user/admin.py:53
 #, python-brace-format
 msgid "Unable to activate user '{email}': {error}."
-msgstr ""
+msgstr "Imposible activar usuario '{email}': {error}"
 
 #: email_user/admin.py:62
 msgid "The account was activated successfully. Email has been sent to user."
 msgstr ""
+"La cuenta fue acitvada exitosamente. Se ha enviado un correo al usuario."
 
 #: email_user/forms.py:19
 msgid "The two password fields didn't match."
-msgstr ""
+msgstr "Los campos de las dos contraseñas no coinciden."
 
 #: email_user/forms.py:24
 msgid "Required. 255 characters or fewer. Letters, digits and @/./+/-/_ only."
 msgstr ""
+"Obligatorio. 255 caracteres o menos. Letras, dígitos y @/./+/-/_ únicamente."
+" "
 
 #: email_user/forms.py:27
 msgid "This value may contain only letters, numbers and @/./+/-/_ characters."
 msgstr ""
+"Este valor puede contener sólo letras, números y los siguientes caracteres "
+"@/./+/-/_"
 
 #: email_user/forms.py:80
 msgid ""
@@ -174,88 +192,99 @@ msgid ""
 "password, but you can change the password using <a href=\"password/\">this "
 "form</a>."
 msgstr ""
+"Las contraseñas no se almacenan, así que no hay manera de ver la contraseña "
+"de este usuario, pero puede cambiar la contraseña usando <a "
+"href=\"password/\">este formulario</a>. "
 
 #: email_user/models.py:45
 msgid "Users must have an email address"
-msgstr ""
+msgstr "Los usuarios deben tener una dirección de correo electrónico"
 
 #: email_user/models.py:81
 msgid "Activation key is invalid or has already been used."
-msgstr ""
+msgstr "La clave de activación no es válida o ya ha sido usada."
 
 #: email_user/models.py:124 services/models.py:497
 msgid "email address"
-msgstr ""
+msgstr "dirección de correo electrónico"
 
 #: email_user/models.py:142
 msgid "staff status"
-msgstr ""
+msgstr "estado del perfil"
 
 #: email_user/models.py:143
 msgid "Designates whether the user can log into this admin site."
 msgstr ""
+"Designe si el usuario puede iniciar sesión como administrador del sitio."
 
 #: email_user/models.py:146
 msgid "active"
-msgstr ""
+msgstr "activo"
 
 #: email_user/models.py:147
 msgid ""
 "Designates whether this user should be treated as active. Unselect this "
 "instead of deleting accounts."
 msgstr ""
+"Designar el entorno que el usuario tendrá activo. Desactivar en lugar de "
+"eliminar. "
 
 #: email_user/models.py:149
 msgid "date joined"
-msgstr ""
+msgstr "fecha en la que se unió"
 
 #: email_user/models.py:152
 msgid "activation key"
-msgstr ""
+msgstr "clave de activación"
 
 #: email_user/models.py:155
 msgid "language"
-msgstr ""
+msgstr "idioma"
 
 #: email_user/models.py:156
 msgid "User's preferred language."
-msgstr ""
+msgstr "Idioma preferido del usuario"
 
 #: email_user/models.py:165
 msgid "user"
-msgstr ""
+msgstr "usuario"
 
 #: email_user/models.py:195
 msgid "User emails must be unique without regard to case."
 msgstr ""
+"El correo electrónico de los usuarios debe ser único sin consideración del "
+"caso"
 
 #: email_user/models.py:232
 #, python-brace-format
 msgid "Password is too short. It must have at least {min_length} characters."
 msgstr ""
+"Contraseña muy corta. Esta debe tener al menos {min_length} caracteres."
 
 #: email_user/templates/email_user/password_reset_email.html:2
 msgid ""
 "You're receiving this email because you requested a password reset for your\n"
 "        user account at Refugee.Info Admin."
 msgstr ""
+"Usted está recibiendo este mensaje porque solicitó restablecer una "
+"contraseña para su cuenta de usuario en Refugee.Info Admin."
 
 #: email_user/templates/email_user/password_reset_email.html:5
 msgid "Please go to the following page and choose a new password:"
-msgstr ""
+msgstr "Por favor, vaya a la siguiente página y elija una nueva contraseña:"
 
 #: email_user/templates/email_user/password_reset_email.html:11
 msgid "Your username is your email address:"
-msgstr ""
+msgstr "Su nombre de usuario es su dirección de correo electrónico:"
 
 #: email_user/templates/email_user/password_reset_email.html:14
 msgid "Thanks for using our site!"
-msgstr ""
+msgstr "¡Gracias por usar nuestro sitio!"
 
 #: email_user/templates/email_user/password_reset_email.html:16
 #, python-format
 msgid "The %(site_name)s team"
-msgstr ""
+msgstr "El equipo de %(site_name)s"
 
 #: email_user/templates/email_user/password_reset_email.txt:2
 msgid ""
@@ -264,12 +293,18 @@ msgid ""
 "password of an account at admin.refugee.info.\n"
 "If this wasn't you, please ignore this email.\n"
 msgstr ""
+"\n"
+"Usted (o alguien haciéndose pasar por usted) ha solicitado restablecer la\n"
+"contraseña de una cuenta en admin.refugee.info.\n"
+"Si no fue usted, por favor, ignore este correo electrónico.\n"
 
 #: email_user/templates/email_user/password_reset_email.txt:7
 msgid ""
 "\n"
 "To reset the password, please click the following link:\n"
 msgstr ""
+"\n"
+"Para restablecer la contraseña, haga clic en el siguiente enlace:\n"
 
 #: email_user/templates/email_user/password_reset_email.txt:13
 msgid ""
@@ -277,25 +312,29 @@ msgid ""
 "Sincerely,\n"
 "Refugee.Info Management\n"
 msgstr ""
+"\n"
+"Sinceramente,\n"
+"Gestión de Refugee.Info\n"
 
 #: email_user/templates/email_user/password_reset_subject.txt:2
 msgid "Password reset on Refugee.Info Admin"
-msgstr ""
+msgstr "Restablecer la contraseña en Refugee.Info Admin"
 
 #: email_user/templates/registration/activation_email.html:6
 msgid "registration"
-msgstr ""
+msgstr "registro"
 
 #: email_user/templates/registration/activation_email.html:11
 #, python-format
 msgid ""
 "\n"
-"    You (or someone pretending to be you) have asked to register an account "
-"at\n"
+"    You (or someone pretending to be you) have asked to register an account at\n"
 "    %(site)s.  If this wasn't you, please ignore this email\n"
 "    and your address will be removed from our records.\n"
 "    "
 msgstr ""
+"\n"
+"Usted (o alguien haciéndose pasar por usted) ha solicitado registrar una cuenta en 1%(site)s. Si no fue usted, por favor, ignore este mensaje y su dirección será eliminada de nuestros registros. "
 
 #: email_user/templates/registration/activation_email.html:18
 msgid ""
@@ -303,6 +342,9 @@ msgid ""
 "    To activate this account, please click the following link:\n"
 "    "
 msgstr ""
+"\n"
+"    Para activar esta cuenta, haga clic en el siguiente enlace:\n"
+"    "
 
 #: email_user/templates/registration/activation_email.html:29
 #, python-format
@@ -312,6 +354,10 @@ msgid ""
 "    %(site)s Management\n"
 "    "
 msgstr ""
+"\n"
+"    Sinceramente,\n"
+"    Gestión de%(site)s \n"
+"    "
 
 #: email_user/templates/registration/activation_email.txt:2
 #, python-format
@@ -321,12 +367,18 @@ msgid ""
 "%(site)s.  If this wasn't you, please ignore this email\n"
 "and your address will be removed from our records.\n"
 msgstr ""
+"\n"
+"Usted (o alguien que pretende ser usted) ha solicitado registrar una cuenta en\n"
+"%(site)s. Si no fue usted, ignore este correo electrónico\n"
+"y su dirección será eliminada de nuestros registros.\n"
 
 #: email_user/templates/registration/activation_email.txt:7
 msgid ""
 "\n"
 "To activate this account, please click the following link:\n"
 msgstr ""
+"\n"
+"Para activar esta cuenta, haga clic en el siguiente enlace:\n"
 
 #: email_user/templates/registration/activation_email.txt:13
 #, python-format
@@ -335,50 +387,51 @@ msgid ""
 "Sincerely,\n"
 "%(site)s Management\n"
 msgstr ""
+"\n"
+"Sinceramente,\n"
+"Gestión de%(site)s\n"
 
 #: email_user/templates/registration/activation_email_subject.txt:1
 msgid "Account activation on"
-msgstr ""
+msgstr "Activación de la cuenta"
 
 #: regions/models.py:90 regions/models.py:288
 #, python-brace-format
 msgid "Title in {LANGUAGE_NAME}"
-msgstr ""
-
+msgstr "Título en {LANGUAGE_NAME}"
 
 #: service_info/settings.py:59
 msgid "Tigrinya"
-msgstr ""
+msgstr "Tigrinya"
 
 #: service_info/templates/admin/submit_line.html:5
 msgid "Save"
-msgstr ""
+msgstr "Guardar"
 
 #: service_info/templates/admin/submit_line.html:8
 msgid "Delete"
-msgstr ""
+msgstr "Borrar"
 
 #: service_info/templates/admin/submit_line.html:10
 msgid "Save as new"
-msgstr ""
+msgstr "Guardar como nuevo"
 
 #: service_info/templates/admin/submit_line.html:11
 msgid "Save and add another"
-msgstr ""
+msgstr "Guardar y agregar otro"
 
 #: service_info/templates/admin/submit_line.html:12
 msgid "Save and continue editing"
-msgstr ""
+msgstr "Guardar y continuar editando"
 
 #: service_info/templates/admin/submit_line.html:13
 msgid "Save and reject"
-msgstr ""
+msgstr "Guardar y rechazar"
 
 #: service_info/templates/admin/submit_line.html:14
 msgid "Save and approve"
-msgstr ""
+msgstr "Guardar y aprobar"
 
 #: service_info/templates/admin/submit_line.html:15
 msgid "Activate provider account"
-msgstr ""
-
+msgstr "Activar cuenta de proveedor"

@@ -4,7 +4,7 @@
     </div>
     <div class="form-container">
         <div class="box-border">
-            <p class="text-center">Sign in to start your session</p>
+            <p class="text-center">{{ 'USER_SIGN_IN' | translate }}</p>
             <form name="ctrl.loginForm"
                   ng-submit="ctrl.loginForm.$valid && ctrl.login()">
                 <div class="form-group has-feedback">
@@ -22,15 +22,15 @@
                 </div>
                 <div class="form-group login-buttons-container">
                     <div class="checkbox checkbox-primary">
-                        <label><input type="checkbox" value="">Remember Me</label>
+                        <label><input type="checkbox" value="">{{ 'USER_REMEMBER_ME' | translate }}</label>
                     </div>
                     <span></span>
                     <button type="submit" class="btn login-button" id="login_submit">
-                        Sign In
+                        {{ 'USER_SIGN_IN' | translate }}
                     </button>
                 </div>
             </form>
-            <p><a class="reset-password-link" ui-sref="resetPassword.email">I forgot my password</a></p>
+            <p><a class="reset-password-link" ui-sref="resetPassword.email">{{ 'USER_FORGOT_PASSWORD' | translate }}</a></p>
         </div>
     </div>
 </div>

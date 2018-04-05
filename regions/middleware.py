@@ -6,12 +6,15 @@ class UserRegionMiddleware(object):
     def process_request(request):
         user = request.user
         if not user.is_anonymous():
-            providers = user.managed_providers.all() | user.providers.all()
-            regions = providers.values_list('region').distinct()
-            if not user.is_superuser and regions.count() == 1:
-                region_id,  = regions.first()
-                request.region = models.GeographicRegion.objects.get(
-                    pk=region_id)
+            if hasattr(user, 'region') and user.region:
+                request.region = user.region
+            else:
+                providers = user.managed_providers.all() | user.providers.all()
+                regions = providers.values_list('region').distinct()
+                if not user.is_superuser and regions.count() == 1:
+                    region_id,  = regions.first()
+                    request.region = models.GeographicRegion.objects.get(
+                        pk=region_id)
 
 
 class RegionAttributesMiddleware(object):

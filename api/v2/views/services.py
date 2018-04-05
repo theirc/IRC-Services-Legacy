@@ -65,7 +65,7 @@ class SearchFilter(filters.SearchFilter):
         return queryset.filter(pk__in=pk_list).order_by(preserved)
 
 
-class ProviderViewSet(viewsets.ModelViewSet):
+class ProviderViewSet(FilterByRegionMixin, viewsets.ModelViewSet):
     queryset = Provider.objects.all()
     serializer_class = serializers_v2.ProviderSerializer
     pagination_class = StandardResultsSetPagination

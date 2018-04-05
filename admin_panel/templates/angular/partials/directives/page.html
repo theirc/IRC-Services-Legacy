@@ -11,8 +11,8 @@
                     style="border: none"
                     ng-if="ctrl.page.published && ctrl.isStaging()"
                     ng-disabled="true"
-                    data-old-tooltip="Page was published: {{ ctrl.page.published }} and {{ ctrl.hasChanged(ctrl.page.has_changed) }} been changed since that time.">
-                <span>Published{{ ctrl.getInfo(ctrl.page.has_changed) }}</span>
+                    data-old-tooltip="{{ 'INDEX_TITLE' | translate}} {{ ctrl.page.published }} and {{ ctrl.hasChanged(ctrl.page.has_changed) }} been changed since that time.">
+                <span>{{ 'PUBLISHED' | translate }}{{ ctrl.getInfo(ctrl.page.has_changed) }}</span>
             </button>
             <div class="page-icons">
                 <i class="fa fa-window-restore tooltip-icon" data-old-tooltip="Pop up"

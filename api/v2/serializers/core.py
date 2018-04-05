@@ -108,7 +108,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = EmailUser
-        fields = ('id', 'email', 'groups', 'name', 'surname', 'is_active', 'is_staff', 'language', 'is_superuser', 'phone_number', 'title',
+        fields = ('id', 'email', 'groups', 'name', 'surname', 'is_active', 'is_staff', 'language', 'region', 'is_superuser', 'phone_number', 'title',
                   'position', 'providers', 'managed_providers')
 
 
@@ -127,7 +127,7 @@ class UserWithGroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = EmailUser
         fields = ('id', 'email', 'groups', 'name', 'surname', 'is_active', 'is_staff', 'is_superuser', 'language',  'phone_number', 'title',
-                  'position', 'providers', 'isStaff', 'isSuperuser', 'managed_providers')
+                  'position', 'providers', 'isStaff', 'isSuperuser', 'region', 'managed_providers')
 
 
 class UserAvatarSerializer(serializers.ModelSerializer):
@@ -211,6 +211,7 @@ class ProviderSerializer(serializers.ModelSerializer):
             generate_translated_fields('address') +
             [
                 'type', 'phone_number', 'website',
+                'facebook', 'twitter',
                 'focal_point_phone_number',
                 'user', 'number_of_monthly_beneficiaries', 'is_frozen'
             ]

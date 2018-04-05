@@ -1,6 +1,6 @@
 <section class="content-header" ng-controller="ContentHeaderController as chctrl">
     <h1>
-        Services
+        {{'SERVICES'| translate}}
     </h1>
 </section>
 
@@ -11,31 +11,31 @@
                 <form class="form" ng-submit="ctrl.reloadOption(ctrl.searchCriteria)">
                     <div class="row">
                         <div class="form-group col-xs-12">
-                            <input type="text" class="form-control" ng-model="ctrl.searchCriteria.search" placeholder="Search">
+                            <input type="text" class="form-control" ng-model="ctrl.searchCriteria.search" placeholder="{{'SEARCH'| translate}}">
                         </div>
                     </div>
                     <div class="row">
 
                         <div class="form-group col-xs-4">
-                            <label for="">Type</label>
+                            <label for="">{{'TYPE'| translate}}</label>
                             <select class="form-control" ng-model="ctrl.searchCriteria.type_numbers" ng-options="r.id as r.name for r in ctrl.serviceTypes"></select>
                         </div>
                         <div class="form-group col-xs-4">
-                            <label for="">Provider</label>
+                            <label for=""> {{'PROVIDER'| translate}} </label>
                             <select class="form-control" ng-model="ctrl.searchCriteria.provider" ng-options="r.id as r.name for r in ctrl.providers"></select>
                         </div>
                         <div class="form-group col-xs-4">
-                            <label for="">City</label>
-                            <input type="text" class="form-control" ng-model="ctrl.searchCriteria.address_city" placeholder="City">
+                            <label for=""> {{'CITY'| translate}} </label>
+                            <input type="text" class="form-control" ng-model="ctrl.searchCriteria.address_city" placeholder="{{'CITY'| translate}}">
                         </div>
                     </div>
                     <div class="row" ng-if="user.isSuperuser">
-                        <div class="form-group col-xs-4">
-                            <label for="">Region</label>
+                        <div class="form-group col-xs-4" ng-if="!user.region">
+                            <label for=""> {{'REGION'| translate}} </label>
                             <select class="form-control" ng-model="ctrl.searchCriteria.geographic_region" ng-options="r.slug as r.name for r in ctrl.regions"></select>
                         </div>
                         <div class="form-group col-xs-4">
-                            <label for="">Status</label>
+                            <label for=""> {{'STATUS'| translate}} </label>
                             <select class="form-control" ng-model="ctrl.searchCriteria.status" ng-options="r.id as r.name for r in ctrl.serviceStatus"></select>
                         </div>
                     </div>
@@ -44,11 +44,11 @@
                 </form>
                 <div class="col-xs-12">
                     <div class="btn-group pull-right">
-                        <button class="btn btn-warning " ng-click="ctrl.searchCriteria = {}">Clear Search</button>
-                        <button class="btn btn-primary " ng-hide="ctrl.isMapMode" ng-click="ctrl.reloadOption(ctrl.searchCriteria)">Search</button>
-                        <button class="btn btn-primary " ng-show="ctrl.isMapMode" ng-click="ctrl.showMap(ctrl.searchCriteria)">Search</button>
-                        <button class="btn btn-primary " ng-hide="ctrl.isMapMode" ng-click="ctrl.showMap(ctrl.searchCriteria)">Show Map</button>
-                        <button class="btn btn-primary " ng-show="ctrl.isMapMode" ng-click="ctrl.isMapMode = false; ctrl.reloadOption(ctrl.searchCriteria)">Hide Map</button>
+                        <button class="btn btn-warning " ng-click="ctrl.searchCriteria = {}"> {{'CLEAR_SEARCH'| translate}} </button>
+                        <button class="btn btn-primary " ng-hide="ctrl.isMapMode" ng-click="ctrl.reloadOption(ctrl.searchCriteria)"> {{'SEARCH'| translate}} </button>
+                        <button class="btn btn-primary " ng-show="ctrl.isMapMode" ng-click="ctrl.showMap(ctrl.searchCriteria)"> {{'SEARCH'| translate}} </button>
+                        <button class="btn btn-primary " ng-hide="ctrl.isMapMode" ng-click="ctrl.showMap(ctrl.searchCriteria)"> {{'SHOW_MAP'| translate}} </button>
+                        <button class="btn btn-primary " ng-show="ctrl.isMapMode" ng-click="ctrl.isMapMode = false"> {{'HIDE_MAP'| translate}} </button>
                     </div>
                 </div>
 
@@ -71,9 +71,9 @@
     <footer-action-bar>
         <div class="col-xs-12">
             <div class="btn-group pull-right">
-                <button class="btn btn-warning " ng-click="ctrl.searchCriteria = {}">Clear Search</button>
-                <button class="btn btn-primary " ng-hide="ctrl.isMapMode" ng-click="ctrl.reloadOption(ctrl.searchCriteria)">Search</button>
-                <button class="btn btn-primary " ng-show="ctrl.isMapMode" ng-click="ctrl.showMap(ctrl.searchCriteria)">Search</button>
+                <button class="btn btn-warning " ng-click="ctrl.searchCriteria = {}"> {{'CLEAR_SEARCH'| translate}} </button>
+                <button class="btn btn-primary " ng-hide="ctrl.isMapMode" ng-click="ctrl.reloadOption(ctrl.searchCriteria)"> {{'SEARCH'| translate}} </button>
+                <button class="btn btn-primary " ng-show="ctrl.isMapMode" ng-click="ctrl.showMap(ctrl.searchCriteria)"> {{'SEARCH'| translate}} </button>
             </div>
         </div>
     </footer-action-bar>

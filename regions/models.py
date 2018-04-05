@@ -7,7 +7,6 @@ from django.contrib.gis.db import models
 from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _, get_language
 
-from email_user.models import EmailUser
 from services.meta import TranslatableModel
 from . import utils
 

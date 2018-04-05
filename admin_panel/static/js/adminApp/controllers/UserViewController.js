@@ -1,4 +1,4 @@
-angular.module('adminApp').controller('UserViewController', function ($rootScope, $scope, $state, $cookies, user, groups, providers, languages, Restangular, Upload) {
+angular.module('adminApp').controller('UserViewController', function ($rootScope, $scope, $state, $cookies, user, groups, providers, languages, regions, Restangular, Upload) {
     let vm = this;
 
     vm.languages = languages.map(l => ({
@@ -10,6 +10,7 @@ angular.module('adminApp').controller('UserViewController', function ($rootScope
         vm.providers = providers;
         vm.editOptions = {};
         vm.isNew = !vm.object.hasOwnProperty('id');
+        vm.regions = _.sortBy(regions.filter(r => r.level === 1), r => r.name);
 
         if (vm.isNew) {
             vm.startEditing();
