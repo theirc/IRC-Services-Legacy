@@ -55,7 +55,11 @@ class LandingPageView(LoginRequiredMixin, TemplateView):
             'title': user.title,
             'position': user.position,
             'phone_number': user.phone_number,
-            'region': user.region.id if user.region else None,
+            'site': {
+                "id": user.site.id,
+                "name": user.site.name,
+                "domain": user.site.domain,
+            } if user.site else {},
             'providers': [{"id": p.id, "name": p.name} for p in user.all_providers],
             'groups': [{"id": p.id, "name": p.name} for p in user.groups.all()],
         }

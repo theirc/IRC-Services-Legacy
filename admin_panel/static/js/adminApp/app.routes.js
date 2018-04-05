@@ -561,6 +561,9 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 					return ProviderService.getList().then(r => r.plain());
 				},
 				groups: Restangular => Restangular.all("groups").getList(),
+				sites: function (CommonDataService) {
+					return CommonDataService.getSites();
+				},
 			},
 		})
 		.state("user.open", {
