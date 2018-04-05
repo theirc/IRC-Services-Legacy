@@ -128,6 +128,8 @@ angular.module("adminApp").config(function($translateProvider){
         PROVIDER_DESCRIPTION: 'Description',
         PROVIDER_ADDRESS: 'Address',
         PROVIDER_TYPE: 'Type',
+        PROVIDER_FACEBOOK: 'Facebook',
+        PROVIDER_TWITTER: 'Twitter',
         PROVIDER_ADMINISTRATOR: 'Administrator',
         PROVIDER_PHONE_NUMBER: 'Phone Number',
         PROVIDER_WEBSITE: 'Website',
