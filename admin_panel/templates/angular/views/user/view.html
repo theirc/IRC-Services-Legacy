@@ -98,7 +98,7 @@
             </div>
         </div>
 
-        <div class="col-xs-12" ng-if="user.isSuperuser && !ctrl.isNew">
+        <div class="col-xs-12" ng-if="user.isSuperuser && !ctrl.isNew && ctrl.providers.length > 0">
             <div class="box">
                 <div class="box-header">
                     <h3 class="box-title">{{ 'USER_PROVIDERS' | translate}}</h3>
