@@ -120,7 +120,6 @@ angular
             }),
             tableUtils
             .newColumn('status')
-<<<<<<< HEAD
             .withTitle($filter('translate')('TABLE_STATUS')),
 
         ];
@@ -147,11 +146,8 @@ angular
         vm.dtColumns.push(tableUtils
             .newServiceActionColumn()
             .withOption('width', '200px')
-=======
-            .withTitle('Status'),
-
->>>>>>> 42ccd4613a0c8db599b7b0668178c15e947e43f3
-        ];
+            .withTitle('Status')
+        );
         if ($scope.user.isSuperuser) {
             vm.dtColumns.push(
                 tableUtils
@@ -805,17 +801,10 @@ Only superusers and service providers have access to the edit functions. Everyon
             .withTitle('ID'),
             tableUtils
             .newColumn(`name_${selectedLanguage}`)
-<<<<<<< HEAD
-            .withTitle($filter('translate')('TABLE_SERVICE')),
-            tableUtils
-            .newColumn(`provider.name_${selectedLanguage}`)
-            .withTitle($filter('translate')('TABLE_PROVIDER')),
-=======
-            .withTitle('Service'),
+            .withTitle($filter('translate')('TABLE_SERVICE')),            
             tableUtils
             .newColumn(`provider.name_${selectedLanguage}`)
             .withTitle('Provider'),
->>>>>>> 42ccd4613a0c8db599b7b0668178c15e947e43f3
             tableUtils
             .newColumn('types')
             .withTitle($filter('translate')('TABLE_TYPES'))
@@ -824,11 +813,7 @@ Only superusers and service providers have access to the edit functions. Everyon
             }),
             tableUtils
             .newColumn(`address_city_${selectedLanguage}`)
-<<<<<<< HEAD
             .withTitle($filter('translate')('TABLE_CITY')),
-=======
-            .withTitle('City'),
->>>>>>> 42ccd4613a0c8db599b7b0668178c15e947e43f3
             tableUtils
             .newColumn('updated_at')
             .withTitle($filter('translate')('TABLE_UPDATE_AT'))
