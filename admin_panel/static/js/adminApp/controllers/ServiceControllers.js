@@ -46,19 +46,19 @@ angular
             tableUtils.newColumn(`name_${selectedLanguage}`).withTitle(`Name (${selectedLanguage})`),
             tableUtils
             .newColumn('types')
-            .withTitle('Types')
+            .withTitle($filter('translate')('TABLE_TYPES'))
             .renderWith(function (types) {
                 return types.map((type) => type.name).join(', ');
             }),
             tableUtils
             .newColumn('updated_at')
-            .withTitle('Updated at')
+            .withTitle($filter('translate')('TABLE_UPDATE_AT'))
             .renderWith(function (data) {
                 return $filter('date')(data, 'medium');
             }),
             tableUtils
             .newColumn('region')
-            .withTitle('Region')
+            .withTitle($filter('translate')('TABLE_REGION'))
             .renderWith(function (data) {
                 let region = regions.filter(function (t) {
                     return t.id == data.id;
@@ -70,7 +70,7 @@ angular
             }),
             tableUtils
             .newColumn('status')
-            .withTitle('Status')
+            .withTitle($filter('translate')('TABLE_STATUS'))
         ];
 
         vm.dtInstance = {};
@@ -93,22 +93,22 @@ angular
             tableUtils
             .newColumn('id')
             .withTitle('ID'),
-            tableUtils.newColumn(`name_${selectedLanguage}`).withTitle(`Name (${selectedLanguage})`),
+            tableUtils.newColumn(`name_${selectedLanguage}`).withTitle($filter('translate')('NAME',`${selectedLanguage}`)),
             tableUtils
             .newColumn('types')
-            .withTitle('Types')
+            .withTitle($filter('translate')('TABLE_TYPES'))
             .renderWith(function (types) {
                 return types.map((type) => type.name).join(', ');
             }),
             tableUtils
             .newColumn('updated_at')
-            .withTitle('Updated at')
+            .withTitle($filter('translate')('TABLE_UPDATE_AT'))
             .renderWith(function (data) {
                 return $filter('date')(data, 'medium');
             }),
             tableUtils
             .newColumn('region')
-            .withTitle('Region')
+            .withTitle($filter('translate')('TABLE_REGION'))
             .renderWith(function (data) {
                 let region = regions.filter(function (t) {
                     return t.id == data;
@@ -120,9 +120,34 @@ angular
             }),
             tableUtils
             .newColumn('status')
-            .withTitle('Status'),
+            .withTitle($filter('translate')('TABLE_STATUS')),
 
         ];
+        if ($scope.user.isSuperuser) {
+            vm.dtColumns.push(
+                tableUtils
+                .newColumn('transifex_status')
+                .withTitle($filter('translate')('TABLE_TRANSIFEX_STATUS'))
+                .renderWith(function (data) {
+                    if (data.hasOwnProperty('errors')) {
+                        return data.errors;
+                    } else {
+                        let transifexStatus = '';
+                        langs.forEach(function (lang) {
+                            if (lang[0] != 'en') {
+                                transifexStatus += `${lang[1]}: ${data[lang[0]] || 'N/A'}<br />`;
+                            }
+                        });
+                        return transifexStatus;
+                    }
+                }));
+        }
+
+        vm.dtColumns.push(tableUtils
+            .newServiceActionColumn()
+            .withOption('width', '200px')
+            .withTitle('Status')
+        );
         if ($scope.user.isSuperuser) {
             vm.dtColumns.push(
                 tableUtils
@@ -776,22 +801,22 @@ Only superusers and service providers have access to the edit functions. Everyon
             .withTitle('ID'),
             tableUtils
             .newColumn(`name_${selectedLanguage}`)
-            .withTitle('Service'),
+            .withTitle($filter('translate')('TABLE_SERVICE')),            
             tableUtils
             .newColumn(`provider.name_${selectedLanguage}`)
             .withTitle('Provider'),
             tableUtils
             .newColumn('types')
-            .withTitle('Types')
+            .withTitle($filter('translate')('TABLE_TYPES'))
             .renderWith(function (types) {
                 return types.map((type) => type.name).join(', ');
             }),
             tableUtils
             .newColumn(`address_city_${selectedLanguage}`)
-            .withTitle('City'),
+            .withTitle($filter('translate')('TABLE_CITY')),
             tableUtils
             .newColumn('updated_at')
-            .withTitle('Updated at')
+            .withTitle($filter('translate')('TABLE_UPDATE_AT'))
             .renderWith(function (data) {
                 return $filter('date')(data, 'medium');
             })
