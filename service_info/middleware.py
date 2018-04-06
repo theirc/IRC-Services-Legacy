@@ -1,9 +1,18 @@
 from .urls import NO_404_LOCALE_REDIRECTS
+from django.utils.translation import ugettext_lazy as _, activate, get_language
 
 RESPONSE_ATTR = 'HiddenFromLocaleMiddleware'
 
 # Wrap Hide404 and Restore404 around django.middleware.locale.LocaleMiddleware
 # to bypass its 404 handling for paths matched in NO_404_LOCALE_REDIRECTS
+
+
+class ActivateUserLanguageMiddleware(object):
+    @staticmethod
+    def process_request(request):
+        if hasattr(request, 'user') and hasattr(request.user, 'language'):
+            if request.user.language:
+                activate(request.user.language)
 
 
 class Hide404FromLocaleMiddleware(object):

@@ -15,36 +15,52 @@
     <div>
         <div class="main-flex-container">
             <div class="logo-header">
-                <img src="/public/static/img/{{site.domain}}.wb.png" />
+                    <img src="/public/static/img/{{site.domain}}.wb.png" />
             </div>
             <div class="form-container">
                 <div class="box-border">
-                    <p class="text-center">{% trans "Sign in to start your session" %}</p>
+                   
+{% if validlink %}
+
+<p class="text-center">
+    {% trans "Please enter your new password twice so we can verify you typed it in correctly." %}
+</p>
                     <form method="POST">
                         {% csrf_token %}
                         <input type="hidden" name="next" value="{% firstof next '/' %}" />
 
-                        <div class="form-group">
-                            <input type="email" name="username" class="form-control" id="id_username" placeholder="{% trans 'Email' %}" required>
+                       
+                        <div class="form-group has-feedback">
+                            <input type="password" name="new_password1" class="form-control" id="id_new_password1" placeholder="{% trans 'New password:' %}" ng-model="ctrl.user.password"
+                                required>
+                            <i class="fa fa-lock form-control-feedback input-right-icon"></i>
                         </div>
-                        <div class="form-group">
-                            <input type="password" name="password" class="form-control" id="id_password" placeholder="{% trans 'Password' %}" required>
+                        <div class="form-group has-feedback">
+                            <input type="password" name="new_password2" class="form-control" id="id_new_password2" placeholder="{% trans 'Confirm password:' %}" ng-model="ctrl.user.password"
+                                required>
+                            <i class="fa fa-lock form-control-feedback input-right-icon"></i>
                         </div>
                         {%if form.errors%}
                         <div class="alert alert-danger" ng-show="ctrl.loginErrorMessage">
                             {{ form.non_field_errors }}
+                            {{ form.new_password1.errors }}
+                            {{ form.new_password2.errors }}
                         </div>
                         {%endif%}
                         <div class="form-group login-buttons-container">
                             <span></span>
                             <button type="submit" class="btn login-button" id="login_submit">
-                                    {% trans 'Log in' %}
-                            </button>
+                                    {% trans 'Change my password' %}
+                                                            </button>
                         </div>
                     </form>
-                    <p>
-                        <a class="reset-password-link" href="/password_reset">{% trans 'Forgotten your password or username?' %}</a>
-                    </p>
+
+
+{% else %}
+
+<p>{% trans "The password reset link was invalid, possibly because it has already been used.  Please request a new password reset." %}</p>
+
+{% endif %}
                 </div>
             </div>
         </div>

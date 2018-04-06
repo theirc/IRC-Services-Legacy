@@ -2,13 +2,12 @@
  * Created by reyrodrigues on 1/2/17.
  */
 angular.module('adminApp')
-    .controller('ProviderListController', function (tableUtils, $scope, ProviderService, providerTypes) {
+    .controller('ProviderListController', function (tableUtils, $scope, ProviderService, providerTypes,selectedLanguage) {
         var vm = this;
         vm.dtOptions = tableUtils.defaultsWithServiceNameAndFilterAndSearch('ProviderService');
         vm.dtColumns = [
             tableUtils.newColumn('id').withTitle('ID'),
-            tableUtils.newLinkColumn('name_en', 'Name (English)'),
-            tableUtils.newLinkColumn('name_ar', 'Name (Arabic)'),
+            tableUtils.newColumn(`name_${selectedLanguage}`).withTitle(`Name (${selectedLanguage})`),
             tableUtils.newColumn('type').withTitle('Type').renderWith(function (data) {
                 var type = providerTypes.filter(function (t) {
                     return t.id == data;
@@ -19,21 +18,20 @@ angular.module('adminApp')
             }),
             tableUtils.newColumn('actions').withTitle('Actions').renderWith(function (data, type, full, meta) {
                 var viewButton = `
-                    <a class="btn btn-primary btn-xs" ui-sref="^.open({id: ${full.id}})">
+                    <a class="btn btn-primary btn-xs btn-block" ui-sref="^.open({id: ${full.id}})">
                         <i class="fa fa-eye"></i>
                         {{ OPEN | translate }}
                     </a>`;
                 var impersonateButton = `
-                    <a class="btn btn-success btn-xs" ui-sref="^.impersonate({id: ${full.id}})">
+                    <a class="btn btn-success btn-xs btn-block" ui-sref="^.impersonate({id: ${full.id}})">
                         <i class="fa fa-user"></i>
                         Impersonate
                     </a>
                 `;
 
-                return `<div class="btn-group">
+                return `
                     ${viewButton}
-                    ${$scope.user.isSuperuser ? impersonateButton : ''}
-                </div>`;
+                    ${$scope.user.isSuperuser ? impersonateButton : ''}`;
             }),
         ];
 
@@ -43,7 +41,7 @@ angular.module('adminApp')
 
         angular.extend($scope, vm);
     })
-    .controller('ProviderOpenController', function ($scope, systemUsers, ProviderService, tableUtils, $rootScope, regions, provider, providerTypes, $state) {
+    .controller('ProviderOpenController', function ($scope, systemUsers, ProviderService, tableUtils, $rootScope, regions, provider, providerTypes, $state, selectedLanguage) {
         var vm = this;
 
         vm.provider = provider;
@@ -89,7 +87,7 @@ angular.module('adminApp')
         });
         vm.stColumns = [
             tableUtils.newColumn('id').withTitle('ID'),
-            tableUtils.newColumn('name_en').withTitle('Name (en)')
+            tableUtils.newColumn(`name_${selectedLanguage}`).withTitle(`Name (${selectedLanguage})`)
         ];
 
         vm.startEditing = function () {
@@ -104,6 +102,11 @@ angular.module('adminApp')
             vm.stopEditing();
             $state.reload();
         };
+
+        vm.canEdit = (
+            $rootScope.user.isSuperuser ||
+            ($rootScope.user.groups.filter(g => g.name === 'Providers').length > 0 && ($rootScope.selectedProvider.id === vm.provider.id ))
+        )
 
         function save() {
             if (vm.isNew) {

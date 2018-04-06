@@ -11,7 +11,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>{{'INDEX_TITLE' | translate}}</title>
+    <title>{{ site.name }} CMS</title>
 
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     {% include "admin_panel/css.html" %}
@@ -108,8 +108,7 @@
 <script type="text/javascript" src='{% static 'Leaflet.vector-markers/dist/leaflet-vector-markers.js' %}'></script>
 <script type="text/javascript"
         src='{% static 'angular-leaflet-directive/dist/angular-leaflet-directive.min.js' %}'></script>
-<script type="application/javascript" src="{% static 'moment/min/moment.min.js' %}"></script>
-<script type="application/javascript" src="{% static 'moment-timezone/builds/moment-timezone-with-data.min.js' %}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.0/moment-with-locales.min.js"></script>
 <script type="application/javascript" src="{% static 'angular-moment/angular-moment.min.js' %}"></script>
 <script src="{% static 'bootstrap-daterangepicker/daterangepicker.js' %}"></script>
 <script src="{% static 'angular-daterangepicker/js/angular-daterangepicker.js' %}"></script>
@@ -126,6 +125,7 @@
 <script type="text/javascript">
     window.API_URL = '{{ API_URL }}';
     window.STATIC_URL = '{{ STATIC_URL }}';
+    angular.module('adminApp').constant('logoName', '{{ site.domain }}.tb.png');
     angular.module('adminApp').constant('apiUrl', '{{ API_URL }}');
     angular.module('adminApp').constant('staticUrl', '{{ STATIC_URL }}');
     angular.module('adminApp').constant('webClientUrl', '{{ WEB_CLIENT_URL }}');
@@ -133,9 +133,10 @@
     angular.module('adminApp').constant('service_languages', [{% for k, v in SERVICE_LANGUAGES %}['{{ k }}', '{{ v }}']{% if not forloop.last %}, {% endif %}{% endfor %}]);
     angular.module('adminApp').constant('userEmail', '{{ request.user }}');
     angular.module('adminApp').constant('user', JSON.parse('{{ USER|safe }}'));
-    angular.module('adminApp').constant('selectedProvider', JSON.parse('{{ SELECTED_PROVIDER|safe }}'));
+    angular.module('adminApp').constant('selectedProvider', {{ SELECTED_PROVIDER|safe }});
     angular.module('adminApp').constant('permissions', JSON.parse('{{ PERMISSIONS|safe }}'));
     angular.module('adminApp').constant('userRegion', JSON.parse('{{ REGION|safe }}'));
+    angular.module('adminApp').constant('selectedLanguage', '{% firstof LANGUAGE_CODE "en" %}');
     
 
     $(function () {
@@ -145,6 +146,24 @@
     });
 </script>
 <toasty></toasty>
+<!--
+   
+-->
+{%if SITE_SETTINGS.CHAT_ENABLED %}
+<script>
+    var user =  JSON.parse('{{ USER|safe }}')
+    window.intercomSettings = {
+        app_id: "{{SITE_SETTINGS.CHAT_APP_ID}}",
+        alignment: 'left',     
+        horizontal_padding: 20, 
+        vertical_padding: 20,
+        email: user.email,
+        name: [user.name, user.surname].filter(function(a) { return a }).join(' '),
+        user_hash: "{{SITE_SETTINGS.CHAT_DIGEST}}"
+    };
+  </script>
+  <script>(function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',intercomSettings);}else{var d=document;var i=function(){i.c(arguments)};i.q=[];i.c=function(args){i.q.push(args)};w.Intercom=i;function l(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/uchonpxg';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);}if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})()</script>
+{%endif%}
 </body>
 
 </html>

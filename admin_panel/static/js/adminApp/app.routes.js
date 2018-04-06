@@ -731,7 +731,10 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 					return CommonDataService.getServiceAreas();
 				},
 				systemUsers: function (CommonDataService) {
-					return CommonDataService.getUsersForLookup();
+					return [];
+				},
+				regions: function (CommonDataService) {
+					return [];
 				},
 				provider: function (ProviderService, $rootScope, $q) {
 					var dfd = $q.defer();

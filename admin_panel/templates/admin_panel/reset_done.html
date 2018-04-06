@@ -16,23 +16,26 @@
             <div class="logo-header">
                     <img src="/public/static/img/{{site.domain}}.wb.png" />
             </div>
-            <div>
-                <h1>{% trans 'You\'ve been logged out!'%}</h1>
+            <div style="padding: 5em">
+                <h1>{% trans "We've emailed you instructions for setting your password, if an account exists with the email you  entered. You should receive them shortly." %}</h1>
+
+                <h1>{% trans "If you don't receive an email, please make sure you've entered the address you registered with, and check your spam folder." %}</h1>
+
             </div>
             <div>
-                <h2>{% trans 'Click '%}
-                    <a href="/">{% trans 'here' %}</a> {% trans 'to go back to the application' %}</h2>
+                <h2>Click
+                    <a href="/">here</a> to go back to the application</h2>
             </div>
         </div>
     </div>
-<script>
-    if(window.localStorage) {
-        localStorage.clear();
-    }
-    if(window.sessionStorage) {
-        sessionStorage.clear();
-    }
-</script>
+    <script>
+        if (window.localStorage) {
+            localStorage.clear();
+        }
+        if (window.sessionStorage) {
+            sessionStorage.clear();
+        }
+    </script>
 
 </body>
 

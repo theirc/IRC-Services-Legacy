@@ -1,6 +1,10 @@
-angular.module('adminApp').controller('UserViewController', function ($rootScope, $scope, $state, $cookies, user, groups, providers, Restangular, Upload) {
+angular.module('adminApp').controller('UserViewController', function ($rootScope, $scope, $state, $cookies, user, groups, providers, languages, Restangular, Upload) {
     let vm = this;
 
+    vm.languages = languages.map(l => ({
+        id: l[0],
+        name: l[1],
+    }));
     this.$onInit = function () {
         vm.object = user;
         vm.providers = providers;
@@ -76,6 +80,11 @@ angular.module('adminApp').controller('UserViewController', function ($rootScope
         } else {
             vm.updateUser();
         }
+    };
+
+    vm.resendActivationEmail = function () {
+        vm.errors = null;
+        Restangular.one('users', vm.object.id).getList('resend_activation_email').then(() => {});
     };
 
     vm.startEditing = function () {

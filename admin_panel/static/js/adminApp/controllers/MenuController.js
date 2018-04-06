@@ -28,7 +28,7 @@ angular.module("adminApp").controller("MenuController", function ($rootScope, $s
 					{
 						title: $filter('translate')('SERVICE_MANAGEMENT'),
 						sref: "service.list",
-						hide: !((($rootScope.user.groups.filter(g => g.name === 'Provider').length > 0) || $rootScope.user.isSuperuser) && $rootScope.selectedProvider),
+						hide: !((($rootScope.user.groups.filter(g => g.name === 'Providers').length > 0) || $rootScope.user.isSuperuser) && $rootScope.selectedProvider),
 					},
 				],
 			},
