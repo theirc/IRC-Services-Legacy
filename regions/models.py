@@ -6,6 +6,7 @@ from django.contrib.gis import geos
 from django.contrib.gis.db import models
 from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _, get_language
+from django.contrib.sites.models import Site
 
 from services.meta import TranslatableModel
 from . import utils
@@ -119,6 +120,9 @@ class GeographicRegion(TranslatableModel, models.Model, ContentFetchingMixin):
         blank=True,
         help_text=_('Comma separated values of code of siblings visible from this region')
     )
+
+    site = models.ForeignKey(Site, related_name='+', null=True, blank=True)
+    
     objects = models.GeoManager()
 
     def __str__(self):

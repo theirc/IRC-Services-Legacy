@@ -19,6 +19,7 @@ router.register(r'provider-types', v2.ProviderTypeViewSet)  # incompatible with 
 router.register(r'service-areas', v2.ServiceAreaViewSet)
 router.register(r'service-tag', v2.ServiceTagViewSet)
 router.register(r'regions', v2.GeographicRegionViewSet)
+router.register(r'sites', v2.SiteViewSet)
 
 router.register(r'permission', v2.UserPermissionViewSet)
 

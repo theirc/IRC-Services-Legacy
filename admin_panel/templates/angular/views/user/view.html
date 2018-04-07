@@ -1,6 +1,6 @@
 <section class="content-header" ng-controller="ContentHeaderController as chctrl">
     <h1>
-        {{ chctrl.state.data.title }}
+        {{ chctrl.state.data.title | translate }}
         <small>{{ ctrl.object.email }}</small>
     </h1>
 </section>
@@ -35,8 +35,8 @@
                     </div>
                     <div class="form-group col-xs-6">
                         <label for="surname">{{ 'USER_LAST_NAME' | translate }}: </label>
-                        <input class="form-control" name="surname" ng-model="ctrl.object.surname" placeholder="{{ 'USER_LAST_NAME' | translate }}" id="surname" ng-required="true"
-                            ng-maxlength="100">
+                        <input class="form-control" name="surname" ng-model="ctrl.object.surname" placeholder="{{ 'USER_LAST_NAME' | translate }}"
+                            id="surname" ng-required="true" ng-maxlength="100">
                         <div class="alert alert-warning form-error" ng-if="userForm.surname.$error.required && !userForm.surname.$pristine && ctrl.isEditing">
                             {{ 'USER_FIELD_REQUIRED' | translate }}
                         </div>
@@ -55,22 +55,22 @@
                     </div>
 
                     <div class="form-group col-xs-6" ng-if="user.isSuperuser">
-                            <label for="user">{{ 'REGION' | translate }}</label>
-                            <div class="input-group" ng-if="ctrl.object.region">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-danger" type="button" ng-click="ctrl.object.region = null">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </span>
-                                <select class="form-control" disabled="disabled" name="region" ng-model="ctrl.object.region" ng-options="region.id as region.name for region in ctrl.regions"></select>
-                            </div>
-                            <select class="form-control" name="region" ng-model="ctrl.object.region" ng-options="region.id as region.name for region in ctrl.regions"
-                                ng-if="!ctrl.object.region"></select>
+                        <label for="user">{{ 'SITE' | translate }}</label>
+                        <div class="input-group" ng-if="ctrl.object.site">
+                            <span class="input-group-btn">
+                                <button class="btn btn-danger" type="button" ng-click="ctrl.object.site = null">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </span>
+                            <select class="form-control" disabled="disabled" name="site" ng-model="ctrl.object.site" ng-options="site.id as site.name for site in ctrl.sites"></select>
                         </div>
+                        <select class="form-control" name="site" ng-model="ctrl.object.site" ng-options="site.id as site.name for site in ctrl.sites"
+                            ng-if="!ctrl.object.site"></select>
+                    </div>
                     <div class="form-group col-xs-6">
                         <label for="phoneNumber">{{ 'USER_PHONE_NUMBER' | translate }}: </label>
-                        <input class="form-control" name="phoneNumber" ng-model="ctrl.object.phone_number" placeholder="{{ 'USER_PHONE_NUMBER' | translate }}" id="phoneNumber"
-                            ng-pattern="/(^[\d+](?!.*--)[\d-]{7,18}[\d])$/">
+                        <input class="form-control" name="phoneNumber" ng-model="ctrl.object.phone_number" placeholder="{{ 'USER_PHONE_NUMBER' | translate }}"
+                            id="phoneNumber" ng-pattern="/(^[\d+](?!.*--)[\d-]{7,18}[\d])$/">
                         <div class="alert alert-warning form-error" ng-if="userForm.phoneNumber.$error.pattern && !userForm.phoneNumber.$pristine && ctrl.isEditing">
                             {{ 'USER_INVALID_PHONE_NUMBER' | translate }}
                         </div>
@@ -87,7 +87,7 @@
                     <div class="form-group col-xs-12" ng-hide="!user.isSuperuser">
                         <label for="email">{{ 'USER_GROUPS' | translate }}</label>
                         <ui-select ng-disabled="!ctrl.isEditing" multiple ng-model="ctrl.object.groups" sortable="true" close-on-select="true">
-                            <ui-select-match placeholder="select a group">{{ $item.name }}</ui-select-match>
+                            <ui-select-match placeholder="{{ USER_SELECT_GROUP | translate }}">{{ $item.name }}</ui-select-match>
                             <ui-select-choices repeat="group in ctrl.groups | filter: {name: $select.search}">
                                 <div ng-bind-html="group.name | highlight: $select.search"></div>
                             </ui-select-choices>
@@ -98,7 +98,7 @@
             </div>
         </div>
 
-        <div class="col-xs-12" ng-if="user.isSuperuser && !ctrl.isNew">
+        <div class="col-xs-12" ng-if="user.isSuperuser && !ctrl.isNew && ctrl.providers.length > 0">
             <div class="box">
                 <div class="box-header">
                     <h3 class="box-title">{{ 'USER_PROVIDERS' | translate}}</h3>
@@ -134,11 +134,11 @@
     <footer-action-bar>
         <div style="width: 100%">
             <div class="btn-group pull-left" ng-if="user.isSuperuser && !ctrl.object.is_active">
-                <button type="button" class="btn btn-primary"  ng-click="ctrl.resendActivationEmail()">Resend Activation Email
+                <button type="button" class="btn btn-primary" ng-click="ctrl.resendActivationEmail()">Resend Activation Email
                 </button>
             </div>
             <div class="btn-group pull-right">
-                <button type="button" class="btn btn-primary" ng-if="!ctrl.isEditing" ng-click="ctrl.startEditing()">Edit
+                <button type="button" class="btn btn-primary" ng-if="!ctrl.isEditing" ng-click="ctrl.startEditing()"> {{ 'EDIT' | translate }}
                 </button>
                 <button type="button" class="btn btn-primary" ng-if="ctrl.isEditing" ng-click="ctrl.save()" ng-disabled="userForm.$invalid">
                     {{ 'SAVE' | translate }}

@@ -3,6 +3,24 @@
         .factory('CommonDataService', function (Restangular, $q, $window) {
 
             return {
+                getSites: function () {
+                    var client = Restangular.service('sites');
+
+                    if ($window.localStorage.sites) {
+                        var def = $q.defer();
+
+                        def.resolve(JSON.parse($window.localStorage.sites));
+
+                        return def.promise;
+                    }
+
+                    return client.getList().then(function (t) {
+                        var objects = t.plain();
+                        $window.sessionStorage.sites = JSON.stringify(objects);
+
+                        return objects;
+                    });
+                },
                 getProviderTypes: function () {
                     var client = Restangular.service('provider-types');
 

@@ -5,7 +5,7 @@ angular.module("adminApp").config(function($translateProvider){
         SERVICE_MANAGEMENT: 'Service Management',
         PROFILE: 'Profile',
         ACCOUNT_SETTINGS: 'Account Settings',
-        PROVIDER_SETTINGS: 'Proider Settings',
+        PROVIDER_SETTINGS: 'Provider Settings',
         REFUGEE_ADMIN: 'REFUGEE.INFO ADMIN',
         BLOG_ENTRY_TRANSLATIONS: 'Blog Entry Translations',
         SERVICE_NEWSLETTER: 'Service Newsletter',
@@ -18,6 +18,7 @@ angular.module("adminApp").config(function($translateProvider){
         CONTROLLED_LISTS_MANAGEMENT: 'Controlled List Management',
         SERVICES_TYPES: 'Service Categories',
         PROVIDER_TYPES: 'Provider Types',
+        SITE: 'Site',
 
         //Search Services page
         SERVICES: 'Services',
@@ -127,6 +128,8 @@ angular.module("adminApp").config(function($translateProvider){
         PROVIDER_DESCRIPTION: 'Description',
         PROVIDER_ADDRESS: 'Address',
         PROVIDER_TYPE: 'Type',
+        PROVIDER_FACEBOOK: 'Facebook',
+        PROVIDER_TWITTER: 'Twitter',
         PROVIDER_ADMINISTRATOR: 'Administrator',
         PROVIDER_PHONE_NUMBER: 'Phone Number',
         PROVIDER_WEBSITE: 'Website',
@@ -285,6 +288,7 @@ angular.module("adminApp").config(function($translateProvider){
         USER_AS_TEAM_MEMBER: 'As Team Member',
         USER_SELECT_PROVIDER: 'Select the provider or search for it on the list',
         USER_AS_ADMIN: 'As Admin',
+        USER_SELECT_GROUP: 'select a group',
 
         //Login modal
         LOGIN_MODAL_TITLE: 'Log in to Refugee.Info Admin',
@@ -292,7 +296,40 @@ angular.module("adminApp").config(function($translateProvider){
         LOGIN_MODAL_EMAIL_REQUIRED: 'Email is required.',
         LOGIN_MODAL_PASSWORD: 'password',
         LOGIN_MODAL_PASSWORD_REQUIRED: 'Password is required.',
-        LOGIN_MODAL_LOGIN: 'Login'
+        LOGIN_MODAL_LOGIN: 'Login',
+
+        //Routes
+        SERVICE_DETAILS: 'Service Details',
+        SERVICE_CONFIRMATION: 'Service Confirmation',
+        SYSTEM_USERS: 'System Users',
+        CREATE_SYSTEM_USER: 'Create System User',
+        SYSTEM_USER: 'System User',
+        SERVICE_PROVIDERS: 'Service Providers',
+        PROVIDER_SETTINGS: 'Provider Settings',
+        SERVICE_PROVIDER_DASHBOARD: 'Service Provider Dashboard',
+        SERVICE_PROVIDER_CREATE: 'Service Provider Create',
+        SERVICE_PROVIDER: 'Service Provider',
+        CREATE_GEOGRAPHIC_REGIONS: 'Create Geographic Region',
+        GEOGRAPHIC_REGION: 'Geographic Region',
+        NEW_SERVICE_TYPE: 'New Service Type',
+        SERVICE_TYPE_TITLE: 'Service Type',
+        NEW_PROVIDER_TYPE: 'New Provider Type',
+        PROVIDER_TYPE_TITLE: 'Provider Type',
+
+        //Tables
+        TABLE_UPDATE_AT: 'Updated At',
+        TABLE_SERVICE: 'Service',
+        TABLE_PROVIDER: 'Provider',
+        TABLE_TYPES: 'Types',
+        TABLE_CITY: 'City',
+        TABLE_REGION: 'Region',
+        TABLE_STATUS: 'Status',
+        TABLE_TRANSIFEX_STATUS: 'Transifex Status',
+        TABLE_NAME: 'Name',
+        TABLE_ACTIONS: 'Actions',
+        TABLE_ARCHIVE: 'Archive',
+        TABLE_EDIT: 'Edit',
+        TABLE_DUPLICATE: 'Duplicate',
         
     });
 
@@ -395,6 +432,7 @@ angular.module("adminApp").config(function($translateProvider){
         LIGHT_URL: 'Light Url',
         API_URL: 'API Url',
         AUTH_TOKEN: 'Auth Token',
+        SITE: 'Sitio',
 
         //ProviderType
         NAME: 'Nombre',
@@ -591,7 +629,40 @@ angular.module("adminApp").config(function($translateProvider){
         LOGIN_MODAL_EMAIL_REQUIRED: 'El Email es requerido.',
         LOGIN_MODAL_PASSWORD: 'contraseña',
         LOGIN_MODAL_PASSWORD_REQUIRED: 'Contraseña requerida.',
-        LOGIN_MODAL_LOGIN: 'Iniciar sesión'
+        LOGIN_MODAL_LOGIN: 'Iniciar sesión',
+
+        //Routes
+        SERVICE_DETAILS: 'Detalles del Servicio',
+        SERVICE_CONFIRMATION: 'Confirmación del Servicio',
+        SYSTEM_USERS: 'Usuarios del Sistema',
+        CREATE_SYSTEM_USER: 'Crear Usuario del Sistema',
+        SYSTEM_USER: 'Usuario del Sistema',
+        SERVICE_PROVIDERS: 'Proveedores de Servicios',
+        PROVIDER_SETTINGS: 'Configuración de Proveedor',
+        SERVICE_PROVIDER_DASHBOARD: 'Tablero de Proveedor de Servicio',
+        SERVICE_PROVIDER_CREATE: 'Crear Proveedor de Servicio',
+        SERVICE_PROVIDER: 'Proveedor de Servicio',
+        CREATE_GEOGRAPHIC_REGIONS: 'Crear Región Geográfica',
+        GEOGRAPHIC_REGION: 'Región Geográfica',
+        NEW_SERVICE_TYPE: 'Nuevo Tipo de Servicio',
+        SERVICE_TYPE_TITLE: 'Tipo de Servicio',
+        NEW_PROVIDER_TYPE: 'Nuevo Tipo de Proveedor',
+        PROVIDER_TYPE_TITLE: 'Tipo de Proveedor',
+
+        //Tables
+        TABLE_UPDATE_AT: 'Actualizado al',
+        TABLE_SERVICE: 'Servicio',
+        TABLE_PROVIDER: 'Proveedor',
+        TABLE_TYPES: 'Tipos',
+        TABLE_CITY: 'Ciudad',
+        TABLE_REGION: 'Región',
+        TABLE_STATUS: 'Estado',
+        TABLE_TRANSIFEX_STATUS: 'Estado Transifex',
+        TABLE_NAME: 'Nombre',
+        TABLE_ACTIONS: 'Acciones',
+        TABLE_ARCHIVE: 'Archivar',
+        TABLE_EDIT: 'Editar',
+        TABLE_DUPLICATE: 'Duplicar'
         
     });
 

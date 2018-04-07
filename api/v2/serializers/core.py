@@ -17,11 +17,17 @@ from rest_framework import exceptions, serializers
 from services.models import Service, Provider, ServiceArea
 from . import apps as apps_serializers
 from . import services as sevices_serializers
+from django.contrib.sites.models import Site
 
 CAN_EDIT_STATUSES = [Service.STATUS_DRAFT,
                      Service.STATUS_CURRENT, Service.STATUS_REJECTED]
 DRFValidationError = exceptions.ValidationError
 
+
+class SiteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Site
+        fields = ('id', 'name', 'domain')
 
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
@@ -108,7 +114,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = EmailUser
-        fields = ('id', 'email', 'groups', 'name', 'surname', 'is_active', 'is_staff', 'language', 'region', 'is_superuser', 'phone_number', 'title',
+        fields = ('id', 'email', 'groups', 'name', 'surname', 'is_active', 'is_staff', 'language', 'region', 'site', 'is_superuser', 'phone_number', 'title',
                   'position', 'providers', 'managed_providers')
 
 
@@ -127,7 +133,7 @@ class UserWithGroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = EmailUser
         fields = ('id', 'email', 'groups', 'name', 'surname', 'is_active', 'is_staff', 'is_superuser', 'language',  'phone_number', 'title',
-                  'position', 'providers', 'isStaff', 'isSuperuser', 'region', 'managed_providers')
+                  'position', 'providers', 'isStaff', 'isSuperuser', 'region', 'site', 'managed_providers')
 
 
 class UserAvatarSerializer(serializers.ModelSerializer):
@@ -303,7 +309,7 @@ class GeographicRegionSerializer(serializers.ModelSerializer):
     class Meta:
         model = GeographicRegion
         fields = tuple(
-            ['id', 'name', 'slug', 'code', 'hidden', 'level', 'geom', 'centroid', 'envelope', 'parent',
+            ['id', 'name', 'slug', 'code', 'hidden', 'level', 'geom', 'site', 'centroid', 'envelope', 'parent',
              'parent__name', 'languages_available'] +
             generate_translated_fields('title')
         )
@@ -326,7 +332,7 @@ class GeographicRegionSerializerNoGeometry(serializers.ModelSerializer):
     class Meta:
         model = GeographicRegion
         fields = tuple(
-            ['id', 'name', 'slug', 'code', 'hidden', 'level', 'centroid', 'envelope', 'parent',
+            ['id', 'name', 'slug', 'code', 'hidden', 'level', 'site', 'centroid', 'envelope', 'parent',
              'parent__name', 'languages_available'] +
             generate_translated_fields('title')
         )

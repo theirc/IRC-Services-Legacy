@@ -25,6 +25,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _, activate, get_language
 from django.contrib.sites.shortcuts import get_current_site
+from django.contrib.sites.models import Site
 
 from rest_framework.authtoken.models import Token
 import six
@@ -159,7 +160,7 @@ class EmailUser(AbstractBaseUser, PermissionsMixin):
         default='',
         blank=True,
     )
-
+    site = models.ForeignKey(Site, related_name='+', null=True, blank=True)
     region = models.ForeignKey(region_models.GeographicRegion, related_name='+', null=True, blank=True)
 
     objects = EmailUserManager()
