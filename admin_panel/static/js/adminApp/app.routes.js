@@ -1012,6 +1012,7 @@ function allRegions(GeoRegionService, $q, $window) {
 					id: r1.id,
 					slug: r1.slug,
 					level: r1.level,
+					parent: r1.parent,
 				};
 			});
 
