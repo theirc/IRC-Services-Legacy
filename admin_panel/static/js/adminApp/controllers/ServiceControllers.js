@@ -786,10 +786,12 @@ Only superusers and service providers have access to the edit functions. Everyon
     .controller('ServicePrivateViewController', function (tableUtils, $scope, providers, serviceTypes, serviceStatus, regions, $filter, service_languages, ServiceService, $http, apiUrl, leafletData, $state, selectedLanguage) {
         let vm = this;
         let langs = service_languages;
-
+        
         vm.providers = providers;
         vm.serviceTypes = serviceTypes;
         vm.regions = regions;
+        vm.regionslvl2 = {};
+        vm.regionslvl3 = {};
         vm.serviceStatus = serviceStatus;
         vm.searchResults = [];
         vm.isMapMode = false;
@@ -951,6 +953,30 @@ Only superusers and service providers have access to the edit functions. Everyon
 
         vm.dtInstance = {};
         vm.searchCriteria = {};
+
+        vm.onRegionChange = () => {
+            vm.regionslvl3 = [];
+            if (vm.searchCriteria.geographic_region){
+                let parent = regions.filter((region) => region.slug == vm.searchCriteria.geographic_region)[0];
+                vm.regionslvl2 = regions.filter((region) => region.parent == parent.id);
+            }else{
+                vm.regionslvl2 = [];
+            }
+            vm.searchCriteria.geographic_regionlvl2 = 0;
+            vm.searchCriteria.geographic_regionlvl3 = 0;           
+        }
+
+        vm.onRegionChangelvl2 = () => {
+            vm.regionslvl3 = regions.filter((region) => region.parentSlug == vm.searchCriteria.geographic_regionlvl2);
+            vm.searchCriteria.geographic_regionlvl3 = 0;       
+            if (vm.searchCriteria.geographic_regionlvl2){
+                let parent = regions.filter((region) => region.slug == vm.searchCriteria.geographic_regionlvl2)[0];
+                vm.regionslvl3 = regions.filter((region) => region.parent == parent.id);
+            }else{
+                vm.regionslvl3 = [];
+            }      
+            vm.searchCriteria.geographic_regionlvl3 = 0; 
+        }        
 
         angular.extend($scope, vm);
     });
