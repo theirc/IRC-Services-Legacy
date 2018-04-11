@@ -32,15 +32,15 @@
                     <div class="row" ng-if="user.isSuperuser">
                         <div class="form-group col-xs-4" ng-if="!user.region">
                             <label for=""> {{'REGION'| translate}} </label>
-                            <select class="form-control" ng-model="ctrl.searchCriteria.geographic_region" ng-change="onRegionChange()" ng-options="r.slug as r.name for r in ctrl.regions | filter:{ parent:null }"></select>
+                            <select class="form-control" ng-model="ctrl.regionlvl1" ng-change="onRegionChange()" ng-options="r.slug as r.name for r in ctrl.regions | filter:{ parent:null }"></select>
                         </div>
                         <div class="form-group col-xs-4" ng-if="!user.region">
                             <label for=""> {{'REGION_LVL2'| translate}} </label>
-                            <select class="form-control" ng-model="ctrl.searchCriteria.geographic_regionlvl2" ng-change="onRegionChangelvl2()" ng-options="r.slug as r.name for r in ctrl.regionslvl2"></select>
+                            <select class="form-control" ng-model="ctrl.regionlvl2" ng-change="onRegionChangelvl2()" ng-options="r.slug as r.name for r in ctrl.regionslvl2"></select>
                         </div>
                         <div class="form-group col-xs-4" ng-if="!user.region">
                             <label for=""> {{'REGION_LVL3'| translate}} </label>
-                            <select class="form-control" ng-model="ctrl.searchCriteria.geographic_regionlvl3"  ng-options="r.slug as r.name for r in ctrl.regionslvl3"></select>
+                            <select class="form-control" ng-model="ctrl.regionlvl3" ng-change="onRegionChangelvl3()" ng-options="r.slug as r.name for r in ctrl.regionslvl3"></select>
                         </div>
                         <div class="form-group col-xs-4">
                             <label for=""> {{'STATUS'| translate}} </label>
