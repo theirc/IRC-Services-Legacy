@@ -78,7 +78,7 @@ angular
                     'canceled': $filter('translate')('SERVICE_CANCELED'),
                     'archived': $filter('translate')('SERVICE_ARCHIVED')
                 };
-                return dict[data.status];
+                return dict[data];
             })
             .withTitle($filter('translate')('TABLE_STATUS'))
         ];
@@ -129,7 +129,17 @@ angular
                 return region[0].name;
             }),
             tableUtils
-            .newColumn('status')
+            .newColumn('status').renderWith(data => {
+                var dict = {
+                    'draft': $filter('translate')('SERVICE_DRAFT'),
+                    'private': $filter('translate')('SERVICE_PRIVATE'),
+                    'current': $filter('translate')('SERVICE_CURRENT'),
+                    'rejected': $filter('translate')('SERVICE_REJECTED'),
+                    'canceled': $filter('translate')('SERVICE_CANCELED'),
+                    'archived': $filter('translate')('SERVICE_ARCHIVED')
+                };
+                return dict[data];
+            })
             .withTitle($filter('translate')('TABLE_STATUS')),
 
         ];
