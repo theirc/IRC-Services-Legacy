@@ -123,31 +123,7 @@ angular
             .withTitle($filter('translate')('TABLE_STATUS')),
 
         ];
-        if ($scope.user.isSuperuser) {
-            vm.dtColumns.push(
-                tableUtils
-                .newColumn('transifex_status')
-                .withTitle($filter('translate')('TABLE_TRANSIFEX_STATUS'))
-                .renderWith(function (data) {
-                    if (data.hasOwnProperty('errors')) {
-                        return data.errors;
-                    } else {
-                        let transifexStatus = '';
-                        langs.forEach(function (lang) {
-                            if (lang[0] != 'en') {
-                                transifexStatus += `${lang[1]}: ${data[lang[0]] || 'N/A'}<br />`;
-                            }
-                        });
-                        return transifexStatus;
-                    }
-                }));
-        }
 
-        vm.dtColumns.push(tableUtils
-            .newServiceActionColumn()
-            .withOption('width', '200px')
-            .withTitle('Status')
-        );
         if ($scope.user.isSuperuser) {
             vm.dtColumns.push(
                 tableUtils
@@ -207,7 +183,9 @@ angular
         };
 
     })
-    .controller('ServiceOpenController', function ($rootScope, Restangular, $state, Upload, provider, providers, serviceTypes, regions, $filter, service, tags, ServiceService, leafletData, $window, service_languages, toasty, $scope, webClientUrl, confirmationLogs, DTOptionsBuilder, DTColumnDefBuilder, staticUrl) {
+    .controller('ServiceOpenController', function ($rootScope, Restangular, $state, Upload, provider, providers, serviceTypes, regions, $filter, 
+        service, tags, ServiceService, leafletData, $window, service_languages, toasty, $scope, webClientUrl, confirmationLogs, 
+        DTOptionsBuilder, DTColumnDefBuilder, staticUrl) {
         let vm = this;
         if (Object.keys(service).length !== 0) {
             if (Object.keys(provider).length !== 0 && service.provider.id == provider.id) {
@@ -229,6 +207,7 @@ angular
         vm.regions = regions;
         vm.providers = providers;
         vm.service = service;
+        vm.showNewsletter = ($rootScope.user.site.domain || '').indexOf('refugee.info') > -1;
         if (Object.keys(confirmationLogs).length !== 0) {
             vm.serviceConfirmationLogs = confirmationLogs.confirmation_logs;
             vm.lastStatus = '';
@@ -270,12 +249,12 @@ angular
         vm.isEditing = vm.isNew;
         vm.transifexStatus = "---";
         vm.statusChoices = {
-            'draft': 'Draft',
-            'private': 'Private',
-            'current': 'Current',
-            'rejected': 'Rejected',
-            'canceled': 'Canceled',
-            'archived': 'Archived'
+            'draft': $filter('translate')('SERVICE_DRAFT'),
+            'private': $filter('translate')('SERVICE_PRIVATE'),
+            'current': $filter('translate')('SERVICE_CURRENT'),
+            'rejected': $filter('translate')('SERVICE_REJECTED'),
+            'canceled': $filter('translate')('SERVICE_CANCELED'),
+            'archived': $filter('translate')('SERVICE_ARCHIVED')
         };
         vm.contactTypeChoices = {
             'email': 'Email',
@@ -293,7 +272,10 @@ angular
             'thursday',
             'friday',
             'saturday'
-        ];
+        ];           
+         vm.translatedDays = _.fromPairs(_.zip(vm.days, moment.weekdays().map(s => (s.charAt(0).toUpperCase() + s.slice(1)))));
+
+
         if (vm.isNew || !vm.service.opening_time) {
             vm.service.provider = vm.provider.id;
             vm.service.region = vm.providerRegion ?
