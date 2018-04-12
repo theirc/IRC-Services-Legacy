@@ -832,8 +832,23 @@ Only superusers and service providers have access to the edit functions. Everyon
         vm.providers = providers;
         vm.serviceTypes = serviceTypes;
         vm.regions = regions;
+        vm.regionslvl1 = regions;
         vm.regionslvl2 = [];
         vm.regionslvl3 = [];
+
+        /*
+        if ($scope.selectedProvider) {
+            vm.providerRegion = regions.filter(function (r) {
+                return r.id === $scope.selectedProvider.region;
+            });
+
+            vm.providerRegion = vm.providerRegion && vm.providerRegion[0]
+            console.log(vm.providerRegion)
+            vm.regionslvl1 = $scope.user.isSuperuser ? regions : [vm.providerRegion];
+        }
+        */
+
+
 
         vm.regionlvl1 = 0;
         vm.regionlvl2 = 0;
@@ -860,9 +875,6 @@ Only superusers and service providers have access to the edit functions. Everyon
             .renderWith(function (types) {
                 return types.map((type) => type.name).join(', ');
             }),
-            tableUtils
-            .newColumn(`address_city_${selectedLanguage}`)
-            .withTitle($filter('translate')('TABLE_CITY')),
             tableUtils
             .newColumn('updated_at')
             .withTitle($filter('translate')('TABLE_UPDATE_AT'))
