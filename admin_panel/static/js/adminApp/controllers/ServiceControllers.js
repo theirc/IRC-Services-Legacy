@@ -69,7 +69,17 @@ angular
                 return region[0].name;
             }),
             tableUtils
-            .newColumn('status')
+            .newColumn('status').renderWith(data => {
+                var dict = {
+                    'draft': $filter('translate')('SERVICE_DRAFT'),
+                    'private': $filter('translate')('SERVICE_PRIVATE'),
+                    'current': $filter('translate')('SERVICE_CURRENT'),
+                    'rejected': $filter('translate')('SERVICE_REJECTED'),
+                    'canceled': $filter('translate')('SERVICE_CANCELED'),
+                    'archived': $filter('translate')('SERVICE_ARCHIVED')
+                };
+                return dict[data.status];
+            })
             .withTitle($filter('translate')('TABLE_STATUS'))
         ];
 
@@ -424,6 +434,9 @@ Only superusers and service providers have access to the edit functions. Everyon
             vm.save = function (file) {
                 vm.generateSlug();
                 vm.service.region = vm.regionlvl3 || vm.regionlvl2 || vm.regionlvl1;
+                if (vm.service.region) {
+                    vm.service.region = vm.service.region.id
+                }
                 if (!vm.provideLocation) {
                     vm.service.location = null;
                 }
@@ -868,7 +881,7 @@ Only superusers and service providers have access to the edit functions. Everyon
             .withTitle($filter('translate')('TABLE_SERVICE')),
             tableUtils
             .newColumn(`provider.name_${selectedLanguage}`)
-            .withTitle('Provider'),
+            .withTitle($filter('translate')('TABLE_PROVIDER')),
             tableUtils
             .newColumn('types')
             .withTitle($filter('translate')('TABLE_TYPES'))
