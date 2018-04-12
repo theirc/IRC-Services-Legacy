@@ -71,6 +71,7 @@ angular.module("adminApp").config(function($translateProvider){
         EDIT: 'Edit',
         SAVE: 'Save',
         CANCEL: 'Cancel',
+        ADD: 'Add',
 
         //Header
         BACK: 'Back',
@@ -413,6 +414,7 @@ angular.module("adminApp").config(function($translateProvider){
         EDIT: 'Editar',
         SAVE: 'Grabar',
         CANCEL: 'Cancelar',
+        ADD: 'Agregar',
 
         //Header
         BACK: 'Volver',
@@ -457,7 +459,7 @@ angular.module("adminApp").config(function($translateProvider){
         SERVICE_ORDERING: 'Orden de Servicio',
 
         //Newsletter
-        SERVICE_CONFIRMATION_NEWSLETTER_LOGS: 'Service Confirmation Newsletter Logs',
+        SERVICE_CONFIRMATION_NEWSLETTER_LOGS: 'Logs de confirmación de Newsletter de Servicios',
         LOG_ID: 'Log ID',
         SERVICE: 'Serviio',
         DATE: 'Fecha',

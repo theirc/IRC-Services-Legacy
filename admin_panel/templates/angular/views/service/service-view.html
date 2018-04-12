@@ -2,7 +2,7 @@
     <h1>
         {{ chctrl.state.data.title | translate }}
         <small>{{ ctrl.provider.name_en}}</small>
-        <button type="button" class="btn btn-warning pull-right" ng-click="ctrl.goBack()">Back</button>
+        <button type="button" class="btn btn-warning pull-right" ng-click="ctrl.goBack()">{{ 'BACK' | translate }}</button>
     </h1>
 </section>
 
@@ -464,7 +464,7 @@
                         <button type="button" class="btn btn-primary" ng-if="!ctrl.isEditing" ng-click="ctrl.startEditing()">{{ 'EDIT' | translate }}
                         </button>
                         <button type="button" class="btn btn-primary button-tooltip" ng-if="ctrl.isEditing" ng-click="ctrl.save(picFile)" ng-disabled="serviceForm.$invalid"
-                            data-old-tooltip="Fill in all required fields">Save
+                            data-old-tooltip="Fill in all required fields">{{ 'SAVE' | translate }}
                         </button>
                         <button type="button" class="btn btn-danger" ng-if="!ctrl.isEditing  && !ctrl.isNew" ng-click="ctrl.remove()">{{ 'DELETE' | translate }}
                         </button>
