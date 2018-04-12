@@ -45,7 +45,7 @@
 
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">{{ 'TRANSLATED_FIELD' | translate }}</h3>
+                            <h3 class="box-title" ng-hide="languages.length === 1">{{ 'TRANSLATED_FIELD' | translate }}</h3>
                             <div class="transifex-container pull-right" ng-if="!ctrl.isNew && user.isSuperuser">
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-default" ng-click="ctrl.pushToTransifex()">
@@ -60,7 +60,7 @@
                         </div>
                         <div class="box-body" read-only-form is-editing="ctrl.isEditing">
                             <div class="nav-tabs-custom">
-                                <ul class="nav nav-tabs">
+                                <ul class="nav nav-tabs" ng-hide="languages.length === 1">
                                     <li ng-class="{active: ctrl.selectedLanguageTab == (lang[0]||languages[0][0])}" ng-repeat="lang in serviceLanguages">
                                         <a href="" ng-click="ctrl.selectedLanguageTab = lang[0]" data-toggle="tab" aria-expanded="true">{{ lang[1] }}</a>
                                     </li>
@@ -91,6 +91,19 @@
                                                 <label for="{{ idHelper('languages_spoken',lang[0]) }}">
                                                     {{ 'SERVICE_LANGUAGES_SPOKEN' | translate }}</label>
                                                 <textarea name="{{  idHelper('languages_spoken',lang[0])}}" class="form-control" ng-model="ctrl.service[idHelper('languages_spoken',lang[0])]"></textarea>
+                                            </div>
+
+                                            <div class="form-group col-xs-4">
+                                                <label for=""> {{'REGION'| translate}} </label>
+                                                <select class="form-control" ng-model="ctrl.regionlvl1" ng-change="ctrl.onRegionChange()" ng-options="r as r.name for r in ctrl.regionslvl1 | filter:{ parent:null }"></select>
+                                            </div>
+                                            <div class="form-group col-xs-4">
+                                                <label for=""> {{'REGION_LVL2'| translate}} </label>
+                                                <select class="form-control" ng-model="ctrl.regionlvl2" ng-change="ctrl.onRegionChangelvl2()" ng-options="r as r.name for r in ctrl.regionslvl2"></select>
+                                            </div>
+                                            <div class="form-group col-xs-4">
+                                                <label for=""> {{'REGION_LVL3'| translate}} </label>
+                                                <select class="form-control" ng-model="ctrl.regionlvl3" ng-options="r as r.name for r in ctrl.regionslvl3"></select>
                                             </div>
                                             <div class="form-group col-xs-12">
                                                 <label for="{{ idHelper('address',lang[0]) }}">{{ 'SERVICE_ADDRESS_CITY' | translate }}</label>
@@ -170,16 +183,8 @@
                                     </ui-select-choices>
                                 </ui-select>
                             </div>
-                            <div class="form-group col-xs-6" ng-if="user.isSuperuser && ctrl.isNew">
-                                <label for="region">{{ 'SERVICE_REGION' | translate }}</label>
-                                <select class="form-control" name="region" ng-model="ctrl.service.region" ng-options="region.id as region.name for region in ctrl.regions"
-                                    required ng-change="ctrl.generateSlug()"></select>
-                            </div>
-                            <div class="form-group col-xs-6" ng-if="user.isSuperuser && !ctrl.isNew">
-                                <label for="region">{{ 'SERVICE_REGION' | translate }}</label>
-                                <select class="form-control" name="region" ng-model="ctrl.service.region.id" ng-options="region.id as region.name for region in ctrl.regions"
-                                    required></select>
-                            </div>
+
+
                             <div class="form-group col-xs-6">
                                 <label for="phoneNumber">{{ 'SERVICE_PHONE_NUMBER' | translate }}</label>
                                 <input type="text" class="form-control" id="phoneNumber" ng-maxlength="40" placeholder="Phone Number" ng-model="ctrl.service.phone_number">
