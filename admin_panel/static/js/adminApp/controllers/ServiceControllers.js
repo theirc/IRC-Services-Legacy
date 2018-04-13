@@ -69,7 +69,17 @@ angular
                 return region[0].name;
             }),
             tableUtils
-            .newColumn('status')
+            .newColumn('status').renderWith(data => {
+                var dict = {
+                    'draft': $filter('translate')('SERVICE_DRAFT'),
+                    'private': $filter('translate')('SERVICE_PRIVATE'),
+                    'current': $filter('translate')('SERVICE_CURRENT'),
+                    'rejected': $filter('translate')('SERVICE_REJECTED'),
+                    'canceled': $filter('translate')('SERVICE_CANCELED'),
+                    'archived': $filter('translate')('SERVICE_ARCHIVED')
+                };
+                return dict[data];
+            })
             .withTitle($filter('translate')('TABLE_STATUS'))
         ];
 
@@ -119,7 +129,17 @@ angular
                 return region[0].name;
             }),
             tableUtils
-            .newColumn('status')
+            .newColumn('status').renderWith(data => {
+                var dict = {
+                    'draft': $filter('translate')('SERVICE_DRAFT'),
+                    'private': $filter('translate')('SERVICE_PRIVATE'),
+                    'current': $filter('translate')('SERVICE_CURRENT'),
+                    'rejected': $filter('translate')('SERVICE_REJECTED'),
+                    'canceled': $filter('translate')('SERVICE_CANCELED'),
+                    'archived': $filter('translate')('SERVICE_ARCHIVED')
+                };
+                return dict[data];
+            })
             .withTitle($filter('translate')('TABLE_STATUS')),
 
         ];
@@ -424,6 +444,9 @@ Only superusers and service providers have access to the edit functions. Everyon
             vm.save = function (file) {
                 vm.generateSlug();
                 vm.service.region = vm.regionlvl3 || vm.regionlvl2 || vm.regionlvl1;
+                if (vm.service.region) {
+                    vm.service.region = vm.service.region.id
+                }
                 if (!vm.provideLocation) {
                     vm.service.location = null;
                 }
@@ -832,8 +855,23 @@ Only superusers and service providers have access to the edit functions. Everyon
         vm.providers = providers;
         vm.serviceTypes = serviceTypes;
         vm.regions = regions;
+        vm.regionslvl1 = regions;
         vm.regionslvl2 = [];
         vm.regionslvl3 = [];
+
+        /*
+        if ($scope.selectedProvider) {
+            vm.providerRegion = regions.filter(function (r) {
+                return r.id === $scope.selectedProvider.region;
+            });
+
+            vm.providerRegion = vm.providerRegion && vm.providerRegion[0]
+            console.log(vm.providerRegion)
+            vm.regionslvl1 = $scope.user.isSuperuser ? regions : [vm.providerRegion];
+        }
+        */
+
+
 
         vm.regionlvl1 = 0;
         vm.regionlvl2 = 0;
@@ -853,16 +891,13 @@ Only superusers and service providers have access to the edit functions. Everyon
             .withTitle($filter('translate')('TABLE_SERVICE')),
             tableUtils
             .newColumn(`provider.name_${selectedLanguage}`)
-            .withTitle('Provider'),
+            .withTitle($filter('translate')('TABLE_PROVIDER')),
             tableUtils
             .newColumn('types')
             .withTitle($filter('translate')('TABLE_TYPES'))
             .renderWith(function (types) {
                 return types.map((type) => type.name).join(', ');
             }),
-            tableUtils
-            .newColumn(`address_city_${selectedLanguage}`)
-            .withTitle($filter('translate')('TABLE_CITY')),
             tableUtils
             .newColumn('updated_at')
             .withTitle($filter('translate')('TABLE_UPDATE_AT'))
