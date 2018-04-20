@@ -661,7 +661,7 @@ angular.module("adminApp").config(function($translateProvider){
         PROVIDER_SETTINGS: 'Configuración de Proveedor',
         SERVICE_PROVIDER_DASHBOARD: 'Tablero de Proveedor de Servicio',
         SERVICE_PROVIDER_CREATE: 'Crear Proveedor de Servicio',
-        SERVICE_PROVIDER: 'Proveedor de Servicio',
+        SERVICE_PROVIDER: 'Organización',
         CREATE_GEOGRAPHIC_REGIONS: 'Crear Región Geográfica',
         GEOGRAPHIC_REGION: 'Región Geográfica',
         NEW_SERVICE_TYPE: 'Nuevo Tipo de Servicio',
