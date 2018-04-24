@@ -378,7 +378,7 @@ angular.module("adminApp").config(function($translateProvider){
         //RightSideBar
         RECENT_ACTIVITY: 'Actividad Reciente',
         LANGDONS_BIRTHDAY: 'Langdon\'s Birthday',
-        TASKS_PROGRESS: 'Tasks Progress',
+        TASKS_PROGRESS: 'Progreso de las Tareas',
         STATS_TAB_CONTENT: 'Contenido de pestaña estadísticas',
         GENERAL_SETTINGS: 'Configuración General',
         REPORT_PANEL_USAGE: 'Uso del panel de Reporte',
@@ -403,22 +403,22 @@ angular.module("adminApp").config(function($translateProvider){
 
         //ServiceType
         SERVICE_TITLE: 'Título',
-        COMMENTS: 'Commentarioss',
+        COMMENTS: 'Comentarios',
         METADATA: 'Metadata',
         ICON: 'Ícono',
         COLOR: 'Color',
         SERVICE_ORDERING: 'Orden de Servicio',
 
         //Newsletter
-        SERVICE_CONFIRMATION_NEWSLETTER_LOGS: 'Service Confirmation Newsletter Logs',
+        SERVICE_CONFIRMATION_NEWSLETTER_LOGS: 'Registro de Newsletter de confirmación de servicios',
         LOG_ID: 'Log ID',
-        SERVICE: 'Serviio',
+        SERVICE: 'Servicio',
         DATE: 'Fecha',
         STATUS: 'Estado',
         EMAIL_SENT_TO: 'Email enviado a ',
         NOTE: 'Nota',
         OPEN: 'Abierto',
-        NEWSLETTER_RESET: 'Reset',
+        NEWSLETTER_RESET: 'Resetear',
         NEWSLETTER_SAVE: 'Grabar',
 
         //PROVIDER
@@ -432,7 +432,7 @@ angular.module("adminApp").config(function($translateProvider){
         PROVIDER_FACEBOOK: 'Facebook',
         PROVIDER_TWITTER: 'Twitter',
         PROVIDER_COUNTRY: 'País',
-        PROVIDER_FREEZE: 'Congelar Provedor (deshabilitar login de usuarios)',
+        PROVIDER_FREEZE: 'Congelar Proveedor (deshabilitar login de usuarios)',
         PROVIDER_SERVICES: 'Servicios',
         PROVIDER_IMPERSONATE: 'Personificar',
         PROVIDER_EXPORT_SERVICES: 'Exportar Servicios',
@@ -450,7 +450,7 @@ angular.module("adminApp").config(function($translateProvider){
         REGION_IS_HIDDEN: 'Es oculto',
         REGION_LANGUAGES: 'Idiomas',
         REGION_TITLE: 'Título',
-        REGION_OUTLINE: 'Delimitar Region',
+        REGION_OUTLINE: 'Delimitar Región',
 
         //Service Overview
         OVERVIEW: 'Servicio',
@@ -518,7 +518,7 @@ angular.module("adminApp").config(function($translateProvider){
         SERVICE_ONLY_JPG: 'Solo se permiten imágenes jpn y png.',
         SERVICE_REMOVE: 'Quitas',
         SERVICE_REMOVE_IMAGE: 'Quitar imagen',
-        SERVICE_OPEN_27_7: 'El servicio estś disponible 24/7:',
+        SERVICE_OPEN_27_7: 'El servicio está disponible 24/7:',
         SERVICE_LEAVE_EMPTY_IF_CLOSED_THAT_DAY: 'Dejar vacío si el servicio está cerrado ese día.',
         SERVICE_CONTACT_INFORMATION: 'Información de Contacto',
         SERVICE_TYPE: 'Categoría',
