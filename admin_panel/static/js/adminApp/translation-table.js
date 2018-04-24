@@ -249,7 +249,7 @@ angular.module("adminApp").config(function($translateProvider){
 
         SERVICE_DRAFT: 'Draft',
         SERVICE_PRIVATE: 'Private',
-        SERVICE_CURRENT: 'Current',
+        SERVICE_CURRENT: 'Public', 
         SERVICE_REJECTED: 'Rejected',
         SERVICE_CANCELED: 'Cancelled',
         SERVICE_ARCHIVED: 'Archived',
