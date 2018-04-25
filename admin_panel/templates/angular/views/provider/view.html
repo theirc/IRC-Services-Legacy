@@ -83,7 +83,17 @@
                             <div class="form-group col-xs-6">
                                 <label for="twitter">{{ 'PROVIDER_TWITTER' | translate }}</label>
                                 <input type="text" class="form-control" id="twitter" placeholder="Twitter" ng-model="ctrl.provider.twitter" ng-maxlength="255">
-                            </div>
+                            </div>    
+                            <div class="form-group col-xs-6">
+                                <label for="type">{{ 'SERVICE_TYPES' | translate }}</label>
+                                <ui-select ng-disabled="!ctrl.isEditing" multiple ng-model="ctrl.service.types" sortable="true" close-on-select="true" required
+                                    limit="4">
+                                    <ui-select-match placeholder="Select Types">{{ $item.name }}</ui-select-match>
+                                    <ui-select-choices repeat="type in ctrl.serviceTypes | filter: { name: $select.search }">
+                                        <div ng-bind-html="type.name | highlight: $select.search"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>                        
                             <div class="form-group col-xs-6" ng-if="user.isSuperuser">
                                 <label for="is_frozen">{{ 'PROVIDER_FREEZE' | translate }}
                                     <input type="checkbox" id="is_frozen" ng-model="ctrl.provider.is_frozen">

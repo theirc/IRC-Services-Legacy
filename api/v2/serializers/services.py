@@ -13,7 +13,7 @@ from rest_framework import exceptions, serializers
 
 from regions.models import GeographicRegion
 from services.models import Service, Provider, ServiceType, SelectionCriterion, ServiceTag, ProviderType, \
-    ServiceConfirmationLog, ContactInformation
+    ServiceConfirmationLog, ContactInformation, UserNote
 
 CAN_EDIT_STATUSES = [Service.STATUS_DRAFT, Service.STATUS_CURRENT, Service.STATUS_REJECTED]
 DRFValidationError = exceptions.ValidationError
@@ -297,6 +297,12 @@ class ServiceTypeSerializer(serializers.ModelSerializer):
         for idx, service_type in enumerate(self.initial_data['types_ordering']):
             ServiceType.objects.update_or_create(id=service_type['id'], defaults={'number': idx + 1})
         return instance
+
+class UserNoteSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=False, allow_null=True) 
+
+    class Meta:
+        model = UserNote
 
 
 class ServiceSerializer(serializers.ModelSerializer):
