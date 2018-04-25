@@ -86,7 +86,8 @@ class ProviderSerializer(RequireOneTranslationMixin, serializers.HyperlinkedMode
             [
                 'type', 'phone_number', 'website',
                 'focal_point_phone_number',
-                'user', 'number_of_monthly_beneficiaries','is_frozen'
+                'user', 'number_of_monthly_beneficiaries','is_frozen', 'service_types',
+                'meta_population', 'record', 'requirement', 'vacancy', 'additional_info'
             ]
         )
         required_translated_fields = ['name', 'description', 'focal_point_name', 'address']
@@ -198,7 +199,8 @@ class ProviderSerializer(serializers.ModelSerializer):
             [
                 'type', 'phone_number', 'website',
                 'focal_point_phone_number',
-                'user', 'number_of_monthly_beneficiaries', 'region','is_frozen'
+                'user', 'number_of_monthly_beneficiaries', 'region','is_frozen', 'service_types',
+                'meta_population', 'record', 'requirement', 'vacancy', 'additional_info'
             ]
         )
         required_translated_fields = ['name', 'description', 'focal_point_name', 'address']

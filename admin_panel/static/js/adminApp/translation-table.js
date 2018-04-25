@@ -145,6 +145,12 @@ angular.module("adminApp").config(function($translateProvider){
         PROVIDER_EDIT: 'Edit',
         PROVIDER_SAVE: 'Save',
         PROVIDER_CANCEL:  'Cancel',
+        PROVIDER_SERVICE_TYPES: 'Service Types',
+        PROVIDER_META_POPULATION: 'Meta Population',
+        PROVIDER_RECORD: 'Record',
+        PROVIDER_REQUIREMENT: 'Requirements',
+        PROVIDER_ADDITIONAL_INFO: 'Additional Information',
+        PROVIDER_VACANCY: 'Vacancy',
 
         //Region
         REGION_NAME: 'Name',
@@ -489,6 +495,13 @@ angular.module("adminApp").config(function($translateProvider){
         PROVIDER_EDIT: 'Editar',
         PROVIDER_SAVE: 'Grabar',
         PROVIDER_CANCEL:  'Cancelar',
+        PROVIDER_SERVICE_TYPES: 'Tipos de Servicios',
+        PROVIDER_META_POPULATION: 'Población Meta',
+        PROVIDER_RECORD: 'Registro',
+        PROVIDER_REQUIREMENT: 'Requisitos',
+        PROVIDER_ADDITIONAL_INFO: 'Información Adicional',
+        PROVIDER_VACANCY: 'Vacancia',
+
 
         //Region
         REGION_NAME: 'Nombre',
