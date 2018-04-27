@@ -20,7 +20,6 @@ from sorl.thumbnail import ImageField
 from sorl.thumbnail.shortcuts import get_thumbnail
 from . import jira_support
 from .meta import TranslatableModel
-from .tasks import email_provider_about_service_approval_task, email_provider_about_service_rejection_task
 from .utils import absolute_url, get_path_to_service
 
 
@@ -578,11 +577,11 @@ class Service(TranslatableModel, models.Model):
 
     def email_provider_about_approval(self):
         """Schedule a task to send an email to the provider"""
-        email_provider_about_service_approval_task.delay(self.pk)
+        #email_provider_about_service_approval_task.delay(self.pk)
 
     def email_provider_about_rejection(self):
         """Schedule a task to send an email to the provider"""
-        email_provider_about_service_rejection_task.delay(self.pk)
+        #email_provider_about_service_rejection_task.delay(self.pk)
 
     def may_approve(self):
         return self.status == self.STATUS_DRAFT
@@ -803,21 +802,6 @@ class Service(TranslatableModel, models.Model):
                     'newsletter_settings': newsletter_settings
                 })
 
-                with get_connection(
-                        host=settings.NEWSLETTER_FROM_EMAIL_HOST,
-                        port=settings.NEWSLETTER_FROM_EMAIL_PORT,
-                        username=settings.NEWSLETTER_FROM_EMAIL_HOST_USER,
-                        password=settings.NEWSLETTER_FROM_EMAIL_HOST_PASSWORD,
-                        user_tls=settings.NEWSLETTER_FROM_EMAIL_USE_TLS
-                ) as connection:
-                    send_mail(
-                        subject=subject,
-                        message='Thank you',
-                        from_email=settings.NEWSLETTER_FROM_EMAIL,
-                        recipient_list=self.newsletter_valid_emails.split(", "),
-                        html_message=content_html,
-                        connection=connection)
-
                 # Send report confirmation e-mail
                 city = ", " + self.address_city if self.address_city else ''
                 subject = 'Updates for ' + self.provider.name + city
@@ -827,12 +811,6 @@ class Service(TranslatableModel, models.Model):
                     'note': note if note else ''
                 })
 
-                send_mail(
-                    subject=subject,
-                    message='Report',
-                    from_email=settings.DEFAULT_FROM_EMAIL,
-                    recipient_list=[settings.SERVICE_MANAGER_EMAIL],
-                    html_message=content_html)
 
             return self
         else:
