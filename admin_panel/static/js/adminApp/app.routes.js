@@ -155,16 +155,16 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 				serviceTypes: function (CommonDataService) {
 					return CommonDataService.getServiceTypes();
 				},
-				serviceStatus: () => {
+				serviceStatus: ($filter) => {
 					return [{
 						id: 'current',
-						name: 'Current'
+						name: $filter('translate')('SERVICE_CURRENT')
 					}, {
 						id: 'private',
-						name: 'Private'
+						name: $filter('translate')('SERVICE_PRIVATE')
 					}, {
 						id: 'draft',
-						name: 'Draft'
+						name: $filter('translate')('SERVICE_DRAFT')
 					}, ]
 				},
 				regions: function (GeoRegionService, $rootScope, $q, $window) {
@@ -1012,6 +1012,7 @@ function allRegions(GeoRegionService, $q, $window) {
 					id: r1.id,
 					slug: r1.slug,
 					level: r1.level,
+					parent: r1.parent,
 				};
 			});
 

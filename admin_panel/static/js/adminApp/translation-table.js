@@ -23,6 +23,8 @@ angular.module("adminApp").config(function($translateProvider){
         //Search Services page
         SERVICES: 'Services',
         REGION: 'Region',
+        REGION_LVL2: 'Departments',
+        REGION_LVL3: 'Municipality',
         TYPE: 'Category',
         PROVIDER: 'Provider',
         CITY: 'City',
@@ -69,6 +71,7 @@ angular.module("adminApp").config(function($translateProvider){
         EDIT: 'Edit',
         SAVE: 'Save',
         CANCEL: 'Cancel',
+        ADD: 'Add',
 
         //Header
         BACK: 'Back',
@@ -245,6 +248,13 @@ angular.module("adminApp").config(function($translateProvider){
         SERVICE_TABLE_EMAIL: 'Email sent to',
         SERVICE_TABLE_NOTE: 'Note',
 
+        SERVICE_DRAFT: 'Draft',
+        SERVICE_PRIVATE: 'Private',
+        SERVICE_CURRENT: 'Current',
+        SERVICE_REJECTED: 'Rejected',
+        SERVICE_CANCELED: 'Cancelled',
+        SERVICE_ARCHIVED: 'Archived',
+
         //User list
         DATA_TABLE_FULL_FEATURES: 'Data Table With Full Features',
 
@@ -356,6 +366,8 @@ angular.module("adminApp").config(function($translateProvider){
         //Search Services page
         SERVICES: 'Servicios',
         REGION: 'Región',
+        REGION_LVL2: 'Departamento',
+        REGION_LVL3: 'Municipalidad',
         TYPE: 'Categoría',
         PROVIDER: 'Proveedor',
         CITY: 'Ciudad',
@@ -402,6 +414,7 @@ angular.module("adminApp").config(function($translateProvider){
         EDIT: 'Editar',
         SAVE: 'Grabar',
         CANCEL: 'Cancelar',
+        ADD: 'Agregar',
 
         //Header
         BACK: 'Volver',
@@ -446,7 +459,7 @@ angular.module("adminApp").config(function($translateProvider){
         SERVICE_ORDERING: 'Orden de Servicio',
 
         //Newsletter
-        SERVICE_CONFIRMATION_NEWSLETTER_LOGS: 'Service Confirmation Newsletter Logs',
+        SERVICE_CONFIRMATION_NEWSLETTER_LOGS: 'Logs de confirmación de Newsletter de Servicios',
         LOG_ID: 'Log ID',
         SERVICE: 'Serviio',
         DATE: 'Fecha',
@@ -545,7 +558,7 @@ angular.module("adminApp").config(function($translateProvider){
         SERVICE_FACEBOOK: 'Página de Facebook',
         SERVICE_COST_SERVICE: 'Costo del Servicio',
         SERVICE_STATUS: 'Estado',
-        SERVICE_TAGS: 'Etiquetas:',
+        SERVICE_TAGS: 'Tags',
         SERVICE_CLICK_TO_CREATE: ' (click para crear)',
         SERVICE_IMAGE: 'Imagen:',
         SERVICE_UPLOAD_IMAGE: 'Subir una imagen',
@@ -560,13 +573,13 @@ angular.module("adminApp").config(function($translateProvider){
         SERVICE_TYPE: 'Categoría',
         SERVICE_TEXT: 'Texto',
         SERVICE_INDEX: 'Índice',
-        SERVICE_FOCAL_POINT: 'Focal Point - Newsletter del Servicio',
-        SERVICE_FOCAL_FIRST_NAME: 'Focal Point Nombre',
-        SERVICE_FOCAL_LAST_NAME: 'Focal Point Apellido',
-        SERVICE_FOCAL_EMAIL: 'Focal Point Email',
-        SERVICE_SECOND_FOCAL_FIRST_NAME: 'Segundo Focal Point Nombre',
-        SERVICE_SECOND_FOCAL_LAST_NAME: 'Segundo Focal Point Apellido',
-        SERVICE_SECOND_FOCAL_EMAIL: 'Segundo Focal Point Email',
+        SERVICE_FOCAL_POINT: 'Punto Focal - Newsletter del Servicio',
+        SERVICE_FOCAL_FIRST_NAME: 'Punto Focal Nombre',
+        SERVICE_FOCAL_LAST_NAME: 'Punto Focal Apellido',
+        SERVICE_FOCAL_EMAIL: 'Punto Focal Email',
+        SERVICE_SECOND_FOCAL_FIRST_NAME: 'Segundo Punto Focal Nombre',
+        SERVICE_SECOND_FOCAL_LAST_NAME: 'Segundo Punto Focal Apellido',
+        SERVICE_SECOND_FOCAL_EMAIL: 'Segundo Punto Focal Email',
         SERVICE_EXCLUDE_FROM_CONFIRMATION: '¿Quiere excluir el servicio del Newsletter de confirmación?',
         SERVICE_LAST_STATUS: 'Último estado del Servicio:',
         SERVICE_WANT_TO_CONFIRM: '¿Quiere confirmarlo?',
@@ -578,6 +591,15 @@ angular.module("adminApp").config(function($translateProvider){
         SERVICE_TABLE_STATUS: 'Estado',
         SERVICE_TABLE_EMAIL: 'Email enviado a',
         SERVICE_TABLE_NOTE: 'Nota',
+
+
+
+        SERVICE_DRAFT: 'Redactado',
+        SERVICE_PRIVATE: 'Privado',
+        SERVICE_CURRENT: 'Público',
+        SERVICE_REJECTED: 'Rechazado',
+        SERVICE_CANCELED: 'Cancelado',
+        SERVICE_ARCHIVED: 'Archivado',
 
         //User list
         DATA_TABLE_FULL_FEATURES: 'Tabla de datos con todas las características',
