@@ -46,19 +46,19 @@ angular
             tableUtils.newColumn(`name_${selectedLanguage}`).withTitle(`Name (${selectedLanguage})`),
             tableUtils
             .newColumn('types')
-            .withTitle('Types')
+            .withTitle($filter('translate')('TABLE_TYPES'))
             .renderWith(function (types) {
                 return types.map((type) => type.name).join(', ');
             }),
             tableUtils
             .newColumn('updated_at')
-            .withTitle('Updated at')
+            .withTitle($filter('translate')('TABLE_UPDATE_AT'))
             .renderWith(function (data) {
                 return $filter('date')(data, 'medium');
             }),
             tableUtils
             .newColumn('region')
-            .withTitle('Region')
+            .withTitle($filter('translate')('TABLE_REGION'))
             .renderWith(function (data) {
                 let region = regions.filter(function (t) {
                     return t.id == data.id;
@@ -69,8 +69,18 @@ angular
                 return region[0].name;
             }),
             tableUtils
-            .newColumn('status')
-            .withTitle('Status')
+            .newColumn('status').renderWith(data => {
+                var dict = {
+                    'draft': $filter('translate')('SERVICE_DRAFT'),
+                    'private': $filter('translate')('SERVICE_PRIVATE'),
+                    'current': $filter('translate')('SERVICE_CURRENT'),
+                    'rejected': $filter('translate')('SERVICE_REJECTED'),
+                    'canceled': $filter('translate')('SERVICE_CANCELED'),
+                    'archived': $filter('translate')('SERVICE_ARCHIVED')
+                };
+                return dict[data];
+            })
+            .withTitle($filter('translate')('TABLE_STATUS'))
         ];
 
         vm.dtInstance = {};
@@ -93,22 +103,22 @@ angular
             tableUtils
             .newColumn('id')
             .withTitle('ID'),
-            tableUtils.newColumn(`name_${selectedLanguage}`).withTitle(`Name (${selectedLanguage})`),
+            tableUtils.newColumn(`name_${selectedLanguage}`).withTitle($filter('translate')('NAME', `${selectedLanguage}`)),
             tableUtils
             .newColumn('types')
-            .withTitle('Types')
+            .withTitle($filter('translate')('TABLE_TYPES'))
             .renderWith(function (types) {
                 return types.map((type) => type.name).join(', ');
             }),
             tableUtils
             .newColumn('updated_at')
-            .withTitle('Updated at')
+            .withTitle($filter('translate')('TABLE_UPDATE_AT'))
             .renderWith(function (data) {
                 return $filter('date')(data, 'medium');
             }),
             tableUtils
             .newColumn('region')
-            .withTitle('Region')
+            .withTitle($filter('translate')('TABLE_REGION'))
             .renderWith(function (data) {
                 let region = regions.filter(function (t) {
                     return t.id == data;
@@ -119,10 +129,21 @@ angular
                 return region[0].name;
             }),
             tableUtils
-            .newColumn('status')
-            .withTitle('Status'),
+            .newColumn('status').renderWith(data => {
+                var dict = {
+                    'draft': $filter('translate')('SERVICE_DRAFT'),
+                    'private': $filter('translate')('SERVICE_PRIVATE'),
+                    'current': $filter('translate')('SERVICE_CURRENT'),
+                    'rejected': $filter('translate')('SERVICE_REJECTED'),
+                    'canceled': $filter('translate')('SERVICE_CANCELED'),
+                    'archived': $filter('translate')('SERVICE_ARCHIVED')
+                };
+                return dict[data];
+            })
+            .withTitle($filter('translate')('TABLE_STATUS')),
 
         ];
+
         if ($scope.user.isSuperuser) {
             vm.dtColumns.push(
                 tableUtils
@@ -182,7 +203,9 @@ angular
         };
 
     })
-    .controller('ServiceOpenController', function ($rootScope, Restangular, $state, Upload, provider, providers, serviceTypes, regions, $filter, service, tags, ServiceService, leafletData, $window, service_languages, toasty, $scope, webClientUrl, confirmationLogs, DTOptionsBuilder, DTColumnDefBuilder, staticUrl) {
+    .controller('ServiceOpenController', function ($rootScope, Restangular, $state, Upload, provider, providers, serviceTypes, regions, $filter,
+        service, tags, ServiceService, leafletData, $window, service_languages, toasty, $scope, webClientUrl, confirmationLogs,
+        DTOptionsBuilder, DTColumnDefBuilder, staticUrl) {
         let vm = this;
         if (Object.keys(service).length !== 0) {
             if (Object.keys(provider).length !== 0 && service.provider.id == provider.id) {
@@ -204,6 +227,41 @@ angular
         vm.regions = regions;
         vm.providers = providers;
         vm.service = service;
+        vm.showNewsletter = ($rootScope.user.site.domain || '').indexOf('refugee.info') > -1;
+
+
+        vm.regionslvl1 = $rootScope.user.isSuperuser ? regions : [vm.providerRegion];
+        vm.regionslvl2 = [];
+        vm.regionslvl3 = [];
+
+        vm.regionlvl1 = null;
+        vm.regionlvl2 = null;
+        vm.regionlvl3 = null;
+
+
+
+        vm.onRegionChange = () => {
+            vm.regionslvl3 = [];
+            if (vm.regionlvl1) {
+                let parent = vm.regions.filter((region) => region.id == vm.regionlvl1.id)[0];
+                vm.regionslvl2 = vm.regions.filter((region) => region.parent == parent.id);
+            } else {
+                vm.regionslvl2 = [];
+            }
+        }
+
+        vm.onRegionChangelvl2 = () => {
+            vm.regionslvl3 = vm.regions.filter((region) => region.parent == vm.regionlvl2);
+            vm.regionlvl3 = '';
+            if (vm.regionlvl2) {
+                let parent = vm.regions.filter((region) => region.id == vm.regionlvl2.id)[0];
+                vm.regionslvl3 = vm.regions.filter((region) => region.parent == parent.id);
+            } else {
+                vm.regionslvl3 = [];
+            }
+        }
+
+
         if (Object.keys(confirmationLogs).length !== 0) {
             vm.serviceConfirmationLogs = confirmationLogs.confirmation_logs;
             vm.lastStatus = '';
@@ -245,12 +303,12 @@ angular
         vm.isEditing = vm.isNew;
         vm.transifexStatus = "---";
         vm.statusChoices = {
-            'draft': 'Draft',
-            'private': 'Private',
-            'current': 'Current',
-            'rejected': 'Rejected',
-            'canceled': 'Canceled',
-            'archived': 'Archived'
+            'draft': $filter('translate')('SERVICE_DRAFT'),
+            'private': $filter('translate')('SERVICE_PRIVATE'),
+            'current': $filter('translate')('SERVICE_CURRENT'),
+            'rejected': $filter('translate')('SERVICE_REJECTED'),
+            'canceled': $filter('translate')('SERVICE_CANCELED'),
+            'archived': $filter('translate')('SERVICE_ARCHIVED')
         };
         vm.contactTypeChoices = {
             'email': 'Email',
@@ -269,6 +327,9 @@ angular
             'friday',
             'saturday'
         ];
+        vm.translatedDays = _.fromPairs(_.zip(vm.days, moment.weekdays().map(s => (s.charAt(0).toUpperCase() + s.slice(1)))));
+
+
         if (vm.isNew || !vm.service.opening_time) {
             vm.service.provider = vm.provider.id;
             vm.service.region = vm.providerRegion ?
@@ -286,7 +347,31 @@ angular
                 }];
             }
 
+        } else {
             console.log(vm.service);
+            let selectedRegion = vm.regions.find(r => r.id === vm.service.region.id);
+            let regionChain = [selectedRegion.id];
+            while (selectedRegion.parent) {
+                regionChain.push(selectedRegion.parent);
+                selectedRegion = vm.regions.find(r => r.id === selectedRegion.parent);
+            }
+
+            regionChain = regionChain.reverse().concat([null, null, null]).slice(0, 3).map(r => r ? vm.regions.find(ar => r === ar.id) : null);
+
+            console.log(regionChain, vm);
+            if (regionChain[0]) {
+
+                vm.regionlvl1 = regionChain[0];
+                if (regionChain[1]) {
+                    vm.onRegionChange();
+                    vm.regionlvl2 = regionChain[1];
+                }
+                if (regionChain[2]) {
+                    vm.onRegionChangelvl2();
+                    vm.regionlvl3 = regionChain[2];
+                }
+            }
+
         }
         $scope.mapControl = {};
         vm.provideLocation = vm.service.location ?
@@ -357,6 +442,11 @@ Only superusers and service providers have access to the edit functions. Everyon
             };
 
             vm.save = function (file) {
+                vm.generateSlug();
+                vm.service.region = vm.regionlvl3 || vm.regionlvl2 || vm.regionlvl1;
+                if (vm.service.region) {
+                    vm.service.region = vm.service.region.id
+                }
                 if (!vm.provideLocation) {
                     vm.service.location = null;
                 }
@@ -765,6 +855,28 @@ Only superusers and service providers have access to the edit functions. Everyon
         vm.providers = providers;
         vm.serviceTypes = serviceTypes;
         vm.regions = regions;
+        vm.regionslvl1 = regions;
+        vm.regionslvl2 = [];
+        vm.regionslvl3 = [];
+
+        /*
+        if ($scope.selectedProvider) {
+            vm.providerRegion = regions.filter(function (r) {
+                return r.id === $scope.selectedProvider.region;
+            });
+
+            vm.providerRegion = vm.providerRegion && vm.providerRegion[0]
+            console.log(vm.providerRegion)
+            vm.regionslvl1 = $scope.user.isSuperuser ? regions : [vm.providerRegion];
+        }
+        */
+
+
+
+        vm.regionlvl1 = 0;
+        vm.regionlvl2 = 0;
+        vm.regionlvl3 = 0;
+
         vm.serviceStatus = serviceStatus;
         vm.searchResults = [];
         vm.isMapMode = false;
@@ -776,22 +888,19 @@ Only superusers and service providers have access to the edit functions. Everyon
             .withTitle('ID'),
             tableUtils
             .newColumn(`name_${selectedLanguage}`)
-            .withTitle('Service'),
+            .withTitle($filter('translate')('TABLE_SERVICE')),
             tableUtils
             .newColumn(`provider.name_${selectedLanguage}`)
-            .withTitle('Provider'),
+            .withTitle($filter('translate')('TABLE_PROVIDER')),
             tableUtils
             .newColumn('types')
-            .withTitle('Types')
+            .withTitle($filter('translate')('TABLE_TYPES'))
             .renderWith(function (types) {
                 return types.map((type) => type.name).join(', ');
             }),
             tableUtils
-            .newColumn(`address_city_${selectedLanguage}`)
-            .withTitle('City'),
-            tableUtils
             .newColumn('updated_at')
-            .withTitle('Updated at')
+            .withTitle($filter('translate')('TABLE_UPDATE_AT'))
             .renderWith(function (data) {
                 return $filter('date')(data, 'medium');
             })
@@ -926,6 +1035,38 @@ Only superusers and service providers have access to the edit functions. Everyon
 
         vm.dtInstance = {};
         vm.searchCriteria = {};
+
+        vm.onRegionChange = () => {
+            vm.regionslvl3 = [];
+            vm.searchCriteria.geographic_region = vm.regionlvl1;
+            if (vm.regionlvl1) {
+                let parent = regions.filter((region) => region.slug == vm.regionlvl1)[0];
+                vm.regionslvl2 = regions.filter((region) => region.parent == parent.id);
+            } else {
+                vm.regionslvl2 = [];
+            }
+        }
+
+        vm.onRegionChangelvl2 = () => {
+            vm.searchCriteria.geographic_region = vm.regionlvl2;
+            vm.regionslvl3 = regions.filter((region) => region.parentSlug == vm.regionlvl2);
+            vm.regionlvl3 = '';
+            if (vm.regionlvl2) {
+                let parent = regions.filter((region) => region.slug == vm.regionlvl2)[0];
+                vm.regionslvl3 = regions.filter((region) => region.parent == parent.id);
+            } else {
+                vm.regionslvl3 = [];
+            }
+        }
+
+        vm.onRegionChangelvl3 = () => {
+            if (vm.regionlvl3) {
+                vm.searchCriteria.geographic_region = vm.regionlvl3;
+            } else {
+                vm.searchCriteria.geographic_region = vm.regionlvl2;
+            }
+
+        }
 
         angular.extend($scope, vm);
     });

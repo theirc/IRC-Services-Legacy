@@ -20,7 +20,7 @@ angular.module('adminApp')
                 var viewButton = `
                     <a class="btn btn-primary btn-xs btn-block" ui-sref="^.open({id: ${full.id}})">
                         <i class="fa fa-eye"></i>
-                        Open
+                        {{ OPEN | translate }}
                     </a>`;
                 var impersonateButton = `
                     <a class="btn btn-success btn-xs btn-block" ui-sref="^.impersonate({id: ${full.id}})">

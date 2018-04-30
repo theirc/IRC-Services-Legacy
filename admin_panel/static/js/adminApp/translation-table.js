@@ -5,7 +5,7 @@ angular.module("adminApp").config(function($translateProvider){
         SERVICE_MANAGEMENT: 'Service Management',
         PROFILE: 'Profile',
         ACCOUNT_SETTINGS: 'Account Settings',
-        PROVIDER_SETTINGS: 'Proider Settings',
+        PROVIDER_SETTINGS: 'Provider Settings',
         REFUGEE_ADMIN: 'REFUGEE.INFO ADMIN',
         BLOG_ENTRY_TRANSLATIONS: 'Blog Entry Translations',
         SERVICE_NEWSLETTER: 'Service Newsletter',
@@ -23,6 +23,8 @@ angular.module("adminApp").config(function($translateProvider){
         //Search Services page
         SERVICES: 'Services',
         REGION: 'Region',
+        REGION_LVL2: 'Departments',
+        REGION_LVL3: 'Municipality',
         TYPE: 'Category',
         PROVIDER: 'Provider',
         CITY: 'City',
@@ -69,6 +71,7 @@ angular.module("adminApp").config(function($translateProvider){
         EDIT: 'Edit',
         SAVE: 'Save',
         CANCEL: 'Cancel',
+        ADD: 'Add',
 
         //Header
         BACK: 'Back',
@@ -128,6 +131,8 @@ angular.module("adminApp").config(function($translateProvider){
         PROVIDER_DESCRIPTION: 'Description',
         PROVIDER_ADDRESS: 'Address',
         PROVIDER_TYPE: 'Type',
+        PROVIDER_FACEBOOK: 'Facebook',
+        PROVIDER_TWITTER: 'Twitter',
         PROVIDER_ADMINISTRATOR: 'Administrator',
         PROVIDER_PHONE_NUMBER: 'Phone Number',
         PROVIDER_WEBSITE: 'Website',
@@ -243,6 +248,13 @@ angular.module("adminApp").config(function($translateProvider){
         SERVICE_TABLE_EMAIL: 'Email sent to',
         SERVICE_TABLE_NOTE: 'Note',
 
+        SERVICE_DRAFT: 'Draft',
+        SERVICE_PRIVATE: 'Private',
+        SERVICE_CURRENT: 'Public', 
+        SERVICE_REJECTED: 'Rejected',
+        SERVICE_CANCELED: 'Cancelled',
+        SERVICE_ARCHIVED: 'Archived',
+
         //User list
         DATA_TABLE_FULL_FEATURES: 'Data Table With Full Features',
 
@@ -286,6 +298,7 @@ angular.module("adminApp").config(function($translateProvider){
         USER_AS_TEAM_MEMBER: 'As Team Member',
         USER_SELECT_PROVIDER: 'Select the provider or search for it on the list',
         USER_AS_ADMIN: 'As Admin',
+        USER_SELECT_GROUP: 'select a group',
 
         //Login modal
         LOGIN_MODAL_TITLE: 'Log in to Refugee.Info Admin',
@@ -293,7 +306,40 @@ angular.module("adminApp").config(function($translateProvider){
         LOGIN_MODAL_EMAIL_REQUIRED: 'Email is required.',
         LOGIN_MODAL_PASSWORD: 'password',
         LOGIN_MODAL_PASSWORD_REQUIRED: 'Password is required.',
-        LOGIN_MODAL_LOGIN: 'Login'
+        LOGIN_MODAL_LOGIN: 'Login',
+
+        //Routes
+        SERVICE_DETAILS: 'Service Details',
+        SERVICE_CONFIRMATION: 'Service Confirmation',
+        SYSTEM_USERS: 'System Users',
+        CREATE_SYSTEM_USER: 'Create System User',
+        SYSTEM_USER: 'System User',
+        SERVICE_PROVIDERS: 'Service Providers',
+        PROVIDER_SETTINGS: 'Provider Settings',
+        SERVICE_PROVIDER_DASHBOARD: 'Service Provider Dashboard',
+        SERVICE_PROVIDER_CREATE: 'Service Provider Create',
+        SERVICE_PROVIDER: 'Service Provider',
+        CREATE_GEOGRAPHIC_REGIONS: 'Create Geographic Region',
+        GEOGRAPHIC_REGION: 'Geographic Region',
+        NEW_SERVICE_TYPE: 'New Service Type',
+        SERVICE_TYPE_TITLE: 'Service Type',
+        NEW_PROVIDER_TYPE: 'New Provider Type',
+        PROVIDER_TYPE_TITLE: 'Provider Type',
+
+        //Tables
+        TABLE_UPDATE_AT: 'Updated At',
+        TABLE_SERVICE: 'Service',
+        TABLE_PROVIDER: 'Provider',
+        TABLE_TYPES: 'Types',
+        TABLE_CITY: 'City',
+        TABLE_REGION: 'Region',
+        TABLE_STATUS: 'Status',
+        TABLE_TRANSIFEX_STATUS: 'Transifex Status',
+        TABLE_NAME: 'Name',
+        TABLE_ACTIONS: 'Actions',
+        TABLE_ARCHIVE: 'Archive',
+        TABLE_EDIT: 'Edit',
+        TABLE_DUPLICATE: 'Duplicate',
         
     });
 
@@ -320,6 +366,8 @@ angular.module("adminApp").config(function($translateProvider){
         //Search Services page
         SERVICES: 'Servicios',
         REGION: 'Región',
+        REGION_LVL2: 'Departamento',
+        REGION_LVL3: 'Municipalidad',
         TYPE: 'Categoría',
         PROVIDER: 'Proveedor',
         CITY: 'Ciudad',
@@ -366,6 +414,7 @@ angular.module("adminApp").config(function($translateProvider){
         EDIT: 'Editar',
         SAVE: 'Grabar',
         CANCEL: 'Cancelar',
+        ADD: 'Agregar',
 
         //Header
         BACK: 'Volver',
@@ -410,7 +459,9 @@ angular.module("adminApp").config(function($translateProvider){
         SERVICE_ORDERING: 'Orden de Servicio',
 
         //Newsletter
-        SERVICE_CONFIRMATION_NEWSLETTER_LOGS: 'Registro de Newsletter de confirmación de servicios',
+
+      
+      SERVICE_CONFIRMATION_NEWSLETTER_LOGS: 'Registro de Newsletter de confirmación de servicios',
         LOG_ID: 'Log ID',
         SERVICE: 'Servicio',
         DATE: 'Fecha',
@@ -509,7 +560,7 @@ angular.module("adminApp").config(function($translateProvider){
         SERVICE_FACEBOOK: 'Página de Facebook',
         SERVICE_COST_SERVICE: 'Costo del Servicio',
         SERVICE_STATUS: 'Estado',
-        SERVICE_TAGS: 'Etiquetas:',
+        SERVICE_TAGS: 'Tags',
         SERVICE_CLICK_TO_CREATE: ' (click para crear)',
         SERVICE_IMAGE: 'Imagen:',
         SERVICE_UPLOAD_IMAGE: 'Subir una imagen',
@@ -524,13 +575,13 @@ angular.module("adminApp").config(function($translateProvider){
         SERVICE_TYPE: 'Categoría',
         SERVICE_TEXT: 'Texto',
         SERVICE_INDEX: 'Índice',
-        SERVICE_FOCAL_POINT: 'Focal Point - Newsletter del Servicio',
-        SERVICE_FOCAL_FIRST_NAME: 'Focal Point Nombre',
-        SERVICE_FOCAL_LAST_NAME: 'Focal Point Apellido',
-        SERVICE_FOCAL_EMAIL: 'Focal Point Email',
-        SERVICE_SECOND_FOCAL_FIRST_NAME: 'Segundo Focal Point Nombre',
-        SERVICE_SECOND_FOCAL_LAST_NAME: 'Segundo Focal Point Apellido',
-        SERVICE_SECOND_FOCAL_EMAIL: 'Segundo Focal Point Email',
+        SERVICE_FOCAL_POINT: 'Punto Focal - Newsletter del Servicio',
+        SERVICE_FOCAL_FIRST_NAME: 'Punto Focal Nombre',
+        SERVICE_FOCAL_LAST_NAME: 'Punto Focal Apellido',
+        SERVICE_FOCAL_EMAIL: 'Punto Focal Email',
+        SERVICE_SECOND_FOCAL_FIRST_NAME: 'Segundo Punto Focal Nombre',
+        SERVICE_SECOND_FOCAL_LAST_NAME: 'Segundo Punto Focal Apellido',
+        SERVICE_SECOND_FOCAL_EMAIL: 'Segundo Punto Focal Email',
         SERVICE_EXCLUDE_FROM_CONFIRMATION: '¿Quiere excluir el servicio del Newsletter de confirmación?',
         SERVICE_LAST_STATUS: 'Último estado del Servicio:',
         SERVICE_WANT_TO_CONFIRM: '¿Quiere confirmarlo?',
@@ -542,6 +593,15 @@ angular.module("adminApp").config(function($translateProvider){
         SERVICE_TABLE_STATUS: 'Estado',
         SERVICE_TABLE_EMAIL: 'Email enviado a',
         SERVICE_TABLE_NOTE: 'Nota',
+
+
+
+        SERVICE_DRAFT: 'Redactado',
+        SERVICE_PRIVATE: 'Privado',
+        SERVICE_CURRENT: 'Público',
+        SERVICE_REJECTED: 'Rechazado',
+        SERVICE_CANCELED: 'Cancelado',
+        SERVICE_ARCHIVED: 'Archivado',
 
         //User list
         DATA_TABLE_FULL_FEATURES: 'Tabla de datos con todas las características',
@@ -593,7 +653,40 @@ angular.module("adminApp").config(function($translateProvider){
         LOGIN_MODAL_EMAIL_REQUIRED: 'El Email es requerido.',
         LOGIN_MODAL_PASSWORD: 'contraseña',
         LOGIN_MODAL_PASSWORD_REQUIRED: 'Contraseña requerida.',
-        LOGIN_MODAL_LOGIN: 'Iniciar sesión'
+        LOGIN_MODAL_LOGIN: 'Iniciar sesión',
+
+        //Routes
+        SERVICE_DETAILS: 'Detalles del Servicio',
+        SERVICE_CONFIRMATION: 'Confirmación del Servicio',
+        SYSTEM_USERS: 'Usuarios del Sistema',
+        CREATE_SYSTEM_USER: 'Crear Usuario del Sistema',
+        SYSTEM_USER: 'Usuario del Sistema',
+        SERVICE_PROVIDERS: 'Proveedores de Servicios',
+        PROVIDER_SETTINGS: 'Configuración de Proveedor',
+        SERVICE_PROVIDER_DASHBOARD: 'Tablero de Proveedor de Servicio',
+        SERVICE_PROVIDER_CREATE: 'Crear Proveedor de Servicio',
+        SERVICE_PROVIDER: 'Organización',
+        CREATE_GEOGRAPHIC_REGIONS: 'Crear Región Geográfica',
+        GEOGRAPHIC_REGION: 'Región Geográfica',
+        NEW_SERVICE_TYPE: 'Nuevo Tipo de Servicio',
+        SERVICE_TYPE_TITLE: 'Tipo de Servicio',
+        NEW_PROVIDER_TYPE: 'Nuevo Tipo de Proveedor',
+        PROVIDER_TYPE_TITLE: 'Tipo de Proveedor',
+
+        //Tables
+        TABLE_UPDATE_AT: 'Actualizado al',
+        TABLE_SERVICE: 'Servicio',
+        TABLE_PROVIDER: 'Proveedor',
+        TABLE_TYPES: 'Tipos',
+        TABLE_CITY: 'Ciudad',
+        TABLE_REGION: 'Región',
+        TABLE_STATUS: 'Estado',
+        TABLE_TRANSIFEX_STATUS: 'Estado Transifex',
+        TABLE_NAME: 'Nombre',
+        TABLE_ACTIONS: 'Acciones',
+        TABLE_ARCHIVE: 'Archivar',
+        TABLE_EDIT: 'Editar',
+        TABLE_DUPLICATE: 'Duplicar'
         
     });
 

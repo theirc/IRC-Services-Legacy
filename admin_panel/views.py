@@ -70,7 +70,8 @@ class LandingPageView(LoginRequiredMixin, TemplateView):
             p = Provider.objects.get(pk=request.session['selected-provider'])
             selected_provider = {
                 'name': p.name,
-                'id': p.id
+                'id': p.id,
+                'region': p.region.id,
             }
         context['SELECTED_PROVIDER'] = json.dumps(selected_provider)
         context['PERMISSIONS'] = json.dumps({
