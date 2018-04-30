@@ -2,7 +2,7 @@
  * Created by reyrodrigues on 1/2/17.
  */
 angular.module('adminApp')
-    .controller('ProviderListController', function (tableUtils, $scope, ProviderService, providerTypes,selectedLanguage) {
+    .controller('ProviderListController', function (tableUtils, $scope, ProviderService, serviceTypes, providerTypes,selectedLanguage) {
         var vm = this;
         vm.dtOptions = tableUtils.defaultsWithServiceNameAndFilterAndSearch('ProviderService');
         vm.dtColumns = [
@@ -38,6 +38,7 @@ angular.module('adminApp')
 
         vm.dtInstance = {};
         vm.createLink = '^.create';
+        vm.serviceTypes = serviceTypes;
 
         angular.extend($scope, vm);
     })
