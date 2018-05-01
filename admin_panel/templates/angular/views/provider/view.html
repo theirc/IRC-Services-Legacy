@@ -83,10 +83,41 @@
                             <div class="form-group col-xs-6">
                                 <label for="twitter">{{ 'PROVIDER_TWITTER' | translate }}</label>
                                 <input type="text" class="form-control" id="twitter" placeholder="Twitter" ng-model="ctrl.provider.twitter" ng-maxlength="255">
+                            </div>    
+                            <div class="form-group col-xs-6">
+                                <label for="type">{{ 'PROVIDER_SERVICE_TYPES' | translate }}</label>
+                                <ui-select ng-disabled="!ctrl.isEditing" multiple ng-model="ctrl.service.types" sortable="true" close-on-select="true" required
+                                    limit="4">
+                                    <ui-select-match placeholder="Select Types">{{ $item.name }}</ui-select-match>
+                                    <ui-select-choices repeat="type in ctrl.serviceTypes | filter: { name: $select.search }">
+                                        <div ng-bind-html="type.name | highlight: $select.search"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>   
+                            <div class="form-group col-xs-6">
+                                <label for="meta_population">{{ 'PROVIDER_META_POPULATION' | translate }}</label>
+                                <input type="text" class="form-control" id="meta_population" ng-model="ctrl.provider.meta_population" />
+                            </div>                        
+                            <div class="form-group col-xs-6">
+                                <label for="record">{{ 'PROVIDER_RECORD' | translate }}</label>
+                                <input type="text" class="form-control" id="record" ng-model="ctrl.provider.record" />
+                            </div>                                                     
+                            <div class="form-group col-xs-6">
+                                <label for="requirement">{{ 'PROVIDER_REQUIREMENT' | translate }}</label>
+                                <input type="text" class="form-control" id="requirement" ng-model="ctrl.provider.requirement" />
+                            </div>                            
+                            <div class="form-group col-xs-12">
+                                <label for="additional_info">{{ 'PROVIDER_ADDITIONAL_INFO' | translate }}</label>
+                                <textarea type="text" class="form-control" id="additional_info" ng-model="ctrl.provider.additional_info" ></textarea>
+                            </div>     
+                            <div class="form-group col-xs-6" ng-if="user.isSuperuser">
+                                <label for="vacancy">{{ 'PROVIDER_VACANCY' | translate }}
+                                    <input type="checkbox" id="vacancy" style="height:20px; width:20px" ng-model="ctrl.provider.vacancy"/>
+                                </label>
                             </div>
                             <div class="form-group col-xs-6" ng-if="user.isSuperuser">
                                 <label for="is_frozen">{{ 'PROVIDER_FREEZE' | translate }}
-                                    <input type="checkbox" id="is_frozen" ng-model="ctrl.provider.is_frozen">
+                                    <input type="checkbox" id="is_frozen" ng-model="ctrl.provider.is_frozen"/>
                                 </label>
                             </div>
                         </div>

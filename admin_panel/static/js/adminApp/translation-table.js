@@ -146,6 +146,12 @@ angular.module("adminApp").config(function($translateProvider){
         PROVIDER_EDIT: 'Edit',
         PROVIDER_SAVE: 'Save',
         PROVIDER_CANCEL:  'Cancel',
+        PROVIDER_SERVICE_TYPES: 'Service Types',
+        PROVIDER_META_POPULATION: 'Meta Population',
+        PROVIDER_RECORD: 'Record',
+        PROVIDER_REQUIREMENT: 'Requirements',
+        PROVIDER_ADDITIONAL_INFO: 'Additional Information',
+        PROVIDER_VACANCY: 'Vacancy',
 
         //Region
         REGION_NAME: 'Name',
@@ -251,7 +257,7 @@ angular.module("adminApp").config(function($translateProvider){
 
         SERVICE_DRAFT: 'Draft',
         SERVICE_PRIVATE: 'Private',
-        SERVICE_CURRENT: 'Current',
+        SERVICE_CURRENT: 'Public', 
         SERVICE_REJECTED: 'Rejected',
         SERVICE_CANCELED: 'Cancelled',
         SERVICE_ARCHIVED: 'Archived',
@@ -429,7 +435,7 @@ angular.module("adminApp").config(function($translateProvider){
         //RightSideBar
         RECENT_ACTIVITY: 'Actividad Reciente',
         LANGDONS_BIRTHDAY: 'Langdon\'s Birthday',
-        TASKS_PROGRESS: 'Tasks Progress',
+        TASKS_PROGRESS: 'Progreso de las Tareas',
         STATS_TAB_CONTENT: 'Contenido de pestaña estadísticas',
         GENERAL_SETTINGS: 'Configuración General',
         REPORT_PANEL_USAGE: 'Uso del panel de Reporte',
@@ -454,22 +460,24 @@ angular.module("adminApp").config(function($translateProvider){
 
         //ServiceType
         SERVICE_TITLE: 'Título',
-        COMMENTS: 'Commentarioss',
+        COMMENTS: 'Comentarios',
         METADATA: 'Metadata',
         ICON: 'Ícono',
         COLOR: 'Color',
         SERVICE_ORDERING: 'Orden de Servicio',
 
         //Newsletter
-        SERVICE_CONFIRMATION_NEWSLETTER_LOGS: 'Logs de confirmación de Newsletter de Servicios',
+
+      
+      SERVICE_CONFIRMATION_NEWSLETTER_LOGS: 'Registro de Newsletter de confirmación de servicios',
         LOG_ID: 'Log ID',
-        SERVICE: 'Serviio',
+        SERVICE: 'Servicio',
         DATE: 'Fecha',
         STATUS: 'Estado',
         EMAIL_SENT_TO: 'Email enviado a ',
         NOTE: 'Nota',
         OPEN: 'Abierto',
-        NEWSLETTER_RESET: 'Reset',
+        NEWSLETTER_RESET: 'Resetear',
         NEWSLETTER_SAVE: 'Grabar',
 
         //PROVIDER
@@ -483,7 +491,7 @@ angular.module("adminApp").config(function($translateProvider){
         PROVIDER_FACEBOOK: 'Facebook',
         PROVIDER_TWITTER: 'Twitter',
         PROVIDER_COUNTRY: 'País',
-        PROVIDER_FREEZE: 'Congelar Provedor (deshabilitar login de usuarios)',
+        PROVIDER_FREEZE: 'Congelar Proveedor (deshabilitar login de usuarios)',
         PROVIDER_SERVICES: 'Servicios',
         PROVIDER_IMPERSONATE: 'Personificar',
         PROVIDER_EXPORT_SERVICES: 'Exportar Servicios',
@@ -491,6 +499,13 @@ angular.module("adminApp").config(function($translateProvider){
         PROVIDER_EDIT: 'Editar',
         PROVIDER_SAVE: 'Grabar',
         PROVIDER_CANCEL:  'Cancelar',
+        PROVIDER_SERVICE_TYPES: 'Tipos de Servicios',
+        PROVIDER_META_POPULATION: 'Población Meta',
+        PROVIDER_RECORD: 'Registro',
+        PROVIDER_REQUIREMENT: 'Requisitos',
+        PROVIDER_ADDITIONAL_INFO: 'Información Adicional',
+        PROVIDER_VACANCY: 'Vacancia',
+
 
         //Region
         REGION_NAME: 'Nombre',
@@ -501,7 +516,7 @@ angular.module("adminApp").config(function($translateProvider){
         REGION_IS_HIDDEN: 'Es oculto',
         REGION_LANGUAGES: 'Idiomas',
         REGION_TITLE: 'Título',
-        REGION_OUTLINE: 'Delimitar Region',
+        REGION_OUTLINE: 'Delimitar Región',
 
         //Service Overview
         OVERVIEW: 'Servicio',
@@ -569,7 +584,7 @@ angular.module("adminApp").config(function($translateProvider){
         SERVICE_ONLY_JPG: 'Solo se permiten imágenes jpn y png.',
         SERVICE_REMOVE: 'Quitas',
         SERVICE_REMOVE_IMAGE: 'Quitar imagen',
-        SERVICE_OPEN_27_7: 'El servicio estś disponible 24/7:',
+        SERVICE_OPEN_27_7: 'El servicio está disponible 24/7:',
         SERVICE_LEAVE_EMPTY_IF_CLOSED_THAT_DAY: 'Dejar vacío si el servicio está cerrado ese día.',
         SERVICE_CONTACT_INFORMATION: 'Información de Contacto',
         SERVICE_TYPE: 'Categoría',
@@ -665,7 +680,7 @@ angular.module("adminApp").config(function($translateProvider){
         PROVIDER_SETTINGS: 'Configuración de Proveedor',
         SERVICE_PROVIDER_DASHBOARD: 'Tablero de Proveedor de Servicio',
         SERVICE_PROVIDER_CREATE: 'Crear Proveedor de Servicio',
-        SERVICE_PROVIDER: 'Proveedor de Servicio',
+        SERVICE_PROVIDER: 'Organización',
         CREATE_GEOGRAPHIC_REGIONS: 'Crear Región Geográfica',
         GEOGRAPHIC_REGION: 'Región Geográfica',
         NEW_SERVICE_TYPE: 'Nuevo Tipo de Servicio',

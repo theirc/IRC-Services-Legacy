@@ -219,7 +219,8 @@ class ProviderSerializer(serializers.ModelSerializer):
                 'type', 'phone_number', 'website',
                 'facebook', 'twitter',
                 'focal_point_phone_number',
-                'user', 'number_of_monthly_beneficiaries', 'is_frozen'
+                'user', 'number_of_monthly_beneficiaries', 'is_frozen', 'service_types',
+                'meta_population', 'record', 'requirement', 'vacancy', 'additional_info'
             ]
         )
         required_translated_fields = [
