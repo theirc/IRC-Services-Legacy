@@ -2,7 +2,7 @@
  * Created by reyrodrigues on 1/2/17.
  */
 angular.module('adminApp')
-    .controller('ProviderListController', function (tableUtils, $scope, ProviderService, serviceTypes, providerTypes,selectedLanguage) {
+    .controller('ProviderListController', function (tableUtils, $scope, ProviderService, providerTypes,selectedLanguage) {
         var vm = this;
         vm.dtOptions = tableUtils.defaultsWithServiceNameAndFilterAndSearch('ProviderService');
         vm.dtColumns = [
@@ -37,12 +37,11 @@ angular.module('adminApp')
 
 
         vm.dtInstance = {};
-        vm.createLink = '^.create';
-        vm.serviceTypes = serviceTypes;
+        vm.createLink = '^.create';        
 
         angular.extend($scope, vm);
     })
-    .controller('ProviderOpenController', function ($scope, systemUsers, ProviderService, tableUtils, $rootScope, regions, provider, providerTypes, $state, selectedLanguage) {
+    .controller('ProviderOpenController', function ($scope, systemUsers, ProviderService, tableUtils, $rootScope, regions, provider, serviceTypes, providerTypes, $state, selectedLanguage) {
         var vm = this;
 
         vm.provider = provider;
@@ -53,6 +52,7 @@ angular.module('adminApp')
         vm.allUsers = systemUsers;
         vm.isNew = !vm.object.hasOwnProperty('id');
         vm.regions = regions.filter(r => r.level === 1);
+        vm.serviceTypes = serviceTypes;
 
         if (vm.isNew) {
             vm.isEditing = true;
