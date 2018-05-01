@@ -168,10 +168,6 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 					}, ]
 				},
 				regions: function (GeoRegionService, $rootScope, $q, $window) {
-					if (!$rootScope.user.isSuperuser) {
-						return [];
-					}
-
 					return allRegions(GeoRegionService, $q, $window)
 				},
 			},

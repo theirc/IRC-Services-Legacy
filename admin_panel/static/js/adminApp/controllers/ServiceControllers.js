@@ -362,13 +362,11 @@ angular
             if (regionChain[0]) {
 
                 vm.regionlvl1 = regionChain[0];
+                vm.onRegionChange();
+
                 if (regionChain[1]) {
-                    vm.onRegionChange();
                     vm.regionlvl2 = regionChain[1];
-                }
-                if (regionChain[2]) {
                     vm.onRegionChangelvl2();
-                    vm.regionlvl3 = regionChain[2];
                 }
             }
 
@@ -444,9 +442,6 @@ Only superusers and service providers have access to the edit functions. Everyon
             vm.save = function (file) {
                 vm.generateSlug();
                 vm.service.region = vm.regionlvl3 || vm.regionlvl2 || vm.regionlvl1;
-                if (vm.service.region) {
-                    vm.service.region = vm.service.region.id
-                }
                 if (!vm.provideLocation) {
                     vm.service.location = null;
                 }
@@ -859,19 +854,16 @@ Only superusers and service providers have access to the edit functions. Everyon
         vm.regionslvl2 = [];
         vm.regionslvl3 = [];
 
-        /*
         if ($scope.selectedProvider) {
+            console.log($scope.selectedProvider);
             vm.providerRegion = regions.filter(function (r) {
                 return r.id === $scope.selectedProvider.region;
             });
 
             vm.providerRegion = vm.providerRegion && vm.providerRegion[0]
-            console.log(vm.providerRegion)
+            console.log(vm.providerRegion);
             vm.regionslvl1 = $scope.user.isSuperuser ? regions : [vm.providerRegion];
         }
-        */
-
-
 
         vm.regionlvl1 = 0;
         vm.regionlvl2 = 0;
@@ -1035,6 +1027,13 @@ Only superusers and service providers have access to the edit functions. Everyon
 
         vm.dtInstance = {};
         vm.searchCriteria = {};
+
+        vm.clearFilters = () => {
+            vm.searchCriteria = {};
+            vm.regionlvl1 = 0;
+            vm.regionlvl2 = 0;
+            vm.regionlvl3 = 0;
+        };
 
         vm.onRegionChange = () => {
             vm.regionslvl3 = [];

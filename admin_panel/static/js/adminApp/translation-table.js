@@ -23,8 +23,9 @@ angular.module("adminApp").config(function($translateProvider){
         //Search Services page
         SERVICES: 'Services',
         REGION: 'Region',
-        REGION_LVL2: 'Departments',
-        REGION_LVL3: 'Municipality',
+        REGION_LVL1: 'Country',
+        REGION_LVL2: 'Region / Area',
+        REGION_LVL3: 'City',
         TYPE: 'Category',
         PROVIDER: 'Provider',
         CITY: 'City',
@@ -366,6 +367,7 @@ angular.module("adminApp").config(function($translateProvider){
         //Search Services page
         SERVICES: 'Servicios',
         REGION: 'Región',
+        REGION_LVL1: 'País',
         REGION_LVL2: 'Departamento',
         REGION_LVL3: 'Municipalidad',
         TYPE: 'Categoría',

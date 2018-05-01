@@ -21,17 +21,17 @@
                                 <label for="slug">{{ 'REGION_SLUG' | translate }}</label>
                                 <input type="text" class="form-control" id="slug" placeholder="Slug" ng-model="ctrl.object.slug" required>
                             </div>
-                            <div class="form-group col-xs-6" ng-if="ctrl.object.level > 1">
-                                <label for="parent">{{ 'REGION_PARENT' | translate }}</label>
-                                <select class="form-control" name="parent" ng-model="ctrl.object.parent" ng-options="r.id as r.name for r in ctrl.allRegions"></select>
-
-                            </div>
-
                             <div class="form-group col-xs-6">
                                 <label for="level">{{ 'REGION_LEVEL' | translate }}</label>
                                 <select class="form-control" name="level" ng-model="ctrl.object.level" ng-options="r.id as r.name for r in ctrl.levels" required></select>
 
                             </div>
+                            <div class="form-group col-xs-6" ng-if="ctrl.object.level > 1">
+                                <label for="parent">{{ 'REGION_PARENT' | translate }}</label>
+                                <select class="form-control" name="parent" ng-model="ctrl.object.parent" ng-options="r.id as r.name  group by r.parent.name for r in ctrl.allRegions | filter: { level: ctrl.object.level - 1 }"></select>
+
+                            </div>
+
                             <div class="form-group col-xs-6">
                                 <label for="code">{{ 'REGION_CODE' | translate }}</label>
                                 <input type="text" class="form-control" id="code" placeholder="Code" ng-model="ctrl.object.code">

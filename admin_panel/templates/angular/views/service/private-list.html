@@ -31,8 +31,8 @@
                     </div>
                     <div class="row">
                         <div class="form-group col-xs-4">
-                            <label for=""> {{'REGION'| translate}} </label>
-                            <select class="form-control" ng-model="ctrl.regionlvl1" ng-change="onRegionChange()" ng-options="r.slug as r.name for r in ctrl.regionslvl1 | filter:{ slug: 'el-salvador' }" ></select>
+                            <label for=""> {{'REGION_LVL1'| translate}} </label>
+                            <select class="form-control" ng-model="ctrl.regionlvl1" ng-change="onRegionChange()" ng-options="r.slug as r.name for r in ctrl.regionslvl1 | filter:{ parent: null }" ></select>
                         </div>
                         <div class="form-group col-xs-4">
                             <label for=""> {{'REGION_LVL2'| translate}} </label>
@@ -47,7 +47,7 @@
                 </form>
                 <div class="col-xs-12">
                     <div class="btn-group pull-right">
-                        <button class="btn btn-warning " ng-click="ctrl.searchCriteria = {}"> {{'CLEAR_SEARCH'| translate}} </button>
+                        <button class="btn btn-warning " ng-click="ctrl.clearFilters()"> {{'CLEAR_SEARCH'| translate}} </button>
                         <button class="btn btn-primary " ng-hide="ctrl.isMapMode" ng-click="ctrl.reloadOption(ctrl.searchCriteria)"> {{'SEARCH'| translate}} </button>
                         <button class="btn btn-primary " ng-show="ctrl.isMapMode" ng-click="ctrl.showMap(ctrl.searchCriteria)"> {{'SEARCH'| translate}} </button>
                         <button class="btn btn-primary " ng-hide="ctrl.isMapMode" ng-click="ctrl.showMap(ctrl.searchCriteria)"> {{'SHOW_MAP'| translate}} </button>
