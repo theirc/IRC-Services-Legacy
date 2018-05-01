@@ -1444,6 +1444,15 @@ class ContactInformation(models.Model):
     text = models.CharField(
         max_length=256)
 
+    name = models.CharField(
+        max_length=256,
+        null=True)
+        
+    
+    title = models.CharField(
+        max_length=256,
+        null=True)
+     
     index = models.SmallIntegerField(
         validators=[
             MinValueValidator(0),            

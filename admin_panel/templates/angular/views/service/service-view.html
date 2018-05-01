@@ -343,11 +343,19 @@
                                         <label for="contactText">{{ 'SERVICE_TEXT' | translate }}</label>
                                         <input type="text" class="form-control" id="contactText" ng-maxlength="255" placeholder="text" ng-model="contactInformation.text">
                                     </div>
-                                    <div class="form-group col-xs-3">
+                                    <div class="form-group col-xs-2">
+                                        <label for="contactText">{{ 'SERVICE_NAME' | translate }}</label>
+                                        <input type="text" class="form-control" id="contactName" ng-maxlength="255" placeholder="name" ng-model="contactInformation.name">
+                                    </div>
+                                    <div class="form-group col-xs-2">
+                                        <label for="contactText">{{ 'SERVICE_TITLE' | translate }}</label>
+                                        <input type="text" class="form-control" id="contactTitle" ng-maxlength="255" placeholder="title" ng-model="contactInformation.title">
+                                    </div>
+                                    <div class="form-group col-xs-1">
                                         <label for="contactnIndex">{{ 'SERVICE_INDEX' | translate }}</label>
                                         <input type="text" class="form-control" id="contactnIndex" ng-maxlength="255" placeholder="index" ng-model="contactInformation.index">
                                     </div>
-                                    <div class="form-group col-xs-3">
+                                    <div class="form-group col-xs-1">
                                         <span ng-if="ctrl.isEditing" class="fa fa-times-circle" ng-click="!ctrl.isEditing || ctrl.removeContact($index)" style="color: red"></span>
                                     </div>
                                 </div>

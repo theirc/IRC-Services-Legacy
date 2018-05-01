@@ -151,7 +151,7 @@ class ContactInformationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ContactInformation
-        fields  =('id', 'index', 'text', 'type')
+        fields  =('id', 'index', 'text', 'type', 'name', 'title')
 
 class ServiceImageSerializer(serializers.ModelSerializer):
     image = serializers.ImageField(allow_null=True)
