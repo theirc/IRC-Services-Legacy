@@ -238,6 +238,12 @@ angular
         vm.regionlvl2 = null;
         vm.regionlvl3 = null;
 
+        vm.updateCity = () => {
+            service_languages.forEach(function (lang) {
+                vm.service[`address_city_${lang[0]}`] = vm.regionlvl3.name;
+            });
+        }
+
 
 
         vm.onRegionChange = () => {
@@ -348,7 +354,6 @@ angular
             }
 
         } else {
-            console.log(vm.service);
             let selectedRegion = vm.regions.find(r => r.id === vm.service.region.id);
             let regionChain = [selectedRegion.id];
             while (selectedRegion.parent) {
@@ -358,7 +363,6 @@ angular
 
             regionChain = regionChain.reverse().concat([null, null, null]).slice(0, 3).map(r => r ? vm.regions.find(ar => r === ar.id) : null);
 
-            console.log(regionChain, vm);
             if (regionChain[0]) {
 
                 vm.regionlvl1 = regionChain[0];
@@ -857,13 +861,11 @@ Only superusers and service providers have access to the edit functions. Everyon
         vm.regionslvl3 = [];
 
         if ($scope.selectedProvider) {
-            console.log($scope.selectedProvider);
             vm.providerRegion = regions.filter(function (r) {
                 return r.id === $scope.selectedProvider.region;
             });
 
             vm.providerRegion = vm.providerRegion && vm.providerRegion[0]
-            console.log(vm.providerRegion);
             vm.regionslvl1 = $scope.user.isSuperuser ? regions : [vm.providerRegion];
         }
 

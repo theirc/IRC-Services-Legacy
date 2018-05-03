@@ -44,9 +44,8 @@
                     </div>
 
                     <div class="box">
-                        <div class="box-header">
-                            <h3 class="box-title" ng-hide="languages.length === 1">{{ 'TRANSLATED_FIELD' | translate }}</h3>
-                            <div class="transifex-container pull-right" ng-if="!ctrl.isNew && user.isSuperuser">
+                        <div class="box-header" ng-if="!ctrl.isNew && user.isSuperuser && (!user.site.id || user.site.domain.indexOf('refugee.info') > -1)">
+                            <div class="transifex-container pull-right">
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-default" ng-click="ctrl.pushToTransifex()">
                                         <i class="fa fa-arrow-up"></i>{{ 'PUSH_TO_TRANSIFEX' | translate }}
@@ -58,7 +57,23 @@
                                 <span>{{ 'TRANSIFEX_STATUS' | translate }} {{ ctrl.transifexStatus }}</span>
                             </div>
                         </div>
+
                         <div class="box-body" read-only-form is-editing="ctrl.isEditing">
+
+                            <div class="row">
+                                <div class="form-group col-xs-4">
+                                    <label for=""> {{'REGION_LVL1'| translate}} </label>
+                                    <select class="form-control" ng-model="ctrl.regionlvl1" ng-change="ctrl.onRegionChange()" ng-options="r as r.name for r in ctrl.regionslvl1 | filter:{ parent:null }"></select>
+                                </div>
+                                <div class="form-group col-xs-4">
+                                    <label for=""> {{'REGION_LVL2'| translate}} </label>
+                                    <select class="form-control" ng-model="ctrl.regionlvl2" ng-change="ctrl.onRegionChangelvl2()" ng-options="r as r.name for r in ctrl.regionslvl2"></select>
+                                </div>
+                                <div class="form-group col-xs-4">
+                                    <label for=""> {{'REGION_LVL3'| translate}} </label>
+                                    <select class="form-control" ng-model="ctrl.regionlvl3" ng-change="ctrl.updateCity()" ng-options="r as r.name for r in ctrl.regionslvl3"></select>
+                                </div>
+                            </div>
                             <div class="nav-tabs-custom">
                                 <ul class="nav nav-tabs" ng-hide="languages.length === 1">
                                     <li ng-class="{active: ctrl.selectedLanguageTab == (lang[0]||languages[0][0])}" ng-repeat="lang in serviceLanguages">
@@ -87,27 +102,10 @@
                                                 <div ng-if="!ctrl.isEditing" ng-bind-html="ctrl.service[idHelper('additional_info',lang[0])] ">
                                                 </div>
                                             </div>
-                                            <div class="form-group col-xs-12">
+                                            <div class="form-group col-xs-12" ng-if=" (!user.site.id || user.site.domain.indexOf('refugee.info') > -1)">
                                                 <label for="{{ idHelper('languages_spoken',lang[0]) }}">
                                                     {{ 'SERVICE_LANGUAGES_SPOKEN' | translate }}</label>
                                                 <textarea name="{{  idHelper('languages_spoken',lang[0])}}" class="form-control" ng-model="ctrl.service[idHelper('languages_spoken',lang[0])]"></textarea>
-                                            </div>
-
-                                            <div class="form-group col-xs-4">
-                                                <label for=""> {{'REGION_LVL1'| translate}} </label>
-                                                <select class="form-control" ng-model="ctrl.regionlvl1" ng-change="ctrl.onRegionChange()" ng-options="r as r.name for r in ctrl.regionslvl1 | filter:{ parent:null }"></select>
-                                            </div>
-                                            <div class="form-group col-xs-4">
-                                                <label for=""> {{'REGION_LVL2'| translate}} </label>
-                                                <select class="form-control" ng-model="ctrl.regionlvl2" ng-change="ctrl.onRegionChangelvl2()" ng-options="r as r.name for r in ctrl.regionslvl2"></select>
-                                            </div>
-                                            <div class="form-group col-xs-4">
-                                                <label for=""> {{'REGION_LVL3'| translate}} </label>
-                                                <select class="form-control" ng-model="ctrl.regionlvl3" ng-options="r as r.name for r in ctrl.regionslvl3"></select>
-                                            </div>
-                                            <div class="form-group col-xs-12">
-                                                <label for="{{ idHelper('address',lang[0]) }}">{{ 'SERVICE_ADDRESS_CITY' | translate }}</label>
-                                                <textarea name="{{  idHelper('address',lang[0])}}" class="form-control" ng-model="ctrl.service[idHelper('address_city',lang[0])]"></textarea>
                                             </div>
                                             <div class="form-group col-xs-12">
                                                 <label for="{{ idHelper('address',lang[0]) }}">{{ 'SERVICE_ADDRESS_STREET' | translate}}</label>
@@ -118,13 +116,18 @@
                                                     {{ 'SERVICE_ADDRESS_FLOOR' | translate }}</label>
                                                 <textarea name="{{  idHelper('address_floor',lang[0])}}" class="form-control" ng-model="ctrl.service[idHelper('address_floor',lang[0])]"></textarea>
                                             </div>
+
+                                            <div class="form-group col-xs-12" ng-if="(!user.site.id || user.site.domain.indexOf('refugee.info') > -1)">
+                                                <label for="{{ idHelper('address',lang[0]) }}">{{ 'SERVICE_ADDRESS_CITY' | translate }}</label>
+                                                <textarea name="{{  idHelper('address',lang[0])}}" class="form-control"  ng-model="ctrl.service[idHelper('address_city',lang[0])]"></textarea>
+                                            </div>
                                         </div>
                                     </div>
 
                                 </div>
                                 <!-- /.tab-content -->
                             </div>
-                            <div class="form-group col-xs-12" ng-if="user.isSuperuser">
+                            <div class="form-group col-xs-12" ng-if="user.isSuperuser &&  (!user.site.id || user.site.domain.indexOf('refugee.info') > -1)">
                                 <label for="addressInCountryLanguage">{{ 'SERVICE_ADDRESS_COUNTRY_LANGUAGE' | translate }}</label>
                                 <input type="text" class="form-control" id="addressInCountryLanguage" placeholder="Address in Country Language" ng-model="ctrl.service.address_in_country_language">
                             </div>
