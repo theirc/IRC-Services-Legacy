@@ -6,6 +6,10 @@ from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
 import unittest, time, re
+import os
+import sys
+
+THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class LoginTestCase(unittest.TestCase):
     def setUp(self):
@@ -19,6 +23,7 @@ class LoginTestCase(unittest.TestCase):
         self.accept_next_alert = True
     
     def test_failure(self):
+        driver.get_screenshot_as_file(os.path.join(THIS_DIR, 'screenshot.png'))
         self.assertTrue(False)
 
     def test_login(self):
@@ -55,7 +60,6 @@ class LoginTestCase(unittest.TestCase):
             time.sleep(1)
         else: self.fail("time out")
 
-        driver.get_screenshot_as_file('out.png')
     
     def is_element_present(self, how, what):
         try: self.driver.find_element(by=how, value=what)
