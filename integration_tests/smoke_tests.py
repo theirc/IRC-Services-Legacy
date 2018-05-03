@@ -25,7 +25,7 @@ class IntegrationTests(unittest.TestCase):
     
     def test_login(self):
         driver = self.driver
-        for user_type, user, password in all_users:
+        for user_type, user, password in [u for u in all_users if len(u) == 3]:
             print("Testing:", user_type)
             
             driver.get(BASE_URL)
@@ -81,7 +81,7 @@ class IntegrationTests(unittest.TestCase):
     
     def test_update_account(self):
         driver = self.driver
-        for user_type, user, password in all_users:
+        for user_type, user, password in [u for u in all_users if len(u) == 3]:
             print("Testing:", user_type)
             
             driver.get(BASE_URL)
