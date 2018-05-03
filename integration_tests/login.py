@@ -18,7 +18,10 @@ class LoginTestCase(unittest.TestCase):
         self.verificationErrors = []
         self.accept_next_alert = True
     
-    def login_test_case(self):
+    def test_failure(self):
+        self.assertTrue(False)
+
+    def test_login(self):
         driver = self.driver
         driver.get("http://localhost:9999/login/?next=/")
         driver.find_element_by_id("id_username").click()
