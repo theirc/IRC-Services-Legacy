@@ -447,6 +447,8 @@ Only superusers and service providers have access to the edit functions. Everyon
                 }
 
                 if (vm.isNew) {
+                    vm.service.region = vm.service.region.id;
+
                     ServiceService
                         .post(vm.service)
                         .then(function (s) {
