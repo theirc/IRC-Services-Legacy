@@ -10,7 +10,7 @@ import os
 
 USERS = os.environ.get('USERS','')
 all_users = [u.split(':') for u in USERS.split(';')]
-BASE_URL = os.environ.get('BASE_URL', '"http://localhost:9999/login/?next=/"')
+BASE_URL = os.environ.get('BASE_URL', 'http://localhost:9999/login/?next=/')
 
 class IntegrationTests(unittest.TestCase):
     def setUp(self):
