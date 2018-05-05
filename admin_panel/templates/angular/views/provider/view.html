@@ -47,7 +47,7 @@
 
                             <div class="form-group col-xs-12" ng-if="user.isSuperuser">
                                 <label for="region">{{ 'PROVIDER_COUNTRY' | translate }}</label>
-                                <select class="form-control" name="region" ng-model="ctrl.provider.region" ng-options="region.id as region.name for region in ctrl.regions"></select>
+                                <select class="form-control" name="region" ng-model="ctrl.provider.region" ng-options="region.id as region.name for region in ctrl.regions" required></select>
                             </div>
                         </div>
 
