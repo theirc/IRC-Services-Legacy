@@ -129,7 +129,7 @@
                             </div>
                             <div class="form-group col-xs-12" ng-if="user.isSuperuser &&  (!user.site.id || user.site.domain.indexOf('refugee.info') > -1)">
                                 <label for="addressInCountryLanguage">{{ 'SERVICE_ADDRESS_COUNTRY_LANGUAGE' | translate }}</label>
-                                <input type="text" class="form-control" id="addressInCountryLanguage" placeholder="Address in Country Language" ng-model="ctrl.service.address_in_country_language">
+                                <input type="text" class="form-control" id="addressInCountryLanguage" placeholder="{{ 'SERVICE_ADDRESS_COUNTRY_LANGUAGE' | translate }}" ng-model="ctrl.service.address_in_country_language">
                             </div>
                         </div>
 
@@ -180,7 +180,7 @@
                                 <label for="type">{{ 'SERVICE_TYPES' | translate }}</label>
                                 <ui-select ng-disabled="!ctrl.isEditing" multiple ng-model="ctrl.service.types" sortable="true" close-on-select="true" required
                                     limit="4">
-                                    <ui-select-match placeholder="Select Types">{{ $item.name }}</ui-select-match>
+                                    <ui-select-match placeholder="{{ 'SERVICE_SELECT_TYPES' | translate }}">{{ $item.name }}</ui-select-match>
                                     <ui-select-choices repeat="type in ctrl.serviceTypes | filter: { name: $select.search }">
                                         <div ng-bind-html="type.name | highlight: $select.search"></div>
                                     </ui-select-choices>
@@ -190,20 +190,20 @@
 
                             <div class="form-group col-xs-6">
                                 <label for="phoneNumber">{{ 'SERVICE_PHONE_NUMBER' | translate }}</label>
-                                <input type="text" class="form-control" id="phoneNumber" ng-maxlength="40" placeholder="Phone Number" ng-model="ctrl.service.phone_number">
+                                <input type="text" class="form-control" id="phoneNumber" ng-maxlength="40" placeholder="{{ 'SERVICE_PHONE_NUMBER' | translate }}" ng-model="ctrl.service.phone_number">
                             </div>
                             <div class="form-group col-xs-6">
                                 <label for="email">{{ 'SERVICE_EMAIL' | translate }}</label>
-                                <input type="email" class="form-control" name="email" id="email" placeholder="Email" ng-model="ctrl.service.email" ng-maxlength="255"
+                                <input type="email" class="form-control" name="email" id="email" placeholder="{{ 'SERVICE_EMAIL' | translate }}" ng-model="ctrl.service.email" ng-maxlength="255"
                                     ng-pattern="/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/">
                             </div>
                             <div class="form-group col-xs-6">
-                                <label for="website">Website</label>
-                                <input type="text" class="form-control" id="website" placeholder="Website" ng-model="ctrl.service.website" ng-maxlength="255">
+                                <label for="website">{{ 'SERVICE_WEBSITE' | translate }}</label>
+                                <input type="text" class="form-control" id="website" placeholder="{{ 'SERVICE_WEBSITE' | translate }}" ng-model="ctrl.service.website" ng-maxlength="255">
                             </div>
                             <div class="form-group col-xs-6">
                                 <label for="facebookPage">{{ 'SERVICE_FACEBOOK' | translate }}</label>
-                                <input type="text" class="form-control" id="facebookPage" placeholder="Facebook Page" ng-model="ctrl.service.facebook_page"
+                                <input type="text" class="form-control" id="facebookPage" placeholder="{{ 'SERVICE_FACEBOOK' | translate }}" ng-model="ctrl.service.facebook_page"
                                     ng-maxlength="255">
                             </div>
                             <div class="form-group col-xs-6">
@@ -218,7 +218,7 @@
                                 <label for="tags">{{ 'SERVICE_TAGS' | translate }}:</label>
                                 <ui-select tagging="ctrl.transformTag" ng-disabled="!ctrl.isEditing" multiple ng-model="ctrl.service.tags" sortable="true"
                                     close-on-select="true" on-select="ctrl.createNewTag($item.name)">
-                                    <ui-select-match placeholder="select tags">{{ $item.name }}</ui-select-match>
+                                    <ui-select-match placeholder="{{ 'SERVICE_FACEBOOK' | translate }}">{{ $item.name }}</ui-select-match>
                                     <ui-select-choices repeat="tag in ctrl.tags | filter: { name: $select.search }">
                                         <div ng-if="tag.isTag" ng-bind-html="(tag.name | highlight: $select.search) + {{ 'SERVICE_CLICK_TO_CREATE' | translate }}"></div>
                                         <div ng-if="!tag.isTag" ng-bind-html="tag.name + tag.isTag | highlight: $select.search"></div>
@@ -377,29 +377,29 @@
                             <div class="box-body">
                                 <div class="form-group col-xs-6">
                                     <label for="focalFirstName">{{ 'SERVICE_FOCAL_FIRST_NAME' | translate }}</label>
-                                    <input type="text" class="form-control" id="focalFirstName" ng-maxlength="255" placeholder="First Name" ng-model="ctrl.service.focal_point_first_name">
+                                    <input type="text" class="form-control" id="focalFirstName" ng-maxlength="255" placeholder="{{ 'SERVICE_FOCAL_FIRST_NAME' | translate }}" ng-model="ctrl.service.focal_point_first_name">
                                 </div>
                                 <div class="form-group col-xs-6">
                                     <label for="focalLastName">{{ 'SERVICE_FOCAL_LAST_NAME' | translate }}</label>
-                                    <input type="text" class="form-control" id="focalLastName" ng-maxlength="255" placeholder="Last Name" ng-model="ctrl.service.focal_point_last_name">
+                                    <input type="text" class="form-control" id="focalLastName" ng-maxlength="255" placeholder="{{ 'SERVICE_FOCAL_LAST_NAME' | translate }}" ng-model="ctrl.service.focal_point_last_name">
                                 </div>
                                 <div class="form-group col-xs-6">
                                     <label for="focalEmail">{{ 'SERVICE_FOCAL_EMAIL' | translate }}</label>
-                                    <input type="email" class="form-control" id="focalEmail" ng-maxlength="255" placeholder="Email" ng-model="ctrl.service.focal_point_email"
+                                    <input type="email" class="form-control" id="focalEmail" ng-maxlength="255" placeholder="{{ 'SERVICE_FOCAL_EMAIL' | translate }}" ng-model="ctrl.service.focal_point_email"
                                         ng-pattern="/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/">
                                 </div>
                                 <div class="form-group col-xs-12"></div>
                                 <div class="form-group col-xs-6">
                                     <label for="secondFocalFirstName">{{ 'SERVICE_SECOND_FOCAL_FIRST_NAME' | translate}}</label>
-                                    <input type="text" class="form-control" id="secondFocalFirstName" ng-maxlength="255" placeholder="First Name" ng-model="ctrl.service.second_focal_point_first_name">
+                                    <input type="text" class="form-control" id="secondFocalFirstName" ng-maxlength="255" placeholder="{{ 'SERVICE_SECOND_FOCAL_FIRST_NAME' | translate}}" ng-model="ctrl.service.second_focal_point_first_name">
                                 </div>
                                 <div class="form-group col-xs-6">
                                     <label for="secondFocalLastName">{{ 'SERVICE_SECOND_FOCAL_LAST_NAME' | translate}}</label>
-                                    <input type="text" class="form-control" id="secondFocalLastName" ng-maxlength="255" placeholder="Last Name" ng-model="ctrl.service.second_focal_point_last_name">
+                                    <input type="text" class="form-control" id="secondFocalLastName" ng-maxlength="255" placeholder="{{ 'SERVICE_SECOND_FOCAL_LAST_NAME' | translate}}" ng-model="ctrl.service.second_focal_point_last_name">
                                 </div>
                                 <div class="form-group col-xs-6">
                                     <label for="secondFocalEmail">{{ 'SERVICE_SECOND_FOCAL_EMAIL' | translate}}</label>
-                                    <input type="email" class="form-control" id="secondFocalEmail" ng-maxlength="255" placeholder="Email" ng-model="ctrl.service.second_focal_point_email"
+                                    <input type="email" class="form-control" id="secondFocalEmail" ng-maxlength="255" placeholder="{{ 'SERVICE_SECOND_FOCAL_EMAIL' | translate}}" ng-model="ctrl.service.second_focal_point_email"
                                         ng-pattern="/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/">
                                 </div>
                                 <div class="col-xs-12 service-location-block">
