@@ -68,7 +68,7 @@
                             </div>
                             <div class="form-group col-xs-6">
                                 <label for="phoneNumber">{{ 'PROVIDER_PHONE_NUMBER' | translate }}</label>
-                                <input type="text" class="form-control" id="phoneNumber" placeholder="Phone Number" ng-model="ctrl.provider.phone_number"
+                                <input type="text" class="form-control" id="phoneNumber" placeholder="{{ 'PROVIDER_PHONE_NUMBER' | translate }}" ng-model="ctrl.provider.phone_number"
                                     ng-pattern="/(^[\d+](?!.*--)[\d-]{7,18}[\d])$/">
                             </div>
                             <div class="form-group col-xs-6">
@@ -87,7 +87,7 @@
                             <div class="form-group col-xs-6">
                                 <label for="type">{{ 'PROVIDER_SERVICE_TYPES' | translate }}</label>
                                 <ui-select ng-disabled="!ctrl.isEditing" multiple ng-model="ctrl.service.types" sortable="true" close-on-select="true"  limit="4">
-                                    <ui-select-match placeholder="Select Types">{{ $item.name }}</ui-select-match>
+                                    <ui-select-match placeholder="{{ 'PROVIDER_SELECT_TYPES' | translate }}">{{ $item.name }}</ui-select-match>
                                     <ui-select-choices repeat="type in ctrl.serviceTypes | filter: { name: $select.search }">
                                         <div ng-bind-html="type.name | highlight: $select.search"></div>
                                     </ui-select-choices>

@@ -1,16 +1,16 @@
 angular.module('adminApp')
-    .controller('RegionListController', function (tableUtils) {
+    .controller('RegionListController', function (tableUtils, $filter) {
         var vm = this;
 
         vm.dtOptions = tableUtils.defaultsWithServiceNameAndFilterAndSearch('GeoRegionService');
 
         vm.dtColumns = [
             tableUtils.newColumn('id').withTitle('ID'),
-            tableUtils.newLinkColumn('name', 'Name'),
-            tableUtils.newLinkColumn('slug', 'Slug'),
-            tableUtils.newLinkColumn('parent__name', 'Parent').withOption('sortBy', 'parent'),
-            tableUtils.newColumn('level').withTitle('Level'),
-            tableUtils.newColumn('hidden').withTitle('Hidden'),
+            tableUtils.newLinkColumn('name', $filter('translate')('REGION_NAME')),
+            tableUtils.newLinkColumn('slug', $filter('translate')('REGION_SLUG')),
+            tableUtils.newLinkColumn('parent__name', $filter('translate')('REGION_PARENT')).withOption('sortBy', 'parent'),
+            tableUtils.newColumn('level').withTitle($filter('translate')('REGION_LEVEL')),
+            tableUtils.newColumn('hidden').withTitle($filter('translate')('REGION_IS_HIDDEN')),
             tableUtils.newActionColumn()
         ];
 
