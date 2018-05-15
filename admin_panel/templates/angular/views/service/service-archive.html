@@ -1,21 +1,21 @@
 <div class="modal-header">
     <div class="pages-header">
-        <h3>{{ ARCHIVE_SERVICE | translate}}</h3>
+        <h3>{{ 'ARCHIVE_SERVICE' | translate}}</h3>
     </div>
 </div>
 <div class="modal-body">
-    <p>{{ ARE_YOU_SURE_ARCHIVE | translate }}</p>
+    <p>{{ 'ARE_YOU_SURE_ARCHIVE' | translate }}</p>
 </div>
 <div class="modal-footer">
     <div class="flex-end">
         <button type="button" ng-click="ctrl.cancel()" class="page-button"
                 id="cancel-{{ ctrl.serviceId }}">
-            <i class="fa fa-undo" aria-hidden="true"></i><span>{{ ARCHIVE_CANCEL | translate}}</span>
+            <i class="fa fa-undo" aria-hidden="true"></i><span>{{ 'ARCHIVE_CANCEL' | translate}}</span>
         </button>
         <button type="button" class="page-button"
                 id="confirm-{{ ctrl.serviceId }}"
                 ng-click="ctrl.confirm()">
-            <i class="fa fa-check" aria-hidden="true"></i><span>{{ ARCHIVE_YES | translate }}</span>
+            <i class="fa fa-check" aria-hidden="true"></i><span>{{ 'ARCHIVE_YES' | translate }}</span>
         </button>
     </div>
 </div>
