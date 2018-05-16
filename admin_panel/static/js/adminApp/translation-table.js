@@ -680,7 +680,7 @@ angular.module("adminApp").config(function($translateProvider){
         SYSTEM_USERS: 'Usuarios del Sistema',
         CREATE_SYSTEM_USER: 'Crear Usuario del Sistema',
         SYSTEM_USER: 'Usuario del Sistema',
-        SERVICE_PROVIDERS: 'Proveedores de Servicios',
+        SERVICE_PROVIDERS: 'Organizaciones',
         PROVIDER_SETTINGS: 'Configuración de Proveedor',
         SERVICE_PROVIDER_DASHBOARD: 'Tablero de Proveedor de Servicio',
         SERVICE_PROVIDER_CREATE: 'Crear Proveedor de Servicio',
