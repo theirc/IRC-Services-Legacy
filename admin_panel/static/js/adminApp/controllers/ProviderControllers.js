@@ -19,15 +19,14 @@ angular.module('adminApp')
             tableUtils.newColumn('actions').withTitle($filter('translate')('TABLE_ACTIONS')).renderWith(function (data, type, full, meta) {
                 var viewButton = `
                     <a class="btn btn-primary btn-xs btn-block" ui-sref="^.open({id: ${full.id}})">
-                        <i class="fa fa-eye"></i>
-                        {{ OPEN | translate }}
-                    </a>`;
+                        <i class="fa fa-eye"></i> `+
+                        $filter('translate')('PROVIDER_OPEN')+
+                        ` </a>`;
                 var impersonateButton = `
                     <a class="btn btn-success btn-xs btn-block" ui-sref="^.impersonate({id: ${full.id}})">
-                        <i class="fa fa-user"></i>
-                        Impersonate
-                    </a>
-                `;
+                        <i class="fa fa-user"></i> `+
+                        $filter('translate')('PROVIDER_IMPERSONATE')+
+                        ` </a>`;
 
                 return `
                     ${viewButton}
