@@ -497,6 +497,7 @@ angular.module("adminApp").config(function($translateProvider){
         PROVIDER_FREEZE: 'Congelar Proveedor (deshabilitar login de usuarios)',
         PROVIDER_SERVICES: 'Servicios',
         PROVIDER_IMPERSONATE: 'Personificar',
+        PROVIDER_OPEN: 'Abrir',
         PROVIDER_EXPORT_SERVICES: 'Exportar Servicios',
         PROVIDER_IMPORT_SERVICES: 'Importar Servicios',
         PROVIDER_EDIT: 'Editar',
