@@ -152,7 +152,7 @@ angular.module("adminApp").config(function($translateProvider){
         PROVIDER_RECORD: 'Record',
         PROVIDER_REQUIREMENT: 'Requirements',
         PROVIDER_ADDITIONAL_INFO: 'Additional Information',
-        PROVIDER_VACANCY: 'Vacancy',
+        PROVIDER_VACANCY: 'No Vacancy',
 
         //Region
         REGION_NAME: 'Name',
@@ -508,7 +508,7 @@ angular.module("adminApp").config(function($translateProvider){
         PROVIDER_RECORD: 'Registro',
         PROVIDER_REQUIREMENT: 'Requisitos',
         PROVIDER_ADDITIONAL_INFO: 'Información Adicional',
-        PROVIDER_VACANCY: 'Vacancia',
+        PROVIDER_VACANCY: 'No Vacancia',
 
 
         //Region
