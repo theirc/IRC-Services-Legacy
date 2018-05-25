@@ -20,6 +20,7 @@ angular.module('adminApp')
                 var viewButton = `
                     <a class="btn btn-primary btn-xs btn-block" ui-sref="^.open({id: ${full.id}})">
                         <i class="fa fa-eye"></i> `+
+                        
                         $filter('translate')('PROVIDER_OPEN')+
                         ` </a>`;
                 var impersonateButton = `
