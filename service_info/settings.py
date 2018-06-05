@@ -439,6 +439,7 @@ if sys.platform == 'darwin':
         '/usr/local/lib/mod_spatialite.dylib'
     )
 
+SPATIALITE_LIBRARY_PATH = 'mod_spatialite'
 
 if 'GEOS_LIBRARY_PATH' in os.environ:
     GEOS_LIBRARY_PATH = os.environ.get('GEOS_LIBRARY_PATH')

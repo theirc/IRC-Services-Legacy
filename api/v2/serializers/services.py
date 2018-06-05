@@ -84,7 +84,7 @@ class ProviderSerializer(RequireOneTranslationMixin, serializers.HyperlinkedMode
             generate_translated_fields('focal_point_name') +
             generate_translated_fields('address') +
             [
-                'type', 'phone_number', 'website',
+                'contact_name','title','type', 'phone_number', 'website',
                 'focal_point_phone_number',
                 'user', 'number_of_monthly_beneficiaries','is_frozen'
             ]
@@ -150,7 +150,7 @@ class ContactInformationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ContactInformation
-        fields  =('id', 'index', 'text', 'type', 'name', 'title')
+        fields  =('id', 'index', 'text', 'type')
 
 class ServiceImageSerializer(serializers.ModelSerializer):
     image = serializers.ImageField(allow_null=True)
@@ -196,7 +196,7 @@ class ProviderSerializer(serializers.ModelSerializer):
             generate_translated_fields('focal_point_name') +
             generate_translated_fields('address') +
             [
-                'type', 'phone_number', 'website',
+                'contact_name','title','type', 'phone_number', 'website',
                 'focal_point_phone_number',
                 'user', 'number_of_monthly_beneficiaries', 'region','is_frozen'
             ]

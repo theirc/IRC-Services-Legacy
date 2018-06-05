@@ -78,6 +78,8 @@ class Command(BaseCommand):
                 address_ar=r.get('address_ar', ''),
                 address_fa=r.get('address_fr', ''),
                 phone_number=r.get('phone_number', ''),
+                contact_name=r.get('contact_name',''),
+                title=r.get('title',''),
                 website=r.get('website', ''),
                 focal_point_phone_number=r.get('focal_point_phone_number', ''),
                 type=provider_type
