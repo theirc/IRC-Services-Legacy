@@ -20,7 +20,6 @@ from sorl.thumbnail import ImageField
 from sorl.thumbnail.shortcuts import get_thumbnail
 from . import jira_support
 from .meta import TranslatableModel
-from .tasks import email_provider_about_service_approval_task, email_provider_about_service_rejection_task
 from .utils import absolute_url, get_path_to_service
 
 
@@ -49,6 +48,60 @@ def at_least_one_letter(s):
 def blank_or_at_least_one_letter(s):
     return s == '' or at_least_one_letter(s)
 
+class ServiceType(TranslatableModel, models.Model):
+    __translatable__ = {
+        "name": lambda l: models.CharField(
+            _("name in {LANGUAGE_NAME}".format(**l)),
+            max_length=256,
+            default='',
+            blank=True,
+        ),
+        "comments": lambda l: models.CharField(
+            _("comments in {LANGUAGE_NAME}".format(**l)),
+            max_length=512,
+            default='',
+            blank=True,
+        )
+    }
+
+    number = models.IntegerField(blank=True, null=True)
+
+    icon = models.ImageField(
+        upload_to='service-type-icons',
+        verbose_name=_("icon"),
+        blank=True,
+    )
+    icon_url = models.URLField(null=True, blank=True)
+    vector_icon = models.CharField(max_length=100, null=True, blank=True, verbose_name=_("Vector Icon"))
+    color = models.CharField(max_length=7, blank=True)
+
+    class Meta(object):
+        ordering = ['number', ]
+
+    def get_api_url(self):
+        return reverse('servicetype-detail', args=[self.id])
+
+    def get_icon_url(self):
+        """Return URL PATH of the icon image for this record"""
+        # For convenience of serializers
+        if self.icon:
+            return self.icon.url
+        return self.icon_url
+
+    def get_icon_base64(self):
+        """Return URL PATH of the icon image for this record"""
+        from requests import get
+        import mimetypes
+        import base64
+        try:
+            url = self.get_icon_url()
+            image = get(url).content
+            mime, a = mimetypes.guess_type(url)
+            b64data = base64.b64encode(image)
+
+            return "data:{};base64,{}".format(mime, b64data.decode("ascii"))
+        except:
+            return ""
 
 class Provider(TranslatableModel, models.Model):
     __translatable__ = {
@@ -155,7 +208,6 @@ class Provider(TranslatableModel, models.Model):
         default=False,
     )
 
-
     facebook = models.CharField(
         _("facebook"),
         max_length=255,
@@ -168,6 +220,44 @@ class Provider(TranslatableModel, models.Model):
         max_length=255,
         blank=True,
         default=''
+    )
+
+    service_types = models.ManyToManyField(
+        ServiceType,
+        verbose_name=_("service_types"),
+        blank=True
+    )
+
+    meta_population = models.IntegerField(
+        _("meta_population"),
+        blank=True, null=True,
+        validators=[
+            MinValueValidator(0)
+        ]
+    )
+
+    record = models.TextField(
+        _("record"),
+        blank=True,
+        default='',
+    )
+
+    requirement = models.TextField(
+        _("requirement"),
+        blank=True,
+        default='',
+    )
+
+    vacancy = models.BooleanField(
+        _("vacancy"),
+        blank=True,
+        default=False,
+    )
+
+    additional_info = models.TextField(
+        _("additional_info"),
+        blank=True,
+        default='',
     )
 
     @property
@@ -260,63 +350,6 @@ class SelectionCriterion(TranslatableModel, models.Model):
 
     def get_api_url(self):
         return reverse('selectioncriterion-detail', args=[self.id])
-
-
-class ServiceType(TranslatableModel, models.Model):
-    __translatable__ = {
-        "name": lambda l: models.CharField(
-            _("name in {LANGUAGE_NAME}".format(**l)),
-            max_length=256,
-            default='',
-            blank=True,
-        ),
-        "comments": lambda l: models.CharField(
-            _("comments in {LANGUAGE_NAME}".format(**l)),
-            max_length=512,
-            default='',
-            blank=True,
-        )
-    }
-
-    number = models.IntegerField(blank=True, null=True)
-
-    icon = models.ImageField(
-        upload_to='service-type-icons',
-        verbose_name=_("icon"),
-        blank=True,
-    )
-    icon_url = models.URLField(null=True, blank=True)
-    vector_icon = models.CharField(max_length=100, null=True, blank=True, verbose_name=_("Vector Icon"))
-    color = models.CharField(max_length=7, blank=True)
-
-    class Meta(object):
-        ordering = ['number', ]
-
-    def get_api_url(self):
-        return reverse('servicetype-detail', args=[self.id])
-
-    def get_icon_url(self):
-        """Return URL PATH of the icon image for this record"""
-        # For convenience of serializers
-        if self.icon:
-            return self.icon.url
-        return self.icon_url
-
-    def get_icon_base64(self):
-        """Return URL PATH of the icon image for this record"""
-        from requests import get
-        import mimetypes
-        import base64
-        try:
-            url = self.get_icon_url()
-            image = get(url).content
-            mime, a = mimetypes.guess_type(url)
-            b64data = base64.b64encode(image)
-
-            return "data:{};base64,{}".format(mime, b64data.decode("ascii"))
-        except:
-            return ""
-
 
 class ServiceTag(models.Model):
     name = models.CharField(_('tag name'), max_length=255)
@@ -590,11 +623,11 @@ class Service(TranslatableModel, models.Model):
 
     def email_provider_about_approval(self):
         """Schedule a task to send an email to the provider"""
-        email_provider_about_service_approval_task.delay(self.pk)
+        #email_provider_about_service_approval_task.delay(self.pk)
 
     def email_provider_about_rejection(self):
         """Schedule a task to send an email to the provider"""
-        email_provider_about_service_rejection_task.delay(self.pk)
+        #email_provider_about_service_rejection_task.delay(self.pk)
 
     def may_approve(self):
         return self.status == self.STATUS_DRAFT
@@ -815,21 +848,6 @@ class Service(TranslatableModel, models.Model):
                     'newsletter_settings': newsletter_settings
                 })
 
-                with get_connection(
-                        host=settings.NEWSLETTER_FROM_EMAIL_HOST,
-                        port=settings.NEWSLETTER_FROM_EMAIL_PORT,
-                        username=settings.NEWSLETTER_FROM_EMAIL_HOST_USER,
-                        password=settings.NEWSLETTER_FROM_EMAIL_HOST_PASSWORD,
-                        user_tls=settings.NEWSLETTER_FROM_EMAIL_USE_TLS
-                ) as connection:
-                    send_mail(
-                        subject=subject,
-                        message='Thank you',
-                        from_email=settings.NEWSLETTER_FROM_EMAIL,
-                        recipient_list=self.newsletter_valid_emails.split(", "),
-                        html_message=content_html,
-                        connection=connection)
-
                 # Send report confirmation e-mail
                 city = ", " + self.address_city if self.address_city else ''
                 subject = 'Updates for ' + self.provider.name + city
@@ -839,12 +857,6 @@ class Service(TranslatableModel, models.Model):
                     'note': note if note else ''
                 })
 
-                send_mail(
-                    subject=subject,
-                    message='Report',
-                    from_email=settings.DEFAULT_FROM_EMAIL,
-                    recipient_list=[settings.SERVICE_MANAGER_EMAIL],
-                    html_message=content_html)
 
             return self
         else:
@@ -1452,5 +1464,25 @@ class ContactInformation(models.Model):
         blank=False,
         null=False,
     )
+class UserNote(models.Model):
+    service = models.ForeignKey(
+        verbose_name=_("Service"),
+        to=Service,
+        null=False,
+        blank=False,
+        related_name='service'
+    )
+    user = models.ForeignKey(
+        to=settings.AUTH_USER_MODEL,
+        verbose_name=_('User'),
+        related_name='user',
+        null=True,
+        blank=True,
+    )
+    updated_at = models.DateTimeField(auto_now=True, blank=True)
+    created_at = models.DateTimeField(blank=True, null=True)
+    note = models.TextField()
+
+
 
     

@@ -35,16 +35,16 @@ angular.module("adminApp").controller("MenuController", function ($rootScope, $s
 			{
 				title: $filter('translate')('PROFILE'),
 				items: [{
-					title: $filter('translate')('ACCOUNT_SETTINGS'),
-					sref: "settings",
-					active: $state.includes("settings"),
-				},
-				{
-					title: $filter('translate')('PROVIDER_SETTINGS'),
-					sref: "provider.openMe",
-					hide: !((($rootScope.user.groups.filter(g => g.name === 'Providers').length > 0) || $rootScope.user.isSuperuser) && $rootScope.selectedProvider),
-				},
-			 ],
+						title: $filter('translate')('ACCOUNT_SETTINGS'),
+						sref: "settings",
+						active: $state.includes("settings"),
+					},
+					{
+						title: $filter('translate')('PROVIDER_SETTINGS'),
+						sref: "provider.openMe",
+						hide: !((($rootScope.user.groups.filter(g => g.name === 'Providers').length > 0) || $rootScope.user.isSuperuser) && $rootScope.selectedProvider),
+					},
+				],
 			},
 			{
 				title: $filter('translate')('REFUGEE_ADMIN'),
@@ -67,7 +67,7 @@ angular.module("adminApp").controller("MenuController", function ($rootScope, $s
 						hide: !$rootScope.user.isSuperuser,
 					},
 				],
-				hide: !$rootScope.user.isSuperuser || !('refugee.info'.indexOf($rootScope.user.site.domain) > -1),
+				hide: !$rootScope.user.isSuperuser || !($rootScope.user.site && $rootScope.user.site.domain && $rootScope.user.site.domain.indexOf('refugee.info') > -1),
 			},
 			{
 				title: $filter('translate')('SYSTEM_ADMIN'),

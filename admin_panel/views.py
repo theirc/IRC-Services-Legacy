@@ -60,7 +60,7 @@ class LandingPageView(LoginRequiredMixin, TemplateView):
                 "name": user.site.name,
                 "domain": user.site.domain,
             } if user.site else {},
-            'providers': [{"id": p.id, "name": p.name} for p in user.all_providers],
+            'providers': [{"id": p.id, "name": p.name, "region": p.region.id if p.region else None} for p in user.all_providers],
             'groups': [{"id": p.id, "name": p.name} for p in user.groups.all()],
         }
         context['USER'] = json.dumps(token)
@@ -70,7 +70,8 @@ class LandingPageView(LoginRequiredMixin, TemplateView):
             p = Provider.objects.get(pk=request.session['selected-provider'])
             selected_provider = {
                 'name': p.name,
-                'id': p.id
+                'id': p.id,
+                'region': p.region.id if p.region else None,
             }
         context['SELECTED_PROVIDER'] = json.dumps(selected_provider)
         context['PERMISSIONS'] = json.dumps({

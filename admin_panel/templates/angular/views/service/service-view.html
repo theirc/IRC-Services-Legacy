@@ -2,7 +2,7 @@
     <h1>
         {{ chctrl.state.data.title | translate }}
         <small>{{ ctrl.provider.name_en}}</small>
-        <button type="button" class="btn btn-warning pull-right" ng-click="ctrl.goBack()">Back</button>
+        <button type="button" class="btn btn-warning pull-right" ng-click="ctrl.goBack()">{{ 'BACK' | translate }}</button>
     </h1>
 </section>
 
@@ -44,9 +44,8 @@
                     </div>
 
                     <div class="box">
-                        <div class="box-header">
-                            <h3 class="box-title">{{ 'TRANSLATED_FIELD' | translate }}</h3>
-                            <div class="transifex-container pull-right" ng-if="!ctrl.isNew && user.isSuperuser">
+                        <div class="box-header" ng-if="!ctrl.isNew && user.isSuperuser && (!user.site.id || user.site.domain.indexOf('refugee.info') > -1)">
+                            <div class="transifex-container pull-right">
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-default" ng-click="ctrl.pushToTransifex()">
                                         <i class="fa fa-arrow-up"></i>{{ 'PUSH_TO_TRANSIFEX' | translate }}
@@ -58,9 +57,25 @@
                                 <span>{{ 'TRANSIFEX_STATUS' | translate }} {{ ctrl.transifexStatus }}</span>
                             </div>
                         </div>
+
                         <div class="box-body" read-only-form is-editing="ctrl.isEditing">
+
+                            <div class="row">
+                                <div class="form-group col-xs-4">
+                                    <label for=""> {{'REGION_LVL1'| translate}} </label>
+                                    <select class="form-control" ng-model="ctrl.regionlvl1" ng-change="ctrl.onRegionChange()" ng-options="r as r.name for r in ctrl.regionslvl1 | filter:{ parent:null }"></select>
+                                </div>
+                                <div class="form-group col-xs-4">
+                                    <label for=""> {{'REGION_LVL2'| translate}} </label>
+                                    <select class="form-control" ng-model="ctrl.regionlvl2" ng-change="ctrl.onRegionChangelvl2()" ng-options="r as r.name for r in ctrl.regionslvl2"></select>
+                                </div>
+                                <div class="form-group col-xs-4">
+                                    <label for=""> {{'REGION_LVL3'| translate}} </label>
+                                    <select class="form-control" ng-model="ctrl.regionlvl3" ng-change="ctrl.updateCity()" ng-options="r as r.name for r in ctrl.regionslvl3"></select>
+                                </div>
+                            </div>
                             <div class="nav-tabs-custom">
-                                <ul class="nav nav-tabs">
+                                <ul class="nav nav-tabs" ng-hide="languages.length === 1">
                                     <li ng-class="{active: ctrl.selectedLanguageTab == (lang[0]||languages[0][0])}" ng-repeat="lang in serviceLanguages">
                                         <a href="" ng-click="ctrl.selectedLanguageTab = lang[0]" data-toggle="tab" aria-expanded="true">{{ lang[1] }}</a>
                                     </li>
@@ -87,14 +102,10 @@
                                                 <div ng-if="!ctrl.isEditing" ng-bind-html="ctrl.service[idHelper('additional_info',lang[0])] ">
                                                 </div>
                                             </div>
-                                            <div class="form-group col-xs-12">
+                                            <div class="form-group col-xs-12" ng-if=" (!user.site.id || user.site.domain.indexOf('refugee.info') > -1)">
                                                 <label for="{{ idHelper('languages_spoken',lang[0]) }}">
                                                     {{ 'SERVICE_LANGUAGES_SPOKEN' | translate }}</label>
                                                 <textarea name="{{  idHelper('languages_spoken',lang[0])}}" class="form-control" ng-model="ctrl.service[idHelper('languages_spoken',lang[0])]"></textarea>
-                                            </div>
-                                            <div class="form-group col-xs-12">
-                                                <label for="{{ idHelper('address',lang[0]) }}">{{ 'SERVICE_ADDRESS_CITY' | translate }}</label>
-                                                <textarea name="{{  idHelper('address',lang[0])}}" class="form-control" ng-model="ctrl.service[idHelper('address_city',lang[0])]"></textarea>
                                             </div>
                                             <div class="form-group col-xs-12">
                                                 <label for="{{ idHelper('address',lang[0]) }}">{{ 'SERVICE_ADDRESS_STREET' | translate}}</label>
@@ -105,15 +116,20 @@
                                                     {{ 'SERVICE_ADDRESS_FLOOR' | translate }}</label>
                                                 <textarea name="{{  idHelper('address_floor',lang[0])}}" class="form-control" ng-model="ctrl.service[idHelper('address_floor',lang[0])]"></textarea>
                                             </div>
+
+                                            <div class="form-group col-xs-12" ng-if="(!user.site.id || user.site.domain.indexOf('refugee.info') > -1)">
+                                                <label for="{{ idHelper('address',lang[0]) }}">{{ 'SERVICE_ADDRESS_CITY' | translate }}</label>
+                                                <textarea name="{{  idHelper('address',lang[0])}}" class="form-control"  ng-model="ctrl.service[idHelper('address_city',lang[0])]"></textarea>
+                                            </div>
                                         </div>
                                     </div>
 
                                 </div>
                                 <!-- /.tab-content -->
                             </div>
-                            <div class="form-group col-xs-12" ng-if="user.isStaff">
+                            <div class="form-group col-xs-12" ng-if="user.isSuperuser &&  (!user.site.id || user.site.domain.indexOf('refugee.info') > -1)">
                                 <label for="addressInCountryLanguage">{{ 'SERVICE_ADDRESS_COUNTRY_LANGUAGE' | translate }}</label>
-                                <input type="text" class="form-control" id="addressInCountryLanguage" placeholder="Address in Country Language" ng-model="ctrl.service.address_in_country_language">
+                                <input type="text" class="form-control" id="addressInCountryLanguage" placeholder="{{ 'SERVICE_ADDRESS_COUNTRY_LANGUAGE' | translate }}" ng-model="ctrl.service.address_in_country_language">
                             </div>
                         </div>
 
@@ -135,12 +151,12 @@
                                     {{ 'SERVICE_PROVIDE_EXACT_LOCATION' | translate }}
                             </div>
                             <div ng-if="ctrl.provideLocation">
-                                <div class="form-group col-xs-6" ng-if="user.isStaff">
+                                <div class="form-group col-xs-6">
                                     <label for="latitude">{{ 'SERVICE_LATITUDE' | translate }}</label>
                                     <input type="number" min="-90" max="90" step="any" class="form-control" id="latitude" placeholder="Latitude" ng-model="ctrl.service.location.coordinates[1]"
                                         ng-disabled="!ctrl.isEditing" ng-change="ctrl.adjustMap()">
                                 </div>
-                                <div class="form-group col-xs-6" ng-if="user.isStaff">
+                                <div class="form-group col-xs-6">
                                     <label for="longitude">{{ 'SERVICE_LONGITUDE' | translate }}</label>
                                     <input type="number" min="-180" max="180" step="any" class="form-control" id="longitude" placeholder="Longitude" ng-model="ctrl.service.location.coordinates[0]"
                                         ng-disabled="!ctrl.isEditing" ng-change="ctrl.adjustMap()">
@@ -160,57 +176,49 @@
                 <div class="col-xs-12">
                     <div class="box box-default">
                         <div class="box-body">
-                            <div class="form-group col-xs-6" ng-if="user.isStaff">
+                            <div class="form-group col-xs-6">
                                 <label for="type">{{ 'SERVICE_TYPES' | translate }}</label>
                                 <ui-select ng-disabled="!ctrl.isEditing" multiple ng-model="ctrl.service.types" sortable="true" close-on-select="true" required
                                     limit="4">
-                                    <ui-select-match placeholder="Select Types">{{ $item.name }}</ui-select-match>
+                                    <ui-select-match placeholder="{{ 'SERVICE_SELECT_TYPES' | translate }}">{{ $item.name }}</ui-select-match>
                                     <ui-select-choices repeat="type in ctrl.serviceTypes | filter: { name: $select.search }">
                                         <div ng-bind-html="type.name | highlight: $select.search"></div>
                                     </ui-select-choices>
                                 </ui-select>
                             </div>
-                            <div class="form-group col-xs-6" ng-if="user.isSuperuser && ctrl.isNew">
-                                <label for="region">{{ 'SERVICE_REGION' | translate }}</label>
-                                <select class="form-control" name="region" ng-model="ctrl.service.region" ng-options="region.id as region.name for region in ctrl.regions"
-                                    required ng-change="ctrl.generateSlug()"></select>
-                            </div>
-                            <div class="form-group col-xs-6" ng-if="user.isSuperuser && !ctrl.isNew">
-                                <label for="region">{{ 'SERVICE_REGION' | translate }}</label>
-                                <select class="form-control" name="region" ng-model="ctrl.service.region.id" ng-options="region.id as region.name for region in ctrl.regions"
-                                    required></select>
-                            </div>
+
+
                             <div class="form-group col-xs-6">
                                 <label for="phoneNumber">{{ 'SERVICE_PHONE_NUMBER' | translate }}</label>
-                                <input type="text" class="form-control" id="phoneNumber" ng-maxlength="40" placeholder="Phone Number" ng-model="ctrl.service.phone_number">
+                                <input type="text" class="form-control" id="phoneNumber" ng-maxlength="40" placeholder="{{ 'SERVICE_PHONE_NUMBER' | translate }}" ng-model="ctrl.service.phone_number">
                             </div>
                             <div class="form-group col-xs-6">
                                 <label for="email">{{ 'SERVICE_EMAIL' | translate }}</label>
-                                <input type="email" class="form-control" name="email" id="email" placeholder="Email" ng-model="ctrl.service.email" ng-maxlength="255"
+                                <input type="email" class="form-control" name="email" id="email" placeholder="{{ 'SERVICE_EMAIL' | translate }}" ng-model="ctrl.service.email" ng-maxlength="255"
                                     ng-pattern="/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/">
                             </div>
                             <div class="form-group col-xs-6">
-                                <label for="website">Website</label>
-                                <input type="text" class="form-control" id="website" placeholder="Website" ng-model="ctrl.service.website" ng-maxlength="255">
+                                <label for="website">{{ 'SERVICE_WEBSITE' | translate }}</label>
+                                <input type="text" class="form-control" id="website" placeholder="{{ 'SERVICE_WEBSITE' | translate }}" ng-model="ctrl.service.website" ng-maxlength="255">
                             </div>
                             <div class="form-group col-xs-6">
                                 <label for="facebookPage">{{ 'SERVICE_FACEBOOK' | translate }}</label>
-                                <input type="text" class="form-control" id="facebookPage" placeholder="Facebook Page" ng-model="ctrl.service.facebook_page"
+                                <input type="text" class="form-control" id="facebookPage" placeholder="{{ 'SERVICE_FACEBOOK' | translate }}" ng-model="ctrl.service.facebook_page"
                                     ng-maxlength="255">
                             </div>
-                            <div class="form-group col-xs-6" ng-if="user.isStaff">
+                            <div class="form-group col-xs-6">
                                 <label for="costOfService">{{ 'SERVICE_COST_SERVICE' | translate }}</label>
                                 <textarea name="costOfService" class="form-control" ng-model="ctrl.service.cost_of_service"></textarea>
                             </div>
-                            <div class="form-group col-xs-6" ng-if="user.isStaff">
+                            <div class="form-group col-xs-6">
                                 <label for="status">{{ 'SERVICE_STATUS' | translate }}</label>
                                 <select class="form-control" name="status" ng-model="ctrl.service.status" ng-options="status_id as status_name for (status_id, status_name) in ctrl.statusChoices"></select>
                             </div>
-                            <div class="form-group col-xs-12" ng-if="user.isStaff">
+                            <div class="form-group col-xs-12">
                                 <label for="tags">{{ 'SERVICE_TAGS' | translate }}:</label>
                                 <ui-select tagging="ctrl.transformTag" ng-disabled="!ctrl.isEditing" multiple ng-model="ctrl.service.tags" sortable="true"
                                     close-on-select="true" on-select="ctrl.createNewTag($item.name)">
-                                    <ui-select-match placeholder="select tags">{{ $item.name }}</ui-select-match>
+                                    <ui-select-match placeholder="{{ 'SERVICE_TAGS' | translate }}">{{ $item.name }}</ui-select-match>
                                     <ui-select-choices repeat="tag in ctrl.tags | filter: { name: $select.search }">
                                         <div ng-if="tag.isTag" ng-bind-html="(tag.name | highlight: $select.search) + {{ 'SERVICE_CLICK_TO_CREATE' | translate }}"></div>
                                         <div ng-if="!tag.isTag" ng-bind-html="tag.name + tag.isTag | highlight: $select.search"></div>
@@ -251,25 +259,25 @@
                     <div class="box box-default">
                         <div class="box-body">
 
-                            <label>Opening hours:</label>
+                            <label>{{ 'OPENING_HOURS' | translate }}</label>
                             <div>
                                 <span class="service-hours-question">
-                                    The service is open 24/7:
+                                    {{ SERVICE_OPEN_27_7 | translate}}
                                     <input type="checkbox" ng-model="ctrl.service.opening_time['24/7']" ng-disabled="!ctrl.isEditing">
                                 </span>
                             </div>
                             <span ng-if="!ctrl.service.opening_time['24/7']" style="margin-bottom: 10px ">
-                                Leave empty if the service is closed on that day.
+                                {{ 'SERVICE_LEAVE_EMPTY_IF_CLOSED_THAT_DAY' | translate }}
                             </span>
                             <div ng-repeat="day in ctrl.days" class="time-picker-row" ng-if="!ctrl.service.opening_time['24/7']">
                                 <div class="col-lg-2 col-xs-12">
                                     <span style="text-transform: capitalize; font-weight: 700">
-                                        {{ day }}
+                                        {{ ctrl.translatedDays[day] }}
                                     </span>
                                 </div>
                                 <div class="col-lg-10 col-xs-12" style="display: flex; flex-direction: column">
                                     <div ng-repeat="shift in ctrl.service.opening_time[day]" class="col-lg-12 col-xs-12">
-                                        <div ng-if="shift.open && shift.close">{{ shift.open }} | {{ shift.close }}</div>
+                                        <div ng-if="shift.open && shift.close">{{ shift.open | formatTimeLocale }} | {{ shift.close | formatTimeLocale }}</div>
                                     </div>
                                 </div>
                             </div>
@@ -297,7 +305,7 @@
                             <div ng-repeat="day in ctrl.days" class="time-picker-row" ng-if="!ctrl.service.opening_time['24/7']">
                                 <div class="col-lg-2 col-xs-12">
                                     <span style="text-transform: capitalize; font-weight: 700">
-                                        {{ day }}
+                                        {{ ctrl.translatedDays[day] }}
                                     </span>
                                 </div>
                                 <div style="display: flex; flex-direction: column">
@@ -326,7 +334,7 @@
                             <h3 class="box-title">{{ 'SERVICE_CONTACT_INFORMATION' | translate }}</h3>
                         </div>
                         <div class="box-body" read-only-form is-editing="ctrl.isEditing">
-                            <button type="button" class="btn btn-primary" ng-if="ctrl.isEditing" ng-click="ctrl.addContactInformation()">Add
+                            <button type="button" class="btn btn-primary" ng-if="ctrl.isEditing" ng-click="ctrl.addContactInformation()">{{ 'SERVICE_CONTACT_INFORMATION' | translate }}
                             </button>
                             <div ng-repeat="contactInformation in ctrl.service.contact_information" class="col-lg-10 col-xs-12">
                                 <div style="display: flex; align-items: center; margin-bottom: 2px">
@@ -361,29 +369,29 @@
                             <div class="box-body">
                                 <div class="form-group col-xs-6">
                                     <label for="focalFirstName">{{ 'SERVICE_FOCAL_FIRST_NAME' | translate }}</label>
-                                    <input type="text" class="form-control" id="focalFirstName" ng-maxlength="255" placeholder="First Name" ng-model="ctrl.service.focal_point_first_name">
+                                    <input type="text" class="form-control" id="focalFirstName" ng-maxlength="255" placeholder="{{ 'SERVICE_FOCAL_FIRST_NAME' | translate }}" ng-model="ctrl.service.focal_point_first_name">
                                 </div>
                                 <div class="form-group col-xs-6">
                                     <label for="focalLastName">{{ 'SERVICE_FOCAL_LAST_NAME' | translate }}</label>
-                                    <input type="text" class="form-control" id="focalLastName" ng-maxlength="255" placeholder="Last Name" ng-model="ctrl.service.focal_point_last_name">
+                                    <input type="text" class="form-control" id="focalLastName" ng-maxlength="255" placeholder="{{ 'SERVICE_FOCAL_LAST_NAME' | translate }}" ng-model="ctrl.service.focal_point_last_name">
                                 </div>
                                 <div class="form-group col-xs-6">
                                     <label for="focalEmail">{{ 'SERVICE_FOCAL_EMAIL' | translate }}</label>
-                                    <input type="email" class="form-control" id="focalEmail" ng-maxlength="255" placeholder="Email" ng-model="ctrl.service.focal_point_email"
+                                    <input type="email" class="form-control" id="focalEmail" ng-maxlength="255" placeholder="{{ 'SERVICE_FOCAL_EMAIL' | translate }}" ng-model="ctrl.service.focal_point_email"
                                         ng-pattern="/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/">
                                 </div>
                                 <div class="form-group col-xs-12"></div>
                                 <div class="form-group col-xs-6">
                                     <label for="secondFocalFirstName">{{ 'SERVICE_SECOND_FOCAL_FIRST_NAME' | translate}}</label>
-                                    <input type="text" class="form-control" id="secondFocalFirstName" ng-maxlength="255" placeholder="First Name" ng-model="ctrl.service.second_focal_point_first_name">
+                                    <input type="text" class="form-control" id="secondFocalFirstName" ng-maxlength="255" placeholder="{{ 'SERVICE_SECOND_FOCAL_FIRST_NAME' | translate}}" ng-model="ctrl.service.second_focal_point_first_name">
                                 </div>
                                 <div class="form-group col-xs-6">
                                     <label for="secondFocalLastName">{{ 'SERVICE_SECOND_FOCAL_LAST_NAME' | translate}}</label>
-                                    <input type="text" class="form-control" id="secondFocalLastName" ng-maxlength="255" placeholder="Last Name" ng-model="ctrl.service.second_focal_point_last_name">
+                                    <input type="text" class="form-control" id="secondFocalLastName" ng-maxlength="255" placeholder="{{ 'SERVICE_SECOND_FOCAL_LAST_NAME' | translate}}" ng-model="ctrl.service.second_focal_point_last_name">
                                 </div>
                                 <div class="form-group col-xs-6">
                                     <label for="secondFocalEmail">{{ 'SERVICE_SECOND_FOCAL_EMAIL' | translate}}</label>
-                                    <input type="email" class="form-control" id="secondFocalEmail" ng-maxlength="255" placeholder="Email" ng-model="ctrl.service.second_focal_point_email"
+                                    <input type="email" class="form-control" id="secondFocalEmail" ng-maxlength="255" placeholder="{{ 'SERVICE_SECOND_FOCAL_EMAIL' | translate}}" ng-model="ctrl.service.second_focal_point_email"
                                         ng-pattern="/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/">
                                 </div>
                                 <div class="col-xs-12 service-location-block">
@@ -391,7 +399,7 @@
                                         <input type="checkbox" ng-model="ctrl.service.exclude_from_confirmation" ng-disabled="!ctrl.isEditing">
                                     </span>
                                 </div>
-                                <div class="col-xs-12 service-location-block" ng-if="ctrl.serviceConfirmationLogs">
+                                <div class="col-xs-12 service-location-block" ng-if="ctrl.serviceConfirmationLogs && ctrl.showNewsletter">
                                     <span class="service-location-question">Last Service Status: {{ ctrl.lastStatus }}.</span>
                                     <span class="service-location-question"> Do you want to confirm it?
                                         <input type="checkbox" ng-model="ctrl.service.confirmedByAdmin" ng-disabled="!ctrl.isEditing">
@@ -464,7 +472,7 @@
                         <button type="button" class="btn btn-primary" ng-if="!ctrl.isEditing" ng-click="ctrl.startEditing()">{{ 'EDIT' | translate }}
                         </button>
                         <button type="button" class="btn btn-primary button-tooltip" ng-if="ctrl.isEditing" ng-click="ctrl.save(picFile)" ng-disabled="serviceForm.$invalid"
-                            data-old-tooltip="Fill in all required fields">Save
+                            data-old-tooltip="Fill in all required fields">{{ 'SAVE' | translate }}
                         </button>
                         <button type="button" class="btn btn-danger" ng-if="!ctrl.isEditing  && !ctrl.isNew" ng-click="ctrl.remove()">{{ 'DELETE' | translate }}
                         </button>

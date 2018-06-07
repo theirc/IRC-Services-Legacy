@@ -19,5 +19,14 @@ angular.module('adminApp')
 
             return moment(time, 'HH:mm:ss').format('hh:mm A');
         }
+    })
+    .filter('formatTimeLocale', function () {
+        return function (time, locale) {
+            if (locale) {
+                moment.locale(locale);
+            }
+
+            return moment(time, 'HH:mm:ss').format('LT');
+        }
     });
 

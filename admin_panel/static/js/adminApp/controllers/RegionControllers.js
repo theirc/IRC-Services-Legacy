@@ -1,28 +1,34 @@
 angular.module('adminApp')
-    .controller('RegionListController', function (tableUtils) {
+    .controller('RegionListController', function (tableUtils, $filter) {
         var vm = this;
 
         vm.dtOptions = tableUtils.defaultsWithServiceNameAndFilterAndSearch('GeoRegionService');
-        
+
         vm.dtColumns = [
             tableUtils.newColumn('id').withTitle('ID'),
-            tableUtils.newLinkColumn('name', 'Name'),
-            tableUtils.newLinkColumn('slug', 'Slug'),
-            tableUtils.newLinkColumn('parent__name', 'Parent').withOption('sortBy', 'parent'),
-            tableUtils.newColumn('level').withTitle('Level'),
-            tableUtils.newColumn('hidden').withTitle('Hidden'),
+            tableUtils.newLinkColumn('name', $filter('translate')('REGION_NAME')),
+            tableUtils.newLinkColumn('slug', $filter('translate')('REGION_SLUG')),
+            tableUtils.newLinkColumn('parent__name', $filter('translate')('REGION_PARENT')).withOption('sortBy', 'parent'),
+            tableUtils.newColumn('level').withTitle($filter('translate')('REGION_LEVEL')),
+            tableUtils.newColumn('hidden').withTitle($filter('translate')('REGION_IS_HIDDEN')),
             tableUtils.newActionColumn()
         ];
 
         vm.createLink = '^.create';
     })
-    .controller('RegionViewController', function (region, languages, $rootScope, $state, allRegions, sites, GeoRegionService, leafletData) {
+    .controller('RegionViewController', function (region, languages, $rootScope, $state, allRegions, sites, GeoRegionService, $filter, leafletData) {
         var vm = this;
         vm.object = region;
         vm.allRegions = allRegions;
         vm.selectedLanguageTab = $rootScope.languages ? $rootScope.languages[0][0] : 'en';
         vm.sites = _.sortBy(sites, r => r.name);
-        
+
+        var regionMap = _.fromPairs(allRegions.map(r => [r.id, r]));
+        vm.allRegions = vm.allRegions.map(a => {
+            a.parent = regionMap[a.parent];
+            return a;
+        });
+
         vm.geojson = {
             data: vm.object.geom,
             style: {
@@ -40,15 +46,15 @@ angular.module('adminApp')
         }));
         vm.levels = [{
                 id: 1,
-                name: 'Country'
+                name: $filter('translate')('REGION_LVL1')
             },
             {
                 id: 2,
-                name: 'Region'
+                name: $filter('translate')('REGION_LVL2')
             },
             {
                 id: 3,
-                name: 'Camp / City'
+                name: $filter('translate')('REGION_LVL3')
             }
         ];
         vm.editOptions = {};
