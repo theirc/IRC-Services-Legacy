@@ -2,7 +2,6 @@
 import os
 import sys
 
-from celery.schedules import crontab
 from django.utils.translation import ugettext_lazy as _
 
 # BASE_DIR = path/to/source/service_info
@@ -493,40 +492,6 @@ BROKER_URL = CELERY_BROKER_URL = os.environ.get(
     'CELERY_BROKER_URL', os.environ.get('REDIS_URL', ''))
 RESULT_BACKEND = CELERY_RESULT_BACKEND = os.environ.get(
     'CELERY_BROKER_URL', os.environ.get('REDIS_URL', ''))
-
-
-"""
-Service Confirmation Newsletter
-"""
-NEWSLETTER_ENABLED = False
-# str(os.environ.get(
-#     'NEWSLETTER_ENABLED', 'False')).lower() == 'true'
-NEWSLETTER_TEST = str(os.environ.get(
-    'NEWSLETTER_TEST', 'False')).lower() == 'true'
-CONFIRM_TIME = os.environ.get('CONFIRM_TIME', 90)
-REMINDER_TIME = os.environ.get('REMINDER_TIME', 14)
-
-"""
-Newsletter sending email
-"""
-NEWSLETTER_FROM_EMAIL = os.environ.get('NEWSLETTER_FROM_EMAIL', '')
-NEWSLETTER_FROM_EMAIL_HOST = os.environ.get('NEWSLETTER_FROM_EMAIL_HOST', '')
-NEWSLETTER_FROM_EMAIL_HOST_USER = os.environ.get(
-    'NEWSLETTER_FROM_EMAIL_HOST_USER', '')
-NEWSLETTER_FROM_EMAIL_HOST_PASSWORD = os.environ.get(
-    'NEWSLETTER_FROM_EMAIL_HOST_PASSWORD', '')
-NEWSLETTER_FROM_EMAIL_PORT = os.environ.get('NEWSLETTER_FROM_EMAIL_PORT', '')
-NEWSLETTER_FROM_EMAIL_USE_TLS = os.environ.get(
-    'NEWSLETTER_FROM_EMAIL_USE_TLS', '')
-
-"""
-Newletter reports
-"""
-SERVICE_MANAGER_EMAIL = os.environ.get(
-    'SERVICE_MANAGER_EMAIL', 'servicemap@refugee.info')
-REMINDER_UNCONFIRMED_REPORT_TIME = os.environ.get(
-    'REMINDER_UNCONFIRMED_REPORT_TIME', 7)
-
 
 GHOST_USER_NAME = os.environ.get('GHOST_USER_NAME')
 GHOST_PASSWORD = os.environ.get('GHOST_PASSWORD')

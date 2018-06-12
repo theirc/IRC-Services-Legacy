@@ -14,19 +14,14 @@
             <span class="sr-only">{{ 'TOGGLE_NAVIGATION' | translate}}</span>
         </a>
 
-        <div style="float: left;display: flex; flex-direction: row;align-items: center; height: 50px; margin-left: 5px;">
-            <h1 style="
-            padding: 0;
-            margin: 0;
-            color: white;
-            font-size: 200%;
-            flex: 1;">
-                {{ selectedProvider.name}}
-            </h1>
-        </div>
-
         <!-- Navbar Right Menu -->
         <div class="navbar-custom-menu">
+            <div class="navbar-provider">
+                <h1>
+                    {{ selectedProvider.name}}
+                </h1>
+            </div>
+
             <ul class="nav navbar-nav">
                 <li class="dropdown messages-menu" ng-if="user.providers.length > 1">
                     <a href="" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">

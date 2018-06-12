@@ -334,11 +334,11 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"Usted (o alguien haciéndose pasar por usted) ha solicitado registrar una cuenta en 1%(site)s. Si no fue usted, por favor, ignore este mensaje y su dirección será eliminada de nuestros registros. "
+"Usted (o alguien haciéndose pasar por usted) ha solicitado registrar una cuenta en %(site)s. Si no fue usted, por favor, ignore este mensaje y su dirección será eliminada de nuestros registros. "
 
 #: email_user/templates/registration/activation_email.html:18
 msgid ""
-"\n"
+
 "    To activate this account, please click the following link:\n"
 "    "
 msgstr ""
@@ -356,7 +356,7 @@ msgid ""
 msgstr ""
 "\n"
 "    Sinceramente,\n"
-"    Gestión de%(site)s \n"
+"    Gestión de %(site)s \n"
 "    "
 
 #: email_user/templates/registration/activation_email.txt:2
@@ -389,7 +389,7 @@ msgid ""
 msgstr ""
 "\n"
 "Sinceramente,\n"
-"Gestión de%(site)s\n"
+"Gestión de %(site)s\n"
 
 #: email_user/templates/registration/activation_email_subject.txt:1
 msgid "Account activation on"

@@ -1,10 +1,62 @@
-angular.module('adminApp').factory('tableUtils', (DTOptionsBuilder, DTColumnBuilder, $compile, $injector, $rootScope) => {
+angular.module('adminApp').factory('tableUtils', (DTOptionsBuilder, DTColumnBuilder, $compile, $injector, $rootScope, $filter, selectedLanguage) => {
     let scope = $rootScope.$new();
+    const translations = {
+        en: {
+            "sEmptyTable": "No data available in table",
+            "sInfo": "Showing _START_ to _END_ of _TOTAL_ entries",
+            "sInfoEmpty": "Showing 0 to 0 of 0 entries",
+            "sInfoFiltered": "(filtered from _MAX_ total entries)",
+            "sInfoPostFix": "",
+            "sInfoThousands": ",",
+            "sLengthMenu": "Show _MENU_ entries",
+            "sLoadingRecords": "Loading...",
+            "sProcessing": "Processing...",
+            "sSearch": "Search:",
+            "sZeroRecords": "No matching records found",
+            "oPaginate": {
+                "sFirst": "First",
+                "sLast": "Last",
+                "sNext": "Next",
+                "sPrevious": "Previous"
+            },
+            "oAria": {
+                "sSortAscending": ": activate to sort column ascending",
+                "sSortDescending": ": activate to sort column descending"
+            }
+        },
+        es: {
+            "sProcessing": "Procesando...",
+            "sLengthMenu": "Mostrar _MENU_ registros",
+            "sZeroRecords": "No se encontraron resultados",
+            "sEmptyTable": "Ningún dato disponible en esta tabla",
+            "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+            "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+            "sInfoPostFix": "",
+            "sSearch": "Buscar:",
+            "sUrl": "",
+            "sInfoThousands": ",",
+            "sLoadingRecords": "Cargando...",
+            "oPaginate": {
+                "sFirst": "Primero",
+                "sLast": "Último",
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
+            },
+            "oAria": {
+                "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+            }
+        }
+    };
+    let language = selectedLanguage in translations ? translations[selectedLanguage] : translations.en;
+
     var generator = (scope = {}) => {
         return {
             defaults() {
                 return DTOptionsBuilder
                     .fromSource('noop.json')
+                    .withLanguage(language)
                     .withOption('sAjaxDataProp', 'data')
                     .withOption('serverSide', true)
                     .withOption('stateSave', true)
@@ -69,7 +121,7 @@ angular.module('adminApp').factory('tableUtils', (DTOptionsBuilder, DTColumnBuil
 
             },
             newActionColumn(sref = "^.open") {
-                return DTColumnBuilder.newColumn(null).withTitle('Actions').notSortable().renderWith(renderActions);
+                return DTColumnBuilder.newColumn(null).withTitle($filter('translate')('TABLE_ACTIONS')).notSortable().renderWith(renderActions);
 
                 function renderActions(data, type, full, meta) {
                     return `
@@ -81,7 +133,7 @@ angular.module('adminApp').factory('tableUtils', (DTOptionsBuilder, DTColumnBuil
                 }
             },
             newServiceReadOnlyActionColumn(sref = "^.open") {
-                return DTColumnBuilder.newColumn(null).withTitle('Actions').notSortable().renderWith(renderActions);
+                return DTColumnBuilder.newColumn(null).withTitle($filter('translate')('TABLE_ACTIONS')).notSortable().renderWith(renderActions);
 
                 function renderActions(data, type, full, meta) {
                     return `
@@ -93,18 +145,18 @@ angular.module('adminApp').factory('tableUtils', (DTOptionsBuilder, DTColumnBuil
                 }
             },
             newServiceActionColumn(sref = "^.open", duplicateSref = "^.duplicate", archiveSref = "^.archive") {
-                return DTColumnBuilder.newColumn(null).withTitle('Actions').notSortable().renderWith(renderActions);
+                return DTColumnBuilder.newColumn(null).withTitle($filter('translate')('TABLE_ACTIONS')).notSortable().renderWith(renderActions);
 
                 function renderActions(data, type, full, meta) {
                     return `
                         <a class="btn btn-danger btn-xs btn-block" ui-sref="${archiveSref}({serviceId: ${full.id}})">
-                            <span><i class="fa fa-archive" style="padding-right: 5px"></i>Archive</span>
+                            <span><i class="fa fa-archive" style="padding-right: 5px"></i>${$filter('translate')('TABLE_ARCHIVE')}</span>
                         </a>
                         <a class="btn btn-primary btn-xs btn-block" ui-sref="${sref}({serviceId: ${full.id}})">
-                            <span><i class="fa fa-eye" style="padding-right: 5px"></i>Edit</span>
+                            <span><i class="fa fa-eye" style="padding-right: 5px"></i>${$filter('translate')('TABLE_EDIT')}</span>
                         </a>
                         <a class="btn btn-warning btn-xs btn-block" ui-sref="${duplicateSref}({serviceId: ${full.id}})">
-                            <span><i class="fa fa-files-o" style="padding-right: 5px"></i>Duplicate</span>
+                            <span><i class="fa fa-files-o" style="padding-right: 5px"></i>${$filter('translate')('TABLE_DUPLICATE')}</span>
                         </a>
                 `;
                 }
