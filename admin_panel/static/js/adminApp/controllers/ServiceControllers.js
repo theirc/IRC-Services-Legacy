@@ -244,8 +244,6 @@ angular
             });
         }
 
-
-
         vm.onRegionChange = () => {
             vm.regionslvl3 = [];
             if (vm.regionlvl1) {
@@ -261,7 +259,7 @@ angular
             vm.regionlvl3 = '';
             if (vm.regionlvl2) {
                 let parent = vm.regions.filter((region) => region.id == vm.regionlvl2.id)[0];
-                vm.regionslvl3 = vm.regions.filter((region) => region.parent == parent.id);
+                vm.regionslvl3 = vm.regions.filter((region) => region.parent == parent.id);    
             } else {
                 vm.regionslvl3 = [];
             }
@@ -371,6 +369,11 @@ angular
                 if (regionChain[1]) {
                     vm.regionlvl2 = regionChain[1];
                     vm.onRegionChangelvl2();
+
+                    if (regionChain[2]) {
+                        vm.regionlvl3 = regionChain[2];
+                        vm.updateCity();
+                    }
                 }
             }
 

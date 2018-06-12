@@ -152,7 +152,7 @@ angular.module("adminApp").config(function($translateProvider){
         PROVIDER_RECORD: 'Record',
         PROVIDER_REQUIREMENT: 'Requirements',
         PROVIDER_ADDITIONAL_INFO: 'Additional Information',
-        PROVIDER_VACANCY: 'Vacancy',
+        PROVIDER_VACANCY: 'No Vacancy',
 
         //Region
         REGION_NAME: 'Name',
@@ -497,6 +497,7 @@ angular.module("adminApp").config(function($translateProvider){
         PROVIDER_FREEZE: 'Congelar Proveedor (deshabilitar login de usuarios)',
         PROVIDER_SERVICES: 'Servicios',
         PROVIDER_IMPERSONATE: 'Personificar',
+        PROVIDER_OPEN: 'Ver',
         PROVIDER_EXPORT_SERVICES: 'Exportar Servicios',
         PROVIDER_IMPORT_SERVICES: 'Importar Servicios',
         PROVIDER_EDIT: 'Editar',
@@ -507,7 +508,7 @@ angular.module("adminApp").config(function($translateProvider){
         PROVIDER_RECORD: 'Registro',
         PROVIDER_REQUIREMENT: 'Requisitos',
         PROVIDER_ADDITIONAL_INFO: 'Información Adicional',
-        PROVIDER_VACANCY: 'Vacancia',
+        PROVIDER_VACANCY: 'No Vacancia',
 
 
         //Region
