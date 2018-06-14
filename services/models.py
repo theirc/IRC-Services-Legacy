@@ -132,6 +132,18 @@ class Provider(TranslatableModel, models.Model):
             blank=True,
         ),
     }
+    contact_name = models.CharField(
+        _("contact_name"),
+        max_length=255,
+        blank=True,
+        default=''
+    )
+    title = models.CharField(
+        _("title"),
+        max_length=255,
+        blank=True,
+        default=''
+    )
 
     type = models.ForeignKey(
         ProviderType,
@@ -1443,16 +1455,6 @@ class ContactInformation(models.Model):
     )    
     text = models.CharField(
         max_length=256)
-
-    name = models.CharField(
-        max_length=256,
-        null=True)
-        
-    
-    title = models.CharField(
-        max_length=256,
-        null=True)
-     
     index = models.SmallIntegerField(
         validators=[
             MinValueValidator(0),            
