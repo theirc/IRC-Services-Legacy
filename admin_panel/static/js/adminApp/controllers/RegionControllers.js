@@ -16,9 +16,10 @@ angular.module('adminApp')
 
         vm.createLink = '^.create';
     })
-    .controller('RegionViewController', function (region, languages, $rootScope, $state, allRegions, sites, GeoRegionService, $filter, leafletData) {
+    .controller('RegionViewController', function (region, languages, $rootScope, $state, allRegions, sites, GeoRegionService, $filter, leafletData, serviceTypes) {
         var vm = this;
         vm.object = region;
+        vm.object.types_ordering = serviceTypes;
         vm.allRegions = allRegions;
         vm.selectedLanguageTab = $rootScope.languages ? $rootScope.languages[0][0] : 'en';
         vm.sites = _.sortBy(sites, r => r.name);

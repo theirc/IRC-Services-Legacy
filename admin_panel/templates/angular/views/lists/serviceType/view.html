@@ -64,24 +64,5 @@
             </div>
         </div>
     </div>
-    <div class="row" read-only-form is-editing="ctrl.isEditing" ng-if="!ctrl.isNew">
-        <div class="col-xs-12">
-            <div class="box">
-                <div class="box-header">
-                    <h3 class="box-title">{{ 'SERVICE_ORDERING' | translate }}</h3>
-                </div>
-                <div class="box-body">
-                    <div>
-                        <ul class="service-types-order" dnd-list="ctrl.object.types_ordering" style="max-height: 300px; overflow: auto;" dnd-disable-if="!ctrl.isEditing">
-                            <li ng-repeat="item in ctrl.object.types_ordering" dnd-draggable="item" dnd-moved="ctrl.object.types_ordering.splice($index, 1)"
-                                dnd-effect-allowed="move">
-                                {{ item.name }}
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     <div ng-include="'partials/edit-controls.html'"></div>
 </section>
