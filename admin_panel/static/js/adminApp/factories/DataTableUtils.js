@@ -155,9 +155,7 @@ angular.module('adminApp').factory('tableUtils', (DTOptionsBuilder, DTColumnBuil
                         <a class="btn btn-primary btn-xs btn-block" ui-sref="${sref}({serviceId: ${full.id}})">
                             <span><i class="fa fa-eye" style="padding-right: 5px"></i>${$filter('translate')('TABLE_EDIT')}</span>
                         </a>
-                        <a class="btn btn-warning btn-xs btn-block" ui-sref="${duplicateSref}({serviceId: ${full.id}})">
-                            <span><i class="fa fa-files-o" style="padding-right: 5px"></i>${$filter('translate')('TABLE_DUPLICATE')}</span>
-                        </a>
+                        
                 `;
                 }
             }
