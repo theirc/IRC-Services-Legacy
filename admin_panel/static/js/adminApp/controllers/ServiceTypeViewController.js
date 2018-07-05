@@ -1,4 +1,4 @@
-angular.module('adminApp').controller('ServiceTypeViewController', function (ServiceTypeService, object, toasty, $state, IconService, serviceTypes) {
+angular.module('adminApp').controller('ServiceTypeViewController', function (ServiceTypeService, object, toasty, $state, IconService) {
     let vm = this;
 
     vm.$onInit = function () {
@@ -6,7 +6,6 @@ angular.module('adminApp').controller('ServiceTypeViewController', function (Ser
         vm.isNew = !vm.object.hasOwnProperty('id');
         vm.isEditing = vm.isNew;
         vm.canDelete = true;
-        vm.object.types_ordering = serviceTypes;
 
         if (vm.isNew) {
             vm.object.color = '#FFFFFF';

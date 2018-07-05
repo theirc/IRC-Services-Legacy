@@ -12,10 +12,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>{{ site.name }} CMS</title>
-
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     {% include "admin_panel/css.html" %}
     {% block additional-requirements %}{% endblock %}
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/all.js" integrity="sha384-xymdQtn1n3lH2wcu0qhcdaOpQwyoarkgLVxC/wZ5q7h9gHtxICrpcaSUfygqZGOe" crossorigin="anonymous"></script>
 </head>
 
 <body class="hold-transition skin-signpost sidebar-mini">
@@ -74,7 +74,7 @@
 <script type="text/javascript" src='{% static 'angular-ui-router/release/angular-ui-router.min.js' %}'></script>
 <script type="text/javascript" src="{% static 'djng/js/django-angular.js' %}"></script>
 <script type="text/javascript" src="{% static 'angular-cookies/angular-cookies.min.js' %}"></script>
-<script type="text/javascript" src='{% static 'angular-sanitize/angular-sanitize.min.js' %}'></script>
+<script type="text/javascript" src='{% static 'angular-sanitize/angular-sanitize.js' %}'></script>
 <script type="text/javascript" src='{% static 'ui-select/dist/select.min.js' %}'></script>
 <script type="text/javascript" src='{% static 'angular-drag-and-drop-lists/angular-drag-and-drop-lists.js' %}'></script>
 <script type="text/javascript" src='{% static 'ckeditor/ckeditor.js' %}'></script>

@@ -131,6 +131,18 @@ div.wrapper {
 }
 
 div.navbar-custom-menu {
+  div.navbar-provider {
+    float: left;
+    display: flex;
+    align-items: center;
+    height: 50px;
+    margin-right: 14px;
+    h1 {
+      margin: 0;
+      color: white;
+      font-size: 16px;
+    }
+  }
   ul.nav.navbar-nav {
     li.user.user-menu {
       a.dropdown-toggle {

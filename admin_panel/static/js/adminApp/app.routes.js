@@ -168,10 +168,6 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 					}, ]
 				},
 				regions: function (GeoRegionService, $rootScope, $q, $window) {
-					if (!$rootScope.user.isSuperuser) {
-						return [];
-					}
-
 					return allRegions(GeoRegionService, $q, $window)
 				},
 			},
@@ -614,6 +610,9 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 				providerTypes: function (CommonDataService) {
 					return CommonDataService.getProviderTypes();
 				},
+				serviceTypes: function (CommonDataService) {
+					return CommonDataService.getServiceTypes();
+				},
 			},
 		})
 		.state("provider.openMe", {
@@ -650,6 +649,9 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 						}
 					});
 					return dfd.promise;
+				},
+				serviceTypes: function (CommonDataService) {
+					return CommonDataService.getServiceTypes();
 				},
 			},
 		})
@@ -711,6 +713,9 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 				provider: function () {
 					return {};
 				},
+				serviceTypes: function (CommonDataService) {
+					return CommonDataService.getServiceTypes();
+				},
 				regions: allRegions,
 			},
 		})
@@ -737,6 +742,9 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 				},
 				provider: function (ProviderService, $stateParams) {
 					return ProviderService.get($stateParams.id);
+				},
+				serviceTypes: function (CommonDataService) {
+					return CommonDataService.getServiceTypes();
 				},
 				regions: allRegions,
 			},
@@ -798,6 +806,9 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 				sites: function (CommonDataService) {
 					return CommonDataService.getSites();
 				},
+				serviceTypes: function (CommonDataService) {
+					return CommonDataService.getServiceTypes();
+				},
 				allRegions: allRegions,
 			},
 		})
@@ -818,6 +829,9 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 				},
 				sites: function (CommonDataService) {
 					return CommonDataService.getSites();
+				},
+				serviceTypes: function (CommonDataService) {
+					return CommonDataService.getServiceTypes();
 				},
 				allRegions: allRegions,
 			},
@@ -916,9 +930,6 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 					dfd.resolve({});
 					return dfd.promise;
 				},
-				serviceTypes: function (CommonDataService) {
-					return CommonDataService.getServiceTypes();
-				},
 			},
 		})
 		.state("lists.serviceType.open", {
@@ -935,9 +946,6 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 			resolve: {
 				object: function (ServiceTypeService, $stateParams) {
 					return ServiceTypeService.get($stateParams.id);
-				},
-				serviceTypes: function (CommonDataService) {
-					return CommonDataService.getServiceTypes();
 				},
 			},
 		})

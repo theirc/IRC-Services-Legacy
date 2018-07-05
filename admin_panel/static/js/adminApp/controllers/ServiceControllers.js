@@ -238,7 +238,11 @@ angular
         vm.regionlvl2 = null;
         vm.regionlvl3 = null;
 
-
+        vm.updateCity = () => {
+            service_languages.forEach(function (lang) {
+                vm.service[`address_city_${lang[0]}`] = vm.regionlvl3.name;
+            });
+        }
 
         vm.onRegionChange = () => {
             vm.regionslvl3 = [];
@@ -255,7 +259,7 @@ angular
             vm.regionlvl3 = '';
             if (vm.regionlvl2) {
                 let parent = vm.regions.filter((region) => region.id == vm.regionlvl2.id)[0];
-                vm.regionslvl3 = vm.regions.filter((region) => region.parent == parent.id);
+                vm.regionslvl3 = vm.regions.filter((region) => region.parent == parent.id);    
             } else {
                 vm.regionslvl3 = [];
             }
@@ -348,7 +352,6 @@ angular
             }
 
         } else {
-            console.log(vm.service);
             let selectedRegion = vm.regions.find(r => r.id === vm.service.region.id);
             let regionChain = [selectedRegion.id];
             while (selectedRegion.parent) {
@@ -358,17 +361,19 @@ angular
 
             regionChain = regionChain.reverse().concat([null, null, null]).slice(0, 3).map(r => r ? vm.regions.find(ar => r === ar.id) : null);
 
-            console.log(regionChain, vm);
             if (regionChain[0]) {
 
                 vm.regionlvl1 = regionChain[0];
+                vm.onRegionChange();
+
                 if (regionChain[1]) {
-                    vm.onRegionChange();
                     vm.regionlvl2 = regionChain[1];
-                }
-                if (regionChain[2]) {
                     vm.onRegionChangelvl2();
-                    vm.regionlvl3 = regionChain[2];
+
+                    if (regionChain[2]) {
+                        vm.regionlvl3 = regionChain[2];
+                        vm.updateCity();
+                    }
                 }
             }
 
@@ -444,14 +449,13 @@ Only superusers and service providers have access to the edit functions. Everyon
             vm.save = function (file) {
                 vm.generateSlug();
                 vm.service.region = vm.regionlvl3 || vm.regionlvl2 || vm.regionlvl1;
-                if (vm.service.region) {
-                    vm.service.region = vm.service.region.id
-                }
                 if (!vm.provideLocation) {
                     vm.service.location = null;
                 }
 
                 if (vm.isNew) {
+                    vm.service.region = vm.service.region.id;
+
                     ServiceService
                         .post(vm.service)
                         .then(function (s) {
@@ -859,19 +863,14 @@ Only superusers and service providers have access to the edit functions. Everyon
         vm.regionslvl2 = [];
         vm.regionslvl3 = [];
 
-        /*
         if ($scope.selectedProvider) {
             vm.providerRegion = regions.filter(function (r) {
                 return r.id === $scope.selectedProvider.region;
             });
 
             vm.providerRegion = vm.providerRegion && vm.providerRegion[0]
-            console.log(vm.providerRegion)
             vm.regionslvl1 = $scope.user.isSuperuser ? regions : [vm.providerRegion];
         }
-        */
-
-
 
         vm.regionlvl1 = 0;
         vm.regionlvl2 = 0;
@@ -1035,6 +1034,13 @@ Only superusers and service providers have access to the edit functions. Everyon
 
         vm.dtInstance = {};
         vm.searchCriteria = {};
+
+        vm.clearFilters = () => {
+            vm.searchCriteria = {};
+            vm.regionlvl1 = 0;
+            vm.regionlvl2 = 0;
+            vm.regionlvl3 = 0;
+        };
 
         vm.onRegionChange = () => {
             vm.regionslvl3 = [];

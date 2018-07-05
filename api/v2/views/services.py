@@ -567,7 +567,7 @@ class ServiceTypeViewSet(viewsets.ModelViewSet):
     Look up service types.
     """
     permission_classes = [permissions.DjangoModelPermissionsOrAnonReadOnly]
-    queryset = ServiceType.objects.all().order_by('number')
+    queryset = ServiceType.objects.order_by('number')
     serializer_class = serializers_v2.ServiceTypeSerializer
     pagination_class = StandardResultsSetPagination
 
@@ -583,7 +583,7 @@ class ServiceTypeViewSet(viewsets.ModelViewSet):
                 ) & Q(service__status=Service.STATUS_CURRENT)
             ).annotate(service_count=Count('service')).filter(service_count__gt=0).distinct().order_by('number')
         else:
-            return self.queryset
+            return ServiceType.objects.all().order_by('number')
 
 
 class CustomServiceTypeViewSet(viewsets.ModelViewSet):

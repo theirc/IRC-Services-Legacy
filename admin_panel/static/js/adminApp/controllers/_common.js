@@ -3,7 +3,7 @@
  */
 
 function GenerateListController(serviceName, and, columns) {
-    return ['tableUtils', '$injector', 'selectedLanguage', function (tableUtils, $injector, selectedLanguage) {
+    return ['tableUtils', '$injector', 'selectedLanguage', '$filter', function (tableUtils, $injector, selectedLanguage, $filter) {
         var vm = this;
 
         vm.dtOptions = tableUtils.defaultsWithServiceName(serviceName);
@@ -17,7 +17,7 @@ function GenerateListController(serviceName, and, columns) {
 
             vm.dtColumns = [
                 tableUtils.newLinkColumn('id', 'ID'),
-                tableUtils.newColumn(`name`).withTitle(`Name`).notSortable(),
+                tableUtils.newColumn(`name`).withTitle($filter('translate')('TABLE_NAME')).notSortable(),
                 tableUtils.newColumn(`name_${selectedLanguage}`).withTitle(`Name (${selectedLanguage})`),
 
                 tableUtils.newActionColumn()
