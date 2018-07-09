@@ -15,10 +15,11 @@
         </a>
 
         <!-- Navbar Right Menu -->
-        <div class="navbar-custom-menu">
-            <div class="navbar-provider">
+        <div class="navbar-custom-menu">           
+            <div ng-show="$root.showProvider" class="navbar-provider">                
                 <h1>
-                    {{ selectedProvider.name}}
+                    <span class="title-provider">{{ 'IMPERSONATING' | translate }} {{ selectedProvider.name }}</span>
+                    <button class="btn btn-danger btn-xs btn-block" ng-click="ctrl.stopImpersonate()">{{ 'STOP_IMPERSONATING' | translate }}</button>
                 </h1>
             </div>
 

@@ -3,7 +3,7 @@
  */
 
 angular.module('adminApp')
-    .controller('NavbarController', function (AuthService, $cookies, $rootScope, $state) {
+    .controller('NavbarController', function (AuthService, $cookies, $rootScope, $state, ProviderService) {
         var vm = this;
 
         vm.userUpdate = $rootScope.user;
@@ -14,14 +14,23 @@ angular.module('adminApp')
             });
         };
 
+        $rootScope.showProvider = $rootScope.selectedProvider.id ? true : false;
+
         vm.impersonate = function (provider) {
             if ($rootScope.selectedProvider) {
-                $rootScope.selectedProvider = provider;
+                $rootScope.selectedProvider = provider;               
                 $state.reload();
             } else {
                 $rootScope.selectedProvider = provider;
                 $state.go('service.dashboard');
             }
         };
+        vm.stopImpersonate = function(){
+            ProviderService.stopImpersonateProvider().then(() => {
+                $rootScope.selectedProvider = {};
+                $rootScope.showProvider = false;                
+                $state.reload();
+            });
+        }
     })
 ;

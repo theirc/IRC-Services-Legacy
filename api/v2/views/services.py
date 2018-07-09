@@ -238,6 +238,17 @@ class ProviderViewSet(FilterByRegionMixin, viewsets.ModelViewSet):
         request.session['selected-provider'] = pk
 
         return Response({})
+    
+    @detail_route(methods=['GET'])
+    def stop_impersonate_provider(self, request, pk):
+        if 'selected-provider' in request.session:
+            del request.session['selected-provider']
+            request.session.modified = True
+            logger.error(
+                    '**** STOP IMPERSONATING'
+                )
+
+        return Response({})
 
     @detail_route(methods=['post'],
                   permission_classes=[permissions.DjangoObjectPermissions],

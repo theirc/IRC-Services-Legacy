@@ -141,7 +141,12 @@ div.navbar-custom-menu {
       margin: 0;
       color: white;
       font-size: 16px;
+      display: flex;
     }
+  }
+  .title-provider{
+    white-space: nowrap;
+    margin-right: 10px;
   }
   ul.nav.navbar-nav {
     li.user.user-menu {
