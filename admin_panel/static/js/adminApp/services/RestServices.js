@@ -54,7 +54,6 @@
                     .customGET('impersonate_provider');
             };
             service.stopImpersonateProvider = function(){
-                console.log("API Stop");
                 return Restangular
                     .one('providers',0)
                     .customGET('stop_impersonate_provider');
