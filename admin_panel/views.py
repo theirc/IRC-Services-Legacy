@@ -70,11 +70,15 @@ class LandingPageView(LoginRequiredMixin, TemplateView):
             if request.session['selected-provider'] == 0:
                 selected_provider = {}
             else:
-                p = Provider.objects.get(pk=request.session['selected-provider'])            
-            selected_provider = {
-                'name': p.name,
-                'id': p.id,
-                'region': p.region.id if p.region else None}
+                try:
+                    p = Provider.objects.get(pk=request.session['selected-provider'])            
+                    selected_provider = {
+                        'name': p.name,
+                        'id': p.id,
+                        'region': p.region.id if p.region else None
+                    }
+                except Provider.DoesNotExist:
+                    selected_provider = {}
         else:
             selected_provider = {}
             
