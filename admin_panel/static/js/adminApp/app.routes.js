@@ -229,7 +229,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 				provider: function (ProviderService, $rootScope, $q) {
 					var dfd = $q.defer();
 					$rootScope.$watch("selectedProvider", function (value) {
-						if (value) {
+						if (value && $rootScope.selectedProvider.id) {
 							ProviderService.get($rootScope.selectedProvider.id).then(function (p) {
 								dfd.resolve(p);
 							});
@@ -760,6 +760,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 				if ($rootScope.user.isSuperuser) {
 					ProviderService.impersonateProvider(provider.id).then(() => {
 						$rootScope.selectedProvider = provider;
+						$rootScope.showProvider = true;
 						$state.go('service.list');
 					});
 				} else {
@@ -767,7 +768,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 				}
 			},
 		})
-
+		
 		//Geographic Regions
 		.state("region", {
 			url: "/region",
