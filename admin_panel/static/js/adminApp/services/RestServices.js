@@ -53,6 +53,11 @@
                     .one('providers', id)
                     .customGET('impersonate_provider');
             };
+            service.stopImpersonateProvider = function(){
+                return Restangular
+                    .one('providers',0)
+                    .customGET('stop_impersonate_provider');
+            }
 
             return wrap(service);
         })

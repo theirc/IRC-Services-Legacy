@@ -10,9 +10,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_ROOT = BASE_DIR
 WEBSERVER_ROOT = BASE_DIR
 
-TEAM_EMAIL = 'reynaldo.rodrigues@rescue.org'
+TEAM_EMAIL = 'andres.aguilar@rescue.org'
 ADMINS = (
-    ('Rey Rodrigues', TEAM_EMAIL),
+    ('Andres Aguilar', TEAM_EMAIL),
 )
 
 SERVER_EMAIL = TEAM_EMAIL

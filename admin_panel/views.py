@@ -67,12 +67,21 @@ class LandingPageView(LoginRequiredMixin, TemplateView):
 
         selected_provider = None
         if 'selected-provider' in request.session:
-            p = Provider.objects.get(pk=request.session['selected-provider'])
-            selected_provider = {
-                'name': p.name,
-                'id': p.id,
-                'region': p.region.id if p.region else None,
-            }
+            if request.session['selected-provider'] == 0:
+                selected_provider = {}
+            else:
+                try:
+                    p = Provider.objects.get(pk=request.session['selected-provider'])            
+                    selected_provider = {
+                        'name': p.name,
+                        'id': p.id,
+                        'region': p.region.id if p.region else None
+                    }
+                except Provider.DoesNotExist:
+                    selected_provider = {}
+        else:
+            selected_provider = {}
+            
         context['SELECTED_PROVIDER'] = json.dumps(selected_provider)
         context['PERMISSIONS'] = json.dumps({
             'email': user.email,

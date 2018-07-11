@@ -81,6 +81,8 @@ angular.module("adminApp").config(function($translateProvider){
         TOGGLE_NAVIGATION: 'Toggle Navigation',
         SELECT_PROVIDER_FROM_LIST: 'Select a provider from the lis below',
         SIGN_OUT: 'Sign out',
+        IMPERSONATING: 'Impersonating',
+        STOP_IMPERSONATING: 'Stop Impersonating',
 
         //RightSideBar
         RECENT_ACTIVITY: 'Recent Activity',
@@ -144,6 +146,7 @@ angular.module("adminApp").config(function($translateProvider){
         PROVIDER_FREEZE: 'Freeze Provider (disable user login)',
         PROVIDER_SERVICES: 'Services',
         PROVIDER_IMPERSONATE: 'Impersonate',
+        PROVIDER_OPEN: 'View',
         PROVIDER_EXPORT_SERVICES: 'Export Services',
         PROVIDER_IMPORT_SERVICES: 'Import Services',
         PROVIDER_EDIT: 'Edit',
@@ -435,6 +438,8 @@ angular.module("adminApp").config(function($translateProvider){
         TOGGLE_NAVIGATION: 'Alternar Navigación',
         SELECT_PROVIDER_FROM_LIST: 'Seleccionar un Proveedor de la lista debajo',
         SIGN_OUT: 'Salir',
+        IMPERSONATING: 'Personificando',
+        STOP_IMPERSONATING: 'Detener Personificación',
 
         //RightSideBar
         RECENT_ACTIVITY: 'Actividad Reciente',
