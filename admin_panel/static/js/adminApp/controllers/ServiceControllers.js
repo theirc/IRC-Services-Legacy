@@ -238,11 +238,11 @@ angular
         vm.regionlvl2 = null;
         vm.regionlvl3 = null;
 
-        vm.updateCity = () => {
+        /*vm.updateCity = () => {
             service_languages.forEach(function (lang) {
                 vm.service[`address_city_${lang[0]}`] = vm.regionlvl3.name;
             });
-        }
+        }*/
 
         vm.onRegionChange = () => {
             vm.regionslvl3 = [];
@@ -372,7 +372,6 @@ angular
 
                     if (regionChain[2]) {
                         vm.regionlvl3 = regionChain[2];
-                        vm.updateCity();
                     }
                 }
             }
