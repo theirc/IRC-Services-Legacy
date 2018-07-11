@@ -22,7 +22,11 @@
                     <button class="btn btn-danger btn-xs btn-block" ng-click="ctrl.stopImpersonate()">{{ 'STOP_IMPERSONATING' | translate }}</button>
                 </h1>
             </div>
-
+            <div class="navbar-provider username">
+                <h1>
+                    <span>{{ !user.name && !user.surname ? user.email : '' }}{{ user.name }} {{ user.surname }}</span>
+                </h1>
+            </div>
             <ul class="nav navbar-nav">
                 <li class="dropdown messages-menu" ng-if="user.providers.length > 1">
                     <a href="" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
