@@ -368,6 +368,10 @@
                             </div>
                             <div class="box-body">
                                 <div class="form-group col-xs-6">
+                                    <label for="focalTitle">{{ 'SERVICE_FOCAL_TITLE' | translate }}</label>
+                                    <input type="text" class="form-control" id="focalTitle" ng-maxlength="255" placeholder="{{ 'SERVICE_FOCAL_TITLE' | translate }}" ng-model="ctrl.service.focal_point_title">
+                                </div>
+                                <div class="form-group col-xs-6">
                                     <label for="focalFirstName">{{ 'SERVICE_FOCAL_FIRST_NAME' | translate }}</label>
                                     <input type="text" class="form-control" id="focalFirstName" ng-maxlength="255" placeholder="{{ 'SERVICE_FOCAL_FIRST_NAME' | translate }}" ng-model="ctrl.service.focal_point_first_name">
                                 </div>
@@ -381,6 +385,10 @@
                                         ng-pattern="/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/">
                                 </div>
                                 <div class="form-group col-xs-12"></div>
+                                 <div class="form-group col-xs-6">
+                                    <label for="secondFocalTitle">{{ 'SERVICE_SECOND_FOCAL_TITLE' | translate}}</label>
+                                    <input type="text" class="form-control" id="secondFocalTitle" ng-maxlength="255" placeholder="{{ 'SERVICE_SECOND_FOCAL_TITLE' | translate}}" ng-model="ctrl.service.second_focal_point_title">
+                                </div>
                                 <div class="form-group col-xs-6">
                                     <label for="secondFocalFirstName">{{ 'SERVICE_SECOND_FOCAL_FIRST_NAME' | translate}}</label>
                                     <input type="text" class="form-control" id="secondFocalFirstName" ng-maxlength="255" placeholder="{{ 'SERVICE_SECOND_FOCAL_FIRST_NAME' | translate}}" ng-model="ctrl.service.second_focal_point_first_name">

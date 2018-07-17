@@ -578,6 +578,12 @@ class Service(TranslatableModel, models.Model):
         null=True
     )
 
+    focal_point_title = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True
+    )
+
     second_focal_point_first_name = models.CharField(
         max_length=255,
         blank=True,
@@ -591,6 +597,12 @@ class Service(TranslatableModel, models.Model):
     )
 
     second_focal_point_email = models.EmailField(
+        max_length=255,
+        blank=True,
+        null=True
+    )
+
+    second_focal_point_title = models.CharField(
         max_length=255,
         blank=True,
         null=True

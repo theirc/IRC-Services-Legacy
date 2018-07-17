@@ -352,9 +352,11 @@ class ServiceSerializer(serializers.ModelSerializer):
                 'focal_point_first_name',
                 'focal_point_last_name',
                 'focal_point_email',
+                'focal_point_title',
                 'second_focal_point_email',
                 'second_focal_point_first_name',
                 'second_focal_point_last_name',
+                'second_focal_point_title',
                 'exclude_from_confirmation',
                 'contact_information'
             ] +
@@ -551,9 +553,11 @@ class ServiceCreateSerializer(serializers.ModelSerializer):
                 'focal_point_first_name',
                 'focal_point_last_name',
                 'focal_point_email',
+                'focal_point_title',
                 'second_focal_point_first_name',
                 'second_focal_point_last_name',
                 'second_focal_point_email',
+                'second_focal_point_title',
                 'contact_information'
             ] +
             generate_translated_fields('name') +
