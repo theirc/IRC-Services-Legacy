@@ -32,7 +32,7 @@ class ProviderType(TranslatableModel, models.Model):
             default='',
             blank=True,
         ),
-    }
+    } 
 
     number = models.IntegerField(null=True)
 
