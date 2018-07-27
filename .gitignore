@@ -9,6 +9,7 @@
 *.DS_Store
 .coverage
 #*/settings/local.py
+.vscode
 post_submit.png
 pre_submit.png
 public/static/
