@@ -547,6 +547,12 @@ class Service(TranslatableModel, models.Model):
         blank=True,
         default=''
     )
+    whatsapp = models.CharField(
+        _('Whatsapp number'),
+        max_length=255,
+        blank=True,
+        default=''
+    )
     website = models.CharField(
         _("website"),
         max_length=255,

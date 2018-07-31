@@ -348,6 +348,7 @@ class ServiceSerializer(serializers.ModelSerializer):
                 'email',
                 'website',
                 'facebook_page',
+                'whatsapp',
                 'opening_time',
                 'focal_point_first_name',
                 'focal_point_last_name',
@@ -463,7 +464,8 @@ class ServiceManagementSerializer(serializers.ModelSerializer):
                 'tags',
                 'email',
                 'website',
-                'facebook_page'
+                'facebook_page',
+                'whatsapp'
             ] + generate_translated_fields('name')
         )
 
@@ -549,6 +551,7 @@ class ServiceCreateSerializer(serializers.ModelSerializer):
                 'email',
                 'website',
                 'facebook_page',
+                'whatsapp',
                 'opening_time',
                 'focal_point_first_name',
                 'focal_point_last_name',

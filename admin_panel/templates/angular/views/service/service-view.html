@@ -207,6 +207,11 @@
                                     ng-maxlength="255">
                             </div>
                             <div class="form-group col-xs-6">
+                                <label for="whatsapp">{{ 'SERVICE_WHATSAPP' | translate }}</label>
+                                <input type="text" class="form-control" id="whatsapp" placeholder="{{ 'SERVICE_WHATSAPP' | translate }}" ng-model="ctrl.service.whatsapp"
+                                    ng-maxlength="255">
+                            </div>
+                            <div class="form-group col-xs-6">
                                 <label for="costOfService">{{ 'SERVICE_COST_SERVICE' | translate }}</label>
                                 <textarea name="costOfService" class="form-control" ng-model="ctrl.service.cost_of_service"></textarea>
                             </div>

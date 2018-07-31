@@ -810,6 +810,7 @@ Only superusers and service providers have access to the edit functions. Everyon
             'Phone Number': vm.service.phone_number,
             'Email': vm.service.email,
             'Website': vm.service.website,
+            'Whatsapp Number': vm.service.whatsapp,
             'Facebook Page': vm.service.facebook_page
         };
         vm.service_data['opening_hours'] = vm.service.opening_time;
