@@ -8,6 +8,7 @@
 *.orig
 *.DS_Store
 .coverage
+.vscode
 #*/settings/local.py
 post_submit.png
 pre_submit.png
