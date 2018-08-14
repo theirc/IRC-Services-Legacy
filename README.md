@@ -5,7 +5,7 @@ Installing
 + Python 3.5
 + pip
 + PostgreSQL
-+ PostGIS
++ PostGIS 
 
 ### Installing dependencies
     sudo add-apt-repository ppa:fkrull/deadsnakes
