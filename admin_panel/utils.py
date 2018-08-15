@@ -2,6 +2,7 @@ from __future__ import absolute_import, unicode_literals, division, print_functi
 
 import json
 import html2text
+import html
 import re
 
 import requests
@@ -127,17 +128,21 @@ def get_blog_transifex_info(slug):
 
     return {}
 
+def cleanUpHTML(s):
+    return html.unescape(s)
 
 def push_service_to_transifex(id):
     try:
         service = Service.objects.get(id=id)
-        service_json = {'name': service.name,
-                        'description': service.description,
-                        'address_city': service.address_city,
-                        'address': service.address,
-                        'address_floor': service.address_floor,
-                        'additional_info': service.additional_info,
-                        'languages_spoken': service.languages_spoken}
+        service_json = {
+            'name': service.name,
+            'description': cleanUpHTML(service.description),
+            'address_city': service.address_city,
+            'address': service.address,
+            'address_floor': service.address_floor,
+            'additional_info': cleanUpHTML(service.additional_info),
+            'languages_spoken': service.languages_spoken
+        }
 
         password = settings.TRANSIFEX_PASSWORD
         user = settings.TRANSIFEX_USER
