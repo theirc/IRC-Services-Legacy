@@ -238,11 +238,11 @@ angular
         vm.regionlvl2 = null;
         vm.regionlvl3 = null;
 
-        vm.updateCity = () => {
+        /*vm.updateCity = () => {
             service_languages.forEach(function (lang) {
                 vm.service[`address_city_${lang[0]}`] = vm.regionlvl3.name;
             });
-        }
+        }*/
 
         vm.onRegionChange = () => {
             vm.regionslvl3 = [];
@@ -372,7 +372,6 @@ angular
 
                     if (regionChain[2]) {
                         vm.regionlvl3 = regionChain[2];
-                        vm.updateCity();
                     }
                 }
             }
@@ -811,6 +810,7 @@ Only superusers and service providers have access to the edit functions. Everyon
             'Phone Number': vm.service.phone_number,
             'Email': vm.service.email,
             'Website': vm.service.website,
+            'Whatsapp Number': vm.service.whatsapp,
             'Facebook Page': vm.service.facebook_page
         };
         vm.service_data['opening_hours'] = vm.service.opening_time;

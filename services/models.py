@@ -32,7 +32,7 @@ class ProviderType(TranslatableModel, models.Model):
             default='',
             blank=True,
         ),
-    }
+    } 
 
     number = models.IntegerField(null=True)
 
@@ -547,6 +547,12 @@ class Service(TranslatableModel, models.Model):
         blank=True,
         default=''
     )
+    whatsapp = models.CharField(
+        _('Whatsapp number'),
+        max_length=255,
+        blank=True,
+        default=''
+    )
     website = models.CharField(
         _("website"),
         max_length=255,
@@ -578,6 +584,12 @@ class Service(TranslatableModel, models.Model):
         null=True
     )
 
+    focal_point_title = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True
+    )
+
     second_focal_point_first_name = models.CharField(
         max_length=255,
         blank=True,
@@ -591,6 +603,12 @@ class Service(TranslatableModel, models.Model):
     )
 
     second_focal_point_email = models.EmailField(
+        max_length=255,
+        blank=True,
+        null=True
+    )
+
+    second_focal_point_title = models.CharField(
         max_length=255,
         blank=True,
         null=True
