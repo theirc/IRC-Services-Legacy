@@ -21,10 +21,10 @@
 
         <li ng-repeat-end ng-repeat="k in i.items" ng-if="!k.hide && !i.hide" ng-class="{treeview: k.items, active: k.items && k.active}"
             style="background-color: rgb(44, 59, 65);">
-            <a href="" ui-sref="{{ k.sref }}" ng-if="!k.items">
+            <a href="{{ k.href }}" ui-sref="{{ k.sref }}" ng-if="!k.items" target="{{k.target}}">
                 <span>{{ k.title}}</span>
             </a>
-            <a href="" ng-if="k.items">
+            <a href="{{ k.href }}" ng-if="k.items">
                 <span>{{ k.title}}</span>
                 <span class="pull-right-container">
                     <i class="fa fa-angle-down pull-right"></i>
@@ -34,7 +34,7 @@
 
             <ul class="treeview-menu" ui-sref-active="menu-open" ng-if="k.items && !k.hide">
                 <li ng-repeat="l in k.items" ng-if="!i.hide && !k.hide && !l.hide" style="padding: 12px 30px 12px 15px;">
-                    <a href="#" ui-sref="{{ l.sref }}">
+                    <a href="{{ l.href }}" ui-sref="{{ l.sref }}">
                         <span>{{ l.title}}</span>
                     </a>
                 </li>
