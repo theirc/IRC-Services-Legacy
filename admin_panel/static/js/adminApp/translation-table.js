@@ -3,6 +3,7 @@ angular.module("adminApp").config(function($translateProvider){
         //Main menu
         SERVICE_SEARCH: 'Service Search',
         SERVICE_MANAGEMENT: 'Service Management',
+        SERVICE_LINK_TO_WEB_APP: 'Go to Service Map',
         PROFILE: 'Profile',
         ACCOUNT_SETTINGS: 'Account Settings',
         PROVIDER_SETTINGS: 'Provider Settings',
@@ -364,6 +365,7 @@ angular.module("adminApp").config(function($translateProvider){
         //Main menu
         SERVICE_SEARCH: 'Buscar Servicios',
         SERVICE_MANAGEMENT: 'Administración de Servicios',
+        SERVICE_LINK_TO_WEB_APP: 'Ir a CuentaNos.org',
         PROFILE: 'Perfil',
         ACCOUNT_SETTINGS: 'Configuración de Cuenta',
         PROVIDER_SETTINGS: 'Configuración de Proveedor',
