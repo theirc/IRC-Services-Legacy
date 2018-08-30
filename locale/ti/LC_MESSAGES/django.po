@@ -1,0 +1,384 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-04-04 15:05+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: admin_panel/templates/admin_panel/activate.html:23
+msgid "Please set up a password for your account."
+msgstr ""
+
+#: admin_panel/templates/admin_panel/activate.html:29
+#: admin_panel/templates/admin_panel/login.html:31 email_user/forms.py:79
+msgid "Password"
+msgstr ""
+
+#: admin_panel/templates/admin_panel/activate.html:32
+msgid "Confirm Password"
+msgstr ""
+
+#: admin_panel/templates/admin_panel/login.html:22
+msgid "Sign in to start your session"
+msgstr ""
+
+#: admin_panel/templates/admin_panel/login.html:28 email_user/forms.py:23
+#: services/models.py:1403
+msgid "Email"
+msgstr ""
+
+#: admin_panel/templates/admin_panel/login.html:41
+#: admin_panel/templates/admin_panel/reset_complete.html:23
+msgid "Log in"
+msgstr ""
+
+#: admin_panel/templates/admin_panel/login.html:46
+msgid "Forgotten your password or username?"
+msgstr ""
+
+#: admin_panel/templates/admin_panel/logout.html:20
+msgid "You\\"
+msgstr ""
+
+#: admin_panel/templates/admin_panel/logout.html:23
+msgid "Click "
+msgstr ""
+
+#: admin_panel/templates/admin_panel/logout.html:24
+msgid "here"
+msgstr ""
+
+#: admin_panel/templates/admin_panel/logout.html:24
+msgid "to go back to the application"
+msgstr ""
+
+#: admin_panel/templates/admin_panel/reset_complete.html:20
+msgid "Your password has been set.  You may go ahead and log in now."
+msgstr ""
+
+#: admin_panel/templates/admin_panel/reset_confirm.html:26
+msgid ""
+"Please enter your new password twice so we can verify you typed it in "
+"correctly."
+msgstr ""
+
+#: admin_panel/templates/admin_panel/reset_confirm.html:34
+msgid "New password:"
+msgstr ""
+
+#: admin_panel/templates/admin_panel/reset_confirm.html:39
+msgid "Confirm password:"
+msgstr ""
+
+#: admin_panel/templates/admin_panel/reset_confirm.html:53
+msgid "Change my password"
+msgstr ""
+
+#: admin_panel/templates/admin_panel/reset_confirm.html:61
+msgid ""
+"The password reset link was invalid, possibly because it has already been "
+"used.  Please request a new password reset."
+msgstr ""
+
+#: admin_panel/templates/admin_panel/reset_done.html:20
+msgid ""
+"We’ve emailed you instructions for setting your password. If an account "
+"exists with the email you entered, you should receive them shortly."
+msgstr ""
+
+#: admin_panel/templates/admin_panel/reset_done.html:22
+msgid ""
+"If you don't receive an email, please make sure you've entered the address "
+"you registered with, and check your spam folder."
+msgstr ""
+
+#: admin_panel/templates/admin_panel/reset_form.html:22
+msgid ""
+"Forgotten your password? Enter your email address below, and we'll email "
+"instructions for setting a new one."
+msgstr ""
+
+#: admin_panel/templates/admin_panel/reset_form.html:28
+msgid "Email address:"
+msgstr ""
+
+#: admin_panel/templates/admin_panel/reset_form.html:39
+msgid "Reset my password"
+msgstr ""
+
+#: api/renderers.py:27 services/models.py:1157
+msgid "Name"
+msgstr ""
+
+#: api/v2/serializers/core.py:52
+msgid "User account is disabled."
+msgstr ""
+
+#: api/v2/serializers/core.py:55
+msgid "Unable to log in with provided credentials."
+msgstr ""
+
+#: api/v2/serializers/core.py:81 api/v2/serializers/services.py:58
+#: services/models.py:672 services/models.py:675
+msgid "This field is required."
+msgstr ""
+
+#: api/v2/serializers/services.py:124 email_user/forms.py:18
+msgid "A user with that email already exists."
+msgstr ""
+
+#: email_user/admin.py:30
+msgid "Permissions"
+msgstr ""
+
+#: email_user/admin.py:32
+msgid "Important dates"
+msgstr ""
+
+#: email_user/admin.py:53
+#, python-brace-format
+msgid "Unable to activate user '{email}': {error}."
+msgstr ""
+
+#: email_user/admin.py:62
+msgid "The account was activated successfully. Email has been sent to user."
+msgstr ""
+
+#: email_user/forms.py:19
+msgid "The two password fields didn't match."
+msgstr ""
+
+#: email_user/forms.py:24
+msgid "Required. 255 characters or fewer. Letters, digits and @/./+/-/_ only."
+msgstr ""
+
+#: email_user/forms.py:27
+msgid "This value may contain only letters, numbers and @/./+/-/_ characters."
+msgstr ""
+
+#: email_user/forms.py:80
+msgid ""
+"Raw passwords are not stored, so there is no way to see this user's "
+"password, but you can change the password using <a href=\"password/\">this "
+"form</a>."
+msgstr ""
+
+#: email_user/models.py:45
+msgid "Users must have an email address"
+msgstr ""
+
+#: email_user/models.py:81
+msgid "Activation key is invalid or has already been used."
+msgstr ""
+
+#: email_user/models.py:124 services/models.py:497
+msgid "email address"
+msgstr ""
+
+#: email_user/models.py:142
+msgid "staff status"
+msgstr ""
+
+#: email_user/models.py:143
+msgid "Designates whether the user can log into this admin site."
+msgstr ""
+
+#: email_user/models.py:146
+msgid "active"
+msgstr ""
+
+#: email_user/models.py:147
+msgid ""
+"Designates whether this user should be treated as active. Unselect this "
+"instead of deleting accounts."
+msgstr ""
+
+#: email_user/models.py:149
+msgid "date joined"
+msgstr ""
+
+#: email_user/models.py:152
+msgid "activation key"
+msgstr ""
+
+#: email_user/models.py:155
+msgid "language"
+msgstr ""
+
+#: email_user/models.py:156
+msgid "User's preferred language."
+msgstr ""
+
+#: email_user/models.py:165
+msgid "user"
+msgstr ""
+
+#: email_user/models.py:195
+msgid "User emails must be unique without regard to case."
+msgstr ""
+
+#: email_user/models.py:232
+#, python-brace-format
+msgid "Password is too short. It must have at least {min_length} characters."
+msgstr ""
+
+#: email_user/templates/email_user/password_reset_email.html:2
+msgid ""
+"You're receiving this email because you requested a password reset for your\n"
+"        user account at Refugee.Info Admin."
+msgstr ""
+
+#: email_user/templates/email_user/password_reset_email.html:5
+msgid "Please go to the following page and choose a new password:"
+msgstr ""
+
+#: email_user/templates/email_user/password_reset_email.html:11
+msgid "Your username is your email address:"
+msgstr ""
+
+#: email_user/templates/email_user/password_reset_email.html:14
+msgid "Thanks for using our site!"
+msgstr ""
+
+#: email_user/templates/email_user/password_reset_email.html:16
+#, python-format
+msgid "The %(site_name)s team"
+msgstr ""
+
+#: email_user/templates/email_user/password_reset_email.txt:2
+msgid ""
+"\n"
+"You (or someone pretending to be you) have asked to reset the\n"
+"password of an account at admin.refugee.info.\n"
+"If this wasn't you, please ignore this email.\n"
+msgstr ""
+
+#: email_user/templates/email_user/password_reset_email.txt:7
+msgid ""
+"\n"
+"To reset the password, please click the following link:\n"
+msgstr ""
+
+#: email_user/templates/email_user/password_reset_email.txt:13
+msgid ""
+"\n"
+"Sincerely,\n"
+"Refugee.Info Management\n"
+msgstr ""
+
+#: email_user/templates/email_user/password_reset_subject.txt:2
+msgid "Password reset on Refugee.Info Admin"
+msgstr ""
+
+#: email_user/templates/registration/activation_email.html:6
+msgid "registration"
+msgstr ""
+
+#: email_user/templates/registration/activation_email.html:11
+#, python-format
+msgid ""
+"\n"
+"    You (or someone pretending to be you) have asked to register an account "
+"at\n"
+"    %(site)s.  If this wasn't you, please ignore this email\n"
+"    and your address will be removed from our records.\n"
+"    "
+msgstr ""
+
+#: email_user/templates/registration/activation_email.html:18
+msgid ""
+"\n"
+"    To activate this account, please click the following link:\n"
+"    "
+msgstr ""
+
+#: email_user/templates/registration/activation_email.html:29
+#, python-format
+msgid ""
+"\n"
+"    Sincerely,\n"
+"    %(site)s Management\n"
+"    "
+msgstr ""
+
+#: email_user/templates/registration/activation_email.txt:2
+#, python-format
+msgid ""
+"\n"
+"You (or someone pretending to be you) have asked to register an account at\n"
+"%(site)s.  If this wasn't you, please ignore this email\n"
+"and your address will be removed from our records.\n"
+msgstr ""
+
+#: email_user/templates/registration/activation_email.txt:7
+msgid ""
+"\n"
+"To activate this account, please click the following link:\n"
+msgstr ""
+
+#: email_user/templates/registration/activation_email.txt:13
+#, python-format
+msgid ""
+"\n"
+"Sincerely,\n"
+"%(site)s Management\n"
+msgstr ""
+
+#: email_user/templates/registration/activation_email_subject.txt:1
+msgid "Account activation on"
+msgstr ""
+
+#: regions/models.py:90 regions/models.py:288
+#, python-brace-format
+msgid "Title in {LANGUAGE_NAME}"
+msgstr ""
+
+
+#: service_info/settings.py:59
+msgid "Tigrinya"
+msgstr ""
+
+#: service_info/templates/admin/submit_line.html:5
+msgid "Save"
+msgstr ""
+
+#: service_info/templates/admin/submit_line.html:8
+msgid "Delete"
+msgstr ""
+
+#: service_info/templates/admin/submit_line.html:10
+msgid "Save as new"
+msgstr ""
+
+#: service_info/templates/admin/submit_line.html:11
+msgid "Save and add another"
+msgstr ""
+
+#: service_info/templates/admin/submit_line.html:12
+msgid "Save and continue editing"
+msgstr ""
+
+#: service_info/templates/admin/submit_line.html:13
+msgid "Save and reject"
+msgstr ""
+
+#: service_info/templates/admin/submit_line.html:14
+msgid "Save and approve"
+msgstr ""
+
+#: service_info/templates/admin/submit_line.html:15
+msgid "Activate provider account"
+msgstr ""
+
