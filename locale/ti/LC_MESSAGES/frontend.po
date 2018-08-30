@@ -1,0 +1,961 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: node-gettext\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgid "app##name"
+msgstr "i18next"
+
+msgid "test##hello"
+msgstr "Hello, World"
+
+msgid "Menu##Menu-Toggle"
+msgstr "MENU"
+
+msgid "Menu##Home"
+msgstr "Home"
+
+msgid "Menu##Service-Info"
+msgstr "Services"
+
+msgid "Menu##Login"
+msgstr "Login"
+
+msgid "Menu##Logout"
+msgstr "Logout"
+
+msgid "Menu##Services"
+msgstr "Manage Services"
+
+msgid "Menu##Add-Services"
+msgstr "Add Services"
+
+msgid "Menu##Import-Export"
+msgstr "Import/Export"
+
+msgid "Menu##Service-Map"
+msgstr "Service Map"
+
+msgid "Menu##Search"
+msgstr "Search"
+
+msgid "Menu##Provider-Registration"
+msgstr "Provider Registration"
+
+msgid "Menu##Edit-Provider-Information"
+msgstr "Edit Provider Information"
+
+msgid "Menu##Feedback-Tool"
+msgstr "Give Feedback"
+
+msgid "Menu##Change-Language"
+msgstr "Change Language"
+
+msgid "Menu##Reports"
+msgstr "Reports"
+
+msgid "Global##Admin"
+msgstr "Admin"
+
+msgid "Global##FormSubmissionError"
+msgstr "There was an unknown error submitting your form."
+
+msgid "Global##UnknownError"
+msgstr "There was an unknown error."
+
+msgid "Global##FormValidationError"
+msgstr "Please correct the errors on the form."
+
+msgid "Global##Sunday"
+msgstr "Sunday"
+
+msgid "Global##Monday"
+msgstr "Monday"
+
+msgid "Global##Tuesday"
+msgstr "Tuesday"
+
+msgid "Global##Wednesday"
+msgstr "Wednesday"
+
+msgid "Global##Thursday"
+msgstr "Thursday"
+
+msgid "Global##Friday"
+msgstr "Friday"
+
+msgid "Global##Saturday"
+msgstr "Saturday"
+
+msgid "Global##GeolocationNotSupported"
+msgstr "Geolocation is not supported by this browser."
+
+msgid "Global##GeoPositionUnavailable"
+msgstr "Location is not available at this time."
+
+msgid "Global##GeoLocationDenied"
+msgstr "You have not given permission to access your current location."
+
+msgid "Global##RequiredField"
+msgstr "This field is required."
+
+msgid "Global##Not-Listed"
+msgstr "Not Listed"
+
+msgid "Login-Form##Page-Head##Page-Title##Title"
+msgstr "Log In"
+
+msgid "Login-Form##Page-Head##Page-Description##Page-Description"
+msgstr "If you are a service provider and have an existing account sign into your account below."
+
+msgid "Login-Form##Form##Email"
+msgstr "Email"
+
+msgid "Login-Form##Form##Password"
+msgstr "Password"
+
+msgid "Login-Form##More-Options-Title"
+msgstr "Additional Options"
+
+msgid "Login-Form##More-Options"
+msgstr "If you need your verification email sent again, or to register to be a service provider click the corresponding button below."
+
+msgid "Login-Form##Form-Submit-Options##Submit"
+msgstr "Login"
+
+msgid "Login-Form##Form-Submit-Options##Register"
+msgstr "Register to be a Service Provider here"
+
+msgid "Login-Form##Form-Submit-Options##Password"
+msgstr "Change or reset password"
+
+msgid "Search-List##Page-Head##Title"
+msgstr "Search For Services"
+
+msgid "Search-List##Page-Head##Description"
+msgstr "Use the filtered search below to find the service that meets your needs."
+
+msgid "Search-List##Service-Request"
+msgstr "Tell us about a missing service"
+
+msgid "Feedback-Search##Page-Head##Title"
+msgstr "Give Feedback on Services"
+
+msgid "Feedback-Search##Page-Head##Description"
+msgstr "Please search for a service provider first to give your feedback, you must select the service provider and click on give feedback to begin."
+
+msgid "Service-Detail##Directions"
+msgstr "Directions"
+
+msgid "Service-Detail##Give-Feedback"
+msgstr "Give feedback on this service"
+
+msgid "Feedback-Confirm##Give-More-Feedback"
+msgstr "Give feedback on another service"
+
+msgid "Feedback-Map##Page-Head##Title"
+msgstr "Give Feedback on Services"
+
+msgid "Feedback-Map##Page-Head##Description"
+msgstr "Please search for a service provider first to give your feedback, you must select the service provider and click on give feedback to begin."
+
+msgid "Service-Map##Page-Head##Page-Title##Title"
+msgstr "Search For Services"
+
+msgid "Service-Map##Page-Head##Page-Description##Page-Description"
+msgstr "Use the filtered search below to find the service that meets your needs."
+
+msgid "Service-Map##No-Search-Results"
+msgstr "No services matched your search terms. Please try other terms."
+
+msgid "Service-Map##Results-Truncated"
+msgstr "There were more results than could be displayed. Try a more specific search."
+
+msgid "Service-Map##More-Results"
+msgstr "Currently showing {thecount} out of {total_results} services, please zoom in to the designated area to see more services."
+
+msgid "Service-Map##Filtered-Search##Label"
+msgstr "Search term"
+
+msgid "Service-Map##Filtered-Search##Submit"
+msgstr "Search"
+
+msgid "Service-Map##Filtered-Search##Service-Type"
+msgstr "Service type"
+
+msgid "Service-Map##Filtered-Search##Distance"
+msgstr "Find Services Near Me"
+
+msgid "Service-Map##Filtered-Search##Sort"
+msgstr "Sort"
+
+msgid "Service-Map##Filtered-Search##SortName"
+msgstr "by Name"
+
+msgid "Service-Map##Filtered-Search##SortNear"
+msgstr "by Distance From Me"
+
+msgid "Service-Map##Filtered-Search##Area"
+msgstr "Area"
+
+msgid "Service-Map##Filtered-Search##Filter-Area"
+msgstr "Filter by area"
+
+msgid "Service-Map##Filtered-Search##Filter-By-Area"
+msgstr "Filter your search by area"
+
+msgid "Service-Map##Filtered-Search##Search-Placeholder"
+msgstr "I am searching for..."
+
+msgid "Service-Map##Filtered-Search##Loading"
+msgstr "Loading Service Type Filters..."
+
+msgid "Service-Map##Filtered-Search##TypeHeader"
+msgstr "Filter by a Service Type"
+
+msgid "Service-Map##Filtered-Search##Any"
+msgstr "Any"
+
+msgid "Service-Map##Map##Toggle"
+msgstr "List View"
+
+msgid "Service-Map##List##Toggle"
+msgstr "Map View"
+
+msgid "Service-Map##List##Service-Name"
+msgstr "Service Name"
+
+msgid "Service-Map##List##Area"
+msgstr "Service Area"
+
+msgid "Service-Map##List##Type"
+msgstr "Service Type"
+
+msgid "Service-Map##List##Additional-Info"
+msgstr "Additional Provider Information"
+
+msgid "Service-Map##List##Cost"
+msgstr "Cost"
+
+msgid "Service-Map##List##Todays-Hours"
+msgstr "Today's Service Hours"
+
+msgid "Service-Map##List##All-Hours"
+msgstr "Service Hours"
+
+msgid "Service-Map##List##Phone"
+msgstr "Phone Number"
+
+msgid "Service-Map##List##Email"
+msgstr "Email Address"
+
+msgid "Service-Map##List##Website"
+msgstr "Website"
+
+msgid "Service-Map##List##Unknown"
+msgstr "Unknown"
+
+msgid "Service-Map##List##Criteria"
+msgstr "Selection Criteria"
+
+msgid "Service-Map##List##Picture"
+msgstr "Service Address Picture"
+
+msgid "Service-Remove-Change##Page-Head##Page-Title##Title"
+msgstr "Remove Change"
+
+msgid "Service-Remove-Change##Update-Of"
+msgstr "Update of"
+
+msgid "Service-Remove-Change##Remove-Change"
+msgstr "Remove change"
+
+msgid "Service-Delete##Page-Head##Page-Title##Title"
+msgstr "Delete Service"
+
+msgid "Service-Delete##Delete-Service"
+msgstr "Delete service"
+
+msgid "Service-Form##Page-Head##Page-Title##Title"
+msgstr "New Service Registration Form"
+
+msgid "Service-Form##Page-Head##Page-Description##Page-Description"
+msgstr "Fill out the form below and apply to have a new approved service."
+
+msgid "Service-Form##Day"
+msgstr "Day"
+
+msgid "Service-Form##Legend"
+msgstr "Service Information"
+
+msgid "Service-Form##Type-Choose"
+msgstr "Choose a Service Type"
+
+msgid "Service-Form##Service-Area-Choose"
+msgstr "Choose a Service Area"
+
+msgid "Service-Form##Service-Name"
+msgstr "Name of Service"
+
+msgid "Service-Form##Is-Mobile"
+msgstr "Mobile Service"
+
+msgid "Service-Form##Is-Mobile-Help"
+msgstr "A mobile service is delivered to the beneficiary. A beneficiary must come get a non-mobile service."
+
+msgid "Service-Form##Service-Area"
+msgstr "Area of Service"
+
+msgid "Service-Form##Service-Area-Help"
+msgstr "The location of the service you provide. For a mobile service, please choose the service area in which the service can be delivered."
+
+msgid "Service-Form##Type"
+msgstr "Service Type"
+
+msgid "Service-Form##Service-Description"
+msgstr "Description"
+
+msgid "Service-Form##Service-Description-Help"
+msgstr "A short explanation about the mentioned service; this explains more about the provided service and helps identify it and its components."
+
+msgid "Service-Form##Service-Hours"
+msgstr "Working Hours"
+
+msgid "Service-Form##Service-Hours-Help"
+msgstr "Please mention the detailed hours of work; this assists the beneficiary in accessing the service easily and without obstacles."
+
+msgid "Service-Form##Additional-Information"
+msgstr "Additional Information (Optional Field)"
+
+msgid "Service-Form##Service-Cost"
+msgstr "Cost of Service (Optional Field)"
+
+msgid "Service-Form##Service-Cost-Help"
+msgstr "Please mention whether the offered service is free of charge or not. If not, please mention the cost of it."
+
+msgid "Service-Form##Selection-Criteria"
+msgstr "Selection Criteria (Optional Field)"
+
+msgid "Service-Form##Selection-Criteria-Help"
+msgstr "Determines the criteria under which the beneficiary is allowed to benefit from the service. Ex: females aged between 3 and 30 years old."
+
+msgid "Service-Form##Hours-Open"
+msgstr "Opening Time:"
+
+msgid "Service-Form##Hours-Close"
+msgstr "Closing Time:"
+
+msgid "Service-Form##Add-Criterion"
+msgstr "Add New Criterion"
+
+msgid "Service-Form##Remove-Criterion"
+msgstr "Remove Criterion"
+
+msgid "Service-Form##Form-Submit-Options##Submit"
+msgstr "Submit Answers"
+
+msgid "Service-Form##Form-Submit-Options##Clear"
+msgstr "Remove Answers"
+
+msgid "Service-Request-Form##Page-Head##Page-Title##Title"
+msgstr "Suggest a service"
+
+msgid "Service-Request-Form##Legend"
+msgstr "To suggest a service, please fill out the form below"
+
+msgid "Service-Request-Form##Provider-Name"
+msgstr "Service Provider Name"
+
+msgid "Service-Request-Form##Service-Name"
+msgstr "Service Name"
+
+msgid "Service-Request-Form##Service-Area"
+msgstr "Service Area"
+
+msgid "Service-Request-Form##Type"
+msgstr "Service Type"
+
+msgid "Service-Request-Form##Service-Address"
+msgstr "Service Address"
+
+msgid "Service-Request-Form##Service-Address-Help"
+msgstr "Where this service is being delivered."
+
+msgid "Service-Request-Form##Service-Contact"
+msgstr "Contact Detail"
+
+msgid "Service-Request-Form##Service-Contact-Help"
+msgstr "Please enter personal contact detail, as it will be used to contact you for more details."
+
+msgid "Service-Request-Form##Service-Description"
+msgstr "Service Description"
+
+msgid "Service-Request-Form##Service-Description-Help"
+msgstr "Enter some details about this service."
+
+msgid "Service-Request-Form##Rating"
+msgstr "Rate the Service (from 1 to 5, where 5 is the highest rating possible):"
+
+msgid "Service-Request-Form##Form-Submit-Options##Submit"
+msgstr "Submit Answers"
+
+msgid "Service-Request-Form##Form-Submit-Options##Clear"
+msgstr "Remove Answers"
+
+msgid "Service-Request-Confirmation##Page-Head##Page-Title##Title"
+msgstr "Your Information was Submitted Successfully"
+
+msgid "Service-Request-Confirmation##Page-Head##Page-Description##Page-Description"
+msgstr "Thank you for your suggestion."
+
+msgid "Provider-Registration-Form##Page-Head##Page-Title##Title"
+msgstr "Service Provider Registration Form"
+
+msgid "Provider-Registration-Form##Page-Head##Page-Description##Page-Description"
+msgstr "Fill out the form below."
+
+msgid "Provider-Registration-Form##Errors##Password-Blank"
+msgstr "Password must not be blank"
+
+msgid "Provider-Registration-Form##Errors##Password-Repeat"
+msgstr "Password must be repeated"
+
+msgid "Provider-Registration-Form##Errors##Password-Match"
+msgstr "Passwords must match"
+
+msgid "Provider-Registration-Form##Form-Sections##Basic##Legend"
+msgstr "Basic details to register a service provider:"
+
+msgid "Provider-Registration-Form##Form-Sections##Basic##Name"
+msgstr "Name of Service Provider"
+
+msgid "Provider-Registration-Form##Form-Sections##Basic##Focal-Point-Name"
+msgstr "Name of Focal Point"
+
+msgid "Provider-Registration-Form##Form-Sections##Basic##Focal-Point-Name-Help"
+msgstr "The name of the person to refer to in case of feedback or clarification"
+
+msgid "Provider-Registration-Form##Form-Sections##Basic##Password"
+msgstr "Password"
+
+msgid "Provider-Registration-Form##Form-Sections##Basic##PasswordConfirm"
+msgstr "Confirm Password"
+
+msgid "Provider-Registration-Form##Form-Sections##Basic##Provider-Type"
+msgstr "Provider Type"
+
+msgid "Provider-Registration-Form##Form-Sections##Basic##Provider-Type-Help"
+msgstr "Mention what type of provider are you; ex: local NGO, international NGO"
+
+msgid "Provider-Registration-Form##Form-Sections##Basic##Provider-Type-Choose"
+msgstr "Choose a Provider Type"
+
+msgid "Provider-Registration-Form##Form-Sections##Basic##Phone-Number"
+msgstr "Phone Number"
+
+msgid "Provider-Registration-Form##Form-Sections##Basic##Phone-Number-Help"
+msgstr "Ex: 70-972074"
+
+msgid "Provider-Registration-Form##Form-Sections##Basic##Focal-Point-Phone-Number"
+msgstr "Phone Number of Focal Point"
+
+msgid "Provider-Registration-Form##Form-Sections##Basic##Focal-Point-Phone-Number-Help"
+msgstr "Ex: 70-972074"
+
+msgid "Provider-Registration-Form##Form-Sections##Basic##Email"
+msgstr "Email"
+
+msgid "Provider-Registration-Form##Form-Sections##Basic##EmailPlaceholder"
+msgstr "Enter your Email"
+
+msgid "Provider-Registration-Form##Form-Sections##Basic##Website"
+msgstr "Website URL (Optional Field)"
+
+msgid "Provider-Registration-Form##Form-Sections##Basic##Website-Help"
+msgstr "The official website"
+
+msgid "Provider-Registration-Form##Form-Sections##Basic##MonthlyBeneficiaries"
+msgstr "Number of Monthly Beneficiaries"
+
+msgid "Provider-Registration-Form##Form-Sections##Basic##MonthlyBeneficiaries-Help"
+msgstr "Number of persons who benefit from your service per month"
+
+msgid "Provider-Registration-Form##Form-Sections##Basic##Description"
+msgstr "Description"
+
+msgid "Provider-Registration-Form##Form-Sections##Basic##Description-Help"
+msgstr "A short explanation about the mentioned service; this explains more about the provided service and helps identify it and its components."
+
+msgid "Provider-Registration-Form##Form-Sections##Basic##Address"
+msgstr "Address"
+
+msgid "Provider-Registration-Form##Form-Sections##Basic##Address-Help"
+msgstr "The address of the main headquarters of your NGO or firm"
+
+msgid "Provider-Registration-Form##Form-Sections##Service-Information##Legend"
+msgstr "Service Information"
+
+msgid "Provider-Registration-Form##Form-Sections##Service-Information##Service-Name"
+msgstr "Name of Service"
+
+msgid "Provider-Registration-Form##Form-Sections##Service-Information##Service-Area"
+msgstr "Area of Service"
+
+msgid "Provider-Registration-Form##Form-Sections##Service-Information##Type"
+msgstr "Service Type"
+
+msgid "Provider-Registration-Form##Form-Sections##Service-Information##Service-Description"
+msgstr "Description"
+
+msgid "Provider-Registration-Form##Form-Sections##Service-Information##Service-Hours"
+msgstr "Hours of Service"
+
+msgid "Provider-Registration-Form##Form-Sections##Service-Information##Additional-Information"
+msgstr "Additional Information (Optional Field)"
+
+msgid "Provider-Registration-Form##Form-Sections##Service-Information##Service-Cost"
+msgstr "Cost of Service (Optional Field, in USD)"
+
+msgid "Provider-Registration-Form##Form-Sections##Service-Information##Selection-Criteria"
+msgstr "Selection Criteria (Optional Field)"
+
+msgid "Provider-Registration-Form##Form-Sections##Form-Submit-Options##Submit"
+msgstr "Submit Answers"
+
+msgid "Provider-Registration-Form##Form-Sections##Form-Submit-Options##Clear"
+msgstr "Remove Answers"
+
+msgid "Provider-Registration-Form##Form-Sections##Form-Submit-Options##ResendVerify"
+msgstr "Resend Verification Email"
+
+msgid "Account-Activation##Pending##Title"
+msgstr "Your account activation is pending..."
+
+msgid "Account-Activation##Success##Title"
+msgstr "Your account has been activated."
+
+msgid "Account-Activation##Failed##Title"
+msgstr "Your account activation Failed."
+
+msgid "Account-Activation##Failed##Description"
+msgstr "There was a problem setting up your service provider account. Please click the resend confirmation email button below to have another confirmation email sent to your email account."
+
+msgid "Account-Activation##Resent##Title"
+msgstr "Your activation e-mail has been resent."
+
+msgid "Account-Activation##Resent##Description"
+msgstr "We have sent a confirmation email to the email account you used during registration. Click the confirmation link in the email to complete the registration process.   If you do not receive the email in a few minutes, check your spam folder."
+
+msgid "Account-Activation##Buttons##Resend-Email"
+msgstr "Resend Verification Email"
+
+msgid "Account-Resend-Verification##Title"
+msgstr " Resend Verification Email"
+
+msgid "Service-List##Page-Head##Page-Title##Title"
+msgstr "Services List"
+
+msgid "Service-List##Page-Head##Page-Description##Page-Description"
+msgstr "Below is a list of services you have applied to provide. Approved services are marked in green. Un-approved services are marked in red. Services pending approval are unmarked."
+
+msgid "Service-List##Empty-Message"
+msgstr "You have not submitted any services yet. You may submit your first service for review by tapping the New Service button."
+
+msgid "Service-List##Add-Service"
+msgstr "New Service"
+
+msgid "Service-List##Import"
+msgstr "Import"
+
+msgid "Service-List##Import-File"
+msgstr "Please choose an Excel spreadsheet file to import."
+
+msgid "Service-List##Export"
+msgstr "Export"
+
+msgid "Service-List##Status##draft"
+msgstr "Draft"
+
+msgid "Service-List##Status##current"
+msgstr "Current"
+
+msgid "Service-List##Status##rejected"
+msgstr "Rejected"
+
+msgid "Service-List##Status##canceled"
+msgstr "Canceled"
+
+msgid "Service-List##Status##archived"
+msgstr "Archived"
+
+msgid "Service-List##Table##Thead##Name"
+msgstr "Name:"
+
+msgid "Service-List##Table##Thead##Type"
+msgstr "Type:"
+
+msgid "Service-List##Table##Thead##Area"
+msgstr "Area:"
+
+msgid "Service-List##Table##Thead##Status"
+msgstr "Status:"
+
+msgid "Service-List##Table##Thead##Change"
+msgstr "Change:"
+
+msgid "Service-List##Cancel"
+msgstr "Cancel"
+
+msgid "Service-List##Delete"
+msgstr "Delete"
+
+msgid "Service-List##Change-Service"
+msgstr "Change service"
+
+msgid "Service-List##Change-Change"
+msgstr "Update this draft"
+
+msgid "Service-List##View-Reports"
+msgstr "View Service Reports"
+
+msgid "Provider-Registration-Confirmation##Page-Head##Page-Title##Title"
+msgstr "Your Information was Submitted Successfully"
+
+msgid "Provider-Registration-Confirmation##Page-Head##Page-Description##Page-Description"
+msgstr "We have sent a confirmation email to the email account you used during registration. Click the confirmation link in the email to complete the registration process.  If you do not receive the email in a few minutes, check your spam folder."
+
+msgid "Feedback-Confirmation##Page-Head##Page-Title##Title"
+msgstr "Your Information was Submitted Successfully"
+
+msgid "Feedback-Confirmation##Page-Head##Page-Description##Page-Description"
+msgstr "Thank you for your feedback."
+
+msgid "Provider-Registration-Changed##Page-Head##Page-Title##Title"
+msgstr "Your Information was Submitted Successfully"
+
+msgid "Provider-Registration-Changed##Page-Head##Page-Description##Page-Description"
+msgstr "Your information has been updated."
+
+msgid "Password-Reset##Page-Head##Page-Title##Title"
+msgstr "Password Reset"
+
+msgid "Password-Reset##Page-Head##Page-Description##Page-Description"
+msgstr "To reset your password enter your email address in the field below then click submit. Clicking submit will send a link to your email account that will direct you to the password reset page."
+
+msgid "Password-Reset##Input-Label##User-Email"
+msgstr "Enter your email:"
+
+msgid "Password-Reset##Submit-Options##Submit"
+msgstr "Submit"
+
+msgid "Password-Reset##Submitted"
+msgstr "We have sent an email to the email address. Check your email for a message containing a link to the password reset form. If you do not receive the email in a few minutes, check your spam folder."
+
+msgid "Password-Reset-Form##Title"
+msgstr "Password Reset Form"
+
+msgid "Password-Reset-Form##Description"
+msgstr "Enter your new password in the text field below, then click submit to update your password."
+
+msgid "Password-Reset-Form##Input-Label##New-Password"
+msgstr "Enter your new password:"
+
+msgid "Password-Reset-Form##Input-Label##New-Password2"
+msgstr "Enter your new password again:"
+
+msgid "Password-Reset-Form##Submit-Options##Submit"
+msgstr "Submit"
+
+msgid "Password-Reset-Form##Invalid-Link"
+msgstr "This is not a valid password reset link. Please check that it was copied correctly from the email, and has not already been used. Go to the login page if you need to request another reset link."
+
+msgid "Password-Reset-Form##Changed"
+msgstr "Your password has been changed."
+
+msgid "Password-Reset-Form##Errors##Password-Blank"
+msgstr "Password must not be blank"
+
+msgid "Password-Reset-Form##Errors##Password-Repeat"
+msgstr "Password must be repeated"
+
+msgid "Password-Reset-Form##Errors##Password-Match"
+msgstr "Passwords must match"
+
+msgid "Map##Loading"
+msgstr "Loading Service Type Filters..."
+
+msgid "Map##TypeHeader"
+msgstr "Filter by a Service Type"
+
+msgid "Footer##About##Title"
+msgstr "About ServiceInfo"
+
+msgid "Footer##About##Sentence1"
+msgstr "Powered by the International Rescue Committee."
+
+msgid "Footer##About##Remainder"
+msgstr "ServiceInfo is a tool that allows both service providers to register their services online and beneficiaries to both discover those services on a map and give feedback on them. ServiceInfo is open source and free to use."
+
+msgid "Footer##Contact##Title"
+msgstr "Reach Us"
+
+msgid "Footer##Contact##Paragraph"
+msgstr "Contact us on one of our social networks below or drop us a mail at"
+
+msgid "Footer##Information-Portal"
+msgstr "Information Portal"
+
+msgid "Feedback-Form##Title"
+msgstr "Feedback form"
+
+msgid "Feedback-Form##Description"
+msgstr "Fill out the form below."
+
+msgid "Feedback-Form##What-Service"
+msgstr "You are giving feedback on this service:"
+
+msgid "Feedback-Form##Name"
+msgstr "Name"
+
+msgid "Feedback-Form##Phone-Number"
+msgstr "Phone Number (NN-NNNNNN)"
+
+msgid "Feedback-Form##Nationality"
+msgstr "Nationality"
+
+msgid "Feedback-Form##AreaOfResidence"
+msgstr "Area of residence"
+
+msgid "Feedback-Form##Delivered##label"
+msgstr "Was service delivered?"
+
+msgid "Feedback-Form##Delivered##yes"
+msgstr "Yes"
+
+msgid "Feedback-Form##Delivered##no"
+msgstr "No"
+
+msgid "Feedback-Form##Form-Sections##Basic##Legend"
+msgstr "Feedback for the selected service"
+
+msgid "Feedback-Form##non-delivery-explained"
+msgstr "Did you receive a clear explanation for why the service you sought was not delivered to you?"
+
+msgid "Feedback-Form##non-delivery-explanation##no"
+msgstr "No explanation"
+
+msgid "Feedback-Form##non-delivery-explanation##unclear"
+msgstr "Explanation was not clear"
+
+msgid "Feedback-Form##non-delivery-explanation##unfair"
+msgstr "Explanation was not fair"
+
+msgid "Feedback-Form##non-delivery-explanation##yes"
+msgstr "Clear and appropriate explanation"
+
+msgid "Feedback-Form##Submit"
+msgstr "Submit Answers"
+
+msgid "Feedback-Form##Clear"
+msgstr "Remove Answers"
+
+msgid "Feedback-Form##WaitTime##label"
+msgstr "How long did you wait for the service to be delivered, after contacting the service provider?"
+
+msgid "Feedback-Form##WaitTime##lesshour"
+msgstr "Less than 1 hour"
+
+msgid "Feedback-Form##WaitTime##uptotwodays"
+msgstr "Up to 2 days"
+
+msgid "Feedback-Form##WaitTime##3-7days"
+msgstr "3-7 days"
+
+msgid "Feedback-Form##WaitTime##1-2weeks"
+msgstr "1-2 weeks"
+
+msgid "Feedback-Form##WaitTime##more"
+msgstr "More than 2 weeks"
+
+msgid "Feedback-Form##wait-time-satisfaction##label"
+msgstr "How do you rate your satisfaction with the time that you waited for the service to be delivered (from 1 to 5, where 5 is the highest rating possible)?"
+
+msgid "Feedback-Form##Quality##label"
+msgstr "How would you rate the quality of the service you received (from 1 to 5, where 5 is the highest rating possible)?"
+
+msgid "Feedback-Form##difficulty-contacting##label"
+msgstr "Did you experience difficulties contacting the provider of the service you needed?"
+
+msgid "Feedback-Form##difficulty-contacting##no"
+msgstr "No"
+
+msgid "Feedback-Form##difficulty-contacting##didntknow"
+msgstr "Did not know how to contact them"
+
+msgid "Feedback-Form##difficulty-contacting##nophoneresponse"
+msgstr "Tried to contact them by phone but received no response"
+
+msgid "Feedback-Form##difficulty-contacting##noresponse"
+msgstr "Tried to contact them in person but received no response or did not find their office"
+
+msgid "Feedback-Form##difficulty-contacting##unhelpful"
+msgstr "Contacted them but response was unhelpful"
+
+msgid "Feedback-Form##difficulty-contacting##other"
+msgstr "Other"
+
+msgid "Feedback-Form##staff-satisfaction##label"
+msgstr "How would you rate your satisfaction with the staff of the organization that provided services to you, (from 1 to 5, where 5 is the highest rating possible)?"
+
+msgid "Feedback-Form##other-difficulties"
+msgstr "Other difficulties contacting the service provider"
+
+msgid "Feedback-Form##extra-comments"
+msgstr "Other comments"
+
+msgid "Feedback-Form##anonymous##label"
+msgstr "I want my feedback to be anonymous to the service provider"
+
+msgid "Feedback-Form##anonymous##yes"
+msgstr "Yes"
+
+msgid "Feedback-Form##anonymous##no"
+msgstr "No"
+
+msgid "Feedback-Tool##Title"
+msgstr "Feedback on services"
+
+msgid "Feedback-Tool##Body"
+msgstr "To give feedback, please search for a service, go to its page, and use the Feedback button."
+
+msgid "Landing##User##Title"
+msgstr "I'm a service user, I want to"
+
+msgid "Landing##User##Search"
+msgstr "Search for a Service"
+
+msgid "Landing##User##Give-Feedback"
+msgstr "Give Feedback"
+
+msgid "Landing##Provider##Title"
+msgstr "I'm a service provider, I want to"
+
+msgid "Landing##Provider##Logged-In##Update-My-Info"
+msgstr "Update My Provider Information"
+
+msgid "Landing##Provider##Logged-In##Update-My-Service"
+msgstr "Update My List of Services"
+
+msgid "Landing##Provider##Logged-In##Add-Service"
+msgstr "Add a New Service"
+
+msgid "Landing##Provider##Logged-Out##Register"
+msgstr "Register to be a Service Provider"
+
+msgid "Landing##Provider##Logged-Out##Login"
+msgstr "Login to an Existing Service Provider Account"
+
+msgid "Export-Tool##Title"
+msgstr "Export services"
+
+msgid "Export-Tool##Button"
+msgstr "Export"
+
+msgid "Export-Tool##Description1"
+msgstr "Click the button to download an Excel spreadsheet file containing the data you have access to."
+
+msgid "Export-Tool##Description2"
+msgstr "The file will contain three tabs or sheets: one for provider data, one for service data, and one for selection criteria."
+
+msgid "Export-Tool##Description3"
+msgstr "You can edit the information in the spreadsheet and import it to make changes to the data."
+
+msgid "Import-Tool##Title"
+msgstr "Import services"
+
+msgid "Import-Tool##Button"
+msgstr "Import"
+
+msgid "Import-Tool##Success"
+msgstr "The import was successful"
+
+msgid "Import-Tool##Errors"
+msgstr "There were errors in the file.  No data was changed."
+
+msgid "Import-Export##Page##Title"
+msgstr "Import/Export"
+
+msgid "Import-Export##Help##Title"
+msgstr "Help"
+
+msgid "Import-Export##Help##Help1"
+msgstr "On import, any invalid data will cause the entire import to be rejected and the errors will be reported to the user."
+
+msgid "Import-Export##Help##Help2"
+msgstr "Any row with a valid ID field but with all the other values cleared means to delete that record."
+
+msgid "Import-Export##Help##Help3"
+msgstr "Times of day are represented as a string in 24-hour 'HH:MM' format."
+
+msgid "Import-Export##Help##Help4"
+msgstr "The provider sheet has a column “password” that never contains any values on export. The provider password can be changed by putting a value in that column for import."
+
+msgid "Import-Export##Help##Help5"
+msgstr "When creating a new service, leave the 'ID' column blank."
+
+msgid "Import-Export##Help##Help6"
+msgstr "When adding selection criteria to an existing service, set the 'service__id' field to the 'ID' of the existing service."
+
+msgid "Import-Export##Help##Help7"
+msgstr "When adding selection criteria to a new service, set the 'service__id' field to the 'name_en' of the new service."
+
+msgid "Reports##Title"
+msgstr "Feedback Reports"
+
+msgid "Reports##Description"
+msgstr "Reports summarizing feedback on services"
+
+msgid "Reports##Form##Stat##Label"
+msgstr "Report To View"
+
+msgid "Reports##Form##Stat##Options##WaitTime"
+msgstr "Waiting Time by Service Type"
+
+msgid "Reports##Form##Stat##Options##QOS"
+msgstr "Quality of Service Delivered by Service Type"
+
+msgid "Reports##Form##Stat##Options##Failure"
+msgstr "Explanation of Service Delivery Failure by Service Type"
+
+msgid "Reports##Form##Stat##Options##Contact"
+msgstr "Difficulties Contacting Service Providers by Service Type"
+
+msgid "Reports##Form##Stat##Options##Communication"
+msgstr "Satisfaction with Staff Communication by Service Type"
+
+msgid "Reports##Form##Stat##Options##NumServicesByServiceType"
+msgstr "Number of services by Location and Service Type"
+
+msgid "Reports##Form##Stat##Options##NumServicesByProviderType"
+msgstr "Number of services by Location and Provider Type"
+
+msgid "Reports##Form##Download"
+msgstr "Download Report CSV"
+
+msgid "Reports##Table##Loading"
+msgstr "Loading..."
+
+msgid "Reports##Table##ServiceType"
+msgstr "Service Type"
+
+msgid "Reports##Chart##AverageResponse"
+msgstr "Average Response"
+
+msgid "Reports##Chart##NumberServices"
+msgstr "Number of Services"
+
+msgid "Reports##Chart##NumberResponses"
+msgstr "Number of Responses"

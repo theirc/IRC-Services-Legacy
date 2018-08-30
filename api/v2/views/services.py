@@ -583,7 +583,7 @@ class ServiceTypeViewSet(viewsets.ModelViewSet):
     pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
-        print('GET', self.request.GET)
+        print('GET', self.request.GET, self.request.META['HTTP_ACCEPT_LANGUAGE'])
         if 'region' in self.request.GET:
             region = self.request.GET['region']
             return self.queryset.filter(
