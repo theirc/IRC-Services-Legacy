@@ -468,7 +468,7 @@ if 'test' in sys.argv:
 """
 AWS Storage Section
 """
-DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
 CKEDITOR_UPLOAD_PATH = "media/"
 CKEDITOR_IMAGE_BACKEND = 'pillow'
