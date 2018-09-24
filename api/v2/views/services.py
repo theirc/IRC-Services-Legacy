@@ -451,7 +451,14 @@ class ServiceViewSet(viewsets.ModelViewSet):
         Public API for searching public information about the current services
         """
         self.is_search = True
-        self.serializer_class = serializers_v2.ServiceSearchSerializer
+        #self.serializer_class = serializers_v2.ServiceSearchSerializer
+        self.serializer_class = serializers_v2.ServiceSearchResultListSerializer
+        return super().list(request, *args, **kwargs)
+    
+    @list_route(methods=['get'], permission_classes=[AllowAny])
+    def searchlist(self, request, *args, **kwargs):
+        
+        self.is_search = True    self.serializer_class = serializers_v2.ServiceSearchResultListSerializer
         return super().list(request, *args, **kwargs)
 
     @list_route(methods=['get'], permission_classes=[AllowAny])
@@ -464,8 +471,14 @@ class ServiceViewSet(viewsets.ModelViewSet):
         return super().list(request, *args, **kwargs)
 
     def get_serializer_class(self):
+        ob = self
+        action = getattr(self, 'action')
         if getattr(self, 'action') == 'create':
-            return serializers_v2.ServiceCreateSerializer
+            return serializers_v2.ServiceCreateSerializer        
+        if getattr(self, 'action') == 'searchlist':
+            return serializers_v2.ServiceSearchResultListSerializer    
+        if getattr(self, 'action') == 'search':
+            return serializers_v2.ServiceSearchResultListSerializer    
         if 'service-management' in self.request.get_full_path():
             return serializers_v2.ServiceManagementSerializer
         return serializers_v2.ServiceSerializer

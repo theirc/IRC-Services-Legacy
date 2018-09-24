@@ -148,10 +148,12 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 					controller: "ServicePrivateViewController as ctrl",
 				},
 			},
-			resolve: {
-				providers: function (PrivateProviderService, $rootScope, $q) {
+			resolve: {				
+				providers: () => { return[]},
+				/*
+				function (PrivateProviderService, $rootScope, $q) {
 					return PrivateProviderService.getList().then(r => r.plain());
-				},
+				},*/
 				serviceTypes: function (CommonDataService) {
 					return CommonDataService.getServiceTypes();
 				},

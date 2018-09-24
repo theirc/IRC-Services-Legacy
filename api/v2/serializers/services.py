@@ -100,6 +100,16 @@ class ProviderSerializer(RequireOneTranslationMixin, serializers.HyperlinkedMode
         }
 
 
+class ProviderResultSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Provider
+        fields = tuple(
+            [
+                'url', 'id',
+            ] +
+            generate_translated_fields('name') +
+            generate_translated_fields('address')
+        )
 
 class CreateProviderSerializer(ProviderSerializer):
     email = serializers.EmailField()
@@ -299,6 +309,26 @@ class ServiceTypeSerializer(serializers.ModelSerializer):
         for idx, service_type in enumerate(self.initial_data['types_ordering']):
             ServiceType.objects.update_or_create(id=service_type['id'], defaults={'number': idx + 1})
         return instance
+
+class ServiceTypeListSerializer(serializers.ModelSerializer):
+    icon_url = serializers.CharField(source='get_icon_url', read_only=True)
+    icon_base64 = serializers.CharField(source='get_icon_base64', read_only=True)
+
+    class Meta:
+        model = ServiceType
+        fields = tuple(
+            [
+                'id',
+                'icon_url',
+                'vector_icon',
+                'number',
+                'icon_base64',
+                'color',
+            ] +
+            generate_translated_fields('name') 
+        )
+        required_translated_fields = ['name']
+
 
 class UserNoteSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=False, allow_null=True) 
@@ -504,6 +534,33 @@ class CustomServiceTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = ServiceType
         fields = ['types']
+
+class ServiceSearchResultListSerializer(serializers.ModelSerializer):
+    types = ServiceTypeListSerializer(many=True)
+    provider = ProviderResultSerializer(read_only=False)
+    region = RegionSerializer(read_only=False)
+
+    class Meta:
+        model = Service
+        fields = tuple(
+            [
+                'url', 
+                'id',
+                'selection_criteria',
+                'status', 
+                'update_of',
+                'location',
+                'region',
+                'provider',
+                'type',
+                'types',
+                'address_in_country_language',
+                'tags',
+            ] +
+            generate_translated_fields('name') +
+            generate_translated_fields('address_city') +
+            generate_translated_fields('address')
+        )
 
 
 class ServiceSearchSerializer(ServiceSerializer):
