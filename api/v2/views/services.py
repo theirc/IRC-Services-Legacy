@@ -476,9 +476,7 @@ class ServiceViewSet(viewsets.ModelViewSet):
         if getattr(self, 'action') == 'create':
             return serializers_v2.ServiceCreateSerializer        
         if getattr(self, 'action') == 'searchlist':
-            return serializers_v2.ServiceSearchResultListSerializer    
-        if getattr(self, 'action') == 'search':
-            return serializers_v2.ServiceSerializer    
+            return serializers_v2.ServiceSearchResultListSerializer  
         if 'service-management' in self.request.get_full_path():
             return serializers_v2.ServiceManagementSerializer
         return serializers_v2.ServiceSerializer
