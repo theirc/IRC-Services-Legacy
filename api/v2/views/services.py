@@ -458,7 +458,8 @@ class ServiceViewSet(viewsets.ModelViewSet):
     @list_route(methods=['get'], permission_classes=[AllowAny])
     def searchlist(self, request, *args, **kwargs):
         
-        self.is_search = True    self.serializer_class = serializers_v2.ServiceSearchResultListSerializer
+        self.is_search = True    
+        self.serializer_class = serializers_v2.ServiceSearchResultListSerializer
         return super().list(request, *args, **kwargs)
 
     @list_route(methods=['get'], permission_classes=[AllowAny])
