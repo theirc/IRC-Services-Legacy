@@ -64,6 +64,10 @@ class SearchFilter(filters.SearchFilter):
                            for pos, pk in enumerate(pk_list)])
         return queryset.filter(pk__in=pk_list).order_by(preserved)
 
+class ProviderListViewSet(FilterByRegionMixin, viewsets.ModelViewSet):
+    queryset = Provider.objects.all()
+    serializer_class = serializers_v2.ProviderListSerializer
+    pagination_class = StandardResultsSetPagination
 
 class ProviderViewSet(FilterByRegionMixin, viewsets.ModelViewSet):
     queryset = Provider.objects.all()

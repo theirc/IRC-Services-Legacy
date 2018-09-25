@@ -65,6 +65,14 @@ class RequireOneTranslationMixin(object):
         return validated_data
 
 
+class ProviderListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Provider
+        fields = tuple(
+            [
+                'id', 'name',
+            ] 
+        )
 
 class ProviderSerializer(RequireOneTranslationMixin, serializers.HyperlinkedModelSerializer):
     number_of_monthly_beneficiaries = serializers.IntegerField(

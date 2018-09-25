@@ -259,7 +259,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 			resolve: {
 				provider: function (Restangular, $rootScope, $q) {
 					if ($rootScope.selectedProvider) {
-						return Restangular.one("providers", $rootScope.selectedProvider.id).get();
+						return Restangular.one("providerslist", $rootScope.selectedProvider.id).get();
 					} else {
 						var dfd = $q.defer();
 						$rootScope.$watch("selectedProvider", function (value) {
@@ -276,6 +276,8 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 					}
 				},
 				providers: function (ProviderService, Restangular, $q) {
+					return Restangular.one("providerslist", $rootScope.selectedProvider.id).get();
+					/*
 					var dfd = $q.defer();
 					ProviderService.getList().then(function (p) {
 						var providers = p.plain().map(function (ps) {
@@ -287,6 +289,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 						dfd.resolve(providers);
 					});
 					return dfd.promise;
+					*/
 				},
 				serviceTypes: function (CommonDataService) {
 					return CommonDataService.getServiceTypes();
@@ -315,7 +318,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 			resolve: {
 				provider: function (Restangular, $rootScope, $q) {
 					if ($rootScope.selectedProvider) {
-						return Restangular.one("providers", $rootScope.selectedProvider.id).get();
+						return Restangular.one("providerslist", $rootScope.selectedProvider.id).get();
 					} else {
 						var dfd = $q.defer();
 						$rootScope.$watch("selectedProvider", function (value) {
@@ -331,7 +334,9 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 						return dfd;
 					}
 				},
-				providers: function (ProviderService, Restangular, $q) {
+				providers: function (ProviderService, $rootScope, Restangular, $q) {
+					return Restangular.one("providerslist", $rootScope.selectedProvider.id).get();
+					/*
 					var dfd = $q.defer();
 					ProviderService.getList().then(function (p) {
 						var providers = p.plain().map(function (ps) {
@@ -343,6 +348,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 						dfd.resolve(providers);
 					});
 					return dfd.promise;
+					*/
 				},
 				serviceTypes: function (CommonDataService) {
 					return CommonDataService.getServiceTypes();
