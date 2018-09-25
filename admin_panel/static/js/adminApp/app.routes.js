@@ -335,7 +335,10 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 					}
 				},
 				providers: function (ProviderService, $rootScope, Restangular, $q) {
-					return Restangular.one("providerslist", $rootScope.selectedProvider.id).get();
+					return [];
+					//Restangular.one("providerslist").get();
+					//return Restangular.one("providerslist", $rootScope.selectedProvider.id).get();
+					
 					/*
 					var dfd = $q.defer();
 					ProviderService.getList().then(function (p) {

@@ -225,7 +225,8 @@ angular
         vm.providerRegion = vm.providerRegion && vm.providerRegion[0]
         vm.serviceTypes = serviceTypes;
         vm.regions = regions;        
-        vm.providers = providers;
+        vm.providers = Array.isArray(provider) ? provider : [provider];
+        //vm.providers = providers;
         vm.service = service;
         vm.showNewsletter = ($rootScope.user.site.domain || '').indexOf('refugee.info') > -1;
 
