@@ -65,10 +65,10 @@ class APILoginSerializer(serializers.Serializer):
         return attrs
 
 
-class GroupSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Group
-        fields = ('url', 'id', 'name')
+# class GroupSerializer(serializers.HyperlinkedModelSerializer):
+#     class Meta:
+#         model = Group
+#         fields = ('url', 'id', 'name')
 
 
 class RequireOneTranslationMixin(object):
@@ -227,70 +227,73 @@ class ProviderSerializer(serializers.ModelSerializer):
             'name', 'description', 'focal_point_name', 'address']
 
 
-class ServiceExcelSerializer(serializers.ModelSerializer):
-    location = serializers.SerializerMethodField(read_only=True)
-    region = serializers.RelatedField(read_only=True)
+# class ServiceExcelSerializer(serializers.ModelSerializer):
+#     location = serializers.SerializerMethodField(read_only=True)
+#     region = serializers.RelatedField(read_only=True)
 
-    def get_location(self, obj):
-        return ",".join([str(obj.location.y), str(obj.location.x)]) if obj.location else ''
+#     def get_location(self, obj):
+#         return ",".join([str(obj.location.y), str(obj.location.x)]) if obj.location else ''
 
-    FIELD_MAP = OrderedDict(
-        [
-            ('id', 'Identifier'),
-            ('region', 'Region of Service'),
-            ('location', 'Coordinates'),
-            ('type', 'Type of Service'),
-            ('phone_number', 'Phone Number'),
-        ] +
-        [("name_{}".format(k), "Name in ({})".format(v)) for k, v in settings.LANGUAGES] +
-        [("description_{}".format(k), "Description in ({})".format(v)) for k, v in settings.LANGUAGES] +
-        [("address_{}".format(k), "Address in ({})".format(v)) for k, v in settings.LANGUAGES] +
-        [
-            ('sunday_open', 'Sunday Opening Hours (00:00:00)'),
-            ('sunday_close', 'Sunday Closing Hours (00:00:00)'),
-            ('monday_open', 'Monday Opening Hours (00:00:00)'),
-            ('monday_close', 'Monday Closing Hours (00:00:00)'),
-            ('tuesday_open', 'Tuesday Opening Hours (00:00:00)'),
-            ('tuesday_close', 'Tuesday Closing Hours (00:00:00)'),
-            ('wednesday_open', 'Wednesday Opening Hours (00:00:00)'),
-            ('wednesday_close', 'Wednesday Closing Hours (00:00:00)'),
-            ('thursday_open', 'Thursday Opening Hours (00:00:00)'),
-            ('thursday_close', 'Thursday Closing Hours (00:00:00)'),
-            ('friday_open', 'Friday Opening Hours (00:00:00)'),
-            ('friday_close', 'Friday Closing Hours (00:00:00)'),
-            ('saturday_open', 'Saturday Opening Hours (00:00:00)'),
-            ('saturday_close', 'Sunday Closing Hours (00:00:00)'),
-        ])
+#     FIELD_MAP = OrderedDict(
+#         [
+#             ('id', 'Identifier'),
+#             ('provider', 'Provider'),
+#             ('region', 'Region of Service'),
+#             ('location', 'Coordinates'),
+#             ('type', 'Type of Service'),
+#             ('phone_number', 'Phone Number'),
+#         ] +
+#         [("name_{}".format(k), "Name in ({})".format(v)) for k, v in settings.LANGUAGES] +
+#         [("description_{}".format(k), "Description in ({})".format(v)) for k, v in settings.LANGUAGES] +
+#         [("address_{}".format(k), "Address in ({})".format(v)) for k, v in settings.LANGUAGES]
+#         # [
+#         #     ('sunday_open', 'Sunday Opening Hours (00:00:00)'),
+#         #     ('sunday_close', 'Sunday Closing Hours (00:00:00)'),
+#         #     ('monday_open', 'Monday Opening Hours (00:00:00)'),
+#         #     ('monday_close', 'Monday Closing Hours (00:00:00)'),
+#         #     ('tuesday_open', 'Tuesday Opening Hours (00:00:00)'),
+#         #     ('tuesday_close', 'Tuesday Closing Hours (00:00:00)'),
+#         #     ('wednesday_open', 'Wednesday Opening Hours (00:00:00)'),
+#         #     ('wednesday_close', 'Wednesday Closing Hours (00:00:00)'),
+#         #     ('thursday_open', 'Thursday Opening Hours (00:00:00)'),
+#         #     ('thursday_close', 'Thursday Closing Hours (00:00:00)'),
+#         #     ('friday_open', 'Friday Opening Hours (00:00:00)'),
+#         #     ('friday_close', 'Friday Closing Hours (00:00:00)'),
+#         #     ('saturday_open', 'Saturday Opening Hours (00:00:00)'),
+#         #     ('saturday_close', 'Sunday Closing Hours (00:00:00)'),
+#         # ]
+#         )
 
-    class Meta:
-        model = Service
-        fields = (
-            [
-                'id',
-                'region',
-                'location',
-                'sunday_open',
-                'sunday_close',
-                'monday_open',
-                'monday_close',
-                'tuesday_open',
-                'tuesday_close',
-                'wednesday_open',
-                'wednesday_close',
-                'thursday_open',
-                'thursday_close',
-                'friday_open',
-                'friday_close',
-                'saturday_open',
-                'saturday_close',
-                'type',
-                'phone_number',
-            ] + generate_translated_fields('name') +
-            generate_translated_fields('description') +
-            generate_translated_fields('address') +
-            generate_translated_fields('additional_info') +
-            generate_translated_fields('languages_spoken')
-        )
+#     class Meta:
+#         model = Service
+#         fields = (
+#             [
+#                 'id',
+#                 'provider',
+#                 'region',
+#                 'location',
+#                 # 'sunday_open',
+#                 # 'sunday_close',
+#                 # 'monday_open',
+#                 # 'monday_close',
+#                 # 'tuesday_open',
+#                 # 'tuesday_close',
+#                 # 'wednesday_open',
+#                 # 'wednesday_close',
+#                 # 'thursday_open',
+#                 # 'thursday_close',
+#                 # 'friday_open',
+#                 # 'friday_close',
+#                 # 'saturday_open',
+#                 # 'saturday_close',
+#                 'type',
+#                 'phone_number',
+#             ] + generate_translated_fields('name') +
+#             generate_translated_fields('description') +
+#             generate_translated_fields('address') +
+#             generate_translated_fields('additional_info') +
+#             generate_translated_fields('languages_spoken')
+#         )
 
 
 class GeographicRegionSerializer(serializers.ModelSerializer):

@@ -241,6 +241,9 @@ class ServiceTagSerializer(serializers.ModelSerializer):
 
 class ServiceExcelSerializer(serializers.ModelSerializer):
     location = serializers.SerializerMethodField(read_only=True)
+    provider_name = serializers.CharField(source='provider.name', read_only=True)
+    region_name = serializers.CharField(source='region.name', read_only=True)
+    type_name = serializers.CharField(source='type.name', read_only=True)
 
     def get_location(self, obj):
         return ",".join([str(obj.location.y), str(obj.location.x)]) if obj.location else ''
@@ -250,29 +253,39 @@ class ServiceExcelSerializer(serializers.ModelSerializer):
 
     FIELD_MAP = OrderedDict(
         [
-            ('id', 'Identifier'),
-            ('region', 'Region of Service'),
+            ('provider_name', 'Provider'),
+            ('id', 'Service Id'),
+            ('status', 'Status'),
+            ('region_name', 'Region of Service'),
             ('location', 'Coordinates'),
-            ('type', 'Type of Service'),
+            ('type_name', 'Type of Service'),
             ('phone_number', 'Phone Number'),
+            ('email', 'Email'),
+            ('facebook_page', 'Facebook'),
+            ('website', 'Website'),
         ] +
         [("name_{}".format(k), "Name in ({})".format(v)) for k, v in settings.LANGUAGES] +
         [("description_{}".format(k), "Description in ({})".format(v)) for k, v in settings.LANGUAGES] +
         [("address_{}".format(k), "Address in ({})".format(v)) for k, v in settings.LANGUAGES] +
-        [
-            ('opening_time', 'Opening time')
-        ])
+        [("additional_info_{}".format(k), "Additional info in ({})".format(v)) for k, v in settings.LANGUAGES] +
+        # [('additional_info', 'Additional information')] +
+        [('languages_spoken', 'Languages spoken')]
+        )
 
     class Meta:
         model = Service
         fields = (
             [
+                'provider_name',
                 'id',
-                'region',
+                'status',
+                'region_name',
                 'location',
-                'opening_time',
-                'type',
+                'type_name',
                 'phone_number',
+                'email',
+                'facebook_page',
+                'website',
             ] + generate_translated_fields('name') +
             generate_translated_fields('description') +
             generate_translated_fields('address') +
