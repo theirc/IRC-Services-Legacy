@@ -1,8 +1,25 @@
+Skip to content
+ 
+Search or jump to…
+
+Pull requests
+Issues
+Marketplace
+Explore
+ @andresdaguilar Sign out
+11
+2 1 theirc/Emergency-Assessments-App Private
+ Code  Issues 0  Pull requests 0  Projects 0  Wiki  Insights
+Emergency-Assessments-App/deploy_virtualenv.cmd
+72bcbf8  on 21 Apr
+@reyrodrigues reyrodrigues Deploy.sh and Azure Settings
+     
+132 lines (95 sloc)  2.98 KB
 @if "%SCM_TRACE_LEVEL%" NEQ "4" @echo off
 
 :: ----------------------
 :: KUDU Deployment Script
-:: Version: 1.0.16
+:: Version: 1.0.15
 :: ----------------------
 
 :: Prerequisites
@@ -30,10 +47,6 @@ IF NOT DEFINED DEPLOYMENT_TARGET (
   SET DEPLOYMENT_TARGET=%ARTIFACTS%\wwwroot
 )
 
-IF NOT DEFINED DEPLOYMENT_TARGET_FRONTEND (
-  SET DEPLOYMENT_TARGET_FRONTEND=%DEPLOYMENT_TARGET%\IRCPeopleDirectoryFrontEnd
-)
-
 IF NOT DEFINED NEXT_MANIFEST_PATH (
   SET NEXT_MANIFEST_PATH=%ARTIFACTS%\manifest
 
@@ -42,16 +55,8 @@ IF NOT DEFINED NEXT_MANIFEST_PATH (
   )
 )
 
-IF NOT DEFINED KUDU_SYNC_CMD (
-  :: Install kudu sync
-  echo Installing Kudu Sync
-  call npm install kudusync -g --silent
-  IF !ERRORLEVEL! NEQ 0 goto error
-
-  :: Locally just running "kuduSync" would also work
-  SET KUDU_SYNC_CMD=%appdata%\npm\kuduSync.cmd
-)
 goto Deployment
+
 
 :: Utility Functions
 :: -----------------
@@ -74,8 +79,8 @@ IF DEFINED KUDU_SELECT_PYTHON_VERSION_CMD (
   SET /P PYTHON_ENV_MODULE=<"%DEPLOYMENT_TEMP%\__PYTHON_ENV_MODULE.tmp"
   IF !ERRORLEVEL! NEQ 0 goto error
 ) ELSE (
-  SET PYTHON_RUNTIME=python-3.4
-  SET PYTHON_VER=3.4
+  SET PYTHON_RUNTIME=python-2.7
+  SET PYTHON_VER=2.7
   SET PYTHON_EXE=%SYSTEMDRIVE%\python27\python.exe
   SET PYTHON_ENV_MODULE=virtualenv
 )
@@ -87,21 +92,12 @@ goto :EOF
 :: ----------
 
 :Deployment
-echo Handling python deployment.
 
-:: 1. KuduSync
-IF /I "%IN_PLACE_DEPLOYMENT%" NEQ "1" (
-  call :ExecuteCmd "%KUDU_SYNC_CMD%" -v 50 -f "%DEPLOYMENT_SOURCE%" -t "%DEPLOYMENT_TARGET%" -n "%NEXT_MANIFEST_PATH%" -p "%PREVIOUS_MANIFEST_PATH%" -i ".git;.hg;.deployment;deploy.cmd"
-  IF !ERRORLEVEL! NEQ 0 goto error
-)
-
-IF NOT EXIST "%DEPLOYMENT_TARGET%\requirements.txt" goto postPython
-IF EXIST "%DEPLOYMENT_TARGET%\.skipPythonDeployment" goto postPython
-
-echo Detected requirements.txt.  You can skip Python specific steps with a .skipPythonDeployment file.
 
 :: 2. Select Python version
 call :SelectPythonVersion
+
+echo %PYTHON_VER% SELECTED
 
 pushd "%DEPLOYMENT_TARGET%"
 
@@ -121,70 +117,6 @@ IF NOT EXIST "%DEPLOYMENT_TARGET%\env\azure.env.%PYTHON_RUNTIME%.txt" (
 ) ELSE (
   echo Found compatible virtual environment.
 )
-
-
-:: 4. Install NPM package (Including dependency packages)
-IF EXIST "%DEPLOYMENT_TARGET_FRONTEND%\package.json" (
-  echo Node Installing packages %DEPLOYMENT_TARGET_FRONTEND%…
-  pushd "%DEPLOYMENT_TARGET_FRONTEND%"
-  call npm install -g @angular/cli@6.0.8
-  call npm install --production
-  IF !ERRORLEVEL! NEQ 0 goto error
-  popd
-)
-
-
-:: 5. Angular Prod Build (Executes 'build' cmd from package.json)
-IF EXIST "%DEPLOYMENT_TARGET_FRONTEND%/.angular-cli.json" (
-    echo Building App in %DEPLOYMENT_TARGET_FRONTEND%…
-    pushd "%DEPLOYMENT_TARGET_FRONTEND%"
-    call npm run prod-build
-    IF !ERRORLEVEL! NEQ 0 goto error
-    popd
-)
-
-
-:: 6. Install packages
-echo Pip install requirements.
-env\scripts\pip install -r requirements.txt
-IF !ERRORLEVEL! NEQ 0 goto error
-
-REM Add additional package installation here
-REM -- Example --
-REM env\scripts\easy_install pytz
-REM IF !ERRORLEVEL! NEQ 0 goto error
-
-
-:: 7. Copy web.config
-IF EXIST "%DEPLOYMENT_SOURCE%\web.%PYTHON_VER%.config" (
-  echo Overwriting web.config with web.%PYTHON_VER%.config
-  copy /y "%DEPLOYMENT_SOURCE%\web.%PYTHON_VER%.config" "%DEPLOYMENT_TARGET%\web.config"
-)
-
-:: 8. Django collectstatic
-IF EXIST "%DEPLOYMENT_TARGET%\manage.py" (
-  IF EXIST "%DEPLOYMENT_TARGET%\env\lib\site-packages\django" (
-    IF NOT EXIST "%DEPLOYMENT_TARGET%\.skipDjango" (
-      echo Collecting Django static files. You can skip Django specific steps with a .skipDjango file.
-      IF NOT EXIST "%DEPLOYMENT_TARGET%\static" (
-        MKDIR "%DEPLOYMENT_TARGET%\static"
-      )
-      env\scripts\python manage.py collectstatic --noinput --clear
-    )
-  )
-)
-
-:: 9. Django migrate
-IF EXIST "%DEPLOYMENT_TARGET%\manage.py" (
-  IF EXIST "%DEPLOYMENT_TARGET%\env\lib\site-packages\django" (
-    IF NOT EXIST "%DEPLOYMENT_TARGET%\.skipDjango" (
-      echo Running migrate. You can skip Django specific steps with a .skipDjango file.
-      env\scripts\python manage.py migrate
-    )
-  )
-)
-
-popd
 
 :postPython
 
@@ -214,3 +146,16 @@ exit /b 1
 :end
 endlocal
 echo Finished successfully.
+© 2018 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Help
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
+Press h to open a hovercard with more details.
