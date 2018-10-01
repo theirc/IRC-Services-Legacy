@@ -1,0 +1,35 @@
+<configuration>
+  <system.diagnostics>
+    <trace>
+      <listeners>
+        <add type="Microsoft.WindowsAzure.Diagnostics.DiagnosticMonitorTraceListener, Microsoft.WindowsAzure.Diagnostics, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" name="AzureDiagnostics">
+          <filter type="" />
+        </add>
+      </listeners>
+    </trace>
+  </system.diagnostics>
+    <system.webServer>
+        <modules runAllManagedModulesForAllRequests="true" />
+        <handlers>
+            <add name="Python_FastCGI"
+                path="handler.fcgi"
+                verb="*"
+                modules="FastCgiModule"
+                scriptProcessor="D:\home\site\wwwroot\env\Scripts\python.exe|D:\home\site\wwwroot\env\Scripts\wfastcgi.py"
+                resourceType="Unspecified"
+                requireAccess="Script" />
+        </handlers>
+    <rewrite>
+      <rules>
+      <rule name="Main Rule" stopProcessing="true">
+          <match url="(.*)" />
+          <conditions logicalGrouping="MatchAll">
+              <add input="{REQUEST_FILENAME}" matchType="IsFile" negate="true" />
+              <add input="{REQUEST_FILENAME}" matchType="IsDirectory" negate="true" />
+          </conditions>
+          <action type="Rewrite" url="/" />
+      </rule>
+      </rules>
+    </rewrite>
+    </system.webServer>
+</configuration>
