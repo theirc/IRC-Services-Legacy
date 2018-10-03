@@ -209,7 +209,6 @@ class ProviderViewSet(FilterByRegionMixin, viewsets.ModelViewSet):
 
         for s in services:
             s = serializers_v2.ServiceExcelSerializer(s).data
-
             provider_services.append(s)
 
         headers = list(serializers_v2.ServiceExcelSerializer.FIELD_MAP.keys())
@@ -233,42 +232,42 @@ class ProviderViewSet(FilterByRegionMixin, viewsets.ModelViewSet):
             "content_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         }, content_type="application/json")
 
-    # @detail_route(methods=['get'], permission_classes=[permissions.DjangoObjectPermissions])
-    # def export_services_bulk(self, request, pk=None, *args, **kwargs):
-    #     providers = self.get_queryset().all()
+    @detail_route(methods=['get'], permission_classes=[permissions.DjangoObjectPermissions])
+    def export_services_bulk(self, request, pk=None, *args, **kwargs):
+        providers = self.get_queryset().all()
 
-    #     book = openpyxl.Workbook()
-    #     sheet = book.active
+        book = openpyxl.Workbook()
+        sheet = book.active
 
-    #     services_bulk = []
+        services_bulk = []
 
-    #     for p in providers:
-    #         provider_services = p.services.all()
-    #         for s in provider_services:
-    #             s = serializers_v2.ServiceExcelSerializer(s).data
+        for p in providers:
+            provider_services = p.services.all()
+            for s in provider_services:
+                s = serializers_v2.ServiceExcelSerializer(s).data
 
-    #             services_bulk.append(s)
+                services_bulk.append(s)
 
-    #     headers = list(serializers_v2.ServiceExcelSerializer.FIELD_MAP.keys())
-    #     human_headers = list(
-    #         serializers_v2.ServiceExcelSerializer.FIELD_MAP.values())
+        headers = list(serializers_v2.ServiceExcelSerializer.FIELD_MAP.keys())
+        human_headers = list(
+            serializers_v2.ServiceExcelSerializer.FIELD_MAP.values())
 
-    #     for col in range(0, len(human_headers)):
-    #         sheet.cell(column=col + 1, row=1).value = human_headers[col]
+        for col in range(0, len(human_headers)):
+            sheet.cell(column=col + 1, row=1).value = human_headers[col]
 
-    #     for row in range(0, len(services_bulk)):
-    #         for col in range(0, len(headers)):
-    #             sheet.cell(column=col + 1, row=row +
-    #                        2).value = services_bulk[row][headers[col]]
+        for row in range(0, len(services_bulk)):
+            for col in range(0, len(headers)):
+                sheet.cell(column=col + 1, row=row +
+                           2).value = services_bulk[row][headers[col]]
 
-    #     book_data = BytesIO()
-    #     book.save(book_data)
-    #     book_data.seek(0)
+        book_data = BytesIO()
+        book.save(book_data)
+        book_data.seek(0)
 
-    #     return Response({
-    #         "data": base64.b64encode(book_data.read()),
-    #         "content_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    #     }, content_type="application/json")
+        return Response({
+            "data": base64.b64encode(book_data.read()),
+            "content_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        }, content_type="application/json")
 
     @detail_route(methods=['GET'])
     def impersonate_provider(self, request, pk):

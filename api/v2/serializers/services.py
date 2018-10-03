@@ -243,10 +243,16 @@ class ServiceExcelSerializer(serializers.ModelSerializer):
     location = serializers.SerializerMethodField(read_only=True)
     provider_name = serializers.CharField(source='provider.name', read_only=True)
     region_name = serializers.CharField(source='region.name', read_only=True)
-    type_name = serializers.CharField(source='type.name', read_only=True)
+    types = serializers.SerializerMethodField(read_only=True)
 
     def get_location(self, obj):
         return ",".join([str(obj.location.y), str(obj.location.x)]) if obj.location else ''
+
+    def get_types(self, obj):
+        _types = list()
+        for t in obj.types.all():
+            _types.append(t.name)
+        return ', '.join(_types)
 
     def validate(self, attrs):
         return super().validate(attrs)
@@ -258,7 +264,7 @@ class ServiceExcelSerializer(serializers.ModelSerializer):
             ('status', 'Status'),
             ('region_name', 'Region of Service'),
             ('location', 'Coordinates'),
-            ('type_name', 'Type of Service'),
+            ('types', 'Type of Service'),
             ('phone_number', 'Phone Number'),
             ('email', 'Email'),
             ('facebook_page', 'Facebook'),
@@ -268,7 +274,6 @@ class ServiceExcelSerializer(serializers.ModelSerializer):
         [("description_{}".format(k), "Description in ({})".format(v)) for k, v in settings.LANGUAGES] +
         [("address_{}".format(k), "Address in ({})".format(v)) for k, v in settings.LANGUAGES] +
         [("additional_info_{}".format(k), "Additional info in ({})".format(v)) for k, v in settings.LANGUAGES] +
-        # [('additional_info', 'Additional information')] +
         [('languages_spoken', 'Languages spoken')]
         )
 
@@ -281,12 +286,13 @@ class ServiceExcelSerializer(serializers.ModelSerializer):
                 'status',
                 'region_name',
                 'location',
-                'type_name',
+                'types',
                 'phone_number',
                 'email',
                 'facebook_page',
                 'website',
-            ] + generate_translated_fields('name') +
+            ] +
+            generate_translated_fields('name') +
             generate_translated_fields('description') +
             generate_translated_fields('address') +
             generate_translated_fields('additional_info') +
