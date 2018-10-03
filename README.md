@@ -32,6 +32,7 @@ Installing
 
 ### Building App
     gulp
+    
 
 ### Setting up your django environment
     ./manage.py migrate
