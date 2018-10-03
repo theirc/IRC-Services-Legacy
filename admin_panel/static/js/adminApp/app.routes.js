@@ -586,8 +586,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 			},
 			resolve: {
 				providers: function (ProviderService, $rootScope, $q) {
-					return []; 
-					
+					return []; 					
 					//return ProviderService.getList().then(r => r.plain());
 				},
 				user: function (Restangular, $stateParams) {
