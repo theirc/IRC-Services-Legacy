@@ -30,10 +30,12 @@ from django.db.models import Count
 from rest_framework.authtoken.models import Token
 from django.contrib.sessions.models import Session
 from django.utils import timezone
+from django.http.response import HttpResponse
 
 logger = logging.getLogger(__name__)
 import openpyxl
 import base64
+from openpyxl.writer.excel import save_virtual_workbook
 from io import BytesIO
 import tempfile
 from django.conf import settings
@@ -232,7 +234,8 @@ class ProviderViewSet(FilterByRegionMixin, viewsets.ModelViewSet):
             "content_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         }, content_type="application/json")
 
-    @detail_route(methods=['get'], permission_classes=[permissions.DjangoObjectPermissions])
+
+    @list_route(methods=['get'], permission_classes=[AllowAny])
     def export_services_bulk(self, request, pk=None, *args, **kwargs):
         providers = self.get_queryset().all()
 
@@ -257,17 +260,13 @@ class ProviderViewSet(FilterByRegionMixin, viewsets.ModelViewSet):
 
         for row in range(0, len(services_bulk)):
             for col in range(0, len(headers)):
-                sheet.cell(column=col + 1, row=row +
-                           2).value = services_bulk[row][headers[col]]
+                sheet.cell(column=col + 1, row=row + 2).value = services_bulk[row][headers[col]]
 
         book_data = BytesIO()
         book.save(book_data)
         book_data.seek(0)
 
-        return Response({
-            "data": base64.b64encode(book_data.read()),
-            "content_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        }, content_type="application/json")
+        return HttpResponse(save_virtual_workbook(book), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 
     @detail_route(methods=['GET'])
     def impersonate_provider(self, request, pk):
