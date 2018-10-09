@@ -177,6 +177,16 @@
                     <div class="box box-default">
                         <div class="box-body">
                             <div class="form-group col-xs-6">
+                                <label for="type">{{ 'SERVICE_MAIN_TYPE' | translate }}</label>
+                            <ui-select ng-disabled="!ctrl.isEditing" multiple ng-model="ctrl.service.type" sortable="true" close-on-select="true" required ng-change="ctrl.filterList()"
+                                    limit="1">
+                                    <ui-select-match placeholder="{{ 'SERVICE_SELECT_TYPES' | translate }}">{{ $item.name }}</ui-select-match>
+                                    <ui-select-choices repeat="type in ctrl.serviceTypes | filter: { name: $select.search }">
+                                        <div ng-bind-html="type.name | highlight: $select.search"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                            <div class="form-group col-xs-6">
                                 <label for="type">{{ 'SERVICE_TYPES' | translate }}</label>
                                 <ui-select ng-disabled="!ctrl.isEditing" multiple ng-model="ctrl.service.types" sortable="true" close-on-select="true" required
                                     limit="5">
