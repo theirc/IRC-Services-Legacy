@@ -265,8 +265,8 @@ angular
             }
         }
 
-        vm.filterList = () => {
-            vm.serviceTypes = vm.serviceTypes.filter((type) => type != vm.service.type);
+        vm.filterTypes = () => {
+            vm.updatedServiceTypes = vm.serviceTypes.filter((type) => type != vm.service.type);
         }
 
         if (Object.keys(confirmationLogs).length !== 0) {
