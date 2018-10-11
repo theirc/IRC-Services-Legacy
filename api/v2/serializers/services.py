@@ -353,6 +353,7 @@ class ServiceSerializer(serializers.ModelSerializer):
     tags = ServiceTagSerializer(many=True)
     opening_time = serializers.SerializerMethodField()
     types = ServiceTypeSerializer(many=True)
+    type = ServiceTypeSerializer(read_only=False)
     contact_information = ContactInformationSerializer(many=True)
 
     class Meta:
@@ -431,6 +432,7 @@ class ServiceSerializer(serializers.ModelSerializer):
 
         tags = validated_data.pop('tags')
         types = validated_data.pop('types')
+        type = validated_data.pop('type')
         validated_data['region'] = GeographicRegion.objects.get(id=self.initial_data['region']['id'])
         validated_data['provider'] = Provider.objects.get(id=self.initial_data['provider']['id'])
         opening_time = self.initial_data.get('opening_time')
@@ -440,7 +442,7 @@ class ServiceSerializer(serializers.ModelSerializer):
         instance.tags = [ServiceTag.objects.get(name=tag['name']) for tag in tags]
         instance.types = [ServiceType.objects.get(name_en=service_type['name_en']) for service_type in types]
         # backwards compatibility for mobile app
-        instance.type = ServiceType.objects.get(name_en=types[0]['name_en'])
+        instance.type = ServiceType.objects.get(name_en=type['name_en'])
         instance.save()
         if self.initial_data.get('confirmedByAdmin'):
             last_log = ServiceConfirmationLog.objects.filter(service=instance).order_by('-date')
@@ -585,6 +587,7 @@ class ServiceCreateSerializer(serializers.ModelSerializer):
     tags = ServiceTagSerializer(many=True)
     opening_time = serializers.SerializerMethodField()
     types = ServiceTypeSerializer(many=True)
+    type = ServiceTypeSerializer(read_only=False)
     contact_information = ContactInformationSerializer(many=True, required=False)
 
     class Meta:
@@ -642,6 +645,7 @@ class ServiceCreateSerializer(serializers.ModelSerializer):
         criteria = validated_data.pop('selection_criteria', None)
         tags = validated_data.pop('tags', None)
         types = validated_data.pop('types')
+        type = validated_data.pop('type')
         opening_time = self.initial_data.get('opening_time')
         validated_data['opening_time'] = json.dumps(opening_time)
         validated_data['created_at'] = datetime.now()
@@ -665,7 +669,7 @@ class ServiceCreateSerializer(serializers.ModelSerializer):
         service.tags = [ServiceTag.objects.get(name=tag['name']) for tag in tags]
         service.types = [ServiceType.objects.get(name_en=service_type['name_en']) for service_type in types]
         # backwards compatibility for mobile app
-        service.type = ServiceType.objects.get(name_en=types[0]['name_en'])
+        service.type = ServiceType.objects.get(name_en=type['name_en'])
         service.save()
         if self.initial_data.get('confirmed'):
             log = ServiceConfirmationLog.objects.create(service=service,

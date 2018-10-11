@@ -224,10 +224,13 @@ angular
 
         vm.providerRegion = vm.providerRegion && vm.providerRegion[0]
         vm.serviceTypes = serviceTypes;
+        
         vm.regions = regions;        
         vm.providers = Array.isArray(provider) ? provider : [provider];
         //vm.providers = providers;
-        vm.service = service;
+        vm.service = service;        
+        vm.service.type = vm.service.type ? serviceTypes.filter( (t) =>  t.id == vm.service.type.id )[0] : null;
+
         vm.showNewsletter = ($rootScope.user.site.domain || '').indexOf('refugee.info') > -1;
 
 
@@ -452,6 +455,7 @@ Only superusers and service providers have access to the edit functions. Everyon
             vm.save = function (file) {
                 vm.generateSlug();
                 vm.service.region = vm.regionlvl3 || vm.regionlvl2 || vm.regionlvl1;
+                //vm.service.type = 0;
                 if (!vm.provideLocation) {
                     vm.service.location = null;
                 }
