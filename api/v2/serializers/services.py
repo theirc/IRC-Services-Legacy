@@ -546,6 +546,7 @@ class CustomServiceTypeSerializer(serializers.ModelSerializer):
         fields = ['types']
 
 class ServiceSearchResultListSerializer(serializers.ModelSerializer):
+    type = ServiceTypeListSerializer(read_only=False)
     types = ServiceTypeListSerializer(many=True)
     provider = ProviderResultSerializer(read_only=False)
     region = RegionSerializer(read_only=False)
