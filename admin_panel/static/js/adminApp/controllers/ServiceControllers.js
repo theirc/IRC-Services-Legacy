@@ -223,13 +223,15 @@ angular
         });
 
         vm.providerRegion = vm.providerRegion && vm.providerRegion[0]
-        vm.serviceTypes = serviceTypes;
-        
+        vm.serviceTypes = serviceTypes;        
+
         vm.regions = regions;        
         vm.providers = Array.isArray(provider) ? provider : [provider];
         //vm.providers = providers;
         vm.service = service;        
         vm.service.type = vm.service.type ? serviceTypes.filter( (t) =>  t.id == vm.service.type.id )[0] : null;
+
+        vm.updatedServiceTypes = vm.service.type ? vm.serviceTypes.filter((type) => type != vm.service.type) :vm.serviceTypes;
 
         vm.showNewsletter = ($rootScope.user.site.domain || '').indexOf('refugee.info') > -1;
 
