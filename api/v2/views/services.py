@@ -23,7 +23,7 @@ from rest_framework.exceptions import ValidationError as DRFValidationError
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from services.models import Service, Provider, ServiceType, ServiceArea, ServiceTag, ProviderType, ServiceConfirmationLog, ContactInformation
-from .utils import StandardResultsSetPagination, FilterByRegionMixin
+from .utils import StandardResultsSetPagination, FilterByRegionMixin, format_opening_hours
 from ..filters import ServiceFilter, CustomServiceFilter, RelativesServiceFilter, WithParentsServiceFilter, PrivateServiceFilter
 from django_filters import rest_framework as django_filters
 from django.db.models import Count
@@ -31,6 +31,8 @@ from rest_framework.authtoken.models import Token
 from django.contrib.sessions.models import Session
 from django.utils import timezone
 from django.http.response import HttpResponse
+from django.utils.html import strip_tags
+import html
 
 logger = logging.getLogger(__name__)
 import openpyxl
@@ -248,7 +250,9 @@ class ProviderViewSet(FilterByRegionMixin, viewsets.ModelViewSet):
             provider_services = p.services.all()
             for s in provider_services:
                 s = serializers_v2.ServiceExcelSerializer(s).data
-
+                s['opening_time'] = format_opening_hours(s['opening_time'])
+                s['description'] = html.unescape(strip_tags(s['description']))
+                s.update({'description_{}'.format(k[0]): html.unescape(strip_tags(s['description_{}'.format(k[0])])) for k in settings.LANGUAGES})
                 services_bulk.append(s)
 
         headers = list(serializers_v2.ServiceExcelSerializer.FIELD_MAP.keys())
