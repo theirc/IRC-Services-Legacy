@@ -275,7 +275,8 @@ class ServiceExcelSerializer(serializers.ModelSerializer):
         [("address_{}".format(k), "Address in ({})".format(v)) for k, v in settings.LANGUAGES] +
         [("additional_info_{}".format(k), "Additional info in ({})".format(v)) for k, v in settings.LANGUAGES] +
         [('languages_spoken', 'Languages spoken')] +
-        [('opening_time', 'Opening time')]
+        [('opening_time', 'Opening time')] +
+        [('confirmation_log', 'Confirmation log')]
         )
 
     class Meta:
@@ -299,7 +300,7 @@ class ServiceExcelSerializer(serializers.ModelSerializer):
             generate_translated_fields('additional_info') +
             generate_translated_fields('languages_spoken') +
             ['opening_time']
-
+            
         )
 
 
