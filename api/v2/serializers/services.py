@@ -6,7 +6,7 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.utils.six import BytesIO
 
 from admin_panel.utils import get_service_transifex_info
-from api.utils import generate_translated_fields
+from api.utils import generate_translated_fields, format_opening_hours
 from collections import OrderedDict
 from django.conf import settings
 from rest_framework import exceptions, serializers
@@ -244,6 +244,10 @@ class ServiceExcelSerializer(serializers.ModelSerializer):
     provider_name = serializers.CharField(source='provider.name', read_only=True)
     region_name = serializers.CharField(source='region.name', read_only=True)
     types = serializers.SerializerMethodField(read_only=True)
+    city = serializers.SerializerMethodField(read_only=True)
+    confirmation_log = serializers.SerializerMethodField(read_only=True)
+    contact_info = serializers.SerializerMethodField(read_only=True)
+    opening_time = serializers.SerializerMethodField(read_only=True)
 
     def get_location(self, obj):
         return ",".join([str(obj.location.y), str(obj.location.x)]) if obj.location else ''
@@ -253,6 +257,21 @@ class ServiceExcelSerializer(serializers.ModelSerializer):
         for t in obj.types.all():
             _types.append(t.name)
         return ', '.join(_types)
+
+    def get_city(self, obj):
+        return obj.region.name if obj.region.level == 3 else ''
+
+    def get_confirmation_log(self, obj):
+        return obj.confirmation_logs.get_queryset().all().order_by('date').last().date.strftime("%Y %b %d") if obj.confirmation_logs.get_queryset().count() else ''
+
+    def get_contact_info(self, obj):
+        contact_info = ''
+        for qs in obj.contact_information.get_queryset().all():
+            contact_info += qs.type + ': ' + qs.text + ' | '
+        return contact_info
+    
+    def get_opening_time(self, obj):
+        return format_opening_hours(obj.opening_time)
 
     def validate(self, attrs):
         return super().validate(attrs)
@@ -274,9 +293,12 @@ class ServiceExcelSerializer(serializers.ModelSerializer):
         [("description_{}".format(k), "Description in ({})".format(v)) for k, v in settings.LANGUAGES] +
         [("address_{}".format(k), "Address in ({})".format(v)) for k, v in settings.LANGUAGES] +
         [("additional_info_{}".format(k), "Additional info in ({})".format(v)) for k, v in settings.LANGUAGES] +
+        [("address_floor_{}".format(k), "Additional details in ({})".format(v)) for k, v in settings.LANGUAGES] +
         [('languages_spoken', 'Languages spoken')] +
         [('opening_time', 'Opening time')] +
-        [('confirmation_log', 'Confirmation log')]
+        [('city', 'City')] +
+        [('confirmation_log', 'Confirmation log')] +
+        [('contact_info', 'Contact info')]
         )
 
     class Meta:
@@ -298,9 +320,12 @@ class ServiceExcelSerializer(serializers.ModelSerializer):
             generate_translated_fields('description') +
             generate_translated_fields('address') +
             generate_translated_fields('additional_info') +
+            generate_translated_fields('address_floor') +
             generate_translated_fields('languages_spoken') +
-            ['opening_time']
-            
+            ['opening_time'] +
+            ['city'] +
+            ['confirmation_log'] +
+            ['contact_info']
         )
 
 

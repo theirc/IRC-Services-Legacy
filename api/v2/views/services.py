@@ -23,7 +23,7 @@ from rest_framework.exceptions import ValidationError as DRFValidationError
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from services.models import Service, Provider, ServiceType, ServiceArea, ServiceTag, ProviderType, ServiceConfirmationLog, ContactInformation
-from .utils import StandardResultsSetPagination, FilterByRegionMixin, format_opening_hours
+from .utils import StandardResultsSetPagination, FilterByRegionMixin
 from ..filters import ServiceFilter, CustomServiceFilter, RelativesServiceFilter, WithParentsServiceFilter, PrivateServiceFilter
 from django_filters import rest_framework as django_filters
 from django.db.models import Count
@@ -249,10 +249,7 @@ class ProviderViewSet(FilterByRegionMixin, viewsets.ModelViewSet):
         for p in providers:
             provider_services = p.services.all()
             for s in provider_services:
-                confirmation_log = s.confirmation_logs.get_queryset().all().order_by('date').last().date.strftime("%Y %b %d") if s.confirmation_logs.get_queryset().count() else ''
                 s = serializers_v2.ServiceExcelSerializer(s).data
-                s['confirmation_log'] = confirmation_log
-                s['opening_time'] = format_opening_hours(s['opening_time'])
                 s.update({'additional_info_{}'.format(k[0]): html.unescape(strip_tags(s['additional_info_{}'.format(k[0])])) for k in settings.LANGUAGES})
                 s.update({'description_{}'.format(k[0]): html.unescape(strip_tags(s['description_{}'.format(k[0])])) for k in settings.LANGUAGES})
                 services_bulk.append(s)
