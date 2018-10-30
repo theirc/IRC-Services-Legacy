@@ -280,25 +280,27 @@ class ServiceExcelSerializer(serializers.ModelSerializer):
         [
             ('provider_name', 'Provider'),
             ('id', 'Service Id'),
-            ('status', 'Status'),
             ('region_name', 'Region of Service'),
-            ('location', 'Coordinates'),
+            ('status', 'Status'),
             ('types', 'Type of Service'),
-            ('phone_number', 'Phone Number'),
-            ('email', 'Email'),
-            ('facebook_page', 'Facebook'),
-            ('website', 'Website'),
         ] +
         [("name_{}".format(k), "Name in ({})".format(v)) for k, v in settings.LANGUAGES] +
         [("description_{}".format(k), "Description in ({})".format(v)) for k, v in settings.LANGUAGES] +
-        [("address_{}".format(k), "Address in ({})".format(v)) for k, v in settings.LANGUAGES] +
         [("additional_info_{}".format(k), "Additional info in ({})".format(v)) for k, v in settings.LANGUAGES] +
-        [("address_floor_{}".format(k), "Additional details in ({})".format(v)) for k, v in settings.LANGUAGES] +
-        [('languages_spoken', 'Languages spoken')] +
         [('opening_time', 'Opening time')] +
         [('city', 'City')] +
-        [('confirmation_log', 'Confirmation log')] +
-        [('contact_info', 'Contact info')]
+        [("address_{}".format(k), "Address in ({})".format(v)) for k, v in settings.LANGUAGES] +
+        [("address_floor_{}".format(k), "Additional details in ({})".format(v)) for k, v in settings.LANGUAGES] +
+        [
+            ('location', 'Coordinates'),
+            ('phone_number', 'Phone Number'),
+            ('contact_info', 'Contact info'),
+            ('email', 'Email'),
+            ('website', 'Website'),
+            ('facebook_page', 'Facebook'),
+        ] +
+        [("languages_spoken_{}".format(k), "Languages spoken in ({})".format(v)) for k, v in settings.LANGUAGES] +
+        [('confirmation_log', 'Confirmation log')]
         )
 
     class Meta:
@@ -307,25 +309,27 @@ class ServiceExcelSerializer(serializers.ModelSerializer):
             [
                 'provider_name',
                 'id',
-                'status',
                 'region_name',
-                'location',
+                'status',
                 'types',
-                'phone_number',
-                'email',
-                'facebook_page',
-                'website',
             ] +
             generate_translated_fields('name') +
             generate_translated_fields('description') +
-            generate_translated_fields('address') +
             generate_translated_fields('additional_info') +
-            generate_translated_fields('address_floor') +
-            generate_translated_fields('languages_spoken') +
             ['opening_time'] +
             ['city'] +
-            ['confirmation_log'] +
-            ['contact_info']
+            generate_translated_fields('address') +
+            generate_translated_fields('address_floor') +
+            [
+                'location',
+                'phone_number',
+                'contact_info',
+                'email',
+                'website',
+                'facebook_page',
+            ] +
+            generate_translated_fields('languages_spoken') +
+            ['confirmation_log']
         )
 
 
