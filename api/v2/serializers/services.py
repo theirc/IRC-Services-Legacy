@@ -291,6 +291,7 @@ class ServiceExcelSerializer(serializers.ModelSerializer):
         [('city', 'City')] +
         [("address_{}".format(k), "Address in ({})".format(v)) for k, v in settings.LANGUAGES] +
         [("address_floor_{}".format(k), "Additional details in ({})".format(v)) for k, v in settings.LANGUAGES] +
+        [("address_city_{}".format(k), "Address city in ({})".format(v)) for k, v in settings.LANGUAGES] +
         [
             ('location', 'Coordinates'),
             ('phone_number', 'Phone Number'),
@@ -320,6 +321,7 @@ class ServiceExcelSerializer(serializers.ModelSerializer):
             ['city'] +
             generate_translated_fields('address') +
             generate_translated_fields('address_floor') +
+            generate_translated_fields('address_city') +
             [
                 'location',
                 'phone_number',
