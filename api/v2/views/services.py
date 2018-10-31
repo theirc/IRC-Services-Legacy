@@ -30,10 +30,14 @@ from django.db.models import Count
 from rest_framework.authtoken.models import Token
 from django.contrib.sessions.models import Session
 from django.utils import timezone
+from django.http.response import HttpResponse
+from django.utils.html import strip_tags
+import html
 
 logger = logging.getLogger(__name__)
 import openpyxl
 import base64
+from openpyxl.writer.excel import save_virtual_workbook
 from io import BytesIO
 import tempfile
 from django.conf import settings
@@ -207,13 +211,12 @@ class ProviderViewSet(FilterByRegionMixin, viewsets.ModelViewSet):
         services = obj.services.all()
 
         book = openpyxl.Workbook()
-        sheet = book.get_active_sheet()
+        sheet = book.active
 
         provider_services = []
 
         for s in services:
             s = serializers_v2.ServiceExcelSerializer(s).data
-
             provider_services.append(s)
 
         headers = list(serializers_v2.ServiceExcelSerializer.FIELD_MAP.keys())
@@ -236,6 +239,41 @@ class ProviderViewSet(FilterByRegionMixin, viewsets.ModelViewSet):
             "data": base64.b64encode(book_data.read()),
             "content_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         }, content_type="application/json")
+
+
+    @list_route(methods=['get'], permission_classes=[AllowAny])
+    def export_services_bulk(self, request, pk=None, *args, **kwargs):
+        providers = self.get_queryset().all()
+
+        book = openpyxl.Workbook()
+        sheet = book.active
+
+        services_bulk = []
+
+        for p in providers:
+            provider_services = p.services.all()
+            for s in provider_services:
+                s = serializers_v2.ServiceExcelSerializer(s).data
+                s.update({'additional_info_{}'.format(k[0]): html.unescape(strip_tags(s['additional_info_{}'.format(k[0])])) for k in settings.LANGUAGES})
+                s.update({'description_{}'.format(k[0]): html.unescape(strip_tags(s['description_{}'.format(k[0])])) for k in settings.LANGUAGES})
+                services_bulk.append(s)
+
+        headers = list(serializers_v2.ServiceExcelSerializer.FIELD_MAP.keys())
+        human_headers = list(
+            serializers_v2.ServiceExcelSerializer.FIELD_MAP.values())
+
+        for col in range(0, len(human_headers)):
+            sheet.cell(column=col + 1, row=1).value = human_headers[col]
+
+        for row in range(0, len(services_bulk)):
+            for col in range(0, len(headers)):
+                sheet.cell(column=col + 1, row=row + 2).value = services_bulk[row][headers[col]]
+
+        book_data = BytesIO()
+        book.save(book_data)
+        book_data.seek(0)
+
+        return HttpResponse(save_virtual_workbook(book), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 
     @detail_route(methods=['GET'])
     def impersonate_provider(self, request, pk):

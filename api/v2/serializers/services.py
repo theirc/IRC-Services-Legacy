@@ -6,7 +6,7 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.utils.six import BytesIO
 
 from admin_panel.utils import get_service_transifex_info
-from api.utils import generate_translated_fields
+from api.utils import generate_translated_fields, format_opening_hours
 from collections import OrderedDict
 from django.conf import settings
 from rest_framework import exceptions, serializers
@@ -249,43 +249,97 @@ class ServiceTagSerializer(serializers.ModelSerializer):
 
 class ServiceExcelSerializer(serializers.ModelSerializer):
     location = serializers.SerializerMethodField(read_only=True)
+    provider_name = serializers.CharField(source='provider.name', read_only=True)
+    region_name = serializers.CharField(source='region.name', read_only=True)
+    types = serializers.SerializerMethodField(read_only=True)
+    city = serializers.SerializerMethodField(read_only=True)
+    confirmation_log = serializers.SerializerMethodField(read_only=True)
+    contact_info = serializers.SerializerMethodField(read_only=True)
+    opening_time = serializers.SerializerMethodField(read_only=True)
 
     def get_location(self, obj):
         return ",".join([str(obj.location.y), str(obj.location.x)]) if obj.location else ''
+
+    def get_types(self, obj):
+        _types = list()
+        for t in obj.types.all():
+            _types.append(t.name)
+        return ', '.join(_types)
+
+    def get_city(self, obj):
+        return obj.region.name if obj.region.level == 3 else ''
+
+    def get_confirmation_log(self, obj):
+        return obj.confirmation_logs.get_queryset().all().order_by('date').last().date.strftime("%Y %b %d") if obj.confirmation_logs.get_queryset().count() else ''
+
+    def get_contact_info(self, obj):
+        contact_info = ''
+        for qs in obj.contact_information.get_queryset().all():
+            contact_info += qs.type + ': ' + qs.text + ' | '
+        return contact_info
+    
+    def get_opening_time(self, obj):
+        return format_opening_hours(obj.opening_time)
 
     def validate(self, attrs):
         return super().validate(attrs)
 
     FIELD_MAP = OrderedDict(
         [
-            ('id', 'Identifier'),
-            ('region', 'Region of Service'),
-            ('location', 'Coordinates'),
-            ('type', 'Type of Service'),
-            ('phone_number', 'Phone Number'),
+            ('provider_name', 'Provider'),
+            ('id', 'Service Id'),
+            ('region_name', 'Region of Service'),
+            ('status', 'Status'),
+            ('types', 'Type of Service'),
         ] +
         [("name_{}".format(k), "Name in ({})".format(v)) for k, v in settings.LANGUAGES] +
         [("description_{}".format(k), "Description in ({})".format(v)) for k, v in settings.LANGUAGES] +
+        [("additional_info_{}".format(k), "Additional info in ({})".format(v)) for k, v in settings.LANGUAGES] +
+        [('opening_time', 'Opening time')] +
+        [('city', 'City')] +
         [("address_{}".format(k), "Address in ({})".format(v)) for k, v in settings.LANGUAGES] +
+        [("address_floor_{}".format(k), "Additional details in ({})".format(v)) for k, v in settings.LANGUAGES] +
+        [("address_city_{}".format(k), "Address city in ({})".format(v)) for k, v in settings.LANGUAGES] +
         [
-            ('opening_time', 'Opening time')
-        ])
+            ('location', 'Coordinates'),
+            ('phone_number', 'Phone Number'),
+            ('contact_info', 'Contact info'),
+            ('email', 'Email'),
+            ('website', 'Website'),
+            ('facebook_page', 'Facebook'),
+        ] +
+        [("languages_spoken_{}".format(k), "Languages spoken in ({})".format(v)) for k, v in settings.LANGUAGES] +
+        [('confirmation_log', 'Confirmation log')]
+        )
 
     class Meta:
         model = Service
         fields = (
             [
+                'provider_name',
                 'id',
-                'region',
-                'location',
-                'opening_time',
-                'type',
-                'phone_number',
-            ] + generate_translated_fields('name') +
+                'region_name',
+                'status',
+                'types',
+            ] +
+            generate_translated_fields('name') +
             generate_translated_fields('description') +
-            generate_translated_fields('address') +
             generate_translated_fields('additional_info') +
-            generate_translated_fields('languages_spoken')
+            ['opening_time'] +
+            ['city'] +
+            generate_translated_fields('address') +
+            generate_translated_fields('address_floor') +
+            generate_translated_fields('address_city') +
+            [
+                'location',
+                'phone_number',
+                'contact_info',
+                'email',
+                'website',
+                'facebook_page',
+            ] +
+            generate_translated_fields('languages_spoken') +
+            ['confirmation_log']
         )
 
 
