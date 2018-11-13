@@ -13,7 +13,7 @@ from rest_framework import exceptions, serializers
 
 from regions.models import GeographicRegion
 from services.models import Service, Provider, ServiceType, SelectionCriterion, ServiceTag, ProviderType, \
-    ServiceConfirmationLog, ContactInformation, UserNote
+    ServiceConfirmationLog, ContactInformation, UserNote, TypesOrdering
 
 CAN_EDIT_STATUSES = [Service.STATUS_DRAFT, Service.STATUS_CURRENT, Service.STATUS_REJECTED]
 DRFValidationError = exceptions.ValidationError
@@ -341,6 +341,14 @@ class ServiceExcelSerializer(serializers.ModelSerializer):
             generate_translated_fields('languages_spoken') +
             ['confirmation_log']
         )
+
+
+class TypesOrderingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TypesOrdering
+
+    def create(self, validated_data):
+        pass
 
 
 class ServiceTypeSerializer(serializers.ModelSerializer):

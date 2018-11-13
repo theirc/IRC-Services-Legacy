@@ -637,15 +637,27 @@ class ServiceTypeViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         print('GET', self.request.GET, self.request.META['HTTP_ACCEPT_LANGUAGE'])
-        if 'region' in self.request.GET:
-            region = self.request.GET['region']
-            return self.queryset.filter(
+        if ('region' in self.request.GET) and len(self.request.GET['region']):
+            region = GeographicRegion.objects.get(id = self.request.GET['region']).slug if self.request.GET['region'].isdigit() else self.request.GET['region']
+            
+            q = self.queryset.filter(
                 (
                     Q(service__region__slug=region) |
                     Q(service__region__parent__slug=region) |
                     Q(service__region__parent__parent__slug=region)
                 ) & Q(service__status=Service.STATUS_CURRENT)
-            ).annotate(service_count=Count('service')).filter(service_count__gt=0).distinct().order_by('number')
+                  & Q(typesordering__region__slug=region)
+            ).annotate(service_count=Count('service')).filter(service_count__gt=0).distinct().order_by('typesordering__ordering')
+            if len(q):
+                return q
+            else:
+                return self.queryset.filter(
+                    (
+                        Q(service__region__slug=region) |
+                        Q(service__region__parent__slug=region) |
+                        Q(service__region__parent__parent__slug=region)
+                    ) & Q(service__status=Service.STATUS_CURRENT)
+                ).annotate(service_count=Count('service')).filter(service_count__gt=0).distinct().order_by('number')
         else:
             return ServiceType.objects.all().order_by('number')
 
