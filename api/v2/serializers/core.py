@@ -317,15 +317,7 @@ class GeographicRegionSerializer(serializers.ModelSerializer):
 
 
 class GeographicRegionSerializerNoGeometry(serializers.ModelSerializer):
-    parent__name = serializers.SerializerMethodField(read_only=True)
-    centroid = serializers.SerializerMethodField(read_only=True)
-    envelope = serializers.SerializerMethodField(read_only=True)
-
-    def get_centroid(self, obj):
-        return json.loads(obj.centroid.json)
-
-    def get_envelope(self, obj):
-        return json.loads(obj.geom.envelope.json)
+    parent__name = serializers.SerializerMethodField(read_only=True)    
 
     def get_parent__name(self, obj):
         return obj.parent.name if obj.parent else ''
@@ -333,7 +325,7 @@ class GeographicRegionSerializerNoGeometry(serializers.ModelSerializer):
     class Meta:
         model = GeographicRegion
         fields = tuple(
-            ['id', 'name', 'slug', 'code', 'hidden', 'level', 'site', 'centroid', 'envelope', 'parent',
+            ['id', 'name', 'slug', 'code', 'hidden', 'level', 'site', 'parent',
              'parent__name', 'languages_available'] +
             generate_translated_fields('title')
         )

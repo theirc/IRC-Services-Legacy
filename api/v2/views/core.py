@@ -255,13 +255,15 @@ class GeographicRegionViewSet(viewsets.ModelViewSet):
     search_fields = ['name'] + generate_translated_fields('title', False)
 
     def get_serializer_class(self):
-        if 'exclude_geometry' in self.request.GET:
+        if ('exclude_geometry' in self.request.GET or 'countries' in self.request.GET):
             return serializers_v2.GeographicRegionSerializerNoGeometry
         else:
             return serializers_v2.GeographicRegionSerializer
 
     def get_queryset(self):
         qs = super(GeographicRegionViewSet, self).get_queryset()
+        if 'countries' in self.request.GET:
+            qs = qs.filter(Q(level=1))
         if (hasattr(self.request, 'parent')):
             qs = qs.filter(Q(parent=self.request.parent) |
                            Q(parent__parent=self.request.parent))
