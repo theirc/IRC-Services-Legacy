@@ -259,6 +259,7 @@ class DynamicMethodHelper(object):
         translatable_field = args[0].__getattribute__(self.method_field + '{}'.format(self.lang))
         return '' if not translatable_field else html.unescape(strip_tags(translatable_field))
 
+
 class ServiceExcelSerializer(serializers.ModelSerializer):
     location = serializers.SerializerMethodField(read_only=True)
     provider_name = serializers.CharField(source='provider.name', read_only=True)
@@ -300,11 +301,6 @@ class ServiceExcelSerializer(serializers.ModelSerializer):
     
     def get_opening_time(self, obj):
         return format_opening_hours(obj.opening_time)
-
-    
-    # s.update({'additional_info_{}'.format(k[0]): html.unescape(strip_tags(s['additional_info_{}'.format(k[0])])) for k in settings.LANGUAGES})
-    # s.update({'description_{}'.format(k[0]): html.unescape(strip_tags(s['description_{}'.format(k[0])])) for k in settings.LANGUAGES})
-
 
     def validate(self, attrs):
         return super().validate(attrs)
@@ -366,7 +362,6 @@ class ServiceExcelSerializer(serializers.ModelSerializer):
             generate_translated_fields('languages_spoken', False) +
             ['confirmation_log']
         )
-
 
 
 class ServiceTypeSerializer(serializers.ModelSerializer):

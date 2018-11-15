@@ -251,10 +251,6 @@ class ProviderViewSet(FilterByRegionMixin, viewsets.ModelViewSet):
 
         services_bulk = serializers_v2.ServiceExcelSerializer(services_list, many=True).data
 
-        t2 = time.time()
-        print('time t taken: ', t2 - t1)
-        t1 = time.time()
-
         human_headers = tuple(serializers_v2.ServiceExcelSerializer.FIELD_MAP.values())
 
         sheet.append(human_headers)
@@ -262,13 +258,13 @@ class ProviderViewSet(FilterByRegionMixin, viewsets.ModelViewSet):
         for row in services_bulk:
             sheet.append(tuple(row.values()))
 
-        t2 = time.time()
-
         book_data = BytesIO()
         book.save(book_data)
         book_data.seek(0)
 
-        print('time t taken: ', t2 - t1)
+        t2 = time.time()
+        print('time consumed: ', t2 - t1)
+
         return HttpResponse(save_virtual_workbook(book), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 
     @detail_route(methods=['GET'])
