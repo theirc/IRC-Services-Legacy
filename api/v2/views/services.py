@@ -31,8 +31,6 @@ from rest_framework.authtoken.models import Token
 from django.contrib.sessions.models import Session
 from django.utils import timezone
 from django.http.response import HttpResponse
-from django.utils.html import strip_tags
-import html
 
 logger = logging.getLogger(__name__)
 import openpyxl
@@ -46,6 +44,7 @@ from rest_framework import filters
 
 from haystack.query import SearchQuerySet
 from django.db.models import Case, When
+import time
 
 
 class ServiceAreaViewSet(viewsets.ModelViewSet):
@@ -74,6 +73,7 @@ class ProviderListViewSet(FilterByRegionMixin, viewsets.ModelViewSet):
     pagination_class = StandardResultsSetPagination
 
 class ProviderViewSet(FilterByRegionMixin, viewsets.ModelViewSet):
+    # queryset = Provider.objects.prefetch_related('services').all()
     queryset = Provider.objects.all()
     serializer_class = serializers_v2.ProviderSerializer
     pagination_class = StandardResultsSetPagination
@@ -243,36 +243,32 @@ class ProviderViewSet(FilterByRegionMixin, viewsets.ModelViewSet):
 
     @list_route(methods=['get'], permission_classes=[AllowAny])
     def export_services_bulk(self, request, pk=None, *args, **kwargs):
-        providers = self.get_queryset().all()
-
         book = openpyxl.Workbook()
         sheet = book.active
 
-        services_bulk = []
+        t1 = time.time()
+        services_list = Service.objects.prefetch_related('types').all()
 
-        for p in providers:
-            provider_services = p.services.all()
-            for s in provider_services:
-                s = serializers_v2.ServiceExcelSerializer(s).data
-                s.update({'additional_info_{}'.format(k[0]): html.unescape(strip_tags(s['additional_info_{}'.format(k[0])])) for k in settings.LANGUAGES})
-                s.update({'description_{}'.format(k[0]): html.unescape(strip_tags(s['description_{}'.format(k[0])])) for k in settings.LANGUAGES})
-                services_bulk.append(s)
+        services_bulk = serializers_v2.ServiceExcelSerializer(services_list, many=True).data
 
-        headers = list(serializers_v2.ServiceExcelSerializer.FIELD_MAP.keys())
-        human_headers = list(
-            serializers_v2.ServiceExcelSerializer.FIELD_MAP.values())
+        t2 = time.time()
+        print('time t taken: ', t2 - t1)
+        t1 = time.time()
 
-        for col in range(0, len(human_headers)):
-            sheet.cell(column=col + 1, row=1).value = human_headers[col]
+        human_headers = tuple(serializers_v2.ServiceExcelSerializer.FIELD_MAP.values())
 
-        for row in range(0, len(services_bulk)):
-            for col in range(0, len(headers)):
-                sheet.cell(column=col + 1, row=row + 2).value = services_bulk[row][headers[col]]
+        sheet.append(human_headers)
+
+        for row in services_bulk:
+            sheet.append(tuple(row.values()))
+
+        t2 = time.time()
 
         book_data = BytesIO()
         book.save(book_data)
         book_data.seek(0)
 
+        print('time t taken: ', t2 - t1)
         return HttpResponse(save_virtual_workbook(book), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 
     @detail_route(methods=['GET'])
