@@ -15,6 +15,9 @@ from regions.models import GeographicRegion
 from services.models import Service, Provider, ServiceType, SelectionCriterion, ServiceTag, ProviderType, \
     ServiceConfirmationLog, ContactInformation, UserNote
 
+from django.utils.html import strip_tags
+import html
+
 CAN_EDIT_STATUSES = [Service.STATUS_DRAFT, Service.STATUS_CURRENT, Service.STATUS_REJECTED]
 DRFValidationError = exceptions.ValidationError
 
@@ -247,6 +250,16 @@ class ServiceTagSerializer(serializers.ModelSerializer):
         fields = ['id', 'name']
 
 
+class DynamicMethodHelper(object):
+    def __init__(self, lang, method_field):
+        self.lang = lang
+        self.method_field = method_field
+
+    def __call__(self, *args, **kwargs):
+        translatable_field = args[0].__getattribute__(self.method_field + '{}'.format(self.lang))
+        return '' if not translatable_field else html.unescape(strip_tags(translatable_field))
+
+
 class ServiceExcelSerializer(serializers.ModelSerializer):
     location = serializers.SerializerMethodField(read_only=True)
     provider_name = serializers.CharField(source='provider.name', read_only=True)
@@ -256,6 +269,14 @@ class ServiceExcelSerializer(serializers.ModelSerializer):
     confirmation_log = serializers.SerializerMethodField(read_only=True)
     contact_info = serializers.SerializerMethodField(read_only=True)
     opening_time = serializers.SerializerMethodField(read_only=True)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for k,v in settings.LANGUAGES:
+            setattr(self, 'get_additional_info_{}'.format(k), DynamicMethodHelper(k, 'additional_info_'))
+            self.fields['additional_info_{}'.format(k)] = serializers.SerializerMethodField(read_only=True)
+            setattr(self, 'get_description_{}'.format(k), DynamicMethodHelper(k, 'description_'))
+            self.fields['description_{}'.format(k)] = serializers.SerializerMethodField(read_only=True)
 
     def get_location(self, obj):
         return ",".join([str(obj.location.y), str(obj.location.x)]) if obj.location else ''
@@ -322,14 +343,14 @@ class ServiceExcelSerializer(serializers.ModelSerializer):
                 'status',
                 'types',
             ] +
-            generate_translated_fields('name') +
-            generate_translated_fields('description') +
-            generate_translated_fields('additional_info') +
+            generate_translated_fields('name', False) +
+            generate_translated_fields('description', False) +
+            generate_translated_fields('additional_info', False) +
             ['opening_time'] +
             ['city'] +
-            generate_translated_fields('address') +
-            generate_translated_fields('address_floor') +
-            generate_translated_fields('address_city') +
+            generate_translated_fields('address', False) +
+            generate_translated_fields('address_floor', False) +
+            generate_translated_fields('address_city', False) +
             [
                 'location',
                 'phone_number',
@@ -338,7 +359,7 @@ class ServiceExcelSerializer(serializers.ModelSerializer):
                 'website',
                 'facebook_page',
             ] +
-            generate_translated_fields('languages_spoken') +
+            generate_translated_fields('languages_spoken', False) +
             ['confirmation_log']
         )
 
