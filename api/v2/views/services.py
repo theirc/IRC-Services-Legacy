@@ -247,16 +247,18 @@ class ProviderViewSet(FilterByRegionMixin, viewsets.ModelViewSet):
         sheet = book.active
 
         t1 = time.time()
-        services_list = Service.objects.prefetch_related('types').all()
-
-        services_bulk = serializers_v2.ServiceExcelSerializer(services_list, many=True).data
 
         human_headers = tuple(serializers_v2.ServiceExcelSerializer.FIELD_MAP.values())
-
         sheet.append(human_headers)
 
-        for row in services_bulk:
-            sheet.append(tuple(row.values()))
+        services_list = Service.objects.prefetch_related(
+            'types',
+            'confirmation_logs',
+            'contact_information').all()
+            
+        # services_bulk = serializers_v2.ServiceExcelSerializer(services_list, many=True).data
+        # for row in services_bulk:
+        #     sheet.append(tuple(row.values()))
 
         book_data = BytesIO()
         book.save(book_data)
