@@ -282,20 +282,18 @@ class ServiceExcelSerializer(serializers.ModelSerializer):
         return ",".join([str(obj.location.y), str(obj.location.x)]) if obj.location else ''
 
     def get_types(self, obj):
-        _types = list()
-        for t in obj.types.all():
-            _types.append(t.name)
-        return ', '.join(_types)
+        types = (t.name for t in obj.types.all())
+        return ', '.join(types)
 
     def get_city(self, obj):
         return obj.region.name if obj.region.level == 3 else ''
 
     def get_confirmation_log(self, obj):
-        return obj.confirmation_logs.get_queryset().all().order_by('date').last().date.strftime("%Y %b %d") if obj.confirmation_logs.get_queryset().count() else ''
+        return obj.confirmation_logs.all().order_by('date').last().date.strftime("%Y %b %d") if obj.confirmation_logs.count() else ''
 
     def get_contact_info(self, obj):
         contact_info = ''
-        for qs in obj.contact_information.get_queryset().all():
+        for qs in obj.contact_information.all():
             contact_info += qs.type + ': ' + qs.text + ' | '
         return contact_info
     
