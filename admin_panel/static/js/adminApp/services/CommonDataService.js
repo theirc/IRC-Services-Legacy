@@ -39,10 +39,11 @@
                         return objects;
                     });
                 },
-                getServiceTypes: function () {
-                    var client = Restangular.service('service-types');
+                getServiceTypes: function (region = '') {
+                    var client = Restangular.one('service-types');
 
-                    return client.getList().then(function (t) {
+                    var params = {region: region};
+                    return client.get(params).then(function (t) {
                         var objects = t.plain();
                         $window.sessionStorage.serviceTypes = JSON.stringify(objects);
 

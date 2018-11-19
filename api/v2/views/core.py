@@ -16,6 +16,7 @@ from api.utils import generate_translated_fields
 from api.v2.serializers import UserAvatarSerializer, EmailSerializer, SecurePasswordCredentialsSerializer, \
     ResetUserPasswordSerializer, GroupSerializer, APILoginSerializer, APIRegisterSerializer
 from email_user.models import EmailUser
+from services.models import TypesOrdering
 from regions.models import GeographicRegion
 from rest_framework import permissions
 from rest_framework import viewsets, mixins, parsers, renderers
@@ -269,6 +270,20 @@ class GeographicRegionViewSet(viewsets.ModelViewSet):
                            Q(parent__parent=self.request.parent))
 
         return qs
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        region = kwargs.pop('pk')
+        serializer = self.get_serializer(instance, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        TypesOrdering.objects.filter(region=region).delete()
+        types_ordering = request.data['types_ordering']
+        for i, obj in enumerate(types_ordering):
+            t = TypesOrdering(ordering=i, region_id=region, service_type_id=obj['id'])
+            t.save()
+
+        self.perform_update(serializer)
+        return Response(serializer.data)
 
 
 class UserPermissionViewSet(viewsets.ReadOnlyModelViewSet):

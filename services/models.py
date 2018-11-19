@@ -75,6 +75,13 @@ class ServiceType(TranslatableModel, models.Model):
     vector_icon = models.CharField(max_length=100, null=True, blank=True, verbose_name=_("Vector Icon"))
     color = models.CharField(max_length=7, blank=True)
 
+    ordering = models.ManyToManyField(
+        region_models.GeographicRegion,
+        verbose_name=_("ordering"),
+        blank=True,
+        through='TypesOrdering'
+    )
+
     class Meta(object):
         ordering = ['number', ]
 
@@ -102,6 +109,11 @@ class ServiceType(TranslatableModel, models.Model):
             return "data:{};base64,{}".format(mime, b64data.decode("ascii"))
         except:
             return ""
+
+class TypesOrdering(models.Model):
+    ordering = models.IntegerField()
+    service_type = models.ForeignKey(ServiceType, blank=False, null=False)
+    region = models.ForeignKey(region_models.GeographicRegion, blank=False, null=False)
 
 class Provider(TranslatableModel, models.Model):
     __translatable__ = {

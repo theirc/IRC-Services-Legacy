@@ -843,8 +843,8 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 				sites: function (CommonDataService) {
 					return CommonDataService.getSites();
 				},
-				serviceTypes: function (CommonDataService) {
-					return CommonDataService.getServiceTypes();
+				serviceTypes: function (CommonDataService, $stateParams) {
+					return CommonDataService.getServiceTypes($stateParams.id);
 				},
 				allRegions: allRegions,
 			},

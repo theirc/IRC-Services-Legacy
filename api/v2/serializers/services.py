@@ -13,7 +13,7 @@ from rest_framework import exceptions, serializers
 
 from regions.models import GeographicRegion
 from services.models import Service, Provider, ServiceType, SelectionCriterion, ServiceTag, ProviderType, \
-    ServiceConfirmationLog, ContactInformation, UserNote
+    ServiceConfirmationLog, ContactInformation, UserNote, TypesOrdering
 
 from django.utils.html import strip_tags
 import html
@@ -360,6 +360,14 @@ class ServiceExcelSerializer(serializers.ModelSerializer):
             generate_translated_fields('languages_spoken', False) +
             ['confirmation_log']
         )
+
+
+class TypesOrderingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TypesOrdering
+
+    def create(self, validated_data):
+        pass
 
 
 class ServiceTypeSerializer(serializers.ModelSerializer):

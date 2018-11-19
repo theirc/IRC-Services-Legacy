@@ -22,7 +22,7 @@ from rest_framework.decorators import list_route, detail_route
 from rest_framework.exceptions import ValidationError as DRFValidationError
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
-from services.models import Service, Provider, ServiceType, ServiceArea, ServiceTag, ProviderType, ServiceConfirmationLog, ContactInformation
+from services.models import Service, Provider, ServiceType, ServiceArea, ServiceTag, ProviderType, ServiceConfirmationLog, ContactInformation, TypesOrdering
 from .utils import StandardResultsSetPagination, FilterByRegionMixin
 from ..filters import ServiceFilter, CustomServiceFilter, RelativesServiceFilter, WithParentsServiceFilter, PrivateServiceFilter
 from django_filters import rest_framework as django_filters
@@ -631,17 +631,41 @@ class ServiceTypeViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         print('GET', self.request.GET, self.request.META['HTTP_ACCEPT_LANGUAGE'])
-        if 'region' in self.request.GET:
-            region = self.request.GET['region']
-            return self.queryset.filter(
+        if ('region' in self.request.GET) and len(self.request.GET['region']):
+            region = GeographicRegion.objects.get(id = self.request.GET['region']).slug if self.request.GET['region'].isdigit() else self.request.GET['region']
+            
+            q = self.queryset.filter(
                 (
                     Q(service__region__slug=region) |
                     Q(service__region__parent__slug=region) |
                     Q(service__region__parent__parent__slug=region)
                 ) & Q(service__status=Service.STATUS_CURRENT)
-            ).annotate(service_count=Count('service')).filter(service_count__gt=0).distinct().order_by('number')
+                  & Q(typesordering__region__slug=region)
+            ).annotate(service_count=Count('service')).filter(service_count__gt=0).distinct().order_by('typesordering__ordering')
+            if len(q):
+                return q
+            else:
+                return self.queryset.filter(
+                    (
+                        Q(service__region__slug=region) |
+                        Q(service__region__parent__slug=region) |
+                        Q(service__region__parent__parent__slug=region)
+                    ) & Q(service__status=Service.STATUS_CURRENT)
+                ).annotate(service_count=Count('service')).filter(service_count__gt=0).distinct().order_by('number')
         else:
             return ServiceType.objects.all().order_by('number')
+
+    def create(self, request, *args, **kwargs):
+        response = super().create(request, *args, **kwargs)
+        types = []
+        for i in GeographicRegion.objects.all():
+            t = TypesOrdering(ordering=0, region_id=i.id, service_type_id=response.data['id'])
+            if TypesOrdering.objects.filter(region_id=i.id).count():
+                types.append(t)
+
+        TypesOrdering.objects.bulk_create(types)
+
+        return response
 
 
 class CustomServiceTypeViewSet(viewsets.ModelViewSet):
