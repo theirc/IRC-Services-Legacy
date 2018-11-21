@@ -256,9 +256,9 @@ class ProviderViewSet(FilterByRegionMixin, viewsets.ModelViewSet):
             'confirmation_logs',
             'contact_information').all()
             
-        # services_bulk = serializers_v2.ServiceExcelSerializer(services_list, many=True).data
-        # for row in services_bulk:
-        #     sheet.append(tuple(row.values()))
+        services_bulk = serializers_v2.ServiceExcelSerializer(services_list, many=True).data
+        for row in services_bulk:
+            sheet.append(tuple(row.values()))
 
         book_data = BytesIO()
         book.save(book_data)
