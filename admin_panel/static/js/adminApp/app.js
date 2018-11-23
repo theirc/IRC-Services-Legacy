@@ -92,11 +92,6 @@ angular
 		$rootScope.serviceLanguages = $rootScope.languages;
 		$rootScope.$state = $state;
 
-		// $rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
-		// 	$rootScope.previous = from;
-		// 	console.log('lo camibioa');
-		// });
-
 		GeoRegionService.getList({
 			level: 1,
 			exclude_geometry: true
