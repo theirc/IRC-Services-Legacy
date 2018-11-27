@@ -264,7 +264,7 @@ class GeographicRegionViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         qs = super(GeographicRegionViewSet, self).get_queryset()
         if 'countries' in self.request.GET:
-            qs = qs.filter(Q(level=1))
+            qs = qs.filter(Q(level=1) & Q(hidden=False))
         if (hasattr(self.request, 'parent')):
             qs = qs.filter(Q(parent=self.request.parent) |
                            Q(parent__parent=self.request.parent))
