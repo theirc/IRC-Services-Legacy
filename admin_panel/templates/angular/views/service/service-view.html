@@ -183,7 +183,7 @@
                             <div class="form-group col-xs-6">
                                 <label for="type">{{ 'SERVICE_TYPES' | translate }}</label>
                                 <ui-select ng-disabled="!ctrl.isEditing" multiple ng-model="ctrl.service.types" sortable="true" close-on-select="true"
-                                    limit="5">
+                                    limit="99">
                                     <ui-select-match placeholder="{{ 'SERVICE_SELECT_TYPES' | translate }}">{{ $item.name }}</ui-select-match>
                                     <ui-select-choices repeat="type in ctrl.updatedServiceTypes | filter: { name: $select.search }">
                                         <div ng-bind-html="type.name | highlight: $select.search"></div>
