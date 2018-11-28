@@ -173,7 +173,7 @@ angular
 
         angular.extend($scope, vm);
     })
-    .controller('ServiceDuplicateController', function (ServiceService, $state, serviceId, $uibModalInstance) {
+    .controller('ServiceDuplicateController', function (ServiceService, $rootScope, $state, serviceId, $uibModalInstance) {
         let vm = this;
         vm.serviceId = serviceId;
         vm.newName = '';
@@ -187,10 +187,11 @@ angular
 
         vm.cancel = function () {
             $uibModalInstance.dismiss('cancel');
+            $state.go($rootScope.previous);
         };
 
     })
-    .controller('ServiceArchiveController', function (ServiceService, $state, serviceId, $uibModalInstance) {
+    .controller('ServiceArchiveController', function (ServiceService, $rootScope, $state, serviceId, $uibModalInstance) {
         let vm = this;
         vm.serviceId = serviceId;
 
@@ -200,6 +201,7 @@ angular
 
         vm.cancel = function () {
             $uibModalInstance.dismiss('cancel');
+            $state.go($rootScope.previous);
         };
 
     })

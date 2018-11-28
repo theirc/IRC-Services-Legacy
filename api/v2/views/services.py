@@ -594,7 +594,7 @@ class ServiceViewSet(viewsets.ModelViewSet):
         if service_id:
             Service.objects.filter(id=service_id).update(
                 status=Service.STATUS_ARCHIVED)
-            return Response(None, status=200)
+            return Response({'status': Service.STATUS_ARCHIVED}, status=200)
         else:
             return Response({'error': 'Missing service id'}, status=400)
 

@@ -392,8 +392,13 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 			},
 		})
 		.state("service.duplicate", {
+			resolve: {
+				previous: ($state, $rootScope) => {
+					return $rootScope.previous = $state.current.name;
+				}
+			},
 			url: "/duplicate/:serviceId",
-			onEnter: function ($stateParams, $state, $uibModal, ServiceService, toasty) {
+			onEnter: function ($stateParams, $state, $rootScope, $uibModal, ServiceService, toasty) {
 				$uibModal
 					.open({
 						templateUrl: "views/service/service-duplicate.html",
@@ -414,17 +419,22 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 								showClose: false,
 								sound: false,
 							});
-							$state.go('service.list');
+							$state.go($rootScope.previous);
 						});
 					})
 					.catch(() => {
-						$state.go('service.list');
+						$state.go($rootScope.previous);
 					});
 			},
 		})
 		.state("service.archive", {
+			resolve: {
+				previous: ($state, $rootScope) => {
+					return $rootScope.previous = $state.current.name;
+				}
+			},
 			url: "/archive/:serviceId",
-			onEnter: function ($stateParams, $state, $uibModal, ServiceService, toasty) {
+			onEnter: function ($stateParams, $state, $rootScope, $uibModal, ServiceService, toasty) {
 				$uibModal
 					.open({
 						templateUrl: "views/service/service-archive.html",
@@ -445,11 +455,11 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 								showClose: false,
 								sound: false,
 							});
-							$state.go('service.list');
+							$state.go($rootScope.previous);
 						});
 					})
 					.catch(() => {
-						$state.go('service.list');
+						$state.go($rootScope.previous);
 					});
 			},
 		})
