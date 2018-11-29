@@ -565,17 +565,32 @@ class ServiceViewSet(viewsets.ModelViewSet):
                 'tags', 'types').get(id=service_id)
             tags = service_to_copy.tags.all()
             types = service_to_copy.types.all()
+            
+            # duplicate contact info
             contact_information = []
             for c in service_to_copy.contact_information.all():
                 c.pk = None
                 c.save()
                 contact_information.append(c)
+
             # Clear service data
             service_to_copy.pk = None
             service_to_copy.slug = None
             service_to_copy.name = new_name
             service_to_copy.status = Service.STATUS_DRAFT
+
+            for l,v in settings.LANGUAGES:
+                if(l != request.LANGUAGE_CODE):
+                    setattr(service_to_copy, 'additional_info_{}'.format(l), '')
+                    setattr(service_to_copy, 'address_{}'.format(l), '')
+                    setattr(service_to_copy, 'address_city_{}'.format(l), '')
+                    setattr(service_to_copy, 'address_floor_{}'.format(l), '')
+                    setattr(service_to_copy, 'description_{}'.format(l), '')
+                    setattr(service_to_copy, 'languages_spoken_{}'.format(l), '')
+                    setattr(service_to_copy, 'name_{}'.format(l), '')
+            
             service_to_copy.save()
+
             # Fill all fragile data
             new_name = re.sub('[\W-]+', '-', new_name.lower())
             new_slug = service_to_copy.region.slug + '_' + \
