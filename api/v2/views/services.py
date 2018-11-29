@@ -565,7 +565,11 @@ class ServiceViewSet(viewsets.ModelViewSet):
                 'tags', 'types').get(id=service_id)
             tags = service_to_copy.tags.all()
             types = service_to_copy.types.all()
-            contact_information = service_to_copy.contact_information.all()
+            contact_information = []
+            for c in service_to_copy.contact_information.all():
+                c.pk = None
+                c.save()
+                contact_information.append(c)
             # Clear service data
             service_to_copy.pk = None
             service_to_copy.slug = None
