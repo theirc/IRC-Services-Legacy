@@ -130,6 +130,10 @@ class RelativesRegionFilter(django_filters.CharFilter):
                 reg = regs[0]
                 qs = qs.filter(Q(region=reg) | Q(region__parent=reg)
                                | Q(region__parent__parent=reg))
+                if reg.parent:
+                    qs = qs.filter(Q(region=reg.parent))
+                if reg.parent.parent:
+                    qs = qs.filter(Q(region=reg.parent.parent))
         return qs
 
 
