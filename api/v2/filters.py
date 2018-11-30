@@ -128,12 +128,15 @@ class RelativesRegionFilter(django_filters.CharFilter):
             regs = regions.models.GeographicRegion.objects.filter(slug=value)
             if regs:
                 reg = regs[0]
-                qs = qs.filter(Q(region=reg) | Q(region__parent=reg)
+                if reg.parent and reg.parent.parent:
+                    qs= qs.filter(Q(region=reg) | Q(region__parent=reg)
+                               | Q(region__parent__parent=reg) | Q(region=reg.parent) | Q(region=reg.parent.parent))
+                elif reg.parent:
+                    qs = qs.filter(Q(region=reg) | Q(region__parent=reg)
+                               | Q(region__parent__parent=reg) | Q(region=reg.parent))
+                else: 
+                    qs = qs.filter(Q(region=reg) | Q(region__parent=reg)
                                | Q(region__parent__parent=reg))
-                if reg.parent:
-                    qs = qs.filter(Q(region=reg.parent))
-                    if reg.parent.parent:
-                        qs = qs.filter(Q(region=reg.parent.parent))
         return qs
 
 
