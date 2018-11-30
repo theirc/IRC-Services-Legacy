@@ -376,8 +376,8 @@ class ServiceTypeSerializer(serializers.ModelSerializer):
             setattr(instance, attr, value)
         instance.save()
 
-        for idx, service_type in enumerate(self.initial_data['types_ordering']):
-            ServiceType.objects.update_or_create(id=service_type['id'], defaults={'number': idx + 1})
+        # for idx, service_type in enumerate(self.initial_data['types_ordering']):
+        #     ServiceType.objects.update_or_create(id=service_type['id'], defaults={'number': idx + 1})
         return instance
 
 class ServiceTypeListSerializer(serializers.ModelSerializer):
