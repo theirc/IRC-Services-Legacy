@@ -19,7 +19,7 @@ django-admin-sortable2==0.6.4
 django-angular==0.8.4
 django-appconf==1.0.2
 django-appdata==0.1.5
-django-ckeditor
+django-ckeditor==5.3.0
 django-classy-tags==0.8.0
 django-compressor==2.1
 django-cors-headers==1.2.1

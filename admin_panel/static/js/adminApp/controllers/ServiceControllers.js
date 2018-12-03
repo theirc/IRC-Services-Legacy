@@ -173,7 +173,7 @@ angular
 
         angular.extend($scope, vm);
     })
-    .controller('ServiceDuplicateController', function (ServiceService, $state, serviceId, $uibModalInstance) {
+    .controller('ServiceDuplicateController', function (ServiceService, $rootScope, $state, serviceId, $uibModalInstance) {
         let vm = this;
         vm.serviceId = serviceId;
         vm.newName = '';
@@ -187,10 +187,11 @@ angular
 
         vm.cancel = function () {
             $uibModalInstance.dismiss('cancel');
+            $state.go($rootScope.previous);
         };
 
     })
-    .controller('ServiceArchiveController', function (ServiceService, $state, serviceId, $uibModalInstance) {
+    .controller('ServiceArchiveController', function (ServiceService, $rootScope, $state, serviceId, $uibModalInstance) {
         let vm = this;
         vm.serviceId = serviceId;
 
@@ -200,6 +201,7 @@ angular
 
         vm.cancel = function () {
             $uibModalInstance.dismiss('cancel');
+            $state.go($rootScope.previous);
         };
 
     })
@@ -223,10 +225,16 @@ angular
         });
 
         vm.providerRegion = vm.providerRegion && vm.providerRegion[0]
-        vm.serviceTypes = serviceTypes;
-        vm.regions = regions;
-        vm.providers = providers;
-        vm.service = service;
+        vm.serviceTypes = serviceTypes;        
+
+        vm.regions = regions;        
+        vm.providers = Array.isArray(provider) ? provider : [provider];
+        //vm.providers = providers;
+        vm.service = service;        
+        vm.service.type = vm.service.type ? serviceTypes.filter( (t) =>  t.id == vm.service.type.id )[0] : null;
+
+        vm.updatedServiceTypes = vm.service.type ? vm.serviceTypes.filter((type) => type != vm.service.type) :vm.serviceTypes;
+
         vm.showNewsletter = ($rootScope.user.site.domain || '').indexOf('refugee.info') > -1;
 
 
@@ -265,6 +273,9 @@ angular
             }
         }
 
+        vm.filterTypes = () => {
+            vm.updatedServiceTypes = vm.serviceTypes.filter((type) => type != vm.service.type);
+        }
 
         if (Object.keys(confirmationLogs).length !== 0) {
             vm.serviceConfirmationLogs = confirmationLogs.confirmation_logs;
@@ -448,6 +459,7 @@ Only superusers and service providers have access to the edit functions. Everyon
             vm.save = function (file) {
                 vm.generateSlug();
                 vm.service.region = vm.regionlvl3 || vm.regionlvl2 || vm.regionlvl1;
+                //vm.service.type = 0;
                 if (!vm.provideLocation) {
                     vm.service.location = null;
                 }

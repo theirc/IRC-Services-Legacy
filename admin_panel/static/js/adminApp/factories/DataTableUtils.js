@@ -148,15 +148,20 @@ angular.module('adminApp').factory('tableUtils', (DTOptionsBuilder, DTColumnBuil
                 return DTColumnBuilder.newColumn(null).withTitle($filter('translate')('TABLE_ACTIONS')).notSortable().renderWith(renderActions);
 
                 function renderActions(data, type, full, meta) {
+                    let disabled = full.status === "archived";
+                    let archivedSrefToggle = disabled ? '' : `${archiveSref}({serviceId: ${full.id}})`;
+                    
                     return `
-                        <a class="btn btn-danger btn-xs btn-block" ui-sref="${archiveSref}({serviceId: ${full.id}})">
+                        <a class="btn btn-danger btn-xs btn-block" ng-disabled=${disabled} ui-sref="${archivedSrefToggle}">
                             <span><i class="fa fa-archive" style="padding-right: 5px"></i>${$filter('translate')('TABLE_ARCHIVE')}</span>
                         </a>
                         <a class="btn btn-primary btn-xs btn-block" ui-sref="${sref}({serviceId: ${full.id}})">
                             <span><i class="fa fa-eye" style="padding-right: 5px"></i>${$filter('translate')('TABLE_EDIT')}</span>
                         </a>
-                        
-                `;
+                        <a class="btn btn-warning btn-xs btn-block" ui-sref="${duplicateSref}({serviceId: ${full.id}})">
+                            <span><i class="fa fa-copy" style="padding-right: 5px"></i>${$filter('translate')('TABLE_DUPLICATE')}</span>
+                        </a>
+                    `;
                 }
             }
         };

@@ -163,6 +163,14 @@ STATICFILES_FINDERS = (
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'hfyyf*=)1!1m16vo$y=g8(r&po3(qvasinv&lv2i&%ztsg7y&a'
 
+if 'MEMCACHED_ENABLED' in os.environ:
+    MEMCACHED_MIDDLEWARE_CLASSES = (
+        'django.middleware.cache.UpdateCacheMiddleware',
+        'django.middleware.cache.FetchFromCacheMiddleware',
+    )
+else:
+    MEMCACHED_MIDDLEWARE_CLASSES = ()
+    
 MIDDLEWARE_CLASSES = (
     'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -179,8 +187,8 @@ MIDDLEWARE_CLASSES = (
     'regions.middleware.UserRegionMiddleware',
     'reversion.middleware.RevisionMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
-    'service_info.middleware.ActivateUserLanguageMiddleware',
-)
+    'service_info.middleware.ActivateUserLanguageMiddleware'
+) + MEMCACHED_MIDDLEWARE_CLASSES
 
 
 
@@ -415,17 +423,14 @@ SIGNED_URL_LIFETIME = 300
 CAPTCHA_SITEKEY = os.environ.get('CAPTCHA_SITEKEY', '')
 CAPTCHA_SECRETKEY = os.environ.get('CAPTCHA_SECRETKEY', '')
 
-if 'MEMCACHED_URL' in os.environ:
-    from urllib.parse import urlparse
-
-    memcached = urlparse(os.environ.get('MEMCACHED_URL'))
-
+if 'MEMCACHED_ENABLED' in os.environ:
     CACHES = {
         'default': {
             'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-            'LOCATION': '{}:{}'.format(memcached.hostname, (memcached.port or 11211)),
+            'LOCATION': '40.114.64.228:11211'
         }
     }
+    SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 
 CMS_ENVIRONMENT = os.environ.get('CMS_ENVIRONMENT', '')
 CMS_URL = os.environ.get('CMS_URL', '')
@@ -469,6 +474,7 @@ if 'test' in sys.argv:
 AWS Storage Section
 """
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+# DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
 
 CKEDITOR_UPLOAD_PATH = "media/"
 CKEDITOR_IMAGE_BACKEND = 'pillow'

@@ -30,6 +30,13 @@ angular.module("adminApp").controller("MenuController", function ($rootScope, $s
 						sref: "service.list",
 						hide: !((($rootScope.user.groups.filter(g => g.name === 'Providers').length > 0) || $rootScope.user.isSuperuser) && $rootScope.selectedProvider.id),
 					},
+					{
+						title: $filter('translate')('SERVICE_LINK_TO_WEB_APP'),
+						sref: "service.map",
+						href: "https://www.cuentanos.org",
+						target: "_blank",
+						hide: ($rootScope.user.site.domain && $rootScope.user.site.domain.indexOf('refugee.info') > -1)
+					},
 				],
 			},
 			{

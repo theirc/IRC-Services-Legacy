@@ -6,14 +6,17 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.utils.six import BytesIO
 
 from admin_panel.utils import get_service_transifex_info
-from api.utils import generate_translated_fields
+from api.utils import generate_translated_fields, format_opening_hours
 from collections import OrderedDict
 from django.conf import settings
 from rest_framework import exceptions, serializers
 
 from regions.models import GeographicRegion
 from services.models import Service, Provider, ServiceType, SelectionCriterion, ServiceTag, ProviderType, \
-    ServiceConfirmationLog, ContactInformation, UserNote
+    ServiceConfirmationLog, ContactInformation, UserNote, TypesOrdering
+
+from django.utils.html import strip_tags
+import html
 
 CAN_EDIT_STATUSES = [Service.STATUS_DRAFT, Service.STATUS_CURRENT, Service.STATUS_REJECTED]
 DRFValidationError = exceptions.ValidationError
@@ -65,6 +68,14 @@ class RequireOneTranslationMixin(object):
         return validated_data
 
 
+class ProviderListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Provider
+        fields = tuple(
+            [
+                'id', 'name',
+            ] 
+        )
 
 class ProviderSerializer(RequireOneTranslationMixin, serializers.HyperlinkedModelSerializer):
     number_of_monthly_beneficiaries = serializers.IntegerField(
@@ -100,6 +111,16 @@ class ProviderSerializer(RequireOneTranslationMixin, serializers.HyperlinkedMode
         }
 
 
+class ProviderResultSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Provider
+        fields = tuple(
+            [
+                'url', 'id',
+            ] +
+            generate_translated_fields('name') +
+            generate_translated_fields('address')
+        )
 
 class CreateProviderSerializer(ProviderSerializer):
     email = serializers.EmailField()
@@ -229,46 +250,124 @@ class ServiceTagSerializer(serializers.ModelSerializer):
         fields = ['id', 'name']
 
 
+class DynamicMethodHelper(object):
+    def __init__(self, lang, method_field):
+        self.lang = lang
+        self.method_field = method_field
+
+    def __call__(self, *args, **kwargs):
+        translatable_field = args[0].__getattribute__(self.method_field + '{}'.format(self.lang))
+        return '' if not translatable_field else html.unescape(strip_tags(translatable_field))
+
+
 class ServiceExcelSerializer(serializers.ModelSerializer):
     location = serializers.SerializerMethodField(read_only=True)
+    provider_name = serializers.CharField(source='provider.name', read_only=True)
+    region_name = serializers.CharField(source='region.name', read_only=True)
+    types = serializers.SerializerMethodField(read_only=True)
+    city = serializers.SerializerMethodField(read_only=True)
+    confirmation_log = serializers.SerializerMethodField(read_only=True)
+    contact_info = serializers.SerializerMethodField(read_only=True)
+    opening_time = serializers.SerializerMethodField(read_only=True)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for k,v in settings.LANGUAGES:
+            setattr(self, 'get_additional_info_{}'.format(k), DynamicMethodHelper(k, 'additional_info_'))
+            self.fields['additional_info_{}'.format(k)] = serializers.SerializerMethodField(read_only=True)
+            setattr(self, 'get_description_{}'.format(k), DynamicMethodHelper(k, 'description_'))
+            self.fields['description_{}'.format(k)] = serializers.SerializerMethodField(read_only=True)
 
     def get_location(self, obj):
         return ",".join([str(obj.location.y), str(obj.location.x)]) if obj.location else ''
+
+    def get_types(self, obj):
+        types = (t.name for t in obj.types.all())
+        return ', '.join(types)
+
+    def get_city(self, obj):
+        return obj.region.name if obj.region.level == 3 else ''
+
+    def get_confirmation_log(self, obj):
+        return obj.confirmation_logs.all().order_by('date').last().date.strftime("%Y %b %d") if obj.confirmation_logs.count() else ''
+
+    def get_contact_info(self, obj):
+        contact_info = ''
+        for qs in obj.contact_information.all():
+            contact_info += qs.type + ': ' + qs.text + ' | '
+        return contact_info
+    
+    def get_opening_time(self, obj):
+        return format_opening_hours(obj.opening_time)
 
     def validate(self, attrs):
         return super().validate(attrs)
 
     FIELD_MAP = OrderedDict(
         [
-            ('id', 'Identifier'),
-            ('region', 'Region of Service'),
-            ('location', 'Coordinates'),
-            ('type', 'Type of Service'),
-            ('phone_number', 'Phone Number'),
+            ('provider_name', 'Provider'),
+            ('id', 'Service Id'),
+            ('region_name', 'Region of Service'),
+            ('status', 'Status'),
+            ('types', 'Type of Service'),
         ] +
         [("name_{}".format(k), "Name in ({})".format(v)) for k, v in settings.LANGUAGES] +
         [("description_{}".format(k), "Description in ({})".format(v)) for k, v in settings.LANGUAGES] +
+        [("additional_info_{}".format(k), "Additional info in ({})".format(v)) for k, v in settings.LANGUAGES] +
+        [('opening_time', 'Opening time')] +
+        [('city', 'City')] +
         [("address_{}".format(k), "Address in ({})".format(v)) for k, v in settings.LANGUAGES] +
+        [("address_floor_{}".format(k), "Additional details in ({})".format(v)) for k, v in settings.LANGUAGES] +
+        [("address_city_{}".format(k), "Address city in ({})".format(v)) for k, v in settings.LANGUAGES] +
         [
-            ('opening_time', 'Opening time')
-        ])
+            ('location', 'Coordinates'),
+            ('phone_number', 'Phone Number'),
+            ('contact_info', 'Contact info'),
+            ('email', 'Email'),
+            ('website', 'Website'),
+            ('facebook_page', 'Facebook'),
+        ] +
+        [("languages_spoken_{}".format(k), "Languages spoken in ({})".format(v)) for k, v in settings.LANGUAGES] +
+        [('confirmation_log', 'Confirmation log')]
+        )
 
     class Meta:
         model = Service
         fields = (
             [
+                'provider_name',
                 'id',
-                'region',
+                'region_name',
+                'status',
+                'types',
+            ] +
+            generate_translated_fields('name', False) +
+            generate_translated_fields('description', False) +
+            generate_translated_fields('additional_info', False) +
+            ['opening_time'] +
+            ['city'] +
+            generate_translated_fields('address', False) +
+            generate_translated_fields('address_floor', False) +
+            generate_translated_fields('address_city', False) +
+            [
                 'location',
-                'opening_time',
-                'type',
                 'phone_number',
-            ] + generate_translated_fields('name') +
-            generate_translated_fields('description') +
-            generate_translated_fields('address') +
-            generate_translated_fields('additional_info') +
-            generate_translated_fields('languages_spoken')
+                'contact_info',
+                'email',
+                'website',
+                'facebook_page',
+            ] +
+            generate_translated_fields('languages_spoken', False) +
+            ['confirmation_log']
         )
+
+
+class TypesOrderingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TypesOrdering
+
+    def create(self, validated_data):
+        pass
 
 
 class ServiceTypeSerializer(serializers.ModelSerializer):
@@ -296,9 +395,29 @@ class ServiceTypeSerializer(serializers.ModelSerializer):
             setattr(instance, attr, value)
         instance.save()
 
-        for idx, service_type in enumerate(self.initial_data['types_ordering']):
-            ServiceType.objects.update_or_create(id=service_type['id'], defaults={'number': idx + 1})
+        # for idx, service_type in enumerate(self.initial_data['types_ordering']):
+        #     ServiceType.objects.update_or_create(id=service_type['id'], defaults={'number': idx + 1})
         return instance
+
+class ServiceTypeListSerializer(serializers.ModelSerializer):
+    icon_url = serializers.CharField(source='get_icon_url', read_only=True)
+    icon_base64 = serializers.CharField(source='get_icon_base64', read_only=True)
+
+    class Meta:
+        model = ServiceType
+        fields = tuple(
+            [
+                'id',
+                'icon_url',
+                'vector_icon',
+                'number',
+                'icon_base64',
+                'color',
+            ] +
+            generate_translated_fields('name') 
+        )
+        required_translated_fields = ['name']
+
 
 class UserNoteSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=False, allow_null=True) 
@@ -315,6 +434,7 @@ class ServiceSerializer(serializers.ModelSerializer):
     tags = ServiceTagSerializer(many=True)
     opening_time = serializers.SerializerMethodField()
     types = ServiceTypeSerializer(many=True)
+    type = ServiceTypeSerializer(read_only=False)
     contact_information = ContactInformationSerializer(many=True)
 
     class Meta:
@@ -393,6 +513,7 @@ class ServiceSerializer(serializers.ModelSerializer):
 
         tags = validated_data.pop('tags')
         types = validated_data.pop('types')
+        type = validated_data.pop('type')
         validated_data['region'] = GeographicRegion.objects.get(id=self.initial_data['region']['id'])
         validated_data['provider'] = Provider.objects.get(id=self.initial_data['provider']['id'])
         opening_time = self.initial_data.get('opening_time')
@@ -402,7 +523,7 @@ class ServiceSerializer(serializers.ModelSerializer):
         instance.tags = [ServiceTag.objects.get(name=tag['name']) for tag in tags]
         instance.types = [ServiceType.objects.get(name_en=service_type['name_en']) for service_type in types]
         # backwards compatibility for mobile app
-        instance.type = ServiceType.objects.get(name_en=types[0]['name_en'])
+        instance.type = ServiceType.objects.get(name_en=type['name_en'])
         instance.save()
         if self.initial_data.get('confirmedByAdmin'):
             last_log = ServiceConfirmationLog.objects.filter(service=instance).order_by('-date')
@@ -505,6 +626,34 @@ class CustomServiceTypeSerializer(serializers.ModelSerializer):
         model = ServiceType
         fields = ['types']
 
+class ServiceSearchResultListSerializer(serializers.ModelSerializer):
+    type = ServiceTypeListSerializer(read_only=False)
+    types = ServiceTypeListSerializer(many=True)
+    provider = ProviderResultSerializer(read_only=False)
+    region = RegionSerializer(read_only=False)
+
+    class Meta:
+        model = Service
+        fields = tuple(
+            [
+                'url', 
+                'id',
+                'selection_criteria',
+                'status', 
+                'update_of',
+                'location',
+                'region',
+                'provider',
+                'type',
+                'types',
+                'address_in_country_language',
+                'tags',
+            ] +
+            generate_translated_fields('name') +
+            generate_translated_fields('address_city') +
+            generate_translated_fields('address')
+        )
+
 
 class ServiceSearchSerializer(ServiceSerializer):
     """Serializer for service searches"""
@@ -520,6 +669,7 @@ class ServiceCreateSerializer(serializers.ModelSerializer):
     tags = ServiceTagSerializer(many=True)
     opening_time = serializers.SerializerMethodField()
     types = ServiceTypeSerializer(many=True)
+    type = ServiceTypeSerializer(read_only=False)
     contact_information = ContactInformationSerializer(many=True, required=False)
 
     class Meta:
@@ -577,6 +727,7 @@ class ServiceCreateSerializer(serializers.ModelSerializer):
         criteria = validated_data.pop('selection_criteria', None)
         tags = validated_data.pop('tags', None)
         types = validated_data.pop('types')
+        type = validated_data.pop('type')
         opening_time = self.initial_data.get('opening_time')
         validated_data['opening_time'] = json.dumps(opening_time)
         validated_data['created_at'] = datetime.now()
@@ -600,7 +751,7 @@ class ServiceCreateSerializer(serializers.ModelSerializer):
         service.tags = [ServiceTag.objects.get(name=tag['name']) for tag in tags]
         service.types = [ServiceType.objects.get(name_en=service_type['name_en']) for service_type in types]
         # backwards compatibility for mobile app
-        service.type = ServiceType.objects.get(name_en=types[0]['name_en'])
+        service.type = ServiceType.objects.get(name_en=type['name_en'])
         service.save()
         if self.initial_data.get('confirmed'):
             log = ServiceConfirmationLog.objects.create(service=service,

@@ -92,7 +92,6 @@ angular
 		$rootScope.serviceLanguages = $rootScope.languages;
 		$rootScope.$state = $state;
 
-
 		GeoRegionService.getList({
 			level: 1,
 			exclude_geometry: true

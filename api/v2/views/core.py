@@ -16,6 +16,7 @@ from api.utils import generate_translated_fields
 from api.v2.serializers import UserAvatarSerializer, EmailSerializer, SecurePasswordCredentialsSerializer, \
     ResetUserPasswordSerializer, GroupSerializer, APILoginSerializer, APIRegisterSerializer
 from email_user.models import EmailUser
+from services.models import TypesOrdering
 from regions.models import GeographicRegion
 from rest_framework import permissions
 from rest_framework import viewsets, mixins, parsers, renderers
@@ -255,18 +256,34 @@ class GeographicRegionViewSet(viewsets.ModelViewSet):
     search_fields = ['name'] + generate_translated_fields('title', False)
 
     def get_serializer_class(self):
-        if 'exclude_geometry' in self.request.GET:
+        if ('exclude_geometry' in self.request.GET or 'countries' in self.request.GET):
             return serializers_v2.GeographicRegionSerializerNoGeometry
         else:
             return serializers_v2.GeographicRegionSerializer
 
     def get_queryset(self):
         qs = super(GeographicRegionViewSet, self).get_queryset()
+        if 'countries' in self.request.GET:
+            qs = qs.filter(Q(level=1) & Q(hidden=False))
         if (hasattr(self.request, 'parent')):
             qs = qs.filter(Q(parent=self.request.parent) |
                            Q(parent__parent=self.request.parent))
 
         return qs
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        region = kwargs.pop('pk')
+        serializer = self.get_serializer(instance, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        TypesOrdering.objects.filter(region=region).delete()
+        types_ordering = request.data['types_ordering']
+        for i, obj in enumerate(types_ordering):
+            t = TypesOrdering(ordering=i, region_id=region, service_type_id=obj['id'])
+            t.save()
+
+        self.perform_update(serializer)
+        return Response(serializer.data)
 
 
 class UserPermissionViewSet(viewsets.ReadOnlyModelViewSet):

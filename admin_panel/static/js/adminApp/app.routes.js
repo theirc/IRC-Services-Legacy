@@ -148,10 +148,12 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 					controller: "ServicePrivateViewController as ctrl",
 				},
 			},
-			resolve: {
-				providers: function (PrivateProviderService, $rootScope, $q) {
+			resolve: {				
+				providers: () => { return[]},
+				/*
+				function (PrivateProviderService, $rootScope, $q) {
 					return PrivateProviderService.getList().then(r => r.plain());
-				},
+				},*/
 				serviceTypes: function (CommonDataService) {
 					return CommonDataService.getServiceTypes();
 				},
@@ -257,7 +259,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 			resolve: {
 				provider: function (Restangular, $rootScope, $q) {
 					if ($rootScope.selectedProvider) {
-						return Restangular.one("providers", $rootScope.selectedProvider.id).get();
+						return Restangular.one("providerslist", $rootScope.selectedProvider.id).get();
 					} else {
 						var dfd = $q.defer();
 						$rootScope.$watch("selectedProvider", function (value) {
@@ -273,7 +275,9 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 						return dfd;
 					}
 				},
-				providers: function (ProviderService, Restangular, $q) {
+				providers: function (ProviderService, Restangular, $rootScope, $q) {
+					return Restangular.one("providerslist").get();
+					/*
 					var dfd = $q.defer();
 					ProviderService.getList().then(function (p) {
 						var providers = p.plain().map(function (ps) {
@@ -285,6 +289,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 						dfd.resolve(providers);
 					});
 					return dfd.promise;
+					*/
 				},
 				serviceTypes: function (CommonDataService) {
 					return CommonDataService.getServiceTypes();
@@ -313,7 +318,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 			resolve: {
 				provider: function (Restangular, $rootScope, $q) {
 					if ($rootScope.selectedProvider) {
-						return Restangular.one("providers", $rootScope.selectedProvider.id).get();
+						return Restangular.one("providerslist", $rootScope.selectedProvider.id).get();
 					} else {
 						var dfd = $q.defer();
 						$rootScope.$watch("selectedProvider", function (value) {
@@ -329,7 +334,12 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 						return dfd;
 					}
 				},
-				providers: function (ProviderService, Restangular, $q) {
+				providers: function (ProviderService, $rootScope, Restangular, $q) {
+					return [];
+					//Restangular.one("providerslist").get();
+					//return Restangular.one("providerslist", $rootScope.selectedProvider.id).get();
+					
+					/*
 					var dfd = $q.defer();
 					ProviderService.getList().then(function (p) {
 						var providers = p.plain().map(function (ps) {
@@ -341,6 +351,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 						dfd.resolve(providers);
 					});
 					return dfd.promise;
+					*/
 				},
 				serviceTypes: function (CommonDataService) {
 					return CommonDataService.getServiceTypes();
@@ -381,8 +392,13 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 			},
 		})
 		.state("service.duplicate", {
+			resolve: {
+				previous: ($state, $rootScope) => {
+					return $rootScope.previous = $state.current.name;
+				}
+			},
 			url: "/duplicate/:serviceId",
-			onEnter: function ($stateParams, $state, $uibModal, ServiceService, toasty) {
+			onEnter: function ($stateParams, $state, $rootScope, $uibModal, ServiceService, toasty) {
 				$uibModal
 					.open({
 						templateUrl: "views/service/service-duplicate.html",
@@ -403,17 +419,22 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 								showClose: false,
 								sound: false,
 							});
-							$state.go('service.list');
+							$state.go($rootScope.previous);
 						});
 					})
 					.catch(() => {
-						$state.go('service.list');
+						$state.go($rootScope.previous);
 					});
 			},
 		})
 		.state("service.archive", {
+			resolve: {
+				previous: ($state, $rootScope) => {
+					return $rootScope.previous = $state.current.name;
+				}
+			},
 			url: "/archive/:serviceId",
-			onEnter: function ($stateParams, $state, $uibModal, ServiceService, toasty) {
+			onEnter: function ($stateParams, $state, $rootScope, $uibModal, ServiceService, toasty) {
 				$uibModal
 					.open({
 						templateUrl: "views/service/service-archive.html",
@@ -434,11 +455,11 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 								showClose: false,
 								sound: false,
 							});
-							$state.go('service.list');
+							$state.go($rootScope.previous);
 						});
 					})
 					.catch(() => {
-						$state.go('service.list');
+						$state.go($rootScope.previous);
 					});
 			},
 		})
@@ -554,7 +575,7 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 					return {};
 				},
 				providers: function (ProviderService, $rootScope, $q) {
-					return ProviderService.getList().then(r => r.plain());
+					return [];
 				},
 				groups: Restangular => Restangular.all("groups").getList(),
 				sites: function (CommonDataService) {
@@ -575,7 +596,8 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 			},
 			resolve: {
 				providers: function (ProviderService, $rootScope, $q) {
-					return ProviderService.getList().then(r => r.plain());
+					return []; 					
+					//return ProviderService.getList().then(r => r.plain());
 				},
 				user: function (Restangular, $stateParams) {
 					return Restangular.one("users", $stateParams.id).get();
@@ -831,8 +853,8 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 				sites: function (CommonDataService) {
 					return CommonDataService.getSites();
 				},
-				serviceTypes: function (CommonDataService) {
-					return CommonDataService.getServiceTypes();
+				serviceTypes: function (CommonDataService, $stateParams) {
+					return CommonDataService.getServiceTypes($stateParams.id);
 				},
 				allRegions: allRegions,
 			},

@@ -22,7 +22,7 @@ from rest_framework.decorators import list_route, detail_route
 from rest_framework.exceptions import ValidationError as DRFValidationError
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
-from services.models import Service, Provider, ServiceType, ServiceArea, ServiceTag, ProviderType, ServiceConfirmationLog, ContactInformation
+from services.models import Service, Provider, ServiceType, ServiceArea, ServiceTag, ProviderType, ServiceConfirmationLog, ContactInformation, TypesOrdering
 from .utils import StandardResultsSetPagination, FilterByRegionMixin
 from ..filters import ServiceFilter, CustomServiceFilter, RelativesServiceFilter, WithParentsServiceFilter, PrivateServiceFilter
 from django_filters import rest_framework as django_filters
@@ -30,10 +30,12 @@ from django.db.models import Count
 from rest_framework.authtoken.models import Token
 from django.contrib.sessions.models import Session
 from django.utils import timezone
+from django.http.response import HttpResponse
 
 logger = logging.getLogger(__name__)
 import openpyxl
 import base64
+from openpyxl.writer.excel import save_virtual_workbook
 from io import BytesIO
 import tempfile
 from django.conf import settings
@@ -42,6 +44,7 @@ from rest_framework import filters
 
 from haystack.query import SearchQuerySet
 from django.db.models import Case, When
+import time
 
 
 class ServiceAreaViewSet(viewsets.ModelViewSet):
@@ -64,8 +67,13 @@ class SearchFilter(filters.SearchFilter):
                            for pos, pk in enumerate(pk_list)])
         return queryset.filter(pk__in=pk_list).order_by(preserved)
 
+class ProviderListViewSet(FilterByRegionMixin, viewsets.ModelViewSet):
+    queryset = Provider.objects.all()
+    serializer_class = serializers_v2.ProviderListSerializer
+    pagination_class = StandardResultsSetPagination
 
 class ProviderViewSet(FilterByRegionMixin, viewsets.ModelViewSet):
+    # queryset = Provider.objects.prefetch_related('services').all()
     queryset = Provider.objects.all()
     serializer_class = serializers_v2.ProviderSerializer
     pagination_class = StandardResultsSetPagination
@@ -203,13 +211,12 @@ class ProviderViewSet(FilterByRegionMixin, viewsets.ModelViewSet):
         services = obj.services.all()
 
         book = openpyxl.Workbook()
-        sheet = book.get_active_sheet()
+        sheet = book.active
 
         provider_services = []
 
         for s in services:
             s = serializers_v2.ServiceExcelSerializer(s).data
-
             provider_services.append(s)
 
         headers = list(serializers_v2.ServiceExcelSerializer.FIELD_MAP.keys())
@@ -232,6 +239,35 @@ class ProviderViewSet(FilterByRegionMixin, viewsets.ModelViewSet):
             "data": base64.b64encode(book_data.read()),
             "content_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         }, content_type="application/json")
+
+
+    @list_route(methods=['get'], permission_classes=[AllowAny])
+    def export_services_bulk(self, request, pk=None, *args, **kwargs):
+        book = openpyxl.Workbook()
+        sheet = book.active
+
+        t1 = time.time()
+
+        human_headers = tuple(serializers_v2.ServiceExcelSerializer.FIELD_MAP.values())
+        sheet.append(human_headers)
+
+        services_list = Service.objects.prefetch_related(
+            'types',
+            'confirmation_logs',
+            'contact_information').all()
+            
+        services_bulk = serializers_v2.ServiceExcelSerializer(services_list, many=True).data
+        for row in services_bulk:
+            sheet.append(tuple(row.values()))
+
+        book_data = BytesIO()
+        book.save(book_data)
+        book_data.seek(0)
+
+        t2 = time.time()
+        print('time consumed: ', t2 - t1)
+
+        return HttpResponse(save_virtual_workbook(book), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 
     @detail_route(methods=['GET'])
     def impersonate_provider(self, request, pk):
@@ -453,6 +489,13 @@ class ServiceViewSet(viewsets.ModelViewSet):
         self.is_search = True
         self.serializer_class = serializers_v2.ServiceSearchSerializer
         return super().list(request, *args, **kwargs)
+    
+    @list_route(methods=['get'], permission_classes=[AllowAny])
+    def searchlist(self, request, *args, **kwargs):
+        
+        self.is_search = True    
+        self.serializer_class = serializers_v2.ServiceSearchResultListSerializer
+        return super().list(request, *args, **kwargs)
 
     @list_route(methods=['get'], permission_classes=[AllowAny])
     def preview(self, request, *args, **kwargs):
@@ -464,8 +507,12 @@ class ServiceViewSet(viewsets.ModelViewSet):
         return super().list(request, *args, **kwargs)
 
     def get_serializer_class(self):
+        ob = self
+        action = getattr(self, 'action')
         if getattr(self, 'action') == 'create':
-            return serializers_v2.ServiceCreateSerializer
+            return serializers_v2.ServiceCreateSerializer        
+        if getattr(self, 'action') == 'searchlist':
+            return serializers_v2.ServiceSearchResultListSerializer  
         if 'service-management' in self.request.get_full_path():
             return serializers_v2.ServiceManagementSerializer
         return serializers_v2.ServiceSerializer
@@ -518,13 +565,32 @@ class ServiceViewSet(viewsets.ModelViewSet):
                 'tags', 'types').get(id=service_id)
             tags = service_to_copy.tags.all()
             types = service_to_copy.types.all()
-            contact_information = service_to_copy.contact_information.all()
+            
+            # duplicate contact info
+            contact_information = []
+            for c in service_to_copy.contact_information.all():
+                c.pk = None
+                c.save()
+                contact_information.append(c)
+
             # Clear service data
             service_to_copy.pk = None
             service_to_copy.slug = None
             service_to_copy.name = new_name
             service_to_copy.status = Service.STATUS_DRAFT
+
+            for l,v in settings.LANGUAGES:
+                if(l != request.LANGUAGE_CODE):
+                    setattr(service_to_copy, 'additional_info_{}'.format(l), '')
+                    setattr(service_to_copy, 'address_{}'.format(l), '')
+                    setattr(service_to_copy, 'address_city_{}'.format(l), '')
+                    setattr(service_to_copy, 'address_floor_{}'.format(l), '')
+                    setattr(service_to_copy, 'description_{}'.format(l), '')
+                    setattr(service_to_copy, 'languages_spoken_{}'.format(l), '')
+                    setattr(service_to_copy, 'name_{}'.format(l), '')
+            
             service_to_copy.save()
+
             # Fill all fragile data
             new_name = re.sub('[\W-]+', '-', new_name.lower())
             new_slug = service_to_copy.region.slug + '_' + \
@@ -547,7 +613,7 @@ class ServiceViewSet(viewsets.ModelViewSet):
         if service_id:
             Service.objects.filter(id=service_id).update(
                 status=Service.STATUS_ARCHIVED)
-            return Response(None, status=200)
+            return Response({'status': Service.STATUS_ARCHIVED}, status=200)
         else:
             return Response({'error': 'Missing service id'}, status=400)
 
@@ -583,18 +649,42 @@ class ServiceTypeViewSet(viewsets.ModelViewSet):
     pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
-        print('GET', self.request.GET)
-        if 'region' in self.request.GET:
-            region = self.request.GET['region']
-            return self.queryset.filter(
+        print('GET', self.request.GET, self.request.META['HTTP_ACCEPT_LANGUAGE'])
+        if ('region' in self.request.GET) and len(self.request.GET['region']):
+            region = GeographicRegion.objects.get(id = self.request.GET['region']).slug if self.request.GET['region'].isdigit() else self.request.GET['region']
+            
+            q = self.queryset.filter(
                 (
                     Q(service__region__slug=region) |
                     Q(service__region__parent__slug=region) |
                     Q(service__region__parent__parent__slug=region)
                 ) & Q(service__status=Service.STATUS_CURRENT)
-            ).annotate(service_count=Count('service')).filter(service_count__gt=0).distinct().order_by('number')
+                  & Q(typesordering__region__slug=region)
+            ).annotate(service_count=Count('service')).filter(service_count__gt=0).distinct().order_by('typesordering__ordering')
+            if len(q):
+                return q
+            else:
+                return self.queryset.filter(
+                    (
+                        Q(service__region__slug=region) |
+                        Q(service__region__parent__slug=region) |
+                        Q(service__region__parent__parent__slug=region)
+                    ) & Q(service__status=Service.STATUS_CURRENT)
+                ).annotate(service_count=Count('service')).filter(service_count__gt=0).distinct().order_by('number')
         else:
             return ServiceType.objects.all().order_by('number')
+
+    def create(self, request, *args, **kwargs):
+        response = super().create(request, *args, **kwargs)
+        types = []
+        for i in GeographicRegion.objects.all():
+            t = TypesOrdering(ordering=0, region_id=i.id, service_type_id=response.data['id'])
+            if TypesOrdering.objects.filter(region_id=i.id).count():
+                types.append(t)
+
+        TypesOrdering.objects.bulk_create(types)
+
+        return response
 
 
 class CustomServiceTypeViewSet(viewsets.ModelViewSet):
