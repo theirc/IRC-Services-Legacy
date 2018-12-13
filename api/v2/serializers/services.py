@@ -269,6 +269,7 @@ class ServiceExcelSerializer(serializers.ModelSerializer):
     confirmation_log = serializers.SerializerMethodField(read_only=True)
     contact_info = serializers.SerializerMethodField(read_only=True)
     opening_time = serializers.SerializerMethodField(read_only=True)
+    country_name = serializers.SerializerMethodField(read_only=True)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -300,6 +301,12 @@ class ServiceExcelSerializer(serializers.ModelSerializer):
     def get_opening_time(self, obj):
         return format_opening_hours(obj.opening_time)
 
+    def get_country_name(self, obj):
+        r = obj.region
+        for i in range(obj.region.depth):
+            r = r.parent
+        return r.name
+
     def validate(self, attrs):
         return super().validate(attrs)
 
@@ -307,6 +314,7 @@ class ServiceExcelSerializer(serializers.ModelSerializer):
         [
             ('provider_name', 'Provider'),
             ('id', 'Service Id'),
+            ('country_name', 'Country'),
             ('region_name', 'Region of Service'),
             ('status', 'Status'),
             ('types', 'Type of Service'),
@@ -337,6 +345,7 @@ class ServiceExcelSerializer(serializers.ModelSerializer):
             [
                 'provider_name',
                 'id',
+                'country_name',
                 'region_name',
                 'status',
                 'types',
