@@ -25,6 +25,8 @@ EMAIL_PORT = os.environ.get('EMAIL_PORT', '587')
 
 STAFF_EMAIL = os.environ.get('STAFF_EMAIL', '')
 
+SILENCED_SYSTEM_CHECKS = ['mysql.E001']
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.spatialite',
