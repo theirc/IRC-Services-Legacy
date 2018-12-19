@@ -1,6 +1,8 @@
 # Django settings for service_info project.
 import os
 import sys
+import pymysql
+pymysql.install_as_MySQLdb()
 
 from django.utils.translation import ugettext_lazy as _
 
@@ -456,6 +458,9 @@ import dj_database_url
 
 if 'DATABASE_URL' in os.environ:
     DATABASES['default'] = dj_database_url.config()
+    print("DB:")
+    print(DATABASES['default'])
+
 
 ALLOWED_HOSTS = ['*']
 DEBUG = str(os.environ.get('DEBUG', 'False')).lower() == 'true'
