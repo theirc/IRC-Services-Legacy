@@ -2,6 +2,7 @@
 import os
 import sys
 import pymysql
+
 pymysql.install_as_MySQLdb()
 
 from django.utils.translation import ugettext_lazy as _
