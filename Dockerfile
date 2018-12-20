@@ -25,7 +25,6 @@ RUN apt-get install -y nodejs
 RUN apt-get install -y --no-install-recommends dialog cron \
         && apt-get install -y --no-install-recommends openssh-server \
         && echo "$SSH_PASSWD" | chpasswd 
-RUN apt-get install libmysqlclient-dev
 ADD commands-cron /etc/crontab
 
 RUN chmod 0644 /etc/crontab  

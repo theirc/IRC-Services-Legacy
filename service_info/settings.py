@@ -459,8 +459,6 @@ import dj_database_url
 
 if 'DATABASE_URL' in os.environ:
     DATABASES['default'] = dj_database_url.config()
-    print("DB:")
-    print(DATABASES['default'])
 
 
 ALLOWED_HOSTS = ['*']

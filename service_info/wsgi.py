@@ -23,9 +23,6 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "service_info.settings")
 from django.core.wsgi import get_wsgi_application
 from dj_static import Cling
 
-import pymysql
-pymysql.install_as_MySQLdb()
-
 application = Cling(get_wsgi_application())
 
 # Apply WSGI middleware here.
