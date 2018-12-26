@@ -570,7 +570,6 @@ class ServiceSerializer(serializers.ModelSerializer):
     def get_opening_time(self, obj):
         return json.loads(obj.opening_time) if obj.opening_time else {}
 
-
 class ServiceManagementSerializer(serializers.ModelSerializer):
     transifex_status = serializers.SerializerMethodField()
     tags = ServiceTagSerializer(many=True)

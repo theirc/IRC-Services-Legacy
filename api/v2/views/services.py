@@ -31,6 +31,7 @@ from rest_framework.authtoken.models import Token
 from django.contrib.sessions.models import Session
 from django.utils import timezone
 from django.http.response import HttpResponse
+from django.db.models.expressions import RawSQL
 
 logger = logging.getLogger(__name__)
 import openpyxl
@@ -491,8 +492,7 @@ class ServiceViewSet(viewsets.ModelViewSet):
         return super().list(request, *args, **kwargs)
     
     @list_route(methods=['get'], permission_classes=[AllowAny])
-    def searchlist(self, request, *args, **kwargs):
-        
+    def searchlist(self, request, *args, **kwargs):        
         self.is_search = True    
         self.serializer_class = serializers_v2.ServiceSearchResultListSerializer
         return super().list(request, *args, **kwargs)
@@ -621,20 +621,16 @@ class ServiceViewSet(viewsets.ModelViewSet):
     def get_same_coordinates_services(self, request, **kwargs):
         requested_service_id = kwargs.get('pk')
         filtered_by_coordinates = []
-        max_distance_m = 5
+        max_distance_m = 20
         if requested_service_id:
             requested_service = Service.objects.get(id=requested_service_id)
             if requested_service.location:
                 filtered_by_region = self.filter_queryset(self.get_queryset())
-                filtered_by_coordinates = filtered_by_region.filter(
-                    location__distance_lt=(
-                        requested_service.location, D(m=max_distance_m)),
-                    status=Service.STATUS_CURRENT) \
-                    .exclude(id=requested_service_id)
+                filtered_by_coordinates = filtered_by_region.annotate(distance=RawSQL('ST_Distance_Sphere(POINT%s,`services_service`.`location`)', (requested_service.location.coords,))).filter(distance__lt=max_distance_m).exclude(id=requested_service_id)            
         else:
             return Response({'error': 'Missing service id'}, status=400)
 
-        serializer = serializers_v2.ServiceSerializer(
+        serializer = serializers_v2.ServiceManagementSerializer(
             filtered_by_coordinates, many=True, context={'request': request})
         return Response({'results': serializer.data}, status=200)
 
