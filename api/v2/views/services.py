@@ -673,11 +673,12 @@ class ServiceTypeViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         response = super().create(request, *args, **kwargs)
         types = []
-        for i in GeographicRegion.objects.all():
-            t = TypesOrdering(ordering=0, region_id=i.id, service_type_id=response.data['id'])
-            if TypesOrdering.objects.filter(region_id=i.id).count():
-                types.append(t)
 
+        distinct_types = TypesOrdering.objects.filter(region_id__in=[r.id for r in GeographicRegion.objects.all()]).distinct('region')
+        for dt in distinct_types:
+            t = TypesOrdering(ordering=0, region_id=dt.region_id, service_type_id=response.data['id'])
+            types.append(t)
+        
         TypesOrdering.objects.bulk_create(types)
 
         return response
