@@ -772,8 +772,6 @@ class ServiceCreateSerializer(serializers.ModelSerializer):
         # backwards compatibility for mobile app
         service.type = ServiceType.objects.get(name_en=type['name_en'])
         service.save()
-        print(service.id)
-        print(location.ewkt)
         cursor = connections['default'].cursor()        
         cursor.execute("UPDATE services_service SET location = ST_GEOMFROMTEXT(%s) where id = %s ;", [location.ewkt, service.id])
 
