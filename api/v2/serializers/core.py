@@ -308,8 +308,7 @@ class GeographicRegionCreateSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):  
         geom = validated_data['geom'].ewkt
-        validated_data['geom'] = None  
-        print(validated_data)    
+        validated_data['geom'] = None 
         region = GeographicRegion.objects.create(**validated_data)
         region.save()
         cursor = connections['default'].cursor()
@@ -340,7 +339,7 @@ class GeographicRegionSerializer(serializers.ModelSerializer):
         )
     
     def update:
-        
+
     
     
         
