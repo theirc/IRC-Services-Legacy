@@ -18,6 +18,8 @@ from services.models import Service, Provider, ServiceArea
 from . import apps as apps_serializers
 from . import services as sevices_serializers
 from django.contrib.sites.models import Site
+from django.db import connections
+import pymysql.cursors
 
 CAN_EDIT_STATUSES = [Service.STATUS_DRAFT,
                      Service.STATUS_CURRENT, Service.STATUS_REJECTED]
@@ -295,6 +297,25 @@ class ProviderSerializer(serializers.ModelSerializer):
 #             generate_translated_fields('languages_spoken')
 #         )
 
+class GeographicRegionCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = GeographicRegion
+        fields = tuple(
+            ['id', 'name', 'slug', 'code', 'hidden', 'level', 'geom', 'site', 'parent',
+             'languages_available'] +
+            generate_translated_fields('title')
+        )
+
+    def create(self, validated_data):  
+        geom = validated_data['geom'].ewkt
+        validated_data['geom'] = None  
+        print(validated_data)    
+        region = GeographicRegion.objects.create(**validated_data)
+        region.save()
+        cursor = connections['default'].cursor()
+        cursor.execute("update regions_geographicregion set geom = ST_GEOMFROMTEXT(%s) where id = %s ;", [geom, region.id])
+        return region
+        
 
 class GeographicRegionSerializer(serializers.ModelSerializer):
     parent__name = serializers.SerializerMethodField(read_only=True)
@@ -317,6 +338,12 @@ class GeographicRegionSerializer(serializers.ModelSerializer):
              'parent__name', 'languages_available'] +
             generate_translated_fields('title')
         )
+    
+    def update:
+        
+    
+    
+        
 
 
 class GeographicRegionSerializerNoGeometry(serializers.ModelSerializer):
