@@ -28,6 +28,11 @@ from ..filters import GeographicRegionFilter
 from rest_framework.views import APIView
 from django.db.models.query_utils import Q
 from django.contrib.sites.models import Site
+# from django.core.cache import cache
+# import time
+# from django.db.models.signals import post_save, post_delete
+# from django.dispatch import receiver
+# import json
 
 logger = logging.getLogger(__name__)
 
@@ -286,7 +291,44 @@ class GeographicRegionViewSet(viewsets.ModelViewSet):
 
         self.perform_update(serializer)
         return Response(serializer.data)
+    
+    # def list(self, request):
+    #     t1 = time.time()
+    #     key = 'regions'
+    #     cached = cache.get(key)
+    #     if not cached:
+    #         queryset = self.filter_queryset(self.get_queryset())
+    #         page = self.paginate_queryset(queryset)
 
+    #         if page is not None:
+    #             serializer = self.get_serializer(page, many=True)
+    #             serializer.data[0]['paginated'] = True
+    #         else:
+    #             serializer = self.get_serializer(queryset, many=True)
+    #             serializer.data[0]['paginated'] = False
+    #             cache.set(key, serializer.data)
+    #             print('SETting not paginated regions.list')
+
+    #         cached = serializer.data
+    #     else:
+    #         print('GETting not paginated cached regions.list')
+
+    #     t2 = time.time()
+    #     print('time consumed: ', t2 - t1)
+
+    #     if cached[0]['paginated']:
+    #         print('paginated response')
+    #         return self.get_paginated_response(cached)
+    #     else:
+    #         print('not paginated response')
+    #         return Response(cached)
+        
+    #     # return Response(cached) if cached[0]['paginated'] is not True else self.get_paginated_response(cached)
+
+    # @receiver(post_save, sender=GeographicRegion)
+    # def invalidate_cache(sender, **kwargs):
+    #     cache.delete('regions')
+    #     print('invalidating regions')
 
 class UserPermissionViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [IsAuthenticated]

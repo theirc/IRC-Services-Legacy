@@ -167,14 +167,6 @@ STATICFILES_FINDERS = (
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'hfyyf*=)1!1m16vo$y=g8(r&po3(qvasinv&lv2i&%ztsg7y&a'
-
-if 'MEMCACHED_ENABLED' in os.environ:
-    MEMCACHED_MIDDLEWARE_CLASSES = (
-        'django.middleware.cache.UpdateCacheMiddleware',
-        'django.middleware.cache.FetchFromCacheMiddleware',
-    )
-else:
-    MEMCACHED_MIDDLEWARE_CLASSES = ()
     
 MIDDLEWARE_CLASSES = (
     'corsheaders.middleware.CorsMiddleware',
@@ -193,8 +185,7 @@ MIDDLEWARE_CLASSES = (
     'reversion.middleware.RevisionMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'service_info.middleware.ActivateUserLanguageMiddleware'
-) + MEMCACHED_MIDDLEWARE_CLASSES
-
+)
 
 
 AUTHENTICATION_BACKENDS = ("service_info.backends.CustomAuthenticationBackend",)
@@ -283,6 +274,7 @@ INSTALLED_APPS = (
     'services.templatetags.newsletter_extras',
     'debug_toolbar',
     'django_filters',
+    'cachalot',
 )
 
 MIGRATION_MODULES = {
@@ -428,14 +420,23 @@ SIGNED_URL_LIFETIME = 300
 CAPTCHA_SITEKEY = os.environ.get('CAPTCHA_SITEKEY', '')
 CAPTCHA_SECRETKEY = os.environ.get('CAPTCHA_SECRETKEY', '')
 
-if 'MEMCACHED_ENABLED' in os.environ:
+if 'REDIS_ENABLED' in os.environ:
     CACHES = {
         'default': {
-            'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-            'LOCATION': '40.114.64.228:11211'
+            # REDIS SETTINGS
+            'BACKEND': 'django_redis.cache.RedisCache',
+            'LOCATION': 'redis://theircredis.redis.cache.windows.net:6379',
+            'OPTIONS': {
+                'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+                'PASSWORD': 'kAzQuizJC0yqgJaHVGVmqV+9fVpLy4LzFjFXEe7uRfw='
+            },
+            'KEY_PREFIX': 'sp-'
         }
     }
-    SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+# Cache Time To Live
+CACHE_TTL = 60 * 60
+CACHALOT_TIMEOUT = CACHE_TTL
+# SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 
 CMS_ENVIRONMENT = os.environ.get('CMS_ENVIRONMENT', '')
 CMS_URL = os.environ.get('CMS_URL', '')
