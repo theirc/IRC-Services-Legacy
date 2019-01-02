@@ -269,6 +269,7 @@ INSTALLED_APPS = (
     'services.templatetags.newsletter_extras',
     'debug_toolbar',
     'django_filters',
+    'cachalot',
 )
 
 MIGRATION_MODULES = {
@@ -428,8 +429,9 @@ if 'REDIS_ENABLED' in os.environ:
         }
     }
 # Cache Time To Live
-CACHE_TTL = 60 * 15
-SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+CACHE_TTL = 60 * 60
+CACHALOT_TIMEOUT = CACHE_TTL
+# SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 
 CMS_ENVIRONMENT = os.environ.get('CMS_ENVIRONMENT', '')
 CMS_URL = os.environ.get('CMS_URL', '')
