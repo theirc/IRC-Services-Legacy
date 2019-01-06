@@ -338,13 +338,6 @@ class GeographicRegionSerializer(serializers.ModelSerializer):
             generate_translated_fields('title')
         )
     
-    def update:
-
-    
-    
-        
-
-
 class GeographicRegionSerializerNoGeometry(serializers.ModelSerializer):
     parent__name = serializers.SerializerMethodField(read_only=True)    
 
