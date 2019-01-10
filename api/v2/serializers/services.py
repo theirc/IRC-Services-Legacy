@@ -529,9 +529,9 @@ class ServiceSerializer(serializers.ModelSerializer):
         validated_data['provider'] = Provider.objects.get(id=self.initial_data['provider']['id'])
         opening_time = self.initial_data.get('opening_time')
         validated_data['opening_time'] = json.dumps(opening_time)
-        point = ''
+        point = None
         for attr, value in validated_data.items():
-            if attr == "location":
+            if attr == "location" and value is not None:
                 point = value.ewkt
                 value = None                
             setattr(instance, attr, value)
@@ -542,7 +542,7 @@ class ServiceSerializer(serializers.ModelSerializer):
         instance.save()
         cursor = connections['default'].cursor()
         
-        cursor.execute("update services_service set location = ST_GEOMFROMTEXT(%s) where id = %s ;", [point, instance.id])
+        cursor.execute("update services_service set location = ST_GEOMFROMTEXT(%s,4326) where id = %s ;", [point, instance.id])
         if self.initial_data.get('confirmedByAdmin'):
             last_log = ServiceConfirmationLog.objects.filter(service=instance).order_by('-date')
             log = ServiceConfirmationLog.objects.create(service=instance,
@@ -750,7 +750,7 @@ class ServiceCreateSerializer(serializers.ModelSerializer):
         validated_data['created_at'] = datetime.now()
         contact_information = validated_data.pop('contact_information') if 'contact_information' in validated_data else []
         services = Service.objects.filter(slug=self.initial_data.get('slug'))           
-        location = ""
+        location = None
         if len(services) > 0:
             new_slug = self.initial_data.get('slug')
             service = Service.objects.create(**validated_data)
@@ -759,7 +759,8 @@ class ServiceCreateSerializer(serializers.ModelSerializer):
             service.save()
         else:
             validated_data['slug'] = self.initial_data.get('slug')
-            location = validated_data['location']
+            if validated_data['location'] is not None:
+                location= validated_data['location'].ewkt
             validated_data['location'] = None
             service = Service.objects.create(**validated_data)
         if criteria:
@@ -773,7 +774,7 @@ class ServiceCreateSerializer(serializers.ModelSerializer):
         service.type = ServiceType.objects.get(name_en=type['name_en'])
         service.save()
         cursor = connections['default'].cursor()        
-        cursor.execute("UPDATE services_service SET location = ST_GEOMFROMTEXT(%s) where id = %s ;", [location.ewkt, service.id])
+        cursor.execute("UPDATE services_service SET location = ST_GEOMFROMTEXT(%s) where id = %s ;", [location, service.id])
 
         if self.initial_data.get('confirmed'):
             log = ServiceConfirmationLog.objects.create(service=service,
