@@ -166,6 +166,7 @@ angular.module('adminApp')
                 vm.object.save();
             }
             vm.stopEditing();
+            sessionStorage.removeItem('allRegions');
         }
 
 
