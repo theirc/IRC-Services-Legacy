@@ -420,19 +420,19 @@ SIGNED_URL_LIFETIME = 300
 CAPTCHA_SITEKEY = os.environ.get('CAPTCHA_SITEKEY', '')
 CAPTCHA_SECRETKEY = os.environ.get('CAPTCHA_SECRETKEY', '')
 
-if 'REDIS_ENABLED' in os.environ:
-    CACHES = {
-        'default': {
-            # REDIS SETTINGS
-            'BACKEND': 'django_redis.cache.RedisCache',
-            'LOCATION': 'redis://theircredis.redis.cache.windows.net:6379',
-            'OPTIONS': {
-                'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-                'PASSWORD': 'kAzQuizJC0yqgJaHVGVmqV+9fVpLy4LzFjFXEe7uRfw='
-            },
-            'KEY_PREFIX': 'sp-'
-        }
-    }
+# if 'REDIS_ENABLED' in os.environ:
+#     CACHES = {
+#         'default': {
+#             # REDIS SETTINGS
+#             'BACKEND': 'django_redis.cache.RedisCache',
+#             'LOCATION': 'redis://theircredis.redis.cache.windows.net:6379',
+#             'OPTIONS': {
+#                 'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+#                 'PASSWORD': 'kAzQuizJC0yqgJaHVGVmqV+9fVpLy4LzFjFXEe7uRfw='
+#             },
+#             'KEY_PREFIX': 'sp-'
+#         }
+#     }
 # Cache Time To Live
 CACHE_TTL = 60 * 60
 CACHALOT_TIMEOUT = CACHE_TTL
