@@ -274,7 +274,7 @@ INSTALLED_APPS = (
     'services.templatetags.newsletter_extras',
     'debug_toolbar',
     'django_filters',
-    'cachalot',
+    # 'cachalot',
 )
 
 MIGRATION_MODULES = {
