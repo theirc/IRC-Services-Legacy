@@ -101,7 +101,8 @@ class GeographicRegion(TranslatableModel, models.Model, ContentFetchingMixin):
             (3, _('City')),
         ]
     )
-    geom = models.MultiPolygonField(srid=4326)
+    geom = models.MultiPolygonField(srid=4326,blank=True,
+        null=True,)
     parent = models.ForeignKey('self', related_name='children', null=True, blank=True)
     name = models.CharField(max_length=256, default='')
 

@@ -16,6 +16,8 @@ from services.models import Service, Provider, ServiceType, SelectionCriterion, 
     ServiceConfirmationLog, ContactInformation, UserNote, TypesOrdering
 
 from django.utils.html import strip_tags
+from django.db import connections
+import pymysql.cursors
 import html
 
 CAN_EDIT_STATUSES = [Service.STATUS_DRAFT, Service.STATUS_CURRENT, Service.STATUS_REJECTED]
@@ -527,13 +529,20 @@ class ServiceSerializer(serializers.ModelSerializer):
         validated_data['provider'] = Provider.objects.get(id=self.initial_data['provider']['id'])
         opening_time = self.initial_data.get('opening_time')
         validated_data['opening_time'] = json.dumps(opening_time)
+        point = None
         for attr, value in validated_data.items():
+            if attr == "location" and value is not None:
+                point = value.ewkt
+                value = None                
             setattr(instance, attr, value)
         instance.tags = [ServiceTag.objects.get(name=tag['name']) for tag in tags]
         instance.types = [ServiceType.objects.get(name_en=service_type['name_en']) for service_type in types]
         # backwards compatibility for mobile app
         instance.type = ServiceType.objects.get(name_en=type['name_en'])
         instance.save()
+        cursor = connections['default'].cursor()
+        
+        cursor.execute("update services_service set location = ST_GEOMFROMTEXT(%s,4326) where id = %s ;", [point, instance.id])
         if self.initial_data.get('confirmedByAdmin'):
             last_log = ServiceConfirmationLog.objects.filter(service=instance).order_by('-date')
             log = ServiceConfirmationLog.objects.create(service=instance,
@@ -569,7 +578,6 @@ class ServiceSerializer(serializers.ModelSerializer):
 
     def get_opening_time(self, obj):
         return json.loads(obj.opening_time) if obj.opening_time else {}
-
 
 class ServiceManagementSerializer(serializers.ModelSerializer):
     transifex_status = serializers.SerializerMethodField()
@@ -742,7 +750,7 @@ class ServiceCreateSerializer(serializers.ModelSerializer):
         validated_data['created_at'] = datetime.now()
         contact_information = validated_data.pop('contact_information') if 'contact_information' in validated_data else []
         services = Service.objects.filter(slug=self.initial_data.get('slug'))           
-
+        location = None
         if len(services) > 0:
             new_slug = self.initial_data.get('slug')
             service = Service.objects.create(**validated_data)
@@ -751,17 +759,23 @@ class ServiceCreateSerializer(serializers.ModelSerializer):
             service.save()
         else:
             validated_data['slug'] = self.initial_data.get('slug')
+            if validated_data['location'] is not None:
+                location= validated_data['location'].ewkt
+            validated_data['location'] = None
             service = Service.objects.create(**validated_data)
         if criteria:
             for kwargs in criteria:
                 # Force criterion to link to the new service
-                kwargs['service'] = service
+                kwargs['service'] = service                
                 SelectionCriterion.objects.create(**kwargs)
         service.tags = [ServiceTag.objects.get(name=tag['name']) for tag in tags]
         service.types = [ServiceType.objects.get(name_en=service_type['name_en']) for service_type in types]
         # backwards compatibility for mobile app
         service.type = ServiceType.objects.get(name_en=type['name_en'])
         service.save()
+        cursor = connections['default'].cursor()        
+        cursor.execute("UPDATE services_service SET location = ST_GEOMFROMTEXT(%s) where id = %s ;", [location, service.id])
+
         if self.initial_data.get('confirmed'):
             log = ServiceConfirmationLog.objects.create(service=service,
                                                         status=ServiceConfirmationLog.CONFIRMED,

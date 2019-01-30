@@ -15,17 +15,35 @@ RUN pip install -r requirements.txt
 ENV SSH_PASSWD "root:Docker!"
 
 RUN curl -sL https://deb.nodesource.com/setup_9.x | bash -
-RUN apt-get install -y software-properties-common python-software-properties --fix-missing
+#RUN apt-get install -y software-properties-common python-software-properties --fix-broken --fix-missing
 #RUN add-apt-repository ppa:maxmind/ppa
 RUN apt-get update 
-RUN apt-get install -y  `cat /code/apt-packages`
+#RUN apt-get install -y  `cat /code/apt-packages`
+
+#RUN apt-get install -y --allow-unauthenticated libicu52
+RUN apt-get install -y --allow-unauthenticated libicu-dev 
+RUN apt-get install -y --allow-unauthenticated libgeoip1 
+RUN apt-get install -y --allow-unauthenticated build-essential 
+RUN apt-get install -y --allow-unauthenticated python3-dev 
+RUN apt-get install -y --allow-unauthenticated python3-setuptools 
+RUN apt-get install -y --allow-unauthenticated python3-numpy 
+RUN apt-get install -y --allow-unauthenticated python3-scipy 
+RUN apt-get install -y --allow-unauthenticated libatlas-dev 
+RUN apt-get install -y --allow-unauthenticated binutils 
+RUN apt-get install -y --allow-unauthenticated libproj-dev 
+RUN apt-get install -y --allow-unauthenticated gdal-bin 
+#RUN apt-get install -y --allow-unauthenticated libatlas3gf-base 
+RUN apt-get install -y --allow-unauthenticated libffi-dev 
+RUN apt-get install -y --allow-unauthenticated wkhtmltopdf 
+RUN apt-get install -y --allow-unauthenticated libspatialite-dev 
+RUN apt-get install -y --allow-unauthenticated spatialite-bin nginx
+
 RUN apt-get install -y nodejs
 #RUN apt-get install libmaxminddb0 libmaxminddb-dev mmdb-bin
 # ssh
 RUN apt-get install -y --no-install-recommends dialog cron \
         && apt-get install -y --no-install-recommends openssh-server \
         && echo "$SSH_PASSWD" | chpasswd 
-
 ADD commands-cron /etc/crontab
 
 RUN chmod 0644 /etc/crontab  
