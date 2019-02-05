@@ -244,6 +244,7 @@ INSTALLED_APPS = (
     'django.contrib.sitemaps',
     'django.contrib.sites',
     'django.contrib.gis',
+    'storages',
 
 
     'email_user',
@@ -480,23 +481,30 @@ if 'test' in sys.argv:
 """
 AWS Storage Section
 """
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 # DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+DEFAULT_FILE_STORAGE = 'storages.backends.azure_storage.AzureStorage'
+
+AZURE_CONTAINER = '$web'
+AZURE_ACCOUNT_NAME = 'refugeecdn'
+AZURE_CUSTOM_DOMAIN = 'https://%s.blob.core.windows.net' % AZURE_ACCOUNT_NAME
+MEDIA_LOCATION = "$web"
+MEDIA_URL = '%s/%s/' % (AZURE_CUSTOM_DOMAIN, MEDIA_LOCATION)
 
 CKEDITOR_UPLOAD_PATH = "media/"
 CKEDITOR_IMAGE_BACKEND = 'pillow'
 
-AWS_QUERYSTRING_AUTH = False
-AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID', None)
-AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY', None)
-AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME', None)
+# AWS_QUERYSTRING_AUTH = False
+# AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID', None)
+# AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY', None)
+# AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME', None)
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: 'http://media.lawrence.com/media/', 'http://example.com/media/'
 
 """ADD TO local_settings.py if AWS settings are there"""
-MEDIA_URL = 'https://%s.s3.amazonaws.com:443/' % AWS_STORAGE_BUCKET_NAME
+# MEDIA_URL = 'https://%s.s3.amazonaws.com:443/' % AWS_STORAGE_BUCKET_NAME
 
 MAX_UPLOAD_SIZE = 1024 * 1024 * 1
 
