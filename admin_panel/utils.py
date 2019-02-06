@@ -11,6 +11,8 @@ from celery.utils.log import get_task_logger
 from . import cms_utils
 from django.conf import settings
 from services.models import Service
+from django.db import connections
+import pymysql.cursors
 
 logger = get_task_logger(__name__)
 
@@ -274,4 +276,12 @@ def _translate_service(translation_dict, language, service):
     for k in translation_dict.keys():
         if hasattr(service, "{}_{}".format(k, language)):
             setattr(service, "{}_{}".format(k, language), translation_dict[k])
+    location = None
+    if (service.location != None):
+        location = service.location.ewkt.split(";")[1]
+    
+    service.location = None
     service.save()
+    cursor = connections['default'].cursor()        
+    cursor.execute("update services_service set location = ST_GEOMFROMTEXT(%s,4326) where id = %s ;", [location, service.id])
+

@@ -62,3 +62,4 @@ Installing
     export DJANGO_SETTINGS_MODULE="service_info.settings"
 ##### From project directory (with virtual environment activated) run:
     ~/.virtualenvs/api.refugee.info/bin/celery -A service_info worker -l info -E -B --purge
+    
