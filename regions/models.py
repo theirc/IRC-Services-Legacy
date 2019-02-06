@@ -131,7 +131,7 @@ class GeographicRegion(TranslatableModel, models.Model, ContentFetchingMixin):
 
     @property
     def centroid(self):
-        return self.geom.centroid
+        return self.geom.centroid 
 
     @property
     def depth(self):

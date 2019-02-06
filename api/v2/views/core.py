@@ -28,6 +28,8 @@ from ..filters import GeographicRegionFilter
 from rest_framework.views import APIView
 from django.db.models.query_utils import Q
 from django.contrib.sites.models import Site
+from django.db import connections
+import pymysql.cursors
 # from django.core.cache import cache
 # import time
 # from django.db.models.signals import post_save, post_delete
@@ -280,6 +282,9 @@ class GeographicRegionViewSet(viewsets.ModelViewSet):
 
     def update(self, request, *args, **kwargs):
         instance = self.get_object()
+        geom = instance.geom.ewkt.split(";")[1]
+        instance.geom = None
+        request.data.pop('geom')
         region = kwargs.pop('pk')
         serializer = self.get_serializer(instance, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
@@ -290,6 +295,9 @@ class GeographicRegionViewSet(viewsets.ModelViewSet):
             t.save()
 
         self.perform_update(serializer)
+        # cursor = connections['default'].cursor()
+        # print(geom)
+        # cursor.execute("update regions_geographicregion set geom = ST_GEOMFROMTEXT('%s') where id = %s ;", [geom, region])
         return Response(serializer.data)
     
     # def list(self, request):
