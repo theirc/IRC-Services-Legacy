@@ -155,6 +155,7 @@ angular.module('adminApp')
         vm.cancelEditing = cancelEditing;
 
         function save() {
+            //vm.object.geom.coordinates.forEach((c)=> c[0].splice(-1,1));
             vm.object.languages_available = vm.object.languages.map(l => l).join(', ');
             if (vm.isNew) {
                 GeoRegionService.post(vm.object).then(function (o) {
