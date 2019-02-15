@@ -488,6 +488,7 @@ DEFAULT_FILE_STORAGE = 'storages.backends.azure_storage.AzureStorage'
 AZURE_CONTAINER = '$web'
 AZURE_ACCOUNT_NAME = 'refugeecdn'
 AZURE_CUSTOM_DOMAIN = 'https://%s.blob.core.windows.net' % AZURE_ACCOUNT_NAME
+AZURE_ACCOUNT_KEY = os.environ.get('AZURE_ACCOUNT_KEY')
 MEDIA_LOCATION = "$web"
 MEDIA_URL = '%s/%s/' % (AZURE_CUSTOM_DOMAIN, MEDIA_LOCATION)
 
