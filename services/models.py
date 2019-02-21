@@ -720,7 +720,7 @@ class Service(TranslatableModel, models.Model):
                 self.location = self.region.centroid
             location = None
             if (self.location != None):
-                location = self.location.ewkt
+                location = self.location.ewkt.split(";")[1]
                 self.location = None
             super().save(*args, **kwargs)
 
