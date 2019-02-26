@@ -579,8 +579,9 @@ class ServiceViewSet(viewsets.ModelViewSet):
             service_to_copy.name = new_name
             service_to_copy.status = Service.STATUS_DRAFT
 
+            # Clear translated fields
             for l,v in settings.LANGUAGES:
-                if(l != request.LANGUAGE_CODE):
+                if l not in ['en', 'es']:
                     setattr(service_to_copy, 'additional_info_{}'.format(l), '')
                     setattr(service_to_copy, 'address_{}'.format(l), '')
                     setattr(service_to_copy, 'address_city_{}'.format(l), '')
