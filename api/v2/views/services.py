@@ -579,8 +579,9 @@ class ServiceViewSet(viewsets.ModelViewSet):
             service_to_copy.name = new_name
             service_to_copy.status = Service.STATUS_DRAFT
 
+            # Clear translated fields
             for l,v in settings.LANGUAGES:
-                if(l != request.LANGUAGE_CODE):
+                if l not in ['en', 'es']:
                     setattr(service_to_copy, 'additional_info_{}'.format(l), '')
                     setattr(service_to_copy, 'address_{}'.format(l), '')
                     setattr(service_to_copy, 'address_city_{}'.format(l), '')
@@ -626,7 +627,7 @@ class ServiceViewSet(viewsets.ModelViewSet):
             requested_service = Service.objects.get(id=requested_service_id)
             if requested_service.location:
                 filtered_by_region = self.filter_queryset(self.get_queryset()).filter(status__in=[Service.STATUS_CURRENT])
-                filtered_by_coordinates = filtered_by_region.annotate(distance=RawSQL('ST_Distance_Sphere(ST_GeomFromWKB(st_aswkb(POINT%s), 4326),services_service.location)', (requested_service.location.coords,))).filter(distance__lt=max_distance_m).exclude(id=requested_service_id)                                                           
+                filtered_by_coordinates = filtered_by_region.annotate(distance=RawSQL('ST_Distance_Sphere(ST_GeomFromWKB(st_aswkb(POINT%s), 4326),services_service.location)', (requested_service.location.coords,))).filter(distance__lt=max_distance_m).exclude(id=requested_service_id)
                 
         else:
             return Response({'error': 'Missing service id'}, status=400)
