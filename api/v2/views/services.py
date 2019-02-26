@@ -627,8 +627,7 @@ class ServiceViewSet(viewsets.ModelViewSet):
             requested_service = Service.objects.get(id=requested_service_id)
             if requested_service.location:
                 filtered_by_region = self.filter_queryset(self.get_queryset()).filter(status__in=[Service.STATUS_CURRENT])
-                #filtered_by_coordinates = filtered_by_region.annotate(distance=RawSQL('ST_Distance_Sphere(ST_GeomFromWKB(st_aswkb(POINT%s), 4326),services_service.location)', (requested_service.location.coords,))).filter(distance__lt=max_distance_m).exclude(id=requested_service_id)                                                           
-                filtered_by_coordinates = filtered_by_region.annotate(distance=RawSQL('ST_Distance_Sphere(ST_GeomFromWKB(st_aswkb(POINT%s), 0),services_service.location)', (requested_service.location.coords,))).filter(distance__lt=max_distance_m).exclude(id=requested_service_id)                                                           
+                filtered_by_coordinates = filtered_by_region.annotate(distance=RawSQL('ST_Distance_Sphere(ST_GeomFromWKB(st_aswkb(POINT%s), 4326),services_service.location)', (requested_service.location.coords,))).filter(distance__lt=max_distance_m).exclude(id=requested_service_id)
                 
         else:
             return Response({'error': 'Missing service id'}, status=400)
