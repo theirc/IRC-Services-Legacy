@@ -277,9 +277,9 @@ def _translate_service(translation_dict, language, service):
         if hasattr(service, "{}_{}".format(k, language)):
             setattr(service, "{}_{}".format(k, language), translation_dict[k])
     location = None
-    if (service.location != None){
+    if (service.location != None):
         location = service.location.ewkt.split(";")[1]
-    }    
+
     service.location = None
     service.save()
     cursor = connections['default'].cursor()        

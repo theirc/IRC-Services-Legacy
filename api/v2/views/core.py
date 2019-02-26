@@ -28,6 +28,8 @@ from ..filters import GeographicRegionFilter
 from rest_framework.views import APIView
 from django.db.models.query_utils import Q
 from django.contrib.sites.models import Site
+from django.db import connections
+import pymysql.cursors
 # from django.core.cache import cache
 # import time
 # from django.db.models.signals import post_save, post_delete
@@ -280,7 +282,17 @@ class GeographicRegionViewSet(viewsets.ModelViewSet):
 
     def update(self, request, *args, **kwargs):
         instance = self.get_object()
+        # serializer with geom for return only
+        serializerReturn = self.get_serializer(instance, data=request.data, partial=True)
+        serializerReturn.is_valid(raise_exception=True)        
+        data = serializerReturn.data
+
+        geom = instance.geom.ewkt.split(";")[1]
+        geomobj = instance.geom
+        instance.geom = None
+        request.data.pop('geom')
         region = kwargs.pop('pk')
+        # serializer without geom objet to save
         serializer = self.get_serializer(instance, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         TypesOrdering.objects.filter(region=region).delete()
@@ -290,7 +302,10 @@ class GeographicRegionViewSet(viewsets.ModelViewSet):
             t.save()
 
         self.perform_update(serializer)
-        return Response(serializer.data)
+        cursor = connections['default'].cursor()
+        cursor.execute("update regions_geographicregion set geom = ST_GEOMFROMTEXT(%s) where id = %s ;", [geom, region])
+        self.geom = geomobj
+        return Response(data)
     
     # def list(self, request):
     #     t1 = time.time()

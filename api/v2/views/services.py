@@ -579,8 +579,9 @@ class ServiceViewSet(viewsets.ModelViewSet):
             service_to_copy.name = new_name
             service_to_copy.status = Service.STATUS_DRAFT
 
+            # Clear translated fields
             for l,v in settings.LANGUAGES:
-                if(l != request.LANGUAGE_CODE):
+                if l not in ['en', 'es']:
                     setattr(service_to_copy, 'additional_info_{}'.format(l), '')
                     setattr(service_to_copy, 'address_{}'.format(l), '')
                     setattr(service_to_copy, 'address_city_{}'.format(l), '')
@@ -625,9 +626,8 @@ class ServiceViewSet(viewsets.ModelViewSet):
         if requested_service_id:
             requested_service = Service.objects.get(id=requested_service_id)
             if requested_service.location:
-                filtered_by_region = self.filter_queryset(self.get_queryset()).filter(status__in=[Service.STATUS_CURRENT])
+                filtered_by_region = self.filter_queryset(self.get_queryset()).filter(status__in=[Service.STATUS_CURRENT]).exclude(location__isnull = True)
                 filtered_by_coordinates = filtered_by_region.annotate(distance=RawSQL('ST_Distance_Sphere(ST_GeomFromWKB(st_aswkb(POINT%s), 4326),services_service.location)', (requested_service.location.coords,))).filter(distance__lt=max_distance_m).exclude(id=requested_service_id)                                                           
-                
         else:
             return Response({'error': 'Missing service id'}, status=400)
 
@@ -675,9 +675,9 @@ class ServiceTypeViewSet(viewsets.ModelViewSet):
         response = super().create(request, *args, **kwargs)
         types = []
 
-        distinct_types = TypesOrdering.objects.filter(region_id__in=[r.id for r in GeographicRegion.objects.all()]).distinct('region')
+        distinct_types = TypesOrdering.objects.filter(region_id__in=[r.id for r in GeographicRegion.objects.all()]).values('region').distinct()
         for dt in distinct_types:
-            t = TypesOrdering(ordering=0, region_id=dt.region_id, service_type_id=response.data['id'])
+            t = TypesOrdering(ordering=0, region_id=dt['region'], service_type_id=response.data['id'])
             types.append(t)
         
         TypesOrdering.objects.bulk_create(types)

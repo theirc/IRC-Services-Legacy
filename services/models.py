@@ -21,6 +21,8 @@ from sorl.thumbnail.shortcuts import get_thumbnail
 from . import jira_support
 from .meta import TranslatableModel
 from .utils import absolute_url, get_path_to_service
+from django.db import connections
+import pymysql.cursors
 
 
 class ProviderType(TranslatableModel, models.Model):
@@ -716,8 +718,15 @@ class Service(TranslatableModel, models.Model):
             # If it's mobile, force the location to the center of the area
             if self.is_mobile:
                 self.location = self.region.centroid
-
+            location = None
+            if (self.location != None):
+                location = self.location.ewkt.split(";")[1]
+                self.location = None
             super().save(*args, **kwargs)
+
+            if (location != None):
+                cursor = connections['default'].cursor()        
+                cursor.execute("update services_service set location = ST_GEOMFROMTEXT(%s,4326) where id = %s ;", [location, self.id])
 
             if new_service:
                 # Now we've safely saved this new record.
