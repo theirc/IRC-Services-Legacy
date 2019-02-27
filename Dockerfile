@@ -15,8 +15,6 @@ RUN pip install -r requirements.txt
 ENV SSH_PASSWD "root:Docker!"
 
 RUN curl -sL https://deb.nodesource.com/setup_9.x | bash -
-#Test node install
-RUN apt-get install nodejs 
 #RUN apt-get install -y software-properties-common python-software-properties --fix-broken --fix-missing
 #RUN add-apt-repository ppa:maxmind/ppa
 RUN apt-get update 
