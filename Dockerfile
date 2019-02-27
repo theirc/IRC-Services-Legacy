@@ -15,7 +15,7 @@ RUN pip install -r requirements.txt
 ENV SSH_PASSWD "root:Docker!"
 
 RUN curl -sL https://deb.nodesource.com/setup_9.x | bash -
-#RUN apt-get install -y software-properties-common python-software-properties --fix-broken --fix-missing
+RUN apt-get install -y software-properties-common python-software-properties --fix-broken --fix-missing
 #RUN add-apt-repository ppa:maxmind/ppa
 RUN apt-get update 
 #RUN apt-get install -y  `cat /code/apt-packages`
