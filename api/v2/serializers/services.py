@@ -774,7 +774,7 @@ class ServiceCreateSerializer(serializers.ModelSerializer):
         service.type = ServiceType.objects.get(name_en=type['name_en'])
         service.save()
         cursor = connections['default'].cursor()        
-        cursor.execute("UPDATE services_service SET location = ST_GEOMFROMTEXT(%s) where id = %s ;", [location, service.id])
+        cursor.execute("UPDATE services_service SET location = ST_GEOMFROMTEXT(%s, 4326) where id = %s ;", [location, service.id])
 
         if self.initial_data.get('confirmed'):
             log = ServiceConfirmationLog.objects.create(service=service,

@@ -314,7 +314,7 @@ class GeographicRegionCreateSerializer(serializers.ModelSerializer):
         region = GeographicRegion.objects.create(**validated_data)
         region.save()
         cursor = connections['default'].cursor()
-        cursor.execute("update regions_geographicregion set geom = ST_GEOMFROMTEXT(%s) where id = %s ;", [geom, region.id])
+        cursor.execute("update regions_geographicregion set geom = ST_GEOMFROMTEXT(%s, 4326) where id = %s ;", [geom, region.id])
         return region
         
 
