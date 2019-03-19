@@ -75,7 +75,7 @@ class ProviderListSerializer(serializers.ModelSerializer):
         model = Provider
         fields = tuple(
             [
-                'id', 'name',
+                'id', 'name', 'vacancy'
             ] 
         )
 
