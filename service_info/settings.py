@@ -7,7 +7,7 @@ pymysql.install_as_MySQLdb()
 
 from django.utils.translation import ugettext_lazy as _
 
-AA_CMS_VERSION = '1.0.1-2019-3-8'
+AA_CMS_VERSION = '1.0.1-2019-3-19'
 # BASE_DIR = path/to/source/service_info
 # E.g. this file is BASE_DIR/settings/base.py
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
