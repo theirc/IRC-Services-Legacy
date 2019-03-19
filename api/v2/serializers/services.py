@@ -118,7 +118,7 @@ class ProviderResultSerializer(serializers.ModelSerializer):
         model = Provider
         fields = tuple(
             [
-                'url', 'id',
+                'url', 'id', 'vacancy'
             ] +
             generate_translated_fields('name') +
             generate_translated_fields('address')
