@@ -46,6 +46,8 @@ from rest_framework import filters
 from haystack.query import SearchQuerySet
 from django.db.models import Case, When
 import time
+from django.db import connections
+import pymysql.cursors
 
 
 class ServiceAreaViewSet(viewsets.ModelViewSet):
@@ -590,6 +592,11 @@ class ServiceViewSet(viewsets.ModelViewSet):
                     setattr(service_to_copy, 'languages_spoken_{}'.format(l), '')
                     setattr(service_to_copy, 'name_{}'.format(l), '')
             
+            location = None
+            if (service_to_copy.location != None):
+                location = service_to_copy.location.ewkt.split(";")[1]
+                service_to_copy.location = None
+
             service_to_copy.save()
 
             # Fill all fragile data
@@ -604,6 +611,11 @@ class ServiceViewSet(viewsets.ModelViewSet):
             service_to_copy.types.add(*types)
             service_to_copy.contact_information.add(*contact_information)
             service_to_copy.save()
+
+            if (location != None):
+                cursor = connections['default'].cursor()        
+                cursor.execute("update services_service set location = ST_GEOMFROMTEXT(%s,4326) where id = %s ;", [location, service_to_copy.id])
+
             return Response({'service_id': service_to_copy.id}, status=201)
         else:
             return Response({'error': 'Missing service id or service name'}, status=400)
