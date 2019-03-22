@@ -32,8 +32,8 @@ function GenerateListController(serviceName, and, columns) {
     }];
 }
 
-function GenerateOpenController(serviceName, and) {
-    return [serviceName, 'object', 'toasty', '$state', '$injector', function (service, object, toasty, $state, $injector) {
+function GenerateOpenController(serviceName, and, storageVarName) {
+    return [serviceName, 'object', 'toasty', '$state', '$injector', '$window', function (service, object, toasty, $state, $injector, $window) {
         let vm = this;
         vm.object = object;
         vm.isNew = !vm.object.hasOwnProperty('id');
@@ -53,8 +53,11 @@ function GenerateOpenController(serviceName, and) {
         }
 
         function save() {
+            if(storageVarName) $window.sessionStorage.removeItem(storageVarName);
+
             if (vm.isNew) {
                 service.post(vm.object).then(function (o) {
+
                     $state.go('^.open', {
                         id: o.id
                     });
@@ -82,6 +85,8 @@ function GenerateOpenController(serviceName, and) {
 
         function remove() {
             if (confirm('Are you sure?')) {
+                if(storageVarName) $window.sessionStorage.removeItem(storageVarName);
+
                 if (vm.isNew) {
                     $state.go('^.list');
                 } else {
