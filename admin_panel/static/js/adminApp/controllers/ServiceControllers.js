@@ -331,7 +331,8 @@ angular
             'viber': 'Viber',
             'whatsapp': 'Whatsapp',
             'skype': 'Skype',
-            'facebook_messenger': 'Facebook Messenger'
+            'facebook_messenger': 'Facebook Messenger',
+            'instagram': 'Instagram',
         };
         vm.days = [
             'sunday',
