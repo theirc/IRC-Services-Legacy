@@ -1477,6 +1477,7 @@ class ContactInformation(models.Model):
     WHATSAPP = 'whatsapp'
     SKYPE = 'skype'
     FACEBOOK_MESSENGER = 'facebook_messenger'
+    INSTAGRAM = 'instagram'
     TYPE_CHOICES = (        
         (EMAIL, _('Email')),
         (PHONE, _('Phone')),
@@ -1484,6 +1485,7 @@ class ContactInformation(models.Model):
         (WHATSAPP, _('Whatsapp')),
         (SKYPE, _('Skype')),
         (FACEBOOK_MESSENGER, _('Facebook Messenger')),
+        (INSTAGRAM, _('Instagram')),
     )
     type = models.CharField(
         max_length=20,
