@@ -140,6 +140,5 @@ angular.module('adminApp')
 
         function initComplete() {
             vm.hasServices = vm.stInstance.DataTable.page.info().recordsTotal > 0;
-            console.log(vm.hasServices);
         }
     });
