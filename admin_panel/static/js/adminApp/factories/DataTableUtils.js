@@ -79,13 +79,15 @@ angular.module('adminApp').factory('tableUtils', (DTOptionsBuilder, DTColumnBuil
                 let service = $injector.get(serviceName);
                 return this.defaultsWithService(service);
             },
-            defaultsWithServiceAndFilter(service, filter) {
-                return this.defaults()
+            defaultsWithServiceAndFilter(service, filter, initComplete = null) {
+                let d = this.defaults()
                     .withOption('ajax', service.forDataTablesWithFilter(filter));
+                initComplete && d.withOption('initComplete', initComplete);
+                return d;
             },
-            defaultsWithServiceNameAndFilter(serviceName, filter) {
+            defaultsWithServiceNameAndFilter(serviceName, filter, initComplete = null) {
                 let service = $injector.get(serviceName);
-                return this.defaultsWithServiceAndFilter(service, filter);
+                return this.defaultsWithServiceAndFilter(service, filter, initComplete);
             },
             defaultsWithServiceAndFilterFunction(service, filter) {
                 return this.defaults()
