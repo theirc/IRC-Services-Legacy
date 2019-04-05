@@ -149,11 +149,10 @@ angular.module("adminApp").config(function ($stateProvider, moment) {
 				},
 			},
 			resolve: {				
-				providers: () => { return[]},
-				/*
-				function (PrivateProviderService, $rootScope, $q) {
-					return PrivateProviderService.getList().then(r => r.plain());
-				},*/
+				providers: function (PrivateProviderService, $rootScope) {
+						return PrivateProviderService.getList().then(r => r.plain());
+				},
+				
 				serviceTypes: function (CommonDataService) {
 					return CommonDataService.getServiceTypes();
 				},
