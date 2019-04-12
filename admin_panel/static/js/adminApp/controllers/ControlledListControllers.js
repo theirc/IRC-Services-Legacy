@@ -7,5 +7,5 @@ angular.module('adminApp')
 
     .controller('ProviderTypeListController', GenerateListController('ProviderTypeService'))
     .controller('ProviderTypeOpenController', GenerateOpenController('ProviderTypeService',(v, i)=>{
-    }))
+    }, 'providerTypes'))
 ;
