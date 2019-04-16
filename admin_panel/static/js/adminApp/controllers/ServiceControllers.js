@@ -331,7 +331,8 @@ angular
             'viber': 'Viber',
             'whatsapp': 'Whatsapp',
             'skype': 'Skype',
-            'facebook_messenger': 'Facebook Messenger'
+            'facebook_messenger': 'Facebook Messenger',
+            'instagram': 'Instagram',
         };
         vm.days = [
             'sunday',
@@ -1052,6 +1053,7 @@ Only superusers and service providers have access to the edit functions. Everyon
             vm.regionlvl1 = 0;
             vm.regionlvl2 = 0;
             vm.regionlvl3 = 0;
+            vm.reloadOption({})
         };
 
         vm.onRegionChange = () => {

@@ -53,6 +53,8 @@ angular.module('adminApp')
         vm.isNew = !vm.object.hasOwnProperty('id');
         vm.regions = regions.filter(r => r.level === 1);
         vm.serviceTypes = serviceTypes;
+        vm.stInstance = {};
+        vm.hasServices = true;
 
         if (vm.isNew) {
             vm.isEditing = true;
@@ -85,7 +87,7 @@ angular.module('adminApp')
 
         vm.stOptions = tableUtils.defaultsWithServiceNameAndFilter('ServiceService', {
             provider: provider.id
-        });
+        }, initComplete);
         vm.stColumns = [
             tableUtils.newColumn('id').withTitle('ID'),
             tableUtils.newColumn(`name_${selectedLanguage}`).withTitle($filter('translate')('TABLE_NAME'))
@@ -120,5 +122,23 @@ angular.module('adminApp')
                 vm.object.save();
             }
             vm.stopEditing();
+        }
+
+        vm.remove = function () {
+            if (confirm('Are you sure?')) {
+    
+                if (vm.isNew) {
+                    $state.go('provider.list');
+                } else {
+                    vm.object.remove().then(function () {
+                        $state.go('provider.list');
+                    });
+                }
+                vm.stopEditing();
+            }
+        };
+
+        function initComplete() {
+            vm.hasServices = vm.stInstance.DataTable.page.info().recordsTotal > 0;
         }
     });

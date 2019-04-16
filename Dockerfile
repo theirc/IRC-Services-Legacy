@@ -52,6 +52,7 @@ ADD . /code/
 
 RUN npm install
 RUN npm install gulp
+RUN npm install angular-material@1.1.7
 RUN npm install -g gulp
 RUN npm rebuild node-sass --force
 RUN gulp

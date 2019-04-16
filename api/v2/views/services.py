@@ -46,6 +46,8 @@ from rest_framework import filters
 from haystack.query import SearchQuerySet
 from django.db.models import Case, When
 import time
+from django.db import connections
+import pymysql.cursors
 
 
 class ServiceAreaViewSet(viewsets.ModelViewSet):
@@ -62,7 +64,7 @@ class SearchFilter(filters.SearchFilter):
         params = request.query_params.get(self.search_param, '')
         if not params:
             return queryset
-
+        
         pk_list = [o.pk for o in SearchQuerySet().filter(content=params)]
         preserved = Case(*[When(pk=pk, then=pos)
                            for pos, pk in enumerate(pk_list)])
@@ -386,7 +388,7 @@ class PrivateServiceViewSet(FilterByRegionMixin, viewsets.ModelViewSet):
     pagination_class = StandardResultsSetPagination
     filter_backends = (django_filters.DjangoFilterBackend,
                        filters.OrderingFilter, SearchFilter)
-
+    search_fields = ['name'] + generate_translated_fields('title', False)
     def get_queryset(self):
         qs = super(PrivateServiceViewSet, self).get_queryset()
         if not (hasattr(self.request, 'user') and self.request.user.is_superuser):
@@ -590,6 +592,11 @@ class ServiceViewSet(viewsets.ModelViewSet):
                     setattr(service_to_copy, 'languages_spoken_{}'.format(l), '')
                     setattr(service_to_copy, 'name_{}'.format(l), '')
             
+            location = None
+            if (service_to_copy.location != None):
+                location = service_to_copy.location.ewkt.split(";")[1]
+                service_to_copy.location = None
+
             service_to_copy.save()
 
             # Fill all fragile data
@@ -604,6 +611,11 @@ class ServiceViewSet(viewsets.ModelViewSet):
             service_to_copy.types.add(*types)
             service_to_copy.contact_information.add(*contact_information)
             service_to_copy.save()
+
+            if (location != None):
+                cursor = connections['default'].cursor()        
+                cursor.execute("update services_service set location = ST_GEOMFROMTEXT(%s,4326) where id = %s ;", [location, service_to_copy.id])
+
             return Response({'service_id': service_to_copy.id}, status=201)
         else:
             return Response({'error': 'Missing service id or service name'}, status=400)
@@ -626,9 +638,8 @@ class ServiceViewSet(viewsets.ModelViewSet):
         if requested_service_id:
             requested_service = Service.objects.get(id=requested_service_id)
             if requested_service.location:
-                filtered_by_region = self.filter_queryset(self.get_queryset()).filter(status__in=[Service.STATUS_CURRENT])
+                filtered_by_region = self.filter_queryset(self.get_queryset()).filter(status__in=[Service.STATUS_CURRENT]).exclude(location__isnull = True)
                 filtered_by_coordinates = filtered_by_region.annotate(distance=RawSQL('ST_Distance_Sphere(ST_GeomFromWKB(st_aswkb(POINT%s), 4326),services_service.location)', (requested_service.location.coords,))).filter(distance__lt=max_distance_m).exclude(id=requested_service_id)
-                
         else:
             return Response({'error': 'Missing service id'}, status=400)
 

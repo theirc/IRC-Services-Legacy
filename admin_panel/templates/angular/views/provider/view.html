@@ -143,7 +143,7 @@
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <table datatable="" dt-options="ctrl.stOptions" dt-columns="ctrl.stColumns" class="table table-bordered table-striped">
+                            <table datatable="" dt-options="ctrl.stOptions" dt-columns="ctrl.stColumns" dt-instance="ctrl.stInstance" class="table table-bordered table-striped">
                             </table>
                         </div>
                     </div>
@@ -168,7 +168,12 @@
                             ng-disabled="ctrl.form.$invalid" data-old-tooltip="Fill in all required fields">
                             {{ 'PROVIDER_SAVE' | translate }}
                         </button>
-                        <button type="button" class="btn btn-warning" ng-if="ctrl.isEditing && ctrl.canEdit && !ctrl.isNew" ng-click="ctrl.cancelEditing()">{{ 'PROVIDER_CANCEL' | translate }}
+                        <button type="button" class="btn btn-danger" ng-if="!ctrl.isEditing && user.isSuperuser && !ctrl.hasServices"
+                            ng-click="ctrl.remove()">
+                            {{ 'DELETE' | translate }}
+                        </button>
+                        <button type="button" class="btn btn-warning" ng-if="ctrl.isEditing && ctrl.canEdit && !ctrl.isNew"
+                            ng-click="ctrl.cancelEditing()">{{ 'PROVIDER_CANCEL' | translate }}
                         </button>
                     </div>
                 </div>

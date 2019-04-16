@@ -75,7 +75,7 @@ class ProviderListSerializer(serializers.ModelSerializer):
         model = Provider
         fields = tuple(
             [
-                'id', 'name',
+                'id', 'name', 'vacancy'
             ] 
         )
 
@@ -90,7 +90,7 @@ class ProviderSerializer(RequireOneTranslationMixin, serializers.HyperlinkedMode
         model = Provider
         fields = tuple(
             [
-                'url', 'id',
+                'url', 'id', 'vacancy',
             ] +
             generate_translated_fields('name') +
             generate_translated_fields('description') +
@@ -118,7 +118,7 @@ class ProviderResultSerializer(serializers.ModelSerializer):
         model = Provider
         fields = tuple(
             [
-                'url', 'id',
+                'url', 'id', 'vacancy',
             ] +
             generate_translated_fields('name') +
             generate_translated_fields('address')
@@ -774,7 +774,7 @@ class ServiceCreateSerializer(serializers.ModelSerializer):
         service.type = ServiceType.objects.get(name_en=type['name_en'])
         service.save()
         cursor = connections['default'].cursor()        
-        cursor.execute("UPDATE services_service SET location = ST_GEOMFROMTEXT(%s) where id = %s ;", [location, service.id])
+        cursor.execute("UPDATE services_service SET location = ST_GEOMFROMTEXT(%s, 4326) where id = %s ;", [location, service.id])
 
         if self.initial_data.get('confirmed'):
             log = ServiceConfirmationLog.objects.create(service=service,

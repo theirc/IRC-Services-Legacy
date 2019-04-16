@@ -303,7 +303,7 @@ class GeographicRegionViewSet(viewsets.ModelViewSet):
 
         self.perform_update(serializer)
         cursor = connections['default'].cursor()
-        cursor.execute("update regions_geographicregion set geom = ST_GEOMFROMTEXT(%s) where id = %s ;", [geom, region])
+        cursor.execute("update regions_geographicregion set geom = ST_GEOMFROMTEXT(%s, 4326) where id = %s ;", [geom, region])
         self.geom = geomobj
         return Response(data)
     
