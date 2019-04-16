@@ -22,6 +22,7 @@ def push_blog_post_to_transifex(blog_post):
         password = settings.TRANSIFEX_PASSWORD
         user = settings.TRANSIFEX_USER
 
+        organization = settings.TRANSIFEX_PROJECT_SLUG
         project = settings.TRANSIFEX_BLOG_PROJECT_SLUG
 
         transifex_url_data = {
@@ -29,7 +30,8 @@ def push_blog_post_to_transifex(blog_post):
             "slug": blog_post['slug']
         }
 
-        fetch_format = "https://www.transifex.com/api/2/project/{project}/resource/{slug}/"
+        # fetch_format = "https://www.transifex.com/api/2/project/{project}/resource/{slug}/"
+        fetch_format = "https://api.transifex.com/organizations/{organization}/projects/{project}/resources/{slug}/"
         post_format = "https://www.transifex.com/api/2/project/{project}/resources/"
 
         r = requests.get(fetch_format.format(
@@ -149,6 +151,7 @@ def push_service_to_transifex(id):
         password = settings.TRANSIFEX_PASSWORD
         user = settings.TRANSIFEX_USER
 
+        organization = settings.TRANSIFEX_PROJECT_SLUG
         project = settings.TRANSIFEX_SERVICES_PROJECT_SLUG
 
         transifex_url_data = {
@@ -156,7 +159,8 @@ def push_service_to_transifex(id):
             "slug": service.slug
         }
 
-        fetch_format = "https://www.transifex.com/api/2/project/{project}/resource/{slug}/"
+        # fetch_format = "https://www.transifex.com/api/2/project/{project}/resource/{slug}/"
+        fetch_format = "https://api.transifex.com/organizations/{organization}/projects/{project}/resources/{slug}/"
         post_format = "https://www.transifex.com/api/2/project/{project}/resources/"
 
         r = requests.get(fetch_format.format(
