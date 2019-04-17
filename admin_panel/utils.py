@@ -21,21 +21,23 @@ def push_blog_post_to_transifex(blog_post):
     try:
         password = settings.TRANSIFEX_PASSWORD
         user = settings.TRANSIFEX_USER
+        api_user = settings.TRANSIFEX_API_USER
+        token = settings.TRANSIFEX_TOKEN
 
-        organization = settings.TRANSIFEX_PROJECT_SLUG
+        organization = settings.TRANSIFEX_ORGANIZATION_SLUG
         project = settings.TRANSIFEX_BLOG_PROJECT_SLUG
 
         transifex_url_data = {
+            "organization": organization,
             "project": project,
             "slug": blog_post['slug']
         }
 
-        # fetch_format = "https://www.transifex.com/api/2/project/{project}/resource/{slug}/"
+        put_format = "https://www.transifex.com/api/2/project/{project}/resource/{slug}/"
         fetch_format = "https://api.transifex.com/organizations/{organization}/projects/{project}/resources/{slug}/"
         post_format = "https://www.transifex.com/api/2/project/{project}/resources/"
 
-        r = requests.get(fetch_format.format(
-            **transifex_url_data), auth=(user, password))
+        r = requests.get(fetch_format.format(**transifex_url_data), auth=(api_user, token))
 
         is_new = r.status_code == 404
 
@@ -59,7 +61,7 @@ def push_blog_post_to_transifex(blog_post):
             status = 'New'
             info = {'strings_added': json.loads(r2.text)[0]}
         else:
-            r2 = requests.put(fetch_format.format(**transifex_url_data) + 'content/',
+            r2 = requests.put(put_format.format(**transifex_url_data) + 'content/',
                               headers={"Content-type": "application/json"},
                               auth=(user, password),
                               data=json.dumps(payload), )
@@ -150,21 +152,23 @@ def push_service_to_transifex(id):
 
         password = settings.TRANSIFEX_PASSWORD
         user = settings.TRANSIFEX_USER
+        api_user = settings.TRANSIFEX_API_USER
+        token = settings.TRANSIFEX_TOKEN
 
-        organization = settings.TRANSIFEX_PROJECT_SLUG
+        organization = settings.TRANSIFEX_ORGANIZATION_SLUG
         project = settings.TRANSIFEX_SERVICES_PROJECT_SLUG
 
         transifex_url_data = {
+            "organization": organization,
             "project": project,
             "slug": service.slug
         }
 
-        # fetch_format = "https://www.transifex.com/api/2/project/{project}/resource/{slug}/"
+        put_format = "https://www.transifex.com/api/2/project/{project}/resource/{slug}/"
         fetch_format = "https://api.transifex.com/organizations/{organization}/projects/{project}/resources/{slug}/"
         post_format = "https://www.transifex.com/api/2/project/{project}/resources/"
 
-        r = requests.get(fetch_format.format(
-            **transifex_url_data), auth=(user, password))
+        r = requests.get(fetch_format.format(**transifex_url_data), auth=(api_user, token))
 
         is_new = r.status_code == 404
 
@@ -185,7 +189,7 @@ def push_service_to_transifex(id):
             status = 'New'
             info = {'strings_added': json.loads(r2.text)[0]}
         else:
-            r2 = requests.put(fetch_format.format(**transifex_url_data) + 'content/',
+            r2 = requests.put(put_format.format(**transifex_url_data) + 'content/',
                               headers={"Content-type": "application/json"},
                               auth=(user, password),
                               data=json.dumps(payload), )
