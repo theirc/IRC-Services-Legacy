@@ -4,19 +4,15 @@ Installing
 ### Dependencies
 + Python 3.5
 + pip
-+ PostgreSQL
++ MySQL
 + PostGIS 
 
 ### Installing dependencies
     sudo add-apt-repository ppa:fkrull/deadsnakes
     sudo apt-get update
     sudo apt-get install python3.5 python3.5-dev python3-pip
-    sudo apt-get install postgresql postgresql-server-dev-9.3 postgresql-9.3-postgis-2.1
     sudo apt-get install libmysqlclient-dev ruby
     sudo gem install sass
-
-### Create database
-    createdb -h localhost -U postgres service_info
 
 ### Setting up a virtualenv
     Virtualenv is not required (but it's better to use it)

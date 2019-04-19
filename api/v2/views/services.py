@@ -64,7 +64,7 @@ class SearchFilter(filters.SearchFilter):
         params = request.query_params.get(self.search_param, '')
         if not params:
             return queryset
-
+        
         pk_list = [o.pk for o in SearchQuerySet().filter(content=params)]
         preserved = Case(*[When(pk=pk, then=pos)
                            for pos, pk in enumerate(pk_list)])
@@ -388,7 +388,7 @@ class PrivateServiceViewSet(FilterByRegionMixin, viewsets.ModelViewSet):
     pagination_class = StandardResultsSetPagination
     filter_backends = (django_filters.DjangoFilterBackend,
                        filters.OrderingFilter, SearchFilter)
-
+    search_fields = ['name'] + generate_translated_fields('title', False)
     def get_queryset(self):
         qs = super(PrivateServiceViewSet, self).get_queryset()
         if not (hasattr(self.request, 'user') and self.request.user.is_superuser):
