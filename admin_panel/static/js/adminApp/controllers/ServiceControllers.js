@@ -541,7 +541,7 @@ Only superusers and service providers have access to the edit functions. Everyon
                 ServiceService
                     .pushServiceToTransifex(vm.service.id)
                     .then(function (s) {
-                        $state.reload();
+                        // $state.reload();
                         let message;
                         if (s.status == 'New') {
                             message = `Service has been created in transifex!
@@ -552,7 +552,6 @@ Only superusers and service providers have access to the edit functions. Everyon
                         <br/>Strings updated: ${s.strings_updated}
                         <br/>Strings deleted: ${s.strings_delete}`;
                         }
-                        $state.reload();
                         toasty.success({
                             title: 'Pushed to transifex!',
                             msg: message,
@@ -561,6 +560,7 @@ Only superusers and service providers have access to the edit functions. Everyon
                             sound: false,
                             html: true
                         });
+                        $state.reload();
                     })
                     .catch(function (e) {
                         toasty.error({
@@ -572,7 +572,7 @@ Only superusers and service providers have access to the edit functions. Everyon
                             html: true
                         });
                     });
-                $state.reload();
+                // $state.reload();
             };
 
             vm.pullFromTransifex = function () {
