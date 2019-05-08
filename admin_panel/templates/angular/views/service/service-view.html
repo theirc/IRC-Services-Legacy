@@ -226,7 +226,7 @@
                                 <ui-select tagging="ctrl.transformTag" ng-disabled="!ctrl.isEditing" multiple ng-model="ctrl.service.tags" sortable="true"
                                     close-on-select="true" on-select="ctrl.createNewTag($item.name)">
                                     <ui-select-match placeholder="{{ 'SERVICE_TAGS' | translate }}">{{ $item.name }}</ui-select-match>
-                                    <ui-select-choices repeat="tag in ctrl.tags | filter: { name: $select.search }">
+                                    <ui-select-choices repeat="tag in ctrl.tags | filter: { name: $select.search } | limitTo: 20">
                                         <div ng-if="tag.isTag" ng-bind-html="(tag.name | highlight: $select.search)"></div>
                                         <div ng-if="!tag.isTag" ng-bind-html="tag.name + tag.isTag | highlight: $select.search"></div>
                                     </ui-select-choices>
