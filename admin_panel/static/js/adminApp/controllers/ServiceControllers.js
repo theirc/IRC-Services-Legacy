@@ -660,7 +660,7 @@ Only superusers and service providers have access to the edit functions. Everyon
                     let object = vm
                         .tags
                         .find(element => {
-                            return element.name === newTag;
+                            return element.name.toLowerCase() === newTag.toLowerCase();
                         });
                     if (object) {
                         return true;
@@ -711,7 +711,7 @@ Only superusers and service providers have access to the edit functions. Everyon
                         .service
                         .tags
                         .filter(element => {
-                            return element.name == newTag;
+                            return element.name.toLowerCase() === newTag.toLowerCase();
                         });
                     for (let obj of objectToPop) {
                         vm
@@ -723,7 +723,7 @@ Only superusers and service providers have access to the edit functions. Everyon
                         .service
                         .tags
                         .push(vm.tags.find(element => {
-                            return element.name == newTag;
+                            return element.name.toLowerCase() === newTag.toLowerCase();
                         }));
                 }
             };
