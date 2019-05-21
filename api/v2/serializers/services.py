@@ -272,6 +272,7 @@ class ServiceExcelSerializer(serializers.ModelSerializer):
     contact_info = serializers.SerializerMethodField(read_only=True)
     opening_time = serializers.SerializerMethodField(read_only=True)
     country_name = serializers.SerializerMethodField(read_only=True)
+    image_url = serializers.SerializerMethodField(read_only=True)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -309,6 +310,9 @@ class ServiceExcelSerializer(serializers.ModelSerializer):
             r = r.parent
         return r.name
 
+    def get_image_url(self, obj):
+        return obj.image.url if obj.image else ''
+
     def validate(self, attrs):
         return super().validate(attrs)
 
@@ -337,6 +341,7 @@ class ServiceExcelSerializer(serializers.ModelSerializer):
             ('website', 'Website'),
             ('facebook_page', 'Facebook'),
         ] +
+        [("image_url", "Image URL")] +
         [("languages_spoken_{}".format(k), "Languages spoken in ({})".format(v)) for k, v in settings.LANGUAGES] +
         [('confirmation_log', 'Confirmation log')]
         )
@@ -368,6 +373,7 @@ class ServiceExcelSerializer(serializers.ModelSerializer):
                 'website',
                 'facebook_page',
             ] +
+            ['image_url'] +
             generate_translated_fields('languages_spoken', False) +
             ['confirmation_log']
         )
