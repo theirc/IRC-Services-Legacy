@@ -250,7 +250,7 @@ INSTALLED_APPS = (
 
     'email_user',
     'haystack',
-
+    'frontend',
     'regions',
     'services',
 
