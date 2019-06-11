@@ -12,16 +12,17 @@ import json
 import hmac
 import hashlib
 
-
-
-class LandingPageView(LoginRequiredMixin, TemplateView):
+class FrontendAppView(LoginRequiredMixin, TemplateView):
     login_url = '/login/'
     redirect_field_name = 'next'
 
-    template_name = 'admin_panel/index.html'
-
+    template_name = 'build/index.html'
+    """
+    Serves the compiled frontend entry point (only works if you have run `yarn
+    run build`).
+    """
     def get_context_data(self, **kwargs):
-        context = super(LandingPageView, self).get_context_data(**kwargs)
+        context = super(FrontendAppView, self).get_context_data(**kwargs)
         request = self.request
         user = request.user
 
@@ -102,3 +103,18 @@ class LandingPageView(LoginRequiredMixin, TemplateView):
             })
 
         return context
+
+    # def get(self, request):
+    #     try:
+    #         with open(os.path.join(settings.REACT_APP_DIR, 'build', 'index.html')) as f:
+    #             return HttpResponse(f.read())
+    #     except FileNotFoundError:
+    #         logging.exception('Production build of app not found')
+    #         return HttpResponse(
+    #             """
+    #             This URL is only used when you have built the production
+    #             version of the app. Visit http://localhost:3000/ instead, or
+    #             run `yarn run build` to test the production version.
+    #             """,
+    #             status=501,
+    #         )

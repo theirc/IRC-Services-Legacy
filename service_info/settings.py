@@ -154,6 +154,12 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "node_modules"),
 )
 
+REACT_APP_DIR = os.path.join(BASE_DIR, 'frontend')
+
+STATICFILES_DIRS = [
+    os.path.join(REACT_APP_DIR, 'build', 'static'),
+]
+
 LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'locale'),
 )
@@ -191,12 +197,17 @@ MIDDLEWARE_CLASSES = (
 
 AUTHENTICATION_BACKENDS = ("service_info.backends.CustomAuthenticationBackend",)
 
+TEMPLATE_DIRS = (
+    os.path.join(REACT_APP_DIR),
+)
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': (
             os.path.join(BASE_DIR, 'templates'),
+            os.path.join(BASE_DIR, 'frontend', 'build'),
             os.path.join(BASE_DIR, 'service_info', 'templates'),
+            os.path.join(REACT_APP_DIR),
         ),
         'OPTIONS': {
             'context_processors':
@@ -250,7 +261,7 @@ INSTALLED_APPS = (
 
     'email_user',
     'haystack',
-
+    'frontend',
     'regions',
     'services',
 
