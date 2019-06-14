@@ -9,15 +9,18 @@ let history;
 
 
 class AppRouter extends Component {
-	componentDidMount() {
+	componentWillMount() {
 		
 	}
 
 	render() {
 		//const ServicesWithCountry = withCountry(Services);
+		const initialCsrf = this.props.initialCsrf;
+		console.log(initialCsrf, this.props);
+		sessionStorage.setItem("csrf", initialCsrf);
 		return (
 			<Router>
-				<Route path="/login" component={Login} />	
+				<Route path="/login" component={props => <Login {...props} />} />	
 			</Router>
 			
 		);

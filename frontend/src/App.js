@@ -1,32 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component }  from 'react';
 import './App.css';
 import { Helmet } from "react-helmet";
 import AppRouter from "./router";
+import { createStore, applyMiddleware } from "redux";
+import { Provider, connect } from "react-redux";
+import thunk from "redux-thunk";
+import {auth} from "./actions";
+import cmsApp from "./reducers";
 
-function App() {
-  return (
-    <div className="App">
-      <Helmet>
-						<title>CMS</title>
-			</Helmet>
-      <AppRouter/>
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+let store = createStore(cmsApp, applyMiddleware(thunk));
+
+class App extends Component {
+  render(){
+    const initialCsrf = document.getElementById("initialCSRF").value;
+    return (
+      <Provider store={store}>
+        <div className="App">
+          <Helmet>
+                <title>CMS</title>
+          </Helmet>
+          <AppRouter initialCsrf={initialCsrf}/>
+          
+        </div>
+      </Provider>
+    );
+  }
+  
 }
 
 export default App;
