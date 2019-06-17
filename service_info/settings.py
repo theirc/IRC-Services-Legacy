@@ -359,7 +359,7 @@ REST_FRAMEWORK = {
         'api.auth.ServiceInfoTokenAuthentication',
         # Remove session auth for now, as it doesn't seem to be compatible with
         # token auth when both frontend and backend are on the same port
-        #'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
     ),
     # LimitOffsetPagination allows the caller to control pagination.
     # We won't paginate by default.

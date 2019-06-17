@@ -20,7 +20,7 @@ class AppRouter extends Component {
 		sessionStorage.setItem("csrf", initialCsrf);
 		return (
 			<Router>
-				<Route path="/login" component={props => <Login {...props} />} />	
+				<Route path="/userlogin" component={props => <Login {...props} />} />	
 			</Router>
 			
 		);
