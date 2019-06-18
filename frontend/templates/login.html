@@ -20,7 +20,7 @@
             <div class="form-container">
                 <div class="box-border">
                     <p class="text-center">{% trans "Sign in to start your session!" %}</p>
-                    
+                     <form method="POST">
                         {% csrf_token %}
                         <input type="hidden" name="next" value="{% firstof next '/' %}" />
 
@@ -41,7 +41,7 @@
                                     {% trans 'Log in' %}
                             </button>
                         </div>
-                    
+                    </form>
                     <p>
                         <a class="reset-password-link" href="/password_reset">{% trans 'Forgotten your password or username?' %}</a>
                     </p>
