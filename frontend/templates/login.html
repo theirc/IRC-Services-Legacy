@@ -1,0 +1,56 @@
+{% load i18n static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>REACT {{ site.name }} CMS</title>
+
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"> {% include "admin_panel/css.html" %} {% block additional-requirements %}{% endblock %}
+</head>
+
+<body class="hold-transition skin-signpost sidebar-mini">
+
+    <div>
+        <div class="main-flex-container">
+            <div class="logo-header">
+                <img src="/public/static/img/{{site.domain}}.wb.png" />
+            </div>
+            <div class="form-container">
+                <div class="box-border">
+                    <p class="text-center">{% trans "Sign in to start your session!" %}</p>
+                     <form method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="{% firstof next '/' %}" />
+
+                        <div class="form-group">
+                            <input type="email" name="username" class="form-control" id="id_username" placeholder="{% trans 'Email' %}" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" name="password" class="form-control" id="id_password" placeholder="{% trans 'Password' %}" required>
+                        </div>
+                        {%if form.errors%}
+                        <div class="alert alert-danger" ng-show="ctrl.loginErrorMessage">
+                            {{ form.non_field_errors }}
+                        </div>
+                        {%endif%}
+                        <div class="form-group login-buttons-container">
+                            <span></span>
+                            <button type="submit" class="btn login-button" id="login_submit">
+                                    {% trans 'Log in' %}
+                            </button>
+                        </div>
+                    </form>
+                    <p>
+                        <a class="reset-password-link" href="/password_reset">{% trans 'Forgotten your password or username?' %}</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>

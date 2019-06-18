@@ -206,6 +206,7 @@ TEMPLATES = [
         'DIRS': (
             os.path.join(BASE_DIR, 'templates'),
             os.path.join(BASE_DIR, 'frontend', 'build'),
+            os.path.join(BASE_DIR, 'frontend', 'templates'),
             os.path.join(BASE_DIR, 'service_info', 'templates'),
             os.path.join(REACT_APP_DIR),
         ),
@@ -351,7 +352,8 @@ REST_FRAMEWORK = {
     # by default.  (We'll alter this as needed on a few specific
     # views.)
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated'
+        #'rest_framework.permissions.IsAuthenticated'
+        'rest_framework.permissions.AllowAny'
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'api.auth.ServiceInfoTokenAuthentication',
@@ -384,7 +386,7 @@ CORS_ALLOW_HEADERS = (
     'accept',
     'origin',
     'authorization',
-    'x-csrftoken',
+    #'x-csrftoken',
     'serviceinfoauthorization',
     'x-requested-location',
 )
