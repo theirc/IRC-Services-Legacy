@@ -17,9 +17,9 @@ class Login extends React.Component {
         let csrftoken = sessionStorage.getItem("csrf");
         csrftoken = document.cookie.match(new RegExp('(^| )' + 'csrftoken' + '=([^;]+)'))[2];
         let headers = {"Content-Type": "application/json", 'X-CSRFToken': csrftoken};
-        let body = JSON.stringify({username, password});
+        let data = JSON.stringify({username, password});
     
-        return fetch("/login", {headers, body, method: "POST"})
+        return fetch("/login", {headers, data, method: "POST"})
             .then(res => {
                 if (res.status < 500) {
                     window.res = res;
