@@ -10,10 +10,14 @@ from django.http import JsonResponse
 
 from django.conf import settings
 from django.middleware.csrf import get_token
-from django.contrib.auth import authenticate, get_user_model
+from django.contrib.auth import authenticate, get_user_model, login, logout
 from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy
-
+from rest_framework.response import Response
+from api.v2.serializers import UserAvatarSerializer, EmailSerializer, SecurePasswordCredentialsSerializer, \
+    ResetUserPasswordSerializer, GroupSerializer, APILoginSerializer, APIRegisterSerializer
+from rest_framework.authtoken.models import Token
+from django.utils.timezone import now
 
 import os
 import json
@@ -28,20 +32,35 @@ class LoginView(TemplateView):
         return  context
  
     def post(self, request, **kwargs):
-        username = request.POST['username']
-        password = request.POST['password']
+        data = json.loads(request.body.decode('utf-8'))
+        username = data['username']
+        password = data['password']
         user = authenticate(username=username, password=password)
         if user:
             if user.is_active:
-                #login(request, user)
-                with open(os.path.join(settings.REACT_APP_DIR, 'build', 'index.html')) as f:
-                    content = f.read()
-                    content = content.replace('csrf_token', get_token(request))
-                    return HttpResponse(content)
+                #login(request, user)                
+                token, created = Token.objects.get_or_create(user=user)
+                user.last_login = now()
+                user.save(update_fields=['last_login'])
+                login(request, user)
+                response = {'token': token.key,
+                    'language': user.language,
+                    'email': user.email,
+                    'isStaff': user.is_staff,
+                    'isSuperuser': user.is_superuser,
+                    'name': user.name,
+                    'surname': user.surname,
+                    'id': user.id,
+                    'title': user.title,
+                    'position': user.position,
+                    'phone_number': user.phone_number
+                    }
+                return JsonResponse(response, status=200)
+
             else:
                 messages.error(request, 'User inactive.', 'danger')
         else:
-            messages.error(request, 'Invalid login credentials.', 'danger')
+            return JsonResponse({'Message': 'User not found'}, status=401)
         
         context = self.get_context_data(**kwargs)
         return self.render_to_response(context)
@@ -61,7 +80,7 @@ class LoginView(TemplateView):
             return reverse_lazy('request:request')
  
 
-class FrontendAppView(LoginRequiredMixin, TemplateView):
+class FrontendAppView(TemplateView):
     #template_name = 'build/index.html'
     template_name = 'login.html'
     """
