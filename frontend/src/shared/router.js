@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Login from "../scenes/Login";
+// import ProviderTypes from './scenes/ProviderTypes/ProviderTypes'
+import Skeleton from '../components/Skeleton/Skeleton';
+import ProviderTypes from '../scenes/ProviderTypes/ProviderTypes';
 
 class AppRouter extends Component {
 	componentWillMount() {
@@ -14,10 +17,12 @@ class AppRouter extends Component {
 		sessionStorage.setItem("csrf", initialCsrf);
 		return (
 			<Router>
-				<Route path='/userlogin' component={props => <Login {...props} />} />	
+				<Route path='/userlogin' component={props => <Login {...props} />} />
+				<Skeleton>
+					<Route path='/provider-types' component={props => <ProviderTypes {...props} />} />
+				</Skeleton>
 			</Router>
-			
-		);
+		)
 	}
 }
 

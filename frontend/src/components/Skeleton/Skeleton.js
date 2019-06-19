@@ -10,7 +10,7 @@ const Skeleton = props => {
 		<div className='Skeleton'>
 			<Header />
 			<SidebarNav />
-			<Canvas />
+			<Canvas {...props} />
 			<SidePanel />
 			<Footer />
 		</div>
