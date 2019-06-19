@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Login from "../scenes/Login";
 // import ProviderTypes from './scenes/ProviderTypes/ProviderTypes'
 import Skeleton from '../components/Skeleton/Skeleton';
@@ -17,10 +17,13 @@ class AppRouter extends Component {
 		sessionStorage.setItem("csrf", initialCsrf);
 		return (
 			<Router>
-				<Route path='/userlogin' component={props => <Login {...props} />} />
-				<Skeleton>
-					<Route path='/provider-types' component={props => <ProviderTypes {...props} />} />
-				</Skeleton>
+				<Switch>
+					<Route path='/userlogin' component={props => <Login {...props} />} />
+					<Skeleton>
+						<Route path='/provider-types' component={props => <ProviderTypes {...props} />} />
+					</Skeleton>
+					<Route render={() => <h1>Page not found</h1>} />
+				</Switch>
 			</Router>
 		)
 	}

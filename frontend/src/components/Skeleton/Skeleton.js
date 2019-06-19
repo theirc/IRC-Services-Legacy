@@ -4,6 +4,7 @@ import SidebarNav from './SidebarNav/SidebarNav';
 import Canvas from './Canvas/Canvas';
 import SidePanel from './SidePanel/SidePanel';
 import Footer from './Footer/Footer';
+import './Skeleton.scss';
 
 const Skeleton = props => {
 	return (
