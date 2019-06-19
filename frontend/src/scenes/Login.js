@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from "react-redux";
-import {Link, Redirect} from "react-router-dom";
-import {auth} from "../actions";
+import {Redirect} from "react-router-dom";
 
 class Login extends React.Component {
     static contextTypes = {
@@ -90,25 +88,4 @@ class Login extends React.Component {
     
 }
 
-const mapStateToProps = state => {
-    let errors = [];
-    if (state.auth.errors) {
-      errors = Object.keys(state.auth.errors).map(field => {
-        return {field, message: state.auth.errors[field]};
-      });
-    }
-    return {
-      errors,
-      isAuthenticated: state.auth.isAuthenticated
-    };
-  }
-  
-  const mapDispatchToProps = dispatch => {
-    return {
-      login: (username, password) => {
-        return dispatch(auth.login(username, password));
-      }
-    };
-  }
-  
-  export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default Login;

@@ -1,12 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import { ConnectedRouter } from "react-router-redux";
-import Placeholder from "./shared/placeholder";
-import Login from "./scenes/Login";
-
-
-let history;
-
+import Login from "../scenes/Login";
 
 class AppRouter extends Component {
 	componentWillMount() {
@@ -20,7 +14,7 @@ class AppRouter extends Component {
 		sessionStorage.setItem("csrf", initialCsrf);
 		return (
 			<Router>
-				<Route path="/userlogin" component={props => <Login {...props} />} />	
+				<Route path='/userlogin' component={props => <Login {...props} />} />	
 			</Router>
 			
 		);
