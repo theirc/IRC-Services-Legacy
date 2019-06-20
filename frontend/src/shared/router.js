@@ -18,7 +18,7 @@ class AppRouter extends Component {
 		return (
 			<Router>
 				<Switch>
-					<Route path='/userlogin' component={props => <Login {...props} />} />
+					<Route path='/login' component={props => <Login {...props} />} />
 					<Skeleton>
 						<Route path='/provider-types' component={props => <ProviderTypes {...props} />} />
 					</Skeleton>

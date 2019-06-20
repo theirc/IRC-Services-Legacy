@@ -25,7 +25,8 @@ import hmac
 import hashlib
 
 class LoginView(TemplateView):
-    template_name = "login.html"
+    #template_name = "login.html"
+    template_name = 'build/index.html'
  
     def get_context_data(self, **kwargs):
         context = super(LoginView, self).get_context_data(**kwargs)
@@ -81,8 +82,8 @@ class LoginView(TemplateView):
  
 
 class FrontendAppView(TemplateView):
-    #template_name = 'build/index.html'
-    template_name = 'login.html'
+    template_name = 'build/index.html'
+    #template_name = 'login.html'
     """
     Serves the compiled frontend entry point (only works if you have run `yarn
     run build`).
