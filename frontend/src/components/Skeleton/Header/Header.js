@@ -2,9 +2,12 @@ import React from 'react';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import { useTranslation } from "react-i18next";
 import './Header.scss';
 
 const Header = props => {
+	const { t, i18n } = useTranslation();
+
 	return (
 		<div className='Header'>
 			<Navbar collapseOnSelect expand="sm" bg="light" variant="light">
