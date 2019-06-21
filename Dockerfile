@@ -4,41 +4,45 @@ FROM python:3.6
 RUN mkdir /code
 WORKDIR /code
 
-ADD requirements.txt /code/
-ADD apt-packages /code/
-ADD nginx.conf /code/
-ADD package.json /code/
-ADD Gulpfile.js /code/
+# Chain these commands - each one on a line creates a layer in the final Docker image
+#Changing ADD to COPY - No specialized source needed(E.g. URL/TAR archive)
+COPY requirements.txt apt-packages nginx.conf package.json Gulpfile.js /code/
+
 #ADD cron.sh /code/
 
 RUN pip install -r requirements.txt
+
+# This needs to be uopdated if you are going to use SSH.  Its the default in th Azure Docs
 ENV SSH_PASSWD "root:Docker!"
 
-RUN curl -sL https://deb.nodesource.com/setup_9.x | bash -
+
 #RUN apt-get install -y software-properties-common python-software-properties --fix-broken --fix-missing
 #RUN add-apt-repository ppa:maxmind/ppa
-RUN apt-get update 
+# RUN apt-get update 
 #RUN apt-get install -y  `cat /code/apt-packages`
 
+# Chain these commands - each one on a line creates a layer in the final Docker image
 #RUN apt-get install -y --allow-unauthenticated libicu52
-RUN apt-get install -y --allow-unauthenticated libicu-dev 
-RUN apt-get install -y --allow-unauthenticated libgeoip1 
-RUN apt-get install -y --allow-unauthenticated build-essential 
-RUN apt-get install -y --allow-unauthenticated python3-dev 
-RUN apt-get install -y --allow-unauthenticated python3-setuptools 
-RUN apt-get install -y --allow-unauthenticated python3-numpy 
-RUN apt-get install -y --allow-unauthenticated python3-scipy 
-RUN apt-get install -y --allow-unauthenticated libatlas-dev 
-RUN apt-get install -y --allow-unauthenticated binutils 
-RUN apt-get install -y --allow-unauthenticated libproj-dev 
-RUN apt-get install -y --allow-unauthenticated gdal-bin 
-#RUN apt-get install -y --allow-unauthenticated libatlas3gf-base 
-RUN apt-get install -y --allow-unauthenticated libffi-dev 
-RUN apt-get install -y --allow-unauthenticated wkhtmltopdf 
-RUN apt-get install -y --allow-unauthenticated libspatialite-dev 
-RUN apt-get install -y --allow-unauthenticated spatialite-bin nginx
+#RUN apt-get clean && apt-get update -y 
+#RUN apt-get install -y --allow-unauthenticated libicu-de \
 
-RUN apt-get install -y nodejs
+RUN apt-get clean && apt-get update && apt-get install -y --allow-unauthenticated libicu-dev \
+    && apt-get install -y --allow-unauthenticated libgeoip1 \
+    && apt-get install -y --allow-unauthenticated build-essential \
+    && apt-get install -y --allow-unauthenticated python3-dev \
+    && apt-get install -y --allow-unauthenticated python3-setuptools \
+    && apt-get install -y --allow-unauthenticated python3-numpy \
+    && apt-get install -y --allow-unauthenticated python3-scipy \
+    && apt-get install -y --allow-unauthenticated libatlas-dev \
+    && apt-get install -y --allow-unauthenticated binutils \
+    && apt-get install -y --allow-unauthenticated libproj-dev \
+    && apt-get install -y --allow-unauthenticated gdal-bin \
+    && apt-get install -y --allow-unauthenticated libffi-dev \
+    && apt-get install -y --allow-unauthenticated wkhtmltopdf \
+    && apt-get install -y --allow-unauthenticated libspatialite-dev \
+    && apt-get install -y --allow-unauthenticated spatialite-bin nginx
+
+RUN curl -sL https://deb.nodesource.com/setup_9.x | bash - && apt-get install -y nodejs
 #RUN apt-get install libmaxminddb0 libmaxminddb-dev mmdb-bin
 # ssh
 RUN apt-get install -y --no-install-recommends dialog cron \
@@ -46,18 +50,12 @@ RUN apt-get install -y --no-install-recommends dialog cron \
         && echo "$SSH_PASSWD" | chpasswd 
 ADD commands-cron /etc/crontab
 
-RUN chmod 0644 /etc/crontab  
-RUN touch /var/log/cron.log 
+RUN chmod 0644 /etc/crontab && touch /var/log/cron.log 
 ADD . /code/
 
-RUN npm install
-RUN npm install gulp
-RUN npm install angular-material@1.1.7
-RUN npm install -g gulp
-RUN npm rebuild node-sass --force
-RUN gulp
-
-RUN python manage.py collectstatic --noinput
+RUN npm install && npm install gulp && npm install angular-material@1.1.7 \
+    && npm install -g gulp && npm rebuild node-sass --force \
+    && gulp && python manage.py collectstatic --noinput
 #RUN python manage.py migrate --noinput
 
 
