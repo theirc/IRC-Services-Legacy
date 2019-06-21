@@ -236,7 +236,7 @@
                                 <label for="update_date">{{'SERVICE_UPDATE_DATE' | translate}}: {{ctrl.lastUpdate}}</label>
                                 <div flex-gt-xs>
                                     <label for="update_date">{{'SERVICE_SELECT_DATE' | translate}}:</label>
-                                    <md-datepicker ng-model="ctrl.customUpdate" md-placeholder="Enter date"></md-datepicker>
+                                    <input type="date" ng-model="ctrl.customUpdate" id="datepicker"></input>
                                 </div>
                             </div>
 
