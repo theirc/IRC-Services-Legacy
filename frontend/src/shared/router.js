@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Login from "../scenes/Login";
 // import ProviderTypes from './scenes/ProviderTypes/ProviderTypes'
-import Skeleton from '../components/Skeleton/Skeleton';
+import Skeleton from '../components/layout/Skeleton/Skeleton';
 import ProviderTypes from '../scenes/ProviderTypes/ProviderTypes';
 
 class AppRouter extends Component {
