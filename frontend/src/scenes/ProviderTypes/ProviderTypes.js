@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from "react-i18next";
 import i18n from '../../shared/i18n';
 import languages from './languages.json';
-import List from './views/List/List';
+import ListView from './views/ListView/ListView';
 import './ProviderTypes.scss';
 import api from './api';
 
@@ -46,7 +46,7 @@ const ProviderTypes = props => {
 	api.providerTypes.getAll();
 	return (
 		<div className={NS}>
-			<List data={products} columns={columns} />
+			<ListView data={products} columns={columns} />
 		</div>
 	)
 }

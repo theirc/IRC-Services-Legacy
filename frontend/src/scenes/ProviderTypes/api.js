@@ -12,7 +12,6 @@ let headers = {
 };
 
 let url = '/api/provider-types/?ordering=id&page=1&page_size=10';
-let api = {};
 api.providerTypes = {
 	getAll: () => {
 		return fetch(`${url}`,
