@@ -4,6 +4,7 @@ import i18n from '../../shared/i18n';
 import languages from './languages.json';
 import List from './views/List/List';
 import './ProviderTypes.scss';
+import api from './api';
 
 const NS = 'ProviderTypes';
 
@@ -42,6 +43,7 @@ const ProviderTypes = props => {
 	i18n.customLoad(languages, NS);
 	const { t } = useTranslation(NS);
 
+	api.providerTypes.getAll();
 	return (
 		<div className={NS}>
 			<List data={products} columns={columns} />
