@@ -16,7 +16,7 @@ api.providerTypes = {
 	getAll: () => {
 		return fetch(`${url}`,
 			{headers}
-			)
+		)
 			.then(r => r.json())
 			.then(console.log);
 	}
