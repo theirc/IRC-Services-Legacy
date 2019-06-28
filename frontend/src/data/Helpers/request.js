@@ -1,11 +1,11 @@
-const composeHeader = (csrfToken, token, cookie = null) => {
+const composeHeader = (csrfToken = null, token = null, cookie = null) => {
 	return {
-		'Cookie': cookie,
 		'Accept': 'application/json',
 		'Content-Type': 'application/json',
-		'ServiceInfoAuthorization': `token ${token}`,
-		'X-CSRFToken': csrfToken,
-		'X-Requested-With': 'XMLHttpRequest' // for security reasons
+		'X-Requested-With': 'XMLHttpRequest', // for security reasons
+		...(csrfToken && {'X-CSRFToken': csrfToken}),
+		...(token && {'ServiceInfoAuthorization': `token ${token}`}),
+		...(cookie && {'Cookie': cookie}),
 	}
 };
 

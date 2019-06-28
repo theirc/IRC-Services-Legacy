@@ -3,6 +3,8 @@ import { useTranslation } from "react-i18next";
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import cellEditFactory from 'react-bootstrap-table2-editor';
+import filterFactory from 'react-bootstrap-table2-filter';
+
 import './List.scss';
 
 const options = {
@@ -23,6 +25,7 @@ const List = ({data, columns}) => {
 				keyField='id'
 				data={data}
 				columns={columns}
+				filter={filterFactory()}
 				pagination={paginationFactory(options)}
 				cellEdit={cellEditFactory({ mode: 'click' })}
 				selectRow={{ mode: 'checkbox' }}

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Login from "../scenes/Login";
+import Login from "../scenes/Login/Login";
 import Skeleton from '../components/layout/Skeleton/Skeleton';
 import Providers from '../scenes/Providers/Providers';
 import ProviderTypes from '../scenes/ProviderTypes/ProviderTypes';

@@ -1,0 +1,22 @@
+{
+	"en": {
+		"Login": {
+			"title": "Login",
+			"description": "Login Description",
+			"properties": {
+				"width": "long",
+				"height": "not long"
+			}
+		}
+	},
+	"fr": {
+		"Login": {
+			"title": "Login fr",
+			"description": "Login Description fr",
+			"properties": {
+				"width": "long fr",
+				"height": "not long fr"
+			}
+		}
+	}
+}

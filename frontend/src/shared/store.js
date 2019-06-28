@@ -15,7 +15,9 @@ let initialState = window && window.initialState ? window.initialState : {
 export const history = createBrowserHistory();
 
 // binding redux devtools extension and routerMiddleware(history) to dispatch history actions
-const enhancers = compose(window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(), applyMiddleware(routerMiddleware(history)));
+const enhancers = window.__REDUX_DEVTOOLS_EXTENSION__ ?
+	compose(applyMiddleware(routerMiddleware(history)), window.__REDUX_DEVTOOLS_EXTENSION__()) :
+	compose(applyMiddleware(routerMiddleware(history)));
 
 const reducers = {
 	login: loginReducers,

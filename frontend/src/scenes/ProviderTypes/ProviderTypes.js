@@ -27,7 +27,7 @@ const ProviderTypes = props => {
 	const { t } = useTranslation(NS);
 
 	const [data, setData] = useState([]);
-	
+
 	useEffect(() => {
 		(async function fetchData() {
 			const response = await api.providerTypes.getAll();
