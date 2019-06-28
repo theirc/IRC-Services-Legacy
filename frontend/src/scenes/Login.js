@@ -26,7 +26,7 @@ class Login extends React.Component {
 			.then(res => {
 				if (res.status < 500) {
 					window.res = res;
-					console.log(res.data);
+					console.log('res.data', res.data);
 					return res.json().then(data => {
 						return { status: res.status, data };
 					})
@@ -38,8 +38,9 @@ class Login extends React.Component {
 			.then(res => {
 				if (res.status === 200) {
 					console.log("Success");
-					console.log(res.data);
+					this.props.setToken(res.data.token);
 					window.res = res;
+					this.props.history.push('/provider-types');
 					return res.data;
 				} else if (res.status === 403 || res.status === 401) {
 					console.log("Error");
@@ -97,7 +98,8 @@ const mapStateToProps = (state, props) => ({});
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		setCsrfToken: csrfToken => dispatch(actions.setCsrfToken(csrfToken))
+		setCsrfToken: csrfToken => dispatch(actions.setCsrfToken(csrfToken)),
+		setToken: token => dispatch(actions.setToken(token)),
 	}
 };
 

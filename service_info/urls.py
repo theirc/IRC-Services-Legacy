@@ -21,7 +21,7 @@ NO_404_LOCALE_REDIRECTS = []
 urlpatterns = [
     url(r'^health/$', health_view),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^api/', include(api.urls)),
+    url(r'^v2/', include(api.urls)),
 
     url(r'^password_reset/$',
         password_reset,
