@@ -22,12 +22,15 @@ const columns = [
 	}
 ];
 
+const rowEvents = {
+	onClick: console.log
+};
+
 const Providers = props => {
 	i18n.customLoad(languages, NS);
 	const { t } = useTranslation(NS);
 
 	const [data, setData] = useState([]);
-	debugger;
 
 	useEffect(() => {
 		(async function fetchData() {
@@ -39,7 +42,7 @@ const Providers = props => {
 
 	return (
 		<div className={NS}>
-			{data.length && <ListView data={data} columns={columns} />}
+			{data.length && <ListView data={data} columns={columns} rowEvents={rowEvents} />}
 		</div>
 	)
 }

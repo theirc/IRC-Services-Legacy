@@ -23,9 +23,7 @@ const reducers = {
 	login: loginReducers,
 	router: connectRouter(history)
 };
-console.log('store::reducers', reducers);
 
 const store = createStore(combineReducers({ ...reducers }), initialState, enhancers);
-console.log('store::store', store);
 
 export default store;

@@ -14,21 +14,22 @@ const options = {
 	hidePageListOnlyOnePage: true
 };
 
-const List = ({data, columns}) => {
+const List = ({data, columns, rowEvents}) => {
 	const { t, i18n } = useTranslation();
 
 	return (
 		<div className='List'>
 			<BootstrapTable
-				striped
+				// cellEdit={cellEditFactory({ mode: 'click' })}
+				columns={columns}
+				data={data}
+				filter={filterFactory()}
 				hover
 				keyField='id'
-				data={data}
-				columns={columns}
-				filter={filterFactory()}
 				pagination={paginationFactory(options)}
-				cellEdit={cellEditFactory({ mode: 'click' })}
+				rowEvents={rowEvents}
 				selectRow={{ mode: 'checkbox' }}
+				striped
 			/>
 		</div>
 	)
