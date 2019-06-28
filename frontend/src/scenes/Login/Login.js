@@ -11,7 +11,6 @@ import './Login.scss';
 const NS = 'Login';
 
 const Login = props => {
-	console.log('login props', props);
 	i18n.customLoad(languages, NS);
 	const { t } = useTranslation(NS);
 

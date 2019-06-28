@@ -27,7 +27,7 @@ const Header = props => {
 							<NavDropdown.Item><Link to='/regions'>Regions</Link></NavDropdown.Item>
 							<NavDropdown.Item><Link to='/service-categories'>ServiceCategories</Link></NavDropdown.Item>
 							<NavDropdown.Divider />
-							<NavDropdown.Item><Link to='/settings'>Settings</Link></NavDropdown.Item>
+							<NavDropdown.Item><Link to='/'>Log out</Link></NavDropdown.Item>
 						</NavDropdown>
 					</Nav>
 				</Navbar.Collapse>
