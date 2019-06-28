@@ -5,21 +5,30 @@ import Canvas from './Canvas/Canvas';
 import SidePanel from './SidePanel/SidePanel';
 import Footer from './Footer/Footer';
 import { useTranslation } from "react-i18next";
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom'
 
 import './Skeleton.scss';
 
 const Skeleton = props => {
 	const { t, i18n } = useTranslation();
 
+	// Redirect to login
+	!props.user && document.location.replace('/');
+	
 	return (
 		<div className='Skeleton'>
-			<Header />
-			<SidebarNav />
+			<Header {...props} />
+			<SidebarNav {...props} />
 			<Canvas {...props} />
-			<SidePanel />
-			<Footer />
+			<SidePanel {...props} />
+			<Footer {...props} />
 		</div>
 	)
 }
 
-export default Skeleton;
+const mapStateToProps = state => ({
+	user: state.login.user
+});
+
+export default connect(mapStateToProps)(Skeleton);

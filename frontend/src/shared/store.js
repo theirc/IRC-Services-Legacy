@@ -8,7 +8,8 @@ const window = global.window || {};
 let initialState = window && window.initialState ? window.initialState : {
 	login: {
 		csrfToken: null
-	}
+	},
+	user: null
 };
 
 export const history = createBrowserHistory();

@@ -27,18 +27,18 @@ const ProviderTypes = props => {
 	const { t } = useTranslation(NS);
 
 	const [data, setData] = useState([]);
-
+	
 	useEffect(() => {
 		(async function fetchData() {
 			const response = await api.providerTypes.getAll();
-			// setData(response.map(e => ({...e, description: e.slug})));
-			setData(response);
+			setData(response.map(e => ({id: e.id, name: e.name})));
+			console.log(response);
 		})();
 	}, []);
 
 	return (
 		<div className={NS}>
-			<ListView data={data} columns={columns} />
+			{data.length && <ListView data={data} columns={columns} />}
 		</div>
 	)
 }

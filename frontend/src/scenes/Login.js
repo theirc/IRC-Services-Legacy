@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Redirect } from "react-router-dom";
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './Login/actions';
 import actions from './Login/actions';
@@ -10,19 +10,19 @@ class Login extends React.Component {
 		router: PropTypes.object
 	}
 	state = {
-		username: "",
-		password: "",
+		username: '',
+		password: '',
 	}
 
 	login = (username, password) => {
-		let csrftoken = sessionStorage.getItem("csrf");
+		let csrftoken = sessionStorage.getItem('csrf');
 		csrftoken = document.cookie.match(new RegExp('(^| )' + 'csrftoken' + '=([^;]+)'))[2];
-		console.log('props, csrftoken', this.props, csrftoken);
-		this.props.setCsrfToken(csrftoken);
-		let headers = { "Content-Type": "application/json", 'X-CSRFToken': csrftoken };
+		let headers = { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken };
 		let body = JSON.stringify({ username, password });
+		
+		this.props.setCsrfToken(csrftoken);
 
-		return fetch("/login", { headers, body, method: "POST" })
+		return fetch('/login', { headers, body, method: 'POST' })
 			.then(res => {
 				if (res.status < 500) {
 					window.res = res;
@@ -31,22 +31,23 @@ class Login extends React.Component {
 						return { status: res.status, data };
 					})
 				} else {
-					console.log("Server Error!");
+					console.log('Server Error!');
 					throw res;
 				}
 			})
 			.then(res => {
 				if (res.status === 200) {
-					console.log("Success");
-					this.props.setToken(res.data.token);
-					window.res = res;
+					console.log('Success');
+					this.props.setUser(res.data);
+					// window.res = res;
 					this.props.history.push('/provider-types');
+					console.log('login props', this.props);
 					return res.data;
 				} else if (res.status === 403 || res.status === 401) {
-					console.log("Error");
+					console.log('Error');
 					throw res.data;
 				} else {
-					console.log("Failed");
+					console.log('Failed');
 					throw res.data;
 				}
 			})
@@ -62,7 +63,7 @@ class Login extends React.Component {
 	}
 	render() {
 		if (this.props.isAuthenticated) {
-			return <Redirect to="/" />
+			return <Redirect to='/' />
 		}
 		return (
 			<div>
@@ -70,19 +71,19 @@ class Login extends React.Component {
 					<fieldset>
 						<legend>Login</legend>
 						<p>
-							<label htmlFor="username">Username</label>
+							<label htmlFor='username'>Username</label>
 							<input
-								type="text" id="username"
+								type='text' id='username'
 								onChange={e => this.setState({ username: e.target.value })} />
 						</p>
 						<p>
-							<label htmlFor="password">Password</label>
+							<label htmlFor='password'>Password</label>
 							<input
-								type="password" id="password"
+								type='password' id='password'
 								onChange={e => this.setState({ password: e.target.value })} />
 						</p>
 						<p>
-							<button type="submit">Login</button>
+							<button type='submit'>Login</button>
 						</p>
 
 					</fieldset>
@@ -99,7 +100,7 @@ const mapStateToProps = (state, props) => ({});
 const mapDispatchToProps = (dispatch) => {
 	return {
 		setCsrfToken: csrfToken => dispatch(actions.setCsrfToken(csrfToken)),
-		setToken: token => dispatch(actions.setToken(token)),
+		setUser: user => dispatch(actions.setUser(user)),
 	}
 };
 

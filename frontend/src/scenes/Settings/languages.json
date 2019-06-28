@@ -1,0 +1,22 @@
+{
+	"en": {
+		"Settings": {
+			"title": "Settings",
+			"description": "Provider Types Description",
+			"properties": {
+				"width": "long",
+				"height": "not long"
+			}
+		}
+	},
+	"fr": {
+		"Settings": {
+			"title": "Settings fr",
+			"description": "Settings Description fr",
+			"properties": {
+				"width": "long fr",
+				"height": "not long fr"
+			}
+		}
+	}
+}
