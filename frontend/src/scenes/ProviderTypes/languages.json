@@ -1,8 +1,8 @@
 {
 	"en": {
 		"ProviderTypes": {
-			"title": "Provider Types",
-			"description": "Provider Types Description",
+			"title": "ProviderTypes",
+			"description": "ProviderTypes Description",
 			"properties": {
 				"width": "long",
 				"height": "not long"
@@ -11,8 +11,8 @@
 	},
 	"fr": {
 		"ProviderTypes": {
-			"title": "Provider Types fr",
-			"description": "Provider Types Description fr",
+			"title": "ProviderTypes fr",
+			"description": "ProviderTypes Description fr",
 			"properties": {
 				"width": "long fr",
 				"height": "not long fr"

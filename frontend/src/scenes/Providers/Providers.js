@@ -4,10 +4,10 @@ import i18n from '../../shared/i18n';
 import languages from './languages.json';
 import ListView from './views/ListView/ListView';
 import { textFilter } from 'react-bootstrap-table2-filter';
-import './ProviderTypes.scss';
+import './Providers.scss';
 import api from './api';
 
-const NS = 'ProviderTypes';
+const NS = 'Providers';
 
 const columns = [
 	{
@@ -22,15 +22,16 @@ const columns = [
 	}
 ];
 
-const ProviderTypes = props => {
+const Providers = props => {
 	i18n.customLoad(languages, NS);
 	const { t } = useTranslation(NS);
 
 	const [data, setData] = useState([]);
-	
+	debugger;
+
 	useEffect(() => {
 		(async function fetchData() {
-			const response = await api.providerTypes.getAll();
+			const response = await api.providers.getAll();
 			setData(response.map(e => ({id: e.id, name: e.name})));
 			console.log(response);
 		})();
@@ -43,4 +44,4 @@ const ProviderTypes = props => {
 	)
 }
 
-export default ProviderTypes;
+export default Providers;

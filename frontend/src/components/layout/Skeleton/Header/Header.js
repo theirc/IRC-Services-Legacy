@@ -3,10 +3,14 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useTranslation } from "react-i18next";
+import { Link } from 'react-router-dom'
+import { connect } from 'react-redux';
 import './Header.scss';
 
 const Header = props => {
 	const { t, i18n } = useTranslation();
+
+	const title = props.user ? `${props.user.name} ${props.user.surname}` : 'Not Logged In';
 
 	return (
 		<div className='Header'>
@@ -17,11 +21,13 @@ const Header = props => {
 					<Nav className="mr-auto">
 					</Nav>
 					<Nav>
-						<NavDropdown alignRight title="John Foo" id="collasible-nav-dropdown">
-							<NavDropdown.Item href="#action/3.1">Profile</NavDropdown.Item>
-							<NavDropdown.Item href="#action/3.2">User Settings</NavDropdown.Item>
+						<NavDropdown alignRight title={title} id="collasible-nav-dropdown">
+							<NavDropdown.Item><Link to='/providers'>Providers</Link></NavDropdown.Item>
+							<NavDropdown.Item><Link to='/provider-types'>ProviderTypes</Link></NavDropdown.Item>
+							<NavDropdown.Item><Link to='/regions'>Regions</Link></NavDropdown.Item>
+							<NavDropdown.Item><Link to='/service-categories'>ServiceCategories</Link></NavDropdown.Item>
 							<NavDropdown.Divider />
-							<NavDropdown.Item href="#action/3.4">Log out</NavDropdown.Item>
+							<NavDropdown.Item><Link to='/settings'>Settings</Link></NavDropdown.Item>
 						</NavDropdown>
 					</Nav>
 				</Navbar.Collapse>
@@ -30,4 +36,8 @@ const Header = props => {
 	)
 }
 
-export default Header;
+const mapStateToProps = state => ({
+	user: state.login.user
+});
+
+export default connect(mapStateToProps)(Header);

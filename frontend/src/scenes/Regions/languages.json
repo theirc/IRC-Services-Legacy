@@ -1,0 +1,22 @@
+{
+	"en": {
+		"Regions": {
+			"title": "Regions",
+			"description": "Provider Types Description",
+			"properties": {
+				"width": "long",
+				"height": "not long"
+			}
+		}
+	},
+	"fr": {
+		"Regions": {
+			"title": "Regions fr",
+			"description": "Regions Description fr",
+			"properties": {
+				"width": "long fr",
+				"height": "not long fr"
+			}
+		}
+	}
+}
