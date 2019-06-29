@@ -1,4 +1,7 @@
 .Canvas {
-  // transition: margin-left .5s; /* If you want a transition effect */
+  transition: margin-left .5s; // collapse effect
   margin-left: 200px;
+  &.expanded {
+    margin-left: 50px;
+  }
 }

@@ -5,7 +5,7 @@ import './Canvas.scss';
 const Canvas = props => {
 	const { t, i18n } = useTranslation();
 
-	return <div className='Canvas'>{props.children}</div>
+	return <div className={`Canvas ${props.sidebarnav.isOpen ? '' : 'expanded'}`}>{props.children}</div>
 }
 
 export default Canvas;

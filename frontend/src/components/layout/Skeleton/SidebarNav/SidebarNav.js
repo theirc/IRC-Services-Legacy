@@ -1,22 +1,35 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { useTranslation } from "react-i18next";
 import Button from 'react-bootstrap/Button';
+import actions from '../actions';
+import { connect } from 'react-redux';
 import './SidebarNav.scss';
 
 const SidebarNav = props => {
 	const { t, i18n } = useTranslation();
 
-	const [isOpen, setOpen] = useState(true);
-
 	const onClick = (e) => {
-		setOpen(!isOpen); // toggle
+		props.setSidebarNavOpen(!props.isOpen);
 	};
 
 	return (
-		<div className={`SidebarNav ${isOpen ? 'open' : 'closed'}`}>
-			<Button variant='outline-info' size='sm' onClick={onClick}>x</Button>
+		<div className={`SidebarNav ${props.isOpen ? 'open' : 'closed'}`}>
+			<div className='header'>
+				<Button variant='outline-secondary' size='sm' onClick={onClick}>x</Button>
+			</div>
 		</div>
 	)
 }
 
-export default SidebarNav;
+const mapStateToProps = (state, props) => ({
+	isOpen: state.skeleton.sidebarnav.isOpen
+});
+
+const mapDispatchToProps = dispatch => {
+	return {
+		setSidebarNavOpen: isOpen => dispatch(actions.setSidebarNavOpen(isOpen)),
+		setUser: user => dispatch(actions.setUser(user)),
+	}
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SidebarNav);

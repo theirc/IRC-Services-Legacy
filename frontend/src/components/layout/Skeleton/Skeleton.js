@@ -22,13 +22,17 @@ const Skeleton = props => {
 			<SidebarNav {...props} />
 			<Canvas {...props} />
 			<SidePanel {...props} />
+			{props.sidebarnav.isOpen}
 			<Footer {...props} />
 		</div>
 	)
 }
 
 const mapStateToProps = state => ({
-	user: state.login.user
+	user: state.login.user,
+	sidebarnav: {
+		isOpen: state.skeleton.sidebarnav.isOpen
+	}
 });
 
 export default connect(mapStateToProps)(Skeleton);
