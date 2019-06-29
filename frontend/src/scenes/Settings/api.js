@@ -1,4 +1,4 @@
-import composeHeader from '../../data/Helpers/request';
+import composeHeader from '../../data/Helpers/headers';
 import store from '../../shared/store';
 
 const url = '/api/settings/';

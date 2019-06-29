@@ -1,0 +1,20 @@
+/* The sidebar menu */
+.SidebarNav {
+	box-shadow: 0 0 8px 0px #ccc;
+  height: 100%; /* 100% Full-height */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Stay on top */
+  top: 0;
+  left: 0;
+  background-color: #fff; /* Black*/
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 60px; /* Place content 60px from the top */
+  transition: 0.5s; /* 0.5 second transition effect to slide in the sidebar */
+  &.open {
+    width: 200px;
+  }
+
+  &.closed {
+    width: 50px;
+  }
+}

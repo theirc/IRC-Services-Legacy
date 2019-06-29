@@ -22,16 +22,17 @@ const columns = [
 	}
 ];
 
-const rowEvents = {
-	onClick: console.log
-};
-
 const Providers = props => {
 	i18n.customLoad(languages, NS);
 	const { t } = useTranslation(NS);
 
 	const [data, setData] = useState([]);
+	console.log(props);
 
+	const rowEvents = {
+		onClick: (e, row, rowIndex) => props.history.push(`/providers/${row.id}`)
+	};
+	
 	useEffect(() => {
 		(async function fetchData() {
 			const response = await api.providers.getAll();
@@ -42,7 +43,8 @@ const Providers = props => {
 
 	return (
 		<div className={NS}>
-			{data.length && <ListView data={data} columns={columns} rowEvents={rowEvents} />}
+			{/* {data.length && <ListView data={data} columns={columns} rowEvents={rowEvents} />} */}
+			{data.length && <ListView data={data} columns={columns} />}
 		</div>
 	)
 }

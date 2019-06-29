@@ -15,7 +15,7 @@ const Header = props => {
 	return (
 		<div className='Header'>
 			<Navbar collapseOnSelect expand="sm" bg="light" variant="light">
-				<Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+				<Navbar.Brand href="#home">Signpost</Navbar.Brand>
 				<Navbar.Toggle aria-controls="responsive-navbar-nav" />
 				<Navbar.Collapse id="responsive-navbar-nav">
 					<Nav className="mr-auto">

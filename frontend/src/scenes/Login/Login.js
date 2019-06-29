@@ -5,7 +5,9 @@ import languages from './languages.json';
 import { connect } from 'react-redux';
 import actions from './actions';
 import api from './api';
-import composeHeader from '../../data/Helpers/request';
+import composeHeader from '../../data/Helpers/headers';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 import './Login.scss';
 
 const NS = 'Login';
@@ -38,29 +40,46 @@ const Login = props => {
 
 	return (
 		<div className={NS}>
-			<form onSubmit={onSubmit}>
-				<fieldset>
-					<legend>Login</legend>
-					<p>
-						<label htmlFor='username'>Username</label>
-						<input type='text' id='username' onChange={e => setUser(e.target.value)} />
-					</p>
-					<p>
-						<label htmlFor='password'>Password</label>
-						<input type='password' id='password' onChange={e => setPass(e.target.value)} />
-					</p>
-					<p>
-						<button type='submit'>Login</button>
-					</p>
-				</fieldset>
-			</form>
+			<Form onSubmit={onSubmit}>
+				<Form.Group controlId="formBasicEmail">
+					<Form.Label>{t('username')}</Form.Label>
+					<Form.Control type="email" placeholder="Enter email" onChange={e => setUser(e.target.value)} />
+					<Form.Text className="text-muted">
+						We'll never share your email with anyone else.
+				</Form.Text>
+				</Form.Group>
+
+				<Form.Group controlId="formBasicPassword">
+					<Form.Label>{t('password')}</Form.Label>
+					<Form.Control type="password" placeholder="Password" onChange={e => setPass(e.target.value)} />
+				</Form.Group>
+				<Button variant="primary" type="submit">
+					{t('submit')}
+				</Button>
+			</Form>
 		</div>
 	)
 }
+{/* <form>
+	<fieldset>
+		<legend>{t('title')}</legend>
+		<p>
+			<label htmlFor='username'>{t('username')}</label>
+			<input type='text' id='username' onChange={e => setUser(e.target.value)} />
+		</p>
+		<p>
+			<label htmlFor='password'>{t('password')}</label>
+			<input type='password' id='password' onChange={e => setPass(e.target.value)} />
+		</p>
+		<p>
+			<button type='submit'>{t('submit')}</button>
+		</p>
+	</fieldset>
+</form> */}
 
 const mapStateToProps = (state, props) => ({});
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
 	return {
 		setCsrfToken: csrfToken => dispatch(actions.setCsrfToken(csrfToken)),
 		setUser: user => dispatch(actions.setUser(user)),

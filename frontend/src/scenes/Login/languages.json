@@ -2,7 +2,8 @@
 	"en": {
 		"Login": {
 			"title": "Login",
-			"description": "Login Description",
+			"username": "User Name",
+			"password": "Password",
 			"properties": {
 				"width": "long",
 				"height": "not long"
@@ -12,7 +13,9 @@
 	"fr": {
 		"Login": {
 			"title": "Login fr",
-			"description": "Login Description fr",
+			"username": "User Name fr",
+			"password": "Password fr",
+			"submit": "Log In",
 			"properties": {
 				"width": "long fr",
 				"height": "not long fr"
