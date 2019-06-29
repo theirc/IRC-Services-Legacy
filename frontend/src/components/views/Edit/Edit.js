@@ -5,7 +5,7 @@ import './Edit.scss';
 const Edit = props => {
 	const { t, i18n } = useTranslation();
 
-	return <div className='Edit'>Edit</div>
+	return <div className='Edit'>{props.data.name}</div>
 }
 
 export default Edit;

@@ -60,22 +60,6 @@ const Login = props => {
 		</div>
 	)
 }
-{/* <form>
-	<fieldset>
-		<legend>{t('title')}</legend>
-		<p>
-			<label htmlFor='username'>{t('username')}</label>
-			<input type='text' id='username' onChange={e => setUser(e.target.value)} />
-		</p>
-		<p>
-			<label htmlFor='password'>{t('password')}</label>
-			<input type='password' id='password' onChange={e => setPass(e.target.value)} />
-		</p>
-		<p>
-			<button type='submit'>{t('submit')}</button>
-		</p>
-	</fieldset>
-</form> */}
 
 const mapStateToProps = (state, props) => ({});
 

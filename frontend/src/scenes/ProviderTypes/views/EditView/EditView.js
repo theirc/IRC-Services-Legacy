@@ -1,12 +1,27 @@
-import React from 'react';
-import { useTranslation } from "react-i18next";
+import React, { useEffect, useState } from 'react';
 import Edit from '../../../../components/views/Edit/Edit';
-import './Edit.scss';
+import api from '../../api';
+import Button from 'react-bootstrap/Button';
+import './EditView.scss';
 
 const EditView = props => {
-	const { t, i18n } = useTranslation();
+	const [data, setData] = useState([]);
 
-	return <Edit {...props} />
+	useEffect(() => {
+		(async function fetchData() {
+			const response = await api.providerTypes.getOne(props.match.params.id);
+			setData(response);
+		})();
+	}, []);
+
+	const onClick = () => props.history.goBack()
+
+	return (
+		<div>
+			<Button onClick={onClick}>Back</Button>
+			<Edit {...props} data={data} />
+		</div>
+	);
 }
 
 export default EditView;

@@ -19,6 +19,7 @@ const List = ({data, columns, rowEvents}) => {
 
 	return (
 		<div className='List'>
+			{ data.length &&
 			<BootstrapTable
 				// cellEdit={cellEditFactory({ mode: 'click' })}
 				columns={columns}
@@ -31,6 +32,7 @@ const List = ({data, columns, rowEvents}) => {
 				selectRow={{ mode: 'checkbox' }}
 				striped
 			/>
+			}
 		</div>
 	)
 }	

@@ -9,19 +9,6 @@ import api from './api';
 
 const NS = 'Settings';
 
-const columns = [
-	{
-		dataField: 'id',
-		text: 'ID',
-		sort: true
-	}, {
-		dataField: 'name',
-		text: 'Name',
-		sort: true,
-		filter: textFilter()
-	}
-];
-
 const Settings = props => {
 	i18n.customLoad(languages, NS);
 	const { t } = useTranslation(NS);
@@ -31,14 +18,14 @@ const Settings = props => {
 	useEffect(() => {
 		(async function fetchData() {
 			const response = await api.settings.getAll();
-			setData(response.map(e => ({id: e.id, name: e.name})));
+			setData(response);
 			console.log(response);
 		})();
 	}, []);
 
 	return (
 		<div className={NS}>
-			{data.length && <ListView data={data} columns={columns} />}
+			Settings
 		</div>
 	)
 }
