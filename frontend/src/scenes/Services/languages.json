@@ -1,0 +1,22 @@
+{
+	"en": {
+		"Services": {
+			"title": "Services",
+			"description": "Provider Types Description",
+			"properties": {
+				"width": "long",
+				"height": "not long"
+			}
+		}
+	},
+	"fr": {
+		"Services": {
+			"title": "Services fr",
+			"description": "Services Description fr",
+			"properties": {
+				"width": "long fr",
+				"height": "not long fr"
+			}
+		}
+	}
+}

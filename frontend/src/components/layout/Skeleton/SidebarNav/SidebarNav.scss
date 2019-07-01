@@ -1,52 +1,61 @@
-/* The sidebar menu */
-.SidebarNav {
-  background-color: #fff; /* Black*/
+	/* The sidebar menu */
+	.SidebarNav {
+	background-color: #fff; /* Black*/
 	box-shadow: 0 0 8px 0px #ccc;
-  height: 100%; /* 100% Full-height */
-  left: 0;
-  top: 0;
-  overflow-x: hidden; /* Disable horizontal scroll */
-  padding-top: 60px; /* Place content 60px from the top */
-  position: fixed; /* Stay in place */
-  transition: 0.5s; /* collapse effect */
-  z-index: 1; /* Stay on top */
-  
-  &.open {
-    width: 235px;
-  }
+	height: 100%; /* 100% Full-height */
+	left: 0;
+	top: 0;
+	overflow-x: hidden; /* Disable horizontal scroll */
+	padding-top: 60px; /* Place content 60px from the top */
+	position: fixed; /* Stay in place */
+	transition: 0.5s; /* collapse effect */
+	z-index: 1; /* Stay on top */
 
-  &.closed {
-    width: 50px;
-  }
+	&.open {
+		width: 235px;
+	}
 
-  .header {
-    text-align: right;
-  }
+	&.closed {
+		width: 50px;
+	}
 
-  
-  ul {
-    margin: 0;
-    padding: 0;
-    
-    li {
-      cursor: pointer;
-      list-style-type: none;
-      padding: 15px 0;
-      text-align: left;
-      white-space: nowrap;
-      
-      &:hover {
-        background-color: #f4f6f9;
-        color: dodgerblue;
-      }
-      
-      img {
-        margin: 8px 15px 10px;
-      }
+	.header {
+		text-align: right;
+	}
 
-      a {
-        white-space: nowrap;
-      }
-    }
-  }
-}
+
+	ul {
+		margin: 0;
+		padding: 0;
+
+		hr {
+			margin-left: 30px;
+			margin-right: 70px;
+		}
+		
+		li {
+			cursor: pointer;
+			list-style-type: none;
+			padding: 15px 0;
+			text-align: left;
+			white-space: nowrap;
+			
+			&:hover {
+				background-color: #f4f6f9;
+				a {
+					color: dodgerblue;
+				}
+			}
+			
+			img {
+				margin: 8px 15px 10px;
+			}
+			
+			a {
+				color: grey;
+				text-decoration: none;
+				white-space: nowrap;
+			}
+		}
+	}
+	}

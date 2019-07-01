@@ -3,7 +3,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useTranslation } from "react-i18next";
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './Header.scss';
 
@@ -22,10 +22,6 @@ const Header = props => {
 					</Nav>
 					<Nav>
 						<NavDropdown alignRight title={title} id="collasible-nav-dropdown">
-							<NavDropdown.Item><Link to='/providers'>Providers</Link></NavDropdown.Item>
-							<NavDropdown.Item><Link to='/provider-types'>ProviderTypes</Link></NavDropdown.Item>
-							<NavDropdown.Item><Link to='/regions'>Regions</Link></NavDropdown.Item>
-							<NavDropdown.Item><Link to='/service-categories'>ServiceCategories</Link></NavDropdown.Item>
 							<NavDropdown.Divider />
 							<NavDropdown.Item><Link to='/'>Log out</Link></NavDropdown.Item>
 						</NavDropdown>

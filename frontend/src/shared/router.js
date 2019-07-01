@@ -7,6 +7,7 @@ import Providers from '../scenes/Providers/Providers';
 import ProviderTypes from '../scenes/ProviderTypes/ProviderTypes';
 import Regions from '../scenes/Regions/Regions';
 import ServiceCategories from '../scenes/ServiceCategories/ServiceCategories';
+import Services from '../scenes/Services/Services';
 import Settings from '../scenes/Settings/Settings';
 import { connect } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
@@ -30,6 +31,8 @@ const AppRouter = props => {
 					<Route exact path='/regions/:id' component={props => <Regions {...props} />} />
 					<Route exact path='/service-categories' component={props => <ServiceCategories {...props} />} />
 					<Route exact path='/service-categories/:id' component={props => <ServiceCategories {...props} />} />
+					<Route exact path='/services' component={props => <Services {...props} />} />
+					<Route exact path='/services/:id' component={props => <Services {...props} />} />
 					<Route exact path='/settings' component={props => <Settings {...props} />} />
 				</Skeleton>
 				}
