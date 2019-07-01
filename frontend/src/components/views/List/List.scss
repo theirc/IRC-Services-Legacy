@@ -7,25 +7,18 @@
 		color: #52575a;
 	
 		td, th {
-			border: 1px solid #dee2e6;
+			border: 1px solid #f0f0f0;
+			border-left: none;
+			border-right: none;
 		}
 
 		th {
 			border-bottom-width: 1px;
 		}
 
-		td:first-child, th:first-child {
-			border-left: none;
-		}
-
-		td:last-child, th:last-child {
-			border-right: none;
-		}
-
 		tbody {
 			tr {
 				cursor: pointer;
-				
 			}
 
 			tr:hover {
