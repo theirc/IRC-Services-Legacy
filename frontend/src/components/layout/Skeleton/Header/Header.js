@@ -22,6 +22,7 @@ const Header = props => {
 					</Nav>
 					<Nav>
 						<NavDropdown alignRight title={title} id="collasible-nav-dropdown">
+							<NavDropdown.Item disabled>Profile</NavDropdown.Item>
 							<NavDropdown.Divider />
 							<NavDropdown.Item><Link to='/'>Log out</Link></NavDropdown.Item>
 						</NavDropdown>
