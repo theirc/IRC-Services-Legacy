@@ -13,11 +13,22 @@ const SidebarNav = props => {
 	};
 
 	return (
-		<div className={`SidebarNav ${props.isOpen ? 'open' : 'closed'}`}>
+		<nav className={`SidebarNav ${props.isOpen ? 'open' : 'closed'}`}>
 			<div className='header'>
 				<Button variant='outline-secondary' size='sm' onClick={onClick}>x</Button>
 			</div>
-		</div>
+			<ul>
+				<li><img src={process.env.PUBLIC_URL + '/static/assets/Skeleton/SidebarNav/nav-services.png'} /><a href='#'>Services</a></li>
+				<li><img src={process.env.PUBLIC_URL + '/static/assets/Skeleton/SidebarNav/nav-service-map.png'} /><a>Service map</a></li>
+				<hr />
+				<li><img src={process.env.PUBLIC_URL + '/static/assets/Skeleton/SidebarNav/nav-providers.png'} /><a>Service providers</a></li>
+				<li><img src={process.env.PUBLIC_URL + '/static/assets/Skeleton/SidebarNav/nav-regions.png'} /><a>Regions</a></li>
+				<li><img src={process.env.PUBLIC_URL + '/static/assets/Skeleton/SidebarNav/nav-service-categories.png'} /><a>Service categories</a></li>
+				<li><img src={process.env.PUBLIC_URL + '/static/assets/Skeleton/SidebarNav/nav-provider-types.png'} /><a>Provider types</a></li>
+				<hr />
+				<li><img src={process.env.PUBLIC_URL + '/static/assets/Skeleton/SidebarNav/nav-settings.png'} /><a>Settings</a></li>
+			</ul>
+		</nav>
 	)
 }
 

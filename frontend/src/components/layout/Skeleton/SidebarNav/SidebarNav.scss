@@ -1,18 +1,18 @@
 /* The sidebar menu */
 .SidebarNav {
+  background-color: #fff; /* Black*/
 	box-shadow: 0 0 8px 0px #ccc;
   height: 100%; /* 100% Full-height */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Stay on top */
-  top: 0;
   left: 0;
-  background-color: #fff; /* Black*/
+  top: 0;
   overflow-x: hidden; /* Disable horizontal scroll */
   padding-top: 60px; /* Place content 60px from the top */
+  position: fixed; /* Stay in place */
   transition: 0.5s; /* collapse effect */
+  z-index: 1; /* Stay on top */
   
   &.open {
-    width: 200px;
+    width: 235px;
   }
 
   &.closed {
@@ -21,5 +21,32 @@
 
   .header {
     text-align: right;
+  }
+
+  
+  ul {
+    margin: 0;
+    padding: 0;
+    
+    li {
+      cursor: pointer;
+      list-style-type: none;
+      padding: 15px 0;
+      text-align: left;
+      white-space: nowrap;
+      
+      &:hover {
+        background-color: #f4f6f9;
+        color: dodgerblue;
+      }
+      
+      img {
+        margin: 8px 15px 10px;
+      }
+
+      a {
+        white-space: nowrap;
+      }
+    }
   }
 }
