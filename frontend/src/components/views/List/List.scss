@@ -1,8 +1,45 @@
 .List {
+	background-color: white;
+	box-shadow: 0 0 8px 0px #e3e3e3;
 	table {
+		border-left: none;
+		border-right: none;
 		color: #52575a;
-		tr {
-			cursor: pointer;
+	
+		td, th {
+			border: 1px solid #dee2e6;
+		}
+
+		th {
+			border-bottom-width: 1px;
+		}
+
+		td:first-child, th:first-child {
+			border-left: none;
+		}
+
+		td:last-child, th:last-child {
+			border-right: none;
+		}
+
+		tbody {
+			tr {
+				cursor: pointer;
+				
+			}
+
+			tr:hover {
+				background-color: #eee !important;
+			}
+
+			tr:nth-of-type(odd) {
+				background-color: white;
+			}
+			
+			tr:nth-of-type(even) {
+				background-color: #f8fafb;
+			}
+
 		}
 	}
 }

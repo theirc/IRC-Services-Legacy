@@ -4,6 +4,7 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import cellEditFactory from 'react-bootstrap-table2-editor';
 import filterFactory from 'react-bootstrap-table2-filter';
+import Actions from './Actions/Actions';
 
 import './List.scss';
 
@@ -19,6 +20,7 @@ const List = ({data, columns, rowEvents}) => {
 
 	return (
 		<div className='List'>
+			<Actions />
 			{ data.length &&
 			<BootstrapTable
 				// cellEdit={cellEditFactory({ mode: 'click' })}

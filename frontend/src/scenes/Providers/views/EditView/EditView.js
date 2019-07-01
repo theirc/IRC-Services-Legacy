@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Edit from '../../../../components/views/Edit/Edit';
 import api from '../../api';
+import { Link } from 'react-router-dom';
 import './EditView.scss';
-import Button from 'react-bootstrap/Button';
 
 const EditView = props => {
 	const [data, setData] = useState([]);
@@ -18,7 +18,7 @@ const EditView = props => {
 
 	return (
 		<div>
-			<Button onClick={onClick}>Back</Button>
+			<Link onClick={onClick}>&lt; Back</Link>
 			<Edit {...props} data={data} />
 		</div>
 	);

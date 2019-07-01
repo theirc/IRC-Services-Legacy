@@ -32,7 +32,11 @@ const ListView = props => {
 		})();
 	}, []);
 
-	return <List {...props} data={data} columns={columns} rowEvents={rowEvents}/>;
+	return (
+		<div className='ListView'>
+			<List {...props} data={data} columns={columns} rowEvents={rowEvents}/>
+		</div>
+	);
 }
 
 export default ListView;
