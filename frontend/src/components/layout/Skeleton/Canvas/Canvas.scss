@@ -1,0 +1,22 @@
+@import '../Skeleton.scss';
+
+body {
+	background-color: #f4f6f9;
+  font-size: 0.9rem;
+  
+  h2 {
+    font-size: 1.1rem;
+  }
+}
+
+.Canvas {
+  margin-left: 235px;
+  margin-top: $header-height;
+  padding: 15px;
+  transition: margin-left .5s; // collapse effect
+  text-align: left;
+
+  &.expanded {
+    margin-left: 50px;
+  }
+}

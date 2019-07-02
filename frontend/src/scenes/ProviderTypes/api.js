@@ -1,11 +1,21 @@
-import composeHeader from '../../data/Helpers/request';
+import composeHeader from '../../data/Helpers/headers';
 import store from '../../shared/store';
 
-const url = '/api/provider-types/';
 let api = api || {};
 
 api.providerTypes = {
 	getAll: () => {
+		const url = '/api/provider-types/';
+		let {login} = store.getState();
+		
+		if(!login.user) return [];
+		
+		let headers = composeHeader(login.csrfToken, login.user.token);
+		
+		return fetch(`${url}`, {headers}).then(r => r.json());
+	},
+	getOne: (id) => {
+		const url = `/api/provider-types/${id}/`;
 		let {login} = store.getState();
 		
 		if(!login.user) return [];
@@ -13,7 +23,7 @@ api.providerTypes = {
 		let headers = composeHeader(login.csrfToken, login.user.token);
 
 		return fetch(`${url}`, {headers}).then(r => r.json());
-	}
+	},
 };
 
 export default api;

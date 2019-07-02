@@ -6,16 +6,12 @@ import SidePanel from './SidePanel/SidePanel';
 import Footer from './Footer/Footer';
 import { useTranslation } from "react-i18next";
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom'
 
 import './Skeleton.scss';
 
 const Skeleton = props => {
 	const { t, i18n } = useTranslation();
 
-	// Redirect to login
-	!props.user && document.location.replace('/');
-	
 	return (
 		<div className='Skeleton'>
 			<Header {...props} />
@@ -28,7 +24,9 @@ const Skeleton = props => {
 }
 
 const mapStateToProps = state => ({
-	user: state.login.user
+	sidebarnav: {
+		isOpen: state.skeleton.sidebarnav.isOpen
+	}
 });
 
 export default connect(mapStateToProps)(Skeleton);

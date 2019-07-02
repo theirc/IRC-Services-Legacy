@@ -1,11 +1,21 @@
-import composeHeader from '../../data/Helpers/request';
+import composeHeader from '../../data/Helpers/headers';
 import store from '../../shared/store';
 
-const url = '/api/regions/?exclude_geometry=true';
 let api = api || {};
 
 api.regions = {
 	getAll: () => {
+		const url = '/api/regions/?exclude_geometry=true';
+		let {login} = store.getState();
+		
+		if(!login.user) return [];
+		
+		let headers = composeHeader(login.csrfToken, login.user.token);
+		
+		return fetch(`${url}`, {headers}).then(r => r.json());
+	},
+	getOne: (id) => {
+		const url = `/api/regions/${id}/`;
 		let {login} = store.getState();
 
 		if(!login.user) return [];
@@ -13,7 +23,7 @@ api.regions = {
 		let headers = composeHeader(login.csrfToken, login.user.token);
 
 		return fetch(`${url}`, {headers}).then(r => r.json());
-	}
+	},
 };
 
 export default api;

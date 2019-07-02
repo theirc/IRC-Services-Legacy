@@ -1,0 +1,68 @@
+@import '../Skeleton.scss';
+
+	/* The sidebar menu */
+.SidebarNav {
+	background-color: #fff; /* Black*/
+	box-shadow: 0 0 8px 0px #e3e3e3;
+	height: 100%; /* 100% Full-height */
+	left: 0;
+	top: 0;
+	overflow-x: hidden; /* Disable horizontal scroll */
+	padding-top: 60px; /* Place content 60px from the top */
+	position: fixed; /* Stay in place */
+	transition: 0.5s; /* collapse effect */
+	z-index: 1; /* Stay on top */
+
+	&.open {
+		width: $sidebarnav-open-width;
+	}
+
+	&.closed {
+		width: $sidebarnav-closed-width;
+	}
+
+	.header {
+		text-align: right;
+	}
+
+	ul {
+		margin: 0;
+		padding: 0;
+
+		hr {
+			margin-left: 15px;
+			margin-right: 15px;
+		}
+		
+		li {
+			cursor: pointer;
+			list-style-type: none;
+			text-align: left;
+			white-space: nowrap;
+			
+			&:hover, &.active {
+				background-color: #f4f6f9;
+				a {
+					color: dodgerblue;
+
+					img {
+						filter: sepia(100%) hue-rotate(190deg) saturate(500%);
+					}
+				}
+			}
+			
+			a {
+				color: grey;
+				display: block;
+				line-height: 60px;
+				text-decoration: none;
+				white-space: nowrap;
+				width: 100%;
+				height: 100%;
+				img {
+					margin: 8px 15px 10px;
+				}
+			}
+		}
+	}
+	}

@@ -3,6 +3,9 @@ import { useTranslation } from "react-i18next";
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import cellEditFactory from 'react-bootstrap-table2-editor';
+import filterFactory from 'react-bootstrap-table2-filter';
+import Actions from './Actions/Actions';
+
 import './List.scss';
 
 const options = {
@@ -12,21 +15,26 @@ const options = {
 	hidePageListOnlyOnePage: true
 };
 
-const List = ({data, columns}) => {
+const List = ({data, columns, rowEvents}) => {
 	const { t, i18n } = useTranslation();
 
 	return (
 		<div className='List'>
+			<Actions />
+			{ data.length &&
 			<BootstrapTable
-				striped
+				// cellEdit={cellEditFactory({ mode: 'click' })}
+				columns={columns}
+				data={data}
+				filter={filterFactory()}
 				hover
 				keyField='id'
-				data={data}
-				columns={columns}
 				pagination={paginationFactory(options)}
-				cellEdit={cellEditFactory({ mode: 'click' })}
+				rowEvents={rowEvents}
 				selectRow={{ mode: 'checkbox' }}
+				striped
 			/>
+			}
 		</div>
 	)
 }	
