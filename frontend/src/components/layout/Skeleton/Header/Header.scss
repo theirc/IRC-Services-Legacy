@@ -1,4 +1,9 @@
 .Header .navbar {
+	box-shadow: 0 0 8px 0px #e3e3e3;
 	opacity: 0.8;
 	z-index: 2;
+
+	.bg-light {
+		background-color: #fff;
+	}
 }
