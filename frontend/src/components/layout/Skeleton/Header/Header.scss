@@ -1,3 +1,5 @@
+@import '../Skeleton.scss';
+	
 .Header .navbar {
 	box-shadow: 0 0 8px 0px #e3e3e3;
 	opacity: 0.8;
@@ -10,9 +12,10 @@
 	.toggler {
 		cursor: pointer;
 		transition: margin-left .5s; // collapse effect
-
+		$toggler-width: 20px;
+		
 		&.expanded {
-			margin-left: 180px;
+			margin-left: $sidebarnav-open-width - $toggler-width - 16px /* navbar padding-left (1rem) */ - 10px /* margin from the right */;
 		}
 	}
 }

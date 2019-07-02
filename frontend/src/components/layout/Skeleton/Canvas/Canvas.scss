@@ -1,3 +1,5 @@
+@import '../Skeleton.scss';
+
 body {
 	background-color: #f4f6f9;
   font-size: 0.9rem;
@@ -9,7 +11,7 @@ body {
 
 .Canvas {
   margin-left: 235px;
-  margin-top: 53px;
+  margin-top: $header-height;
   padding: 15px;
   transition: margin-left .5s; // collapse effect
   text-align: left;
