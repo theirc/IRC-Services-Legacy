@@ -9,15 +9,8 @@ import './SidebarNav.scss';
 const SidebarNav = props => {
 	const { t, i18n } = useTranslation();
 
-	const onClick = (e) => {
-		props.setSidebarNavOpen(!props.isOpen);
-	};
-
 	return (
 		<nav className={`SidebarNav ${props.isOpen ? 'open' : 'closed'}`}>
-			<div className='header'>
-				<Button variant='outline-secondary' size='sm' onClick={onClick}>x</Button>
-			</div>
 			<ul>
 				<li className={props.location.pathname.includes('services') && 'active'}>
 					<Link to='/services'><img src={process.env.PUBLIC_URL + '/static/assets/Skeleton/SidebarNav/nav-services.png'} />Services</Link>
@@ -53,7 +46,6 @@ const mapStateToProps = (state, props) => ({
 
 const mapDispatchToProps = dispatch => {
 	return {
-		setSidebarNavOpen: isOpen => dispatch(actions.setSidebarNavOpen(isOpen)),
 		setUser: user => dispatch(actions.setUser(user)),
 	}
 };

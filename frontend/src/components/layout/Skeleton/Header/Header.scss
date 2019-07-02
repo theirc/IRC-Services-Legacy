@@ -6,4 +6,13 @@
 	.bg-light {
 		background-color: #fff;
 	}
+	
+	.toggler {
+		cursor: pointer;
+		transition: margin-left .5s; // collapse effect
+
+		&.expanded {
+			margin-left: 180px;
+		}
+	}
 }
