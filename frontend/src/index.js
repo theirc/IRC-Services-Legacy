@@ -9,7 +9,7 @@ import './index.css';
 
 ReactDOM.render(
 	<Provider store={store}>
-		<Suspense fallback='loading'>
+		<Suspense fallback=''>
 			<App />
 		</Suspense>
 	</Provider>,

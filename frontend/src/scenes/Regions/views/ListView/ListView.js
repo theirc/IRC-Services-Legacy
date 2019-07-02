@@ -15,6 +15,10 @@ const ListView = props => {
 			text: 'Name',
 			sort: true,
 			// filter: textFilter()
+		}, {
+			dataField: 'parent',
+			text: 'Parent',
+			sort: true,
 		}
 	];
 
@@ -27,7 +31,7 @@ const ListView = props => {
 	useEffect(() => {
 		(async function fetchData() {
 			const response = await api.regions.getAll();
-			setData(response.map(e => ({id: e.id, name: e.name})));
+			setData(response.map(e => ({id: e.id, name: e.name, parent: e.parent__name})));
 			console.log(response);
 		})();
 	}, []);
