@@ -7,9 +7,9 @@ const Edit = props => {
 
 	return (
 		<div className='Edit'>
-			<h2>{props.data.name}</h2>
 			<section>
-			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse iaculis auctor arcu sit amet auctor. Suspendisse at pellentesque turpis, ut convallis ligula. Fusce fermentum lectus in enim sollicitudin, imperdiet finibus nunc pretium. Etiam placerat ex non hendrerit tempus. Maecenas eu nisi eu sapien aliquet viverra
+				<h3>{props.data.name}</h3>
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse iaculis auctor arcu sit amet auctor. Suspendisse at pellentesque turpis, ut convallis ligula. Fusce fermentum lectus in enim sollicitudin, imperdiet finibus nunc pretium. Etiam placerat ex non hendrerit tempus. Maecenas eu nisi eu sapien aliquet viverra
 			</section>
 		</div>
 	);

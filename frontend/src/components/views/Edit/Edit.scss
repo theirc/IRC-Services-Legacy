@@ -1,7 +1,14 @@
-.Edit{
+.Edit {
+	margin-bottom: 15px;
+	background-color: white;
+	box-shadow: 0 0 8px 0px #e3e3e3;
+	padding: 15px;
+
 	section {
-		background-color: white;
-		box-shadow: 0 0 8px 0px #e3e3e3;
-		padding: 15px;
+		h3 {
+			font-size: 0.9rem;
+			font-weight: normal;
+			text-transform: uppercase;
+		}
 	}
 }
