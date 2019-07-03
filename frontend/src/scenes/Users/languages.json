@@ -1,0 +1,22 @@
+{
+	"en": {
+		"Users": {
+			"title": "Users",
+			"description": "Provider Types Description",
+			"properties": {
+				"width": "long",
+				"height": "not long"
+			}
+		}
+	},
+	"fr": {
+		"Users": {
+			"title": "Users fr",
+			"description": "Users Description fr",
+			"properties": {
+				"width": "long fr",
+				"height": "not long fr"
+			}
+		}
+	}
+}

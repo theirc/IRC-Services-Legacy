@@ -12,28 +12,38 @@ const SidebarNav = props => {
 	return (
 		<nav className={`SidebarNav ${props.isOpen ? 'open' : 'closed'}`}>
 			<ul>
-				<li className={props.location.pathname.includes('services') && 'active'}>
-					<Link to='/services'><img src={process.env.PUBLIC_URL + '/static/assets/Skeleton/SidebarNav/nav-services.png'} />Services</Link>
+				<li className={props.location.pathname.includes('services') && 'active'} onClick={() => props.history.push('/services')}>
+					<img src={'/public/static/assets/Skeleton/SidebarNav/nav-services.png'} />
+					Services
 				</li>
 				<li>
-					<a target='_blank' href='https://www.refugee.info/'><img src={process.env.PUBLIC_URL + '/static/assets/Skeleton/SidebarNav/nav-service-map.png'} />Service map</a>
+					<a target='_blank' href='https://www.refugee.info/'><img src={'/public/static/assets/Skeleton/SidebarNav/nav-service-map.png'} />Service map</a>
 				</li>
 				<hr /> {/* Separator */}
-				<li className={props.location.pathname.includes('providers') && 'active'}>
-					<Link to='/providers'><img src={process.env.PUBLIC_URL + '/static/assets/Skeleton/SidebarNav/nav-providers.png'} />Service providers</Link>
+				<li className={props.location.pathname.includes('providers') && 'active'} onClick={() => props.history.push('/providers')}>
+					<img src={'/public/static/assets/Skeleton/SidebarNav/nav-providers.png'} />
+					Service providers
 				</li>
-				<li className={props.location.pathname.includes('regions') && 'active'}>
-					<Link to='/regions'><img src={process.env.PUBLIC_URL + '/static/assets/Skeleton/SidebarNav/nav-regions.png'} />Regions</Link>
+				<li className={props.location.pathname.includes('regions') && 'active'} onClick={() => props.history.push('/regions')}>
+					<img src={'/public/static/assets/Skeleton/SidebarNav/nav-regions.png'} />
+					Regions
 				</li>
-				<li className={props.location.pathname.includes('service-categories') && 'active'}>
-					<Link to='service-categories'><img src={process.env.PUBLIC_URL + '/static/assets/Skeleton/SidebarNav/nav-service-categories.png'} />Service categories</Link>
+				<li className={props.location.pathname.includes('service-categories') && 'active'} onClick={() => props.history.push('/service-categories')}>
+					<img src={'/public/static/assets/Skeleton/SidebarNav/nav-service-categories.png'} />
+					Service categories
 				</li>
-				<li className={props.location.pathname.includes('provider-types') && 'active'}>
-					<Link to='provider-types'><img src={process.env.PUBLIC_URL + '/static/assets/Skeleton/SidebarNav/nav-provider-types.png'} />Provider types</Link>
+				<li className={props.location.pathname.includes('provider-types') && 'active'} onClick={() => props.history.push('/provider-types')}>
+					<img src={'/public/static/assets/Skeleton/SidebarNav/nav-provider-types.png'} />
+					Provider types
+				</li>
+				<li className={props.location.pathname.includes('users') && 'active'} onClick={() => props.history.push('/users')}>
+					<img src={'/public/static/assets/Skeleton/SidebarNav/nav-users.png'} />
+					Users
 				</li>
 				<hr /> {/* Separator */}
-				<li className={props.location.pathname.includes('settings') && 'active'}>
-					<Link to='/settings'><img src={process.env.PUBLIC_URL + '/static/assets/Skeleton/SidebarNav/nav-settings.png'} />Settings</Link>
+				<li className={props.location.pathname.includes('settings') && 'active'} onClick={() => props.history.push('/settings')}>
+					<img src={'/public/static/assets/Skeleton/SidebarNav/nav-settings.png'} />
+					Settings
 				</li>
 			</ul>
 		</nav>

@@ -4,11 +4,11 @@ import i18n from '../../shared/i18n';
 import languages from './languages.json';
 import ListView from './views/ListView/ListView';
 import EditView from './views/EditView/EditView';
-import './Regions.scss';
+import './Users.scss';
 
-const NS = 'Regions';
+const NS = 'Users';
 
-const Regions = props => {
+const Users = props => {
 	i18n.customLoad(languages, NS);
 	const { t } = useTranslation(NS);
 
@@ -21,4 +21,4 @@ const Regions = props => {
 	)
 }
 
-export default Regions;
+export default Users;

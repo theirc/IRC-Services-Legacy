@@ -9,6 +9,7 @@ import Regions from '../scenes/Regions/Regions';
 import ServiceCategories from '../scenes/ServiceCategories/ServiceCategories';
 import Services from '../scenes/Services/Services';
 import Settings from '../scenes/Settings/Settings';
+import Users from '../scenes/Users/Users';
 import { connect } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import { history } from '../shared/store';
@@ -17,27 +18,30 @@ const AppRouter = props => {
 	const initialCsrf = props.initialCsrf;
 	sessionStorage.setItem("csrf", initialCsrf);
 
-	console.log(props);
+	console.log('approuter', props);
 	return (
 		<ConnectedRouter history={history}>
 			<Switch>
 				{props.user &&
-				<Skeleton {...props}>
-					<Route exact path='/providers' component={props => <Providers {...props} />} />
-					<Route exact path='/providers/:id' component={props => <Providers {...props} />} />
-					<Route exact path='/provider-types' component={props => <ProviderTypes {...props} />} />
-					<Route exact path='/provider-types/:id' component={props => <ProviderTypes {...props} />} />
-					<Route exact path='/regions' component={props => <Regions {...props} />} />
-					<Route exact path='/regions/:id' component={props => <Regions {...props} />} />
-					<Route exact path='/service-categories' component={props => <ServiceCategories {...props} />} />
-					<Route exact path='/service-categories/:id' component={props => <ServiceCategories {...props} />} />
-					<Route exact path='/services' component={props => <Services {...props} />} />
-					<Route exact path='/services/:id' component={props => <Services {...props} />} />
-					<Route exact path='/settings' component={props => <Settings {...props} />} />
-				</Skeleton>
+				<div className='AppRouter'>
+					<Route exact path='/providers' component={props => <Skeleton {...props}><Providers {...props} /></Skeleton>} />
+					<Route exact path='/providers/:id' component={props => <Skeleton {...props}><Providers {...props} /></Skeleton>} />
+					<Route exact path='/provider-types' component={props => <Skeleton {...props}><ProviderTypes {...props} /></Skeleton>} />
+					<Route exact path='/provider-types/:id' component={props => <Skeleton {...props}><ProviderTypes {...props} /></Skeleton>} />
+					<Route exact path='/regions' component={props => <Skeleton {...props}><Regions {...props} /></Skeleton>} />
+					<Route exact path='/regions/:id' component={props => <Skeleton {...props}><Regions {...props} /></Skeleton>} />
+					<Route exact path='/service-categories' component={props => <Skeleton {...props}><ServiceCategories {...props} /></Skeleton>} />
+					<Route exact path='/service-categories/:id' component={props => <Skeleton {...props}><ServiceCategories {...props} /></Skeleton>} />
+					<Route exact path='/services' component={props => <Skeleton {...props}><Services {...props} /></Skeleton>} />
+					<Route exact path='/services/:id' component={props => <Skeleton {...props}><Services {...props} /></Skeleton>} />
+					<Route exact path='/users' component={props => <Skeleton {...props}><Users {...props} /></Skeleton>} />
+					<Route exact path='/users/:id' component={props => <Skeleton {...props}><Users {...props} /></Skeleton>} />
+					<Route exact path='/settings' component={props => <Skeleton {...props}><Settings {...props} /></Skeleton>} />
+					<Route exact path='/' component={props => <Skeleton {...props}><Regions {...props} /></Skeleton>} />{ /*Default scene*/ }
+				</div>
 				}
 				{!props.user &&
-					<div>
+					<div className='AppRouter'>
 						<Redirect to='/' />
 						<Route path='/' component={props => <Login {...props} />} />
 					</div>

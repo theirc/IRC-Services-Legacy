@@ -18,10 +18,12 @@ const options = {
 const List = ({data, columns, rowEvents}) => {
 	const { t, i18n } = useTranslation();
 
+	console.log(data.length);
 	return (
 		<div className='List'>
 			<Actions />
-			{ data.length &&
+			{ !data.length && <p>loading...</p> }
+			{ !!data.length &&
 			<BootstrapTable
 				// cellEdit={cellEditFactory({ mode: 'click' })}
 				columns={columns}

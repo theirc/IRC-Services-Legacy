@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useTranslation } from "react-i18next";
+import { useTranslation } from 'react-i18next';
 import i18n from '../../shared/i18n';
 import languages from './languages.json';
 import { connect } from 'react-redux';
@@ -41,19 +41,19 @@ const Login = props => {
 	return (
 		<div className={NS}>
 			<Form onSubmit={onSubmit}>
-				<Form.Group controlId="formBasicEmail">
+				<Form.Group controlId='formBasicEmail'>
 					<Form.Label>{t('username')}</Form.Label>
-					<Form.Control type="email" placeholder="Enter email" onChange={e => setUser(e.target.value)} />
-					<Form.Text className="text-muted">
+					<Form.Control type='email' placeholder='Enter email' onChange={e => setUser(e.target.value)} />
+					<Form.Text className='text-muted'>
 						We'll never share your email with anyone else.
 				</Form.Text>
 				</Form.Group>
 
-				<Form.Group controlId="formBasicPassword">
+				<Form.Group controlId='formBasicPassword'>
 					<Form.Label>{t('password')}</Form.Label>
-					<Form.Control type="password" placeholder="Password" onChange={e => setPass(e.target.value)} />
+					<Form.Control type='password' placeholder='Password' onChange={e => setPass(e.target.value)} />
 				</Form.Group>
-				<Button variant="primary" type="submit">
+				<Button variant='primary' type='submit'>
 					{t('submit')}
 				</Button>
 			</Form>
