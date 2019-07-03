@@ -4,6 +4,7 @@
 			"title": "Login",
 			"username": "User Name",
 			"password": "Password",
+			"submit": "Log In",
 			"properties": {
 				"width": "long",
 				"height": "not long"
@@ -15,7 +16,7 @@
 			"title": "Login fr",
 			"username": "User Name fr",
 			"password": "Password fr",
-			"submit": "Log In",
+			"submit": "Log In fr",
 			"properties": {
 				"width": "long fr",
 				"height": "not long fr"
