@@ -18,7 +18,6 @@ const options = {
 const List = ({data, columns, rowEvents}) => {
 	const { t, i18n } = useTranslation();
 
-	console.log(data.length);
 	return (
 		<div className='List'>
 			<Actions />
