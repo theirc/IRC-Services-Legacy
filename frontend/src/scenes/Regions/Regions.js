@@ -12,7 +12,6 @@ const Regions = props => {
 	i18n.customLoad(languages, NS);
 	const { t } = useTranslation(NS);
 
-	console.log(props);
 	return (
 		<div className={NS}>
 			{!props.match.params.id && <ListView {...props} />}
