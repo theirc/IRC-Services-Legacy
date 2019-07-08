@@ -23,6 +23,7 @@ import os
 import json
 import hmac
 import hashlib
+import logging
 
 class LoginView(TemplateView):
     #template_name = "login.html"
