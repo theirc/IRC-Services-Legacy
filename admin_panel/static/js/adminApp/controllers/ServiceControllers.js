@@ -246,6 +246,8 @@ angular
         vm.regionlvl2 = null;
         vm.regionlvl3 = null;
 
+        vm.lastUpdate = moment(vm.service.updated_at).format('MMMM Do YYYY, h:mm:ss a');
+        
         /*vm.updateCity = () => {
             service_languages.forEach(function (lang) {
                 vm.service[`address_city_${lang[0]}`] = vm.regionlvl3.name;
@@ -456,8 +458,12 @@ Only superusers and service providers have access to the edit functions. Everyon
                         $state.reload();
                     });
             };
-
             vm.save = function (file) {
+                if(vm.customUpdate != null){
+                    vm.service.updated_at = vm.customUpdate;
+                }else{
+                    vm.service.updated_at = new Date();
+                }
                 vm.generateSlug();
                 vm.service.region = vm.regionlvl3 || vm.regionlvl2 || vm.regionlvl1;
                 //vm.service.type = 0;

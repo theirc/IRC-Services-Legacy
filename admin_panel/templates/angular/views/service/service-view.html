@@ -232,6 +232,13 @@
                                     </ui-select-choices>
                                 </ui-select>
                             </div>
+                            <div class="form-group col-xs-12">
+                                <label for="update_date">{{'SERVICE_UPDATE_DATE' | translate}}: {{ctrl.lastUpdate}}</label>
+                                <div flex-gt-xs>
+                                    <label for="update_date">{{'SERVICE_SELECT_DATE' | translate}}:</label>
+                                    <input type="date" ng-model="ctrl.customUpdate" id="datepicker"></input>
+                                </div>
+                            </div>
 
                             <div class="form-group col-xs-12">
                                 <label for="file">{{ 'SERVICE_IMAGE' | translate }} </label>

@@ -547,7 +547,7 @@ class Service(TranslatableModel, models.Model):
         default='',
     )
     foreign_object_id = models.IntegerField(blank=True, null=True)
-    updated_at = models.DateTimeField(auto_now=True, blank=True)
+    updated_at = models.DateTimeField(blank=True, null=True)
     created_at = models.DateTimeField(blank=True, null=True)
     tags = models.ManyToManyField(
         ServiceTag,

@@ -37,6 +37,13 @@ angular.module("adminApp").controller("MenuController", function ($rootScope, $s
 						target: "_blank",
 						hide: ($rootScope.user.site.domain && $rootScope.user.site.domain.indexOf('refugee.info') > -1)
 					},
+					{
+						title: $filter('translate')('SERVICE_LINK_TO_WEB_APP'),
+						sref: "service.map",
+						href: "https://www.refugee.info",
+						target: "_blank",
+						hide: ($rootScope.user.site.domain && $rootScope.user.site.domain.indexOf('refugee.info') == -1)
+					},
 				],
 			},
 			{
