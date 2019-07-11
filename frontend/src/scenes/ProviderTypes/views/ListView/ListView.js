@@ -25,11 +25,19 @@ const ListView = props => {
 	};
 	
 	useEffect(() => {
-		(async function fetchData() {
-			const response = await api.providerTypes.getAll();
-			setData(response.map(e => ({id: e.id, name: e.name})));
-			console.log(response);
-		})();
+		let list = sessionStorage.getItem('providerTypes') ? JSON.parse(sessionStorage.getItem('providerTypes')) : null;
+		if (list)
+		{
+			setData(list.map(e => ({id: e.id, name: e.name})));
+		}else{
+			(async function fetchData() {
+				const response = await api.providerTypes.getAll();
+				setData(response.map(e => ({id: e.id, name: e.name})));
+				console.log(response);
+				sessionStorage.setItem('providerTypes', JSON.stringify(response));
+			})();
+		}
+		
 	}, []);
 
 	return (
