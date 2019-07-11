@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import List from '../../../../components/views/List/List';
 import api from '../../api';
 import './ListView.scss';
+import Button from 'react-bootstrap/Button';
 
 const ListView = props => {
 	const columns = [
@@ -23,6 +24,10 @@ const ListView = props => {
 	const rowEvents = {
 		onClick: (e, row, rowIndex) => props.history.push(`/provider-types/${row.id}`)
 	};
+
+	const addNew = () => {
+		props.history.push(`/provider-types/create`);
+	}
 	
 	useEffect(() => {
 		let list = sessionStorage.getItem('providerTypes') ? JSON.parse(sessionStorage.getItem('providerTypes')) : null;
@@ -43,6 +48,8 @@ const ListView = props => {
 	return (
 		<div className='ListView'>
 			<h2>PROVIDER TYPES</h2>
+			<Button type="button" className="button is-block is-info is-fullwidth btn-add" onClick={addNew}>+ Add New</Button>
+ 
 			<List {...props} data={data} columns={columns} rowEvents={rowEvents}/>
 		</div>
 	);

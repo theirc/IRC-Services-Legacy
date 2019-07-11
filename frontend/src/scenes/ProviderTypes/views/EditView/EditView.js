@@ -6,7 +6,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
 const EditView = props => {
-	const [values, setValues] = useState({});
+	const [data, setData] = useState({});
 	const [isSaving, setIsSaving] = useState(false);
 	const [isNew, setIsNew] = useState(false);
 
@@ -15,9 +15,10 @@ const EditView = props => {
 		setIsSaving(true);
 		if (event) event.preventDefault();
 		(async function save(){
-			const response = await api.providerTypes.saveType(values);
+			const response = await api.providerTypes.saveType(data);
 			if (response){
-				props.history.goBack()
+				sessionStorage.removeItem('providerTypes');
+				props.history.goBack();
 			}
 		})();
 		
@@ -26,20 +27,19 @@ const EditView = props => {
 	const handleChange = (event) => {
 		event.persist();
 
-		setValues(values => ({ ...values, [event.target.name]: event.target.value }));
+		setData(data => ({ ...data, [event.target.name]: event.target.value }));
 	};
 
 	useEffect(() => {
-		if (props.match.params.id){
+		if (props.match.params.id && props.match.params.id != 'create'){
 			(async function fetchData() {
 				const response = await api.providerTypes.getOne(props.match.params.id);
-				setValues(response);
-				console.log(values.name);
+				setData(response);
 				setIsSaving(false);
 			})();
 		}else{
 			setIsNew(true);
-			let type = {
+			let newType = {
 				id: 0,
 				name: '',
 				name_en: '',
@@ -47,7 +47,7 @@ const EditView = props => {
 				name_fr: '',
 				name_ar: ''
 			};
-			setValues(type);
+			setData(newType);
 		}
 		
 	}, []);
@@ -57,24 +57,24 @@ const EditView = props => {
 	return (
 		<div>
 			<Link onClick={onClick}>&lt; Back</Link>
-			{ !values.name && <p>loading...</p> }
-			{!!values.name &&
+			{ (!data.name && data.id !== 0) && <p>loading...</p> }
+			{(!!data.name || data.id === 0) &&
 			<Form onSubmit={handleSubmit}>
 				<Form.Group controlId='formName'>
 					<Form.Label>Name (English)</Form.Label>
-						<Form.Control type='text' name='name_en' onChange={handleChange} value={values.name_en} required />
+						<Form.Control type='text' name='name_en' onChange={handleChange} value={data.name_en} required />
 				</Form.Group>
 				<Form.Group controlId='formName'>
 					<Form.Label>Name (Arabic)</Form.Label>
-						<Form.Control type='text' name='name_ar' onChange={handleChange} value={values.name_ar}  />
+						<Form.Control type='text' name='name_ar' onChange={handleChange} value={data.name_ar}  />
 				</Form.Group>
 				<Form.Group controlId='formName'>
 					<Form.Label>Name (French)</Form.Label>
-						<Form.Control type='text' name='name_fr' onChange={handleChange} value={values.name_fr}  />
+						<Form.Control type='text' name='name_fr' onChange={handleChange} value={data.name_fr}  />
 				</Form.Group>
 				<Form.Group controlId='formName'>
 					<Form.Label>Name (Spanish)</Form.Label>
-						<Form.Control type='text' name='name_es' onChange={handleChange} value={values.name_es}  />
+						<Form.Control type='text' name='name_es' onChange={handleChange} value={data.name_es}  />
 				</Form.Group>
 				{!isSaving && 
 				<Button type="submit" className="button is-block is-info is-fullwidth">Save</Button>

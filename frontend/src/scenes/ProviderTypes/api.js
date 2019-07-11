@@ -24,16 +24,26 @@ api.providerTypes = {
 
 		return fetch(`${url}`, {headers}).then(r => r.json());
 	},
-	saveType: (data) => {
-		const url = `https://admin.refugee.info/v2/provider-types/${data.id}/`;
-		
+	saveType: (data) => {		
 		let {login} = store.getState();
 
 		if(!login.user) return [];
 
 		let headers = composeHeader(login.csrfToken, login.user.token);
 
-		return fetch(`${url}`, {method: 'PUT', body: JSON.stringify(data), headers: headers}).then(r => r.json());
+		if (data.id === 0){
+			const url = `/api/provider-types/`;
+			return fetch(`${url}`, {method: 'POST', body: JSON.stringify(data), headers: headers}).then(r => r.json());
+		}else{
+			const url = `/api/provider-types/${data.id}/`;
+			return fetch(`${url}`, {method: 'PUT', body: JSON.stringify(data), headers: headers}).then(r => r.json());
+		}
+
+		
+		
+
+		
+
 	}
 };
 
