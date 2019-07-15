@@ -609,7 +609,8 @@ class ServiceManagementSerializer(serializers.ModelSerializer):
                 'email',
                 'website',
                 'facebook_page',
-                'whatsapp'
+                'whatsapp',
+                'cost_of_service'
             ] + generate_translated_fields('name')
         )
 
