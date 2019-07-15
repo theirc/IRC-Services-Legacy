@@ -17,6 +17,7 @@
     "react-bootstrap-table2-editor": "^1.2.4",
     "react-bootstrap-table2-filter": "^1.1.10",
     "react-bootstrap-table2-paginator": "^2.0.6",
+    "react-color": "^2.17.3",
     "react-dom": "^16.8.6",
     "react-helmet": "^5.2.1",
     "react-i18next": "^10.11.2",

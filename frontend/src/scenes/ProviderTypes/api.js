@@ -38,12 +38,6 @@ api.providerTypes = {
 			const url = `/api/provider-types/${data.id}/`;
 			return fetch(`${url}`, {method: 'PUT', body: JSON.stringify(data), headers: headers}).then(r => r.json());
 		}
-
-		
-		
-
-		
-
 	}
 };
 
