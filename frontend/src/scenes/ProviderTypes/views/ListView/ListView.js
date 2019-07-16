@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 // import { textFilter } from 'react-bootstrap-table2-filter';
 import List from '../../../../components/views/List/List';
 import api from '../../api';
-import './ListView.scss';
 import Button from 'react-bootstrap/Button';
+
+import './ListView.scss';
 
 const ListView = props => {
 	const columns = [
@@ -30,19 +31,11 @@ const ListView = props => {
 	}
 	
 	useEffect(() => {
-		let list = sessionStorage.getItem('providerTypes') ? JSON.parse(sessionStorage.getItem('providerTypes')) : null;
-		if (list)
-		{
-			setData(list.map(e => ({id: e.id, name: e.name})));
-		}else{
-			(async function fetchData() {
-				const response = await api.providerTypes.getAll();
-				setData(response.map(e => ({id: e.id, name: e.name})));
-				console.log(response);
-				sessionStorage.setItem('providerTypes', JSON.stringify(response));
-			})();
-		}
-		
+		(async function fetchData() {
+			const response = await api.providerTypes.listAll();
+			setData(response.map(e => ({id: e.id, name: e.name})));
+			console.log(response);
+		})();
 	}, []);
 
 	return (

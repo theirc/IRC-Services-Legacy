@@ -4,6 +4,7 @@ import i18n from '../../shared/i18n';
 import languages from './languages.json';
 import ListView from './views/ListView/ListView';
 import EditView from './views/EditView/EditView';
+
 import './ProviderTypes.scss';
 
 const NS = 'ProviderTypes';

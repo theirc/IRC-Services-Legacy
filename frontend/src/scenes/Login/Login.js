@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import i18n from '../../shared/i18n';
 import languages from './languages.json';
 import { connect } from 'react-redux';
 import actions from './actions';
-import api from './api';
 import composeHeader from '../../data/Helpers/headers';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+
 import './Login.scss';
 
 const NS = 'Login';

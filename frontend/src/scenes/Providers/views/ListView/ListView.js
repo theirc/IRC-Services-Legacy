@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 // import { textFilter } from 'react-bootstrap-table2-filter';
 import List from '../../../../components/views/List/List';
 import api from '../../api';
+
 import './ListView.scss';
 
 const ListView = props => {
@@ -26,7 +27,7 @@ const ListView = props => {
 	
 	useEffect(() => {
 		(async function fetchData() {
-			const response = await api.providers.getAll();
+			const response = await api.providers.listAll();
 			setData(response.map(e => ({id: e.id, name: e.name})));
 			console.log(response);
 		})();

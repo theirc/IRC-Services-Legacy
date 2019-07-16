@@ -11,6 +11,7 @@ let initialState = window && window.initialState ? window.initialState : {
 		csrfToken: null
 	},
 	skeleton: {
+		darkMode: false,
 		sidebarnav: {
 			isOpen: true
 		}

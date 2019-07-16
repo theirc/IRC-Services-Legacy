@@ -89,6 +89,9 @@ class APIActivationView(TemplateView):
 
         return redirect('/')
 
+class UserListViewSet(viewsets.ModelViewSet):
+    queryset = EmailUser.objects.all()
+    serializer_class = serializers_v2.UserListSerializer
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -253,6 +256,9 @@ class UserViewSet(viewsets.ModelViewSet):
             return Response(serializer.data)
         return Response(status=403)
 
+class GeographicRegionListViewSet(viewsets.ModelViewSet):
+    queryset = GeographicRegion.objects.select_related('parent').all()
+    serializer_class = serializers_v2.GeographicRegionListSerializer
 
 class GeographicRegionViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.DjangoModelPermissionsOrAnonReadOnly]

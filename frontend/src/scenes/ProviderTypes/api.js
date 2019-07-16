@@ -24,6 +24,16 @@ api.providerTypes = {
 
 		return fetch(`${url}`, {headers}).then(r => r.json());
 	},
+	listAll: () => {
+		const url = '/api/list-provider-types/';
+		let {login} = store.getState();
+		
+		if(!login.user) return [];
+		
+		let headers = composeHeader(login.csrfToken, login.user.token);
+		
+		return fetch(`${url}`, {headers}).then(r => r.json());
+	},
 	saveType: (data) => {		
 		let {login} = store.getState();
 

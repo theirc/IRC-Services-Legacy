@@ -4,10 +4,7 @@
 	box-shadow: 0 0 8px 0px #e3e3e3;
 	opacity: 0.8;
 	z-index: 2;
-
-	.bg-light {
-		background-color: #fff;
-	}
+	background-color: #fff;
 	
 	.toggler {
 		cursor: pointer;
@@ -17,5 +14,11 @@
 		&.expanded {
 			margin-left: $sidebarnav-open-width - $toggler-width - 16px /* navbar padding-left (1rem) */ - 10px /* margin from the right */;
 		}
+	}
+	
+	// Dark theme
+	&.bg-dark {
+		background-color: #282828 !important;
+		box-shadow: 0 0 8px 0px #222;
 	}
 }

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Edit from '../../../../components/views/Edit/Edit';
 import api from '../../api';
 import { Link } from 'react-router-dom';
+
 import './EditView.scss';
 
 const EditView = props => {

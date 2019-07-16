@@ -5,6 +5,7 @@ import paginationFactory from 'react-bootstrap-table2-paginator';
 import cellEditFactory from 'react-bootstrap-table2-editor';
 import filterFactory from 'react-bootstrap-table2-filter';
 import Actions from './Actions/Actions';
+import { connect } from 'react-redux';
 
 import './List.scss';
 
@@ -15,29 +16,33 @@ const options = {
 	hidePageListOnlyOnePage: true
 };
 
-const List = ({data, columns, rowEvents}) => {
+const List = ({data, columns, rowEvents, darkMode}) => {
 	const { t, i18n } = useTranslation();
 
 	return (
-		<div className='List'>
+		<div className={`List ${darkMode ? 'bg-dark' : ''}`}>
 			<Actions />
 			{ !data.length && <p>loading...</p> }
 			{ !!data.length &&
-			<BootstrapTable
-				// cellEdit={cellEditFactory({ mode: 'click' })}
-				columns={columns}
-				data={data}
-				filter={filterFactory()}
-				hover
-				keyField='id'
-				pagination={paginationFactory(options)}
-				rowEvents={rowEvents}
-				selectRow={{ mode: 'checkbox' }}
-				striped
-			/>
+				<BootstrapTable
+					// cellEdit={cellEditFactory({ mode: 'click' })}
+					columns={columns}
+					data={data}
+					filter={filterFactory()}
+					hover
+					keyField='id'
+					pagination={paginationFactory(options)}
+					rowEvents={rowEvents}
+					selectRow={{ mode: 'checkbox' }}
+					striped
+				/>
 			}
 		</div>
 	)
 }	
 
-export default List;
+const mapStateToProps = state => ({
+	darkMode: state.skeleton.darkMode,
+});
+
+export default connect(mapStateToProps)(List);

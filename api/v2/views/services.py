@@ -397,6 +397,13 @@ class PrivateServiceViewSet(FilterByRegionMixin, viewsets.ModelViewSet):
                 status__in=[Service.STATUS_PRIVATE], provider__in=providers))
         return qs
 
+class ServiceListViewSet(viewsets.ModelViewSet):
+    queryset = Service.objects.prefetch_related('provider')
+    serializer_class = serializers_v2.ServiceListSerializer
+
+class PrivateProviderListViewSet(viewsets.ModelViewSet):
+    queryset = Provider.objects.all()
+    serializer_class = serializers_v2.PrivateProviderListSerializer
 
 class ServiceViewSet(viewsets.ModelViewSet):
     filter_class = ServiceFilter
@@ -647,6 +654,9 @@ class ServiceViewSet(viewsets.ModelViewSet):
             filtered_by_coordinates, many=True, context={'request': request})
         return Response({'results': serializer.data}, status=200)
 
+class ServiceTypeListViewSet(viewsets.ModelViewSet):
+    queryset = ServiceType.objects.all()
+    serializer_class = serializers_v2.ServiceTypeListSerializer
 
 class ServiceTypeViewSet(viewsets.ModelViewSet):
     """
@@ -717,7 +727,6 @@ class CustomServiceTypeViewSet(viewsets.ModelViewSet):
         distincted = filtered.values_list('types__id', flat=True).distinct()
         types = ServiceType.objects.filter(id__in=distincted)
         return Response([serializers_v2.ServiceTypeSerializer(t, context={'request': request}).data for t in types])
-
 
 class ProviderTypeViewSet(viewsets.ModelViewSet):
     """

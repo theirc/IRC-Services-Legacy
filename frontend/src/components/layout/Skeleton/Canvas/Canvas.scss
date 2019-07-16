@@ -10,6 +10,7 @@ body {
 }
 
 .Canvas {
+  height: -webkit-fill-available;
   margin-left: 235px;
   margin-top: $header-height;
   padding: 15px;
@@ -19,4 +20,14 @@ body {
   &.expanded {
     margin-left: 50px;
   }
+
+  // Dark theme
+  &.bg-dark {
+    background-color: #282828 !important;
+
+    h2 {
+      color: white;
+    }
+  }
+
 }

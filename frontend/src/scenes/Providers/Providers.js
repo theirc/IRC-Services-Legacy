@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useTranslation } from "react-i18next";
 import i18n from '../../shared/i18n';
 import languages from './languages.json';
 import ListView from './views/ListView/ListView';
 import EditView from './views/EditView/EditView';
+
 import './Providers.scss';
 
 const NS = 'Providers';

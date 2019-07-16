@@ -109,6 +109,16 @@ class ServiceAreaSerializer(RequireOneTranslationMixin,
         )
         required_translated_fields = ['name']
 
+class UserListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EmailUser
+        fields = tuple([
+            'id',
+            'name',
+            'surname',
+            'email',
+            'groups'
+        ])
 
 class UserSerializer(serializers.ModelSerializer):
     managed_providers = sevices_serializers.ProviderSerializer(
@@ -317,6 +327,14 @@ class GeographicRegionCreateSerializer(serializers.ModelSerializer):
         cursor.execute("update regions_geographicregion set geom = ST_GEOMFROMTEXT(%s, 4326) where id = %s ;", [geom, region.id])
         return region
         
+class GeographicRegionListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = GeographicRegion
+        fields = tuple([
+            'id',
+            'name',
+            'parent__name'
+        ])
 
 class GeographicRegionSerializer(serializers.ModelSerializer):
     parent__name = serializers.SerializerMethodField(read_only=True)

@@ -1,16 +1,15 @@
 import React from 'react';
 import { useTranslation } from "react-i18next";
-import Button from 'react-bootstrap/Button';
 import actions from '../actions';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+
 import './SidebarNav.scss';
 
 const SidebarNav = props => {
 	const { t, i18n } = useTranslation();
 
 	return (
-		<nav className={`SidebarNav ${props.isOpen ? 'open' : 'closed'}`}>
+		<nav className={`SidebarNav ${props.sidebarnav.isOpen ? 'open' : 'closed'} ${props.darkMode ? 'bg-dark' : ''}`}>
 			<ul>
 				<li className={props.location.pathname.includes('services') && 'active'} onClick={() => props.history.push('/services')}>
 					<img src={'/public/static/assets/Skeleton/SidebarNav/nav-services.png'} />
@@ -50,14 +49,5 @@ const SidebarNav = props => {
 	)
 }
 
-const mapStateToProps = (state, props) => ({
-	isOpen: state.skeleton.sidebarnav.isOpen
-});
 
-const mapDispatchToProps = dispatch => {
-	return {
-		setUser: user => dispatch(actions.setUser(user)),
-	}
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(SidebarNav);
+export default SidebarNav;

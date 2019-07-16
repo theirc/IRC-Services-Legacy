@@ -201,6 +201,21 @@ class DistanceField(serializers.FloatField):
             return obj.distance.m  # Distance in meters
         return self.default
 
+class PrivateProviderListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Provider
+        fields = tuple([
+            'id',
+            'name'
+        ])
+
+class GeographicRegionListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = GeographicRegion
+        fields = tuple([
+            'id',
+            'name'
+        ])
 
 class ProviderSerializer(serializers.ModelSerializer):
     number_of_monthly_beneficiaries = serializers.IntegerField(
@@ -386,6 +401,13 @@ class TypesOrderingSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         pass
 
+class ServiceTypeListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ServiceType
+        fields = tuple([
+            'id',
+            'name'
+        ])
 
 class ServiceTypeSerializer(serializers.ModelSerializer):
     icon_url = serializers.CharField(source='get_icon_url', read_only=True)
@@ -442,6 +464,17 @@ class UserNoteSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserNote
 
+
+class ServiceListSerializer(serializers.ModelSerializer):
+    provider = serializers.CharField(source='provider.name', read_only=True)
+
+    class Meta:
+        model = Service
+        fields = tuple([
+            'id',
+            'name',
+            'provider'
+        ])
 
 class ServiceSerializer(serializers.ModelSerializer):
     provider_fetch_url = serializers.CharField(source='get_provider_fetch_url', read_only=True)
@@ -640,7 +673,6 @@ class ProviderTypeSerializer(serializers.ModelSerializer):
             ] + generate_translated_fields('name')
         )
 
-
 class CustomServiceTypeSerializer(serializers.ModelSerializer):
     """Serializer for distincted service types"""
     types = ServiceTypeSerializer(many=True)
@@ -824,5 +856,3 @@ class ServiceConfirmationLogListSerializer(serializers.ModelSerializer):
     class Meta:
         model = ServiceConfirmationLog
         fields = '__all__'
-
-

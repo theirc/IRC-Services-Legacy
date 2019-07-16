@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
+
 import './Actions.scss';
 
 const Actions = props => {

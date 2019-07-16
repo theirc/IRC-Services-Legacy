@@ -17,13 +17,23 @@ api.services = {
 	getOne: (id) => {
 		const url = `/api/private-services/${id}/`;
 		let {login} = store.getState();
-
+		
 		if(!login.user) return [];
-
+		
 		let headers = composeHeader(login.csrfToken, login.user.token);
-
+		
 		return fetch(`${url}`, {headers}).then(r => r.json());
 	},
+	listAll: () => {
+		const url = '/api/list-services/';
+		let {login} = store.getState();
+		
+		if(!login.user) return [];
+		
+		let headers = composeHeader(login.csrfToken, login.user.token);
+		
+		return fetch(`${url}`, {headers}).then(r => r.json());
+	}
 };
 
 export default api;
