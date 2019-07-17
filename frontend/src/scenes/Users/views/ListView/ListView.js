@@ -47,7 +47,7 @@ const ListView = props => {
 
 	return (
 		<div className='ListView'>
-			<h2>REGIONS</h2>
+			<h2>USERS</h2>
 			<List {...props} data={data} columns={columns} rowEvents={rowEvents}/>
 		</div>
 	);
