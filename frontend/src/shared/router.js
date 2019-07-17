@@ -32,6 +32,7 @@ const AppRouter = props => {
 					<Route exact path='/regions/:id' component={props => <Skeleton {...props}><Regions {...props} /></Skeleton>} />
 					<Route exact path='/service-categories' component={props => <Skeleton {...props}><ServiceCategories {...props} /></Skeleton>} />
 					<Route exact path='/service-categories/:id' component={props => <Skeleton {...props}><ServiceCategories {...props} /></Skeleton>} />
+					<Route exact path='/' component={props => <Skeleton {...props}><Services {...props} /></Skeleton>} />
 					<Route exact path='/services' component={props => <Skeleton {...props}><Services {...props} /></Skeleton>} />
 					<Route exact path='/services/:id' component={props => <Skeleton {...props}><Services {...props} /></Skeleton>} />
 					<Route exact path='/users' component={props => <Skeleton {...props}><Users {...props} /></Skeleton>} />
