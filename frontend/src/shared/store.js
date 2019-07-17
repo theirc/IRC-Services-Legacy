@@ -2,6 +2,12 @@ import { createStore, combineReducers, compose, applyMiddleware } from "redux";
 import { connectRouter, routerMiddleware } from 'connected-react-router'
 import { createBrowserHistory } from 'history'
 import loginReducers from '../scenes/Login/reducers';
+import providersReducers from '../scenes/Providers/reducers';
+import providerTypesReducers from '../scenes/ProviderTypes/reducers';
+import regionsReducers from '../scenes/Regions/reducers';
+import serviceCategoriesReducers from '../scenes/ServiceCategories/reducers';
+import servicesReducers from '../scenes/Services/reducers';
+import usersReducers from '../scenes/Users/reducers';
 import skeletonReducers from '../components/layout/Skeleton/reducers';
 
 const window = global.window || {};
@@ -9,6 +15,24 @@ const window = global.window || {};
 let initialState = window && window.initialState ? window.initialState : {
 	login: {
 		csrfToken: null
+	},
+	providers: {
+		list: null
+	},
+	providerTypes: {
+		list: null
+	},
+	regions: {
+		list: null
+	},
+	serviceCategories: {
+		list: null
+	},
+	services: {
+		list: null
+	},
+	users: {
+		list: null
 	},
 	skeleton: {
 		darkMode: false,
@@ -28,6 +52,12 @@ const enhancers = window.__REDUX_DEVTOOLS_EXTENSION__ ?
 
 const reducers = {
 	login: loginReducers,
+	providers: providersReducers,
+	providerTypes: providerTypesReducers,
+	regions: regionsReducers,
+	serviceCategories: serviceCategoriesReducers,
+	services: servicesReducers,
+	users: usersReducers,
 	skeleton: skeletonReducers,
 	router: connectRouter(history)
 };

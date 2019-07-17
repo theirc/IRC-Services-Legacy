@@ -1,4 +1,5 @@
 import composeHeader from '../../data/Helpers/headers';
+import actions from './actions';
 import store from '../../shared/store';
 
 let api = api || {};
@@ -6,33 +7,34 @@ let api = api || {};
 api.regions = {
 	getAll: () => {
 		const url = '/api/regions/?exclude_geometry=true';
-		let {login} = store.getState();
-		
-		if(!login.user) return [];
-		
+		let { login } = store.getState();
+
+		if (!login.user) return [];
+
 		let headers = composeHeader(login.csrfToken, login.user.token);
-		
-		return fetch(`${url}`, {headers}).then(r => r.json());
+
+		return fetch(url, { headers }).then(r => r.json());
 	},
-	getOne: (id) => {
+	getOne: id => {
 		const url = `/api/regions/${id}/`;
-		let {login} = store.getState();
+		let { login } = store.getState();
 
-		if(!login.user) return [];
+		if (!login.user) return [];
 
 		let headers = composeHeader(login.csrfToken, login.user.token);
 
-		return fetch(`${url}`, {headers}).then(r => r.json());
+		return fetch(url, { headers }).then(r => r.json());
 	},
 	listAll: () => {
 		const url = '/api/list-regions/';
-		let {login} = store.getState();
-		
-		if(!login.user) return [];
-		
+		let { login, regions } = store.getState();
+
+		if (!login.user) return [];
+
 		let headers = composeHeader(login.csrfToken, login.user.token);
-		
-		return fetch(`${url}`, {headers}).then(r => r.json());
+
+		// Saving response to redux store
+		return regions.list ? Promise.resolve(regions.list) : fetch(url, { headers }).then(r => r.json()).then(r => { store.dispatch(actions.setRegionsList(r)); return r; });
 	},
 };
 
