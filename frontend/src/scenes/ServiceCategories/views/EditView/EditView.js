@@ -37,12 +37,27 @@ const EditView = props => {
 	}
 	
 	useEffect(() => {
-		(async function fetchData() {
-			const response = await api.serviceCategories.getOne(props.match.params.id);
-			console.log(response);
-			response.color = '#'+response.color;
-			setData(response);
-		})();
+		if (props.match.params.id && props.match.params.id !== 'create'){
+			(async function fetchData() {
+				const response = await api.serviceCategories.getOne(props.match.params.id);
+				response.color = '#'+response.color;
+				setData(response);
+				setIsSaving(false);
+			})();
+		}else{
+			setIsNew(true);
+			let newCategory = {
+				id: 0,
+				name: '',
+				name_en: '',
+				name_es: '',
+				name_fr: '',
+				name_ar: '',
+				color: ''
+			};
+			setData(newCategory);
+		}
+		
 	}, []);
 
 	const onClick = () => props.history.goBack()
@@ -52,6 +67,8 @@ const EditView = props => {
 	return (
 		<div>
 			<Link onClick={onClick}>&lt; Back</Link>
+			{ (!data.name && data.id !== 0) && <p>loading...</p> }
+			{(!!data.name || data.id === 0) &&
 			<Card>
 				<Card.Body>
 					<Card.Title>Service Category</Card.Title>
@@ -99,7 +116,7 @@ const EditView = props => {
 					</Card.Text>
 				</Card.Body>	
 			</Card>
-			
+			}
 		</div>
 	);
 }

@@ -28,13 +28,12 @@ const ListView = props => {
 
 	const addNew = () => {
 		props.history.push(`/provider-types/create`);
-	}
+	};
 	
 	useEffect(() => {
 		(async function fetchData() {
 			const response = await api.providerTypes.listAll();
 			setData(response.map(e => ({id: e.id, name: e.name})));
-			console.log(response);
 		})();
 	}, []);
 

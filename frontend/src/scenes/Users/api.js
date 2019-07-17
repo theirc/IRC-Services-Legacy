@@ -36,6 +36,17 @@ api.users = {
 		// Saving response to redux store
 		return users.list ? Promise.resolve(users.list) : fetch(url, { headers }).then(r => r.json()).then(r => { store.dispatch(actions.setUsersList(r)); return r; });
 	},
+	save: data => {
+		let { login } = store.getState();
+
+		if (!login.user) return [];
+
+		let headers = composeHeader(login.csrfToken, login.user.token);
+		const method = data.id === 0 ? 'POST' : 'PUT';
+		const url = data.id === 0 ? `/api/users/` : `/api/users/${data.id}/`;
+
+		return fetch(url, { method: method, body: JSON.stringify(data), headers: headers }).then(r => r.json());
+	}
 };
 
 export default api;
