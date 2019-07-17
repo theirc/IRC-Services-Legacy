@@ -190,7 +190,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'regions.middleware.UserRegionMiddleware',
     'reversion.middleware.RevisionMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    #'debug_toolbar.middleware.DebugToolbarMiddleware',
     'service_info.middleware.ActivateUserLanguageMiddleware'
 )
 
@@ -286,7 +286,7 @@ INSTALLED_APPS = (
     'admin_panel',
 
     'services.templatetags.newsletter_extras',
-    'debug_toolbar',
+    #'debug_toolbar',
     'django_filters',
     # 'cachalot',
 )

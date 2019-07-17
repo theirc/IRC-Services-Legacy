@@ -25,7 +25,7 @@ api.users = {
 		return fetch(`${url}`, {headers}).then(r => r.json());
 	},
 	listAll: () => {
-		const url = '/api/list-users/';
+		const url = '/api/list-users/?siteid=1';
 		let {login} = store.getState();
 		
 		if(!login.user) return [];
