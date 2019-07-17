@@ -32,7 +32,7 @@ const ListView = props => {
 	useEffect(() => {
 		(async function fetchData() {
 			const response = await api.regions.listAll();
-			setData(response.map(e => ({id: e.id, name: e.name, parent: e.parent__name})));
+			setData(response.map(e => ({id: e.id, name: e.name, parent: e.parent ? e.parent : '-'})));
 			console.log(response);
 		})();
 	}, []);

@@ -37,7 +37,6 @@ const AppRouter = props => {
 					<Route exact path='/users' component={props => <Skeleton {...props}><Users {...props} /></Skeleton>} />
 					<Route exact path='/users/:id' component={props => <Skeleton {...props}><Users {...props} /></Skeleton>} />
 					<Route exact path='/settings' component={props => <Skeleton {...props}><Settings {...props} /></Skeleton>} />
-					<Route exact path='/' component={props => <Skeleton {...props}><Regions {...props} /></Skeleton>} />{ /*Default scene*/ }
 				</div>
 				}
 				{!props.user &&

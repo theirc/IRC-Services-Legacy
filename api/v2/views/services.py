@@ -6,12 +6,12 @@ from admin_panel.utils import push_service_to_transifex, pull_completed_service_
     get_service_transifex_info
 from api.utils import generate_translated_fields
 from api.v2 import serializers as serializers_v2
-from api.v2.serializers import ServiceImageSerializer, ServiceAreaSerializer, CreateProviderSerializer, ProviderSerializer, ProviderTypeSerializer
+from api.v2.serializers import ServiceImageSerializer, ServiceAreaSerializer, CreateProviderSerializer, ProviderSerializer, ProviderTypeSerializer, ProviderTypeListSerializer
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 from django.contrib.gis.geos import Point, Polygon
 from django.contrib.gis.measure import D
-from django.db.models import Q
+from django.db.models import Q, Prefetch
 from django.core.exceptions import ValidationError as DjangoValidationError
 from django.db.transaction import atomic
 from django.db.utils import IntegrityError
@@ -398,11 +398,11 @@ class PrivateServiceViewSet(FilterByRegionMixin, viewsets.ModelViewSet):
         return qs
 
 class ServiceListViewSet(viewsets.ModelViewSet):
-    queryset = Service.objects.prefetch_related('provider')
+    queryset = Service.objects.prefetch_related('provider').values('id', 'name_en', 'provider__name_en')
     serializer_class = serializers_v2.ServiceListSerializer
 
 class PrivateProviderListViewSet(viewsets.ModelViewSet):
-    queryset = Provider.objects.all()
+    queryset = Provider.objects.values('id', 'name_en');
     serializer_class = serializers_v2.PrivateProviderListSerializer
 
 class ServiceViewSet(viewsets.ModelViewSet):
@@ -655,8 +655,8 @@ class ServiceViewSet(viewsets.ModelViewSet):
         return Response({'results': serializer.data}, status=200)
 
 class ServiceTypeListViewSet(viewsets.ModelViewSet):
-    queryset = ServiceType.objects.all()
-    serializer_class = serializers_v2.ServiceTypeListSerializer
+    queryset = ServiceType.objects.values('id', 'name_en')
+    serializer_class = serializers_v2.ServiceTypeList2Serializer
 
 class ServiceTypeViewSet(viewsets.ModelViewSet):
     """
@@ -727,6 +727,10 @@ class CustomServiceTypeViewSet(viewsets.ModelViewSet):
         distincted = filtered.values_list('types__id', flat=True).distinct()
         types = ServiceType.objects.filter(id__in=distincted)
         return Response([serializers_v2.ServiceTypeSerializer(t, context={'request': request}).data for t in types])
+
+class ProviderTypeListViewSet(viewsets.ModelViewSet):
+    queryset = ProviderType.objects.values('id', 'name_en');
+    serializer_class = ProviderTypeListSerializer
 
 class ProviderTypeViewSet(viewsets.ModelViewSet):
     """

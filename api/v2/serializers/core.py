@@ -116,8 +116,7 @@ class UserListSerializer(serializers.ModelSerializer):
             'id',
             'name',
             'surname',
-            'email',
-            'groups'
+            'email'
         ])
 
 class UserSerializer(serializers.ModelSerializer):

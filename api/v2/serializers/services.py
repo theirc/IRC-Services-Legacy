@@ -202,6 +202,8 @@ class DistanceField(serializers.FloatField):
         return self.default
 
 class PrivateProviderListSerializer(serializers.ModelSerializer):
+    name = serializers.SerializerMethodField()
+
     class Meta:
         model = Provider
         fields = tuple([
@@ -209,13 +211,23 @@ class PrivateProviderListSerializer(serializers.ModelSerializer):
             'name'
         ])
 
+    def get_name(self, obj):
+        key = [i for i in obj.keys() if i.startswith('name')][0]
+        return obj[key]
+
 class GeographicRegionListSerializer(serializers.ModelSerializer):
+    parent = serializers.SerializerMethodField()
+
     class Meta:
         model = GeographicRegion
         fields = tuple([
             'id',
-            'name'
+            'name',
+            'parent'
         ])
+
+    def get_parent(self, obj):
+        return obj['parent__name']
 
 class ProviderSerializer(serializers.ModelSerializer):
     number_of_monthly_beneficiaries = serializers.IntegerField(
@@ -401,13 +413,19 @@ class TypesOrderingSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         pass
 
-class ServiceTypeListSerializer(serializers.ModelSerializer):
+class ServiceTypeList2Serializer(serializers.ModelSerializer):
+    name = serializers.SerializerMethodField()
+
     class Meta:
         model = ServiceType
         fields = tuple([
             'id',
             'name'
         ])
+
+    def get_name(self, obj):
+        key = [i for i in obj.keys() if i.startswith('name')][0]
+        return obj[key]
 
 class ServiceTypeSerializer(serializers.ModelSerializer):
     icon_url = serializers.CharField(source='get_icon_url', read_only=True)
@@ -466,7 +484,8 @@ class UserNoteSerializer(serializers.ModelSerializer):
 
 
 class ServiceListSerializer(serializers.ModelSerializer):
-    provider = serializers.CharField(source='provider.name', read_only=True)
+    name = serializers.SerializerMethodField()
+    provider = serializers.SerializerMethodField()
 
     class Meta:
         model = Service
@@ -475,6 +494,14 @@ class ServiceListSerializer(serializers.ModelSerializer):
             'name',
             'provider'
         ])
+
+    def get_name(self, obj):
+        key = [i for i in obj.keys() if i.startswith('name')][0]
+        return obj[key]
+
+    def get_provider(self, obj):
+        key = [i for i in obj.keys() if i.startswith('provider')][0]
+        return obj[key]
 
 class ServiceSerializer(serializers.ModelSerializer):
     provider_fetch_url = serializers.CharField(source='get_provider_fetch_url', read_only=True)
@@ -662,6 +689,20 @@ class ServiceManagementSerializer(serializers.ModelSerializer):
                     'errors': 'An error occurred from Transifex (%s).' % r.text
                 }
         return output
+
+class ProviderTypeListSerializer(serializers.ModelSerializer):
+    name = serializers.SerializerMethodField()
+
+    class Meta:
+        model = GeographicRegion
+        fields = tuple([
+            'id',
+            'name'
+        ])
+
+    def get_name(self, obj):
+        key = [i for i in obj.keys() if i.startswith('name')][0]
+        return obj[key]
 
 
 class ProviderTypeSerializer(serializers.ModelSerializer):

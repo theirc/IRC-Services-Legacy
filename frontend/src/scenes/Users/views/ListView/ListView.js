@@ -19,10 +19,6 @@ const ListView = props => {
 			dataField: 'email',
 			text: 'email',
 			sort: true,
-		}, {
-			dataField: 'groups',
-			text: 'Groups',
-			sort: true,
 		}
 	];
 

@@ -7,6 +7,7 @@ import actions from './actions';
 import composeHeader from '../../data/Helpers/headers';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Alert from 'react-bootstrap/Alert';
 
 import './Login.scss';
 
@@ -18,6 +19,7 @@ const Login = props => {
 
 	const [user, setUser] = useState('');
 	const [pass, setPass] = useState('');
+	const [message, setMessage] = useState('');
 
 	const onSubmit = e => {
 		e.preventDefault();
@@ -29,12 +31,16 @@ const Login = props => {
 
 		let csrftoken = document.cookie.match(new RegExp('(^| )' + 'csrftoken' + '=([^;]+)'))[2];
 		props.setCsrfToken(csrftoken);
+		setMessage('');
 
 		return fetch('/login', { headers: composeHeader(csrftoken), body, method: 'POST' })
-			.then(res => res.json())
+			.then(res => res.status === 200 ? res.json() : Promise.reject(res))
+			.catch(res => setMessage('Invalid credentials'))
 			.then(res => {
-				props.setUser(res);
-				props.history.push('/provider-types');
+				if(res) {
+					props.setUser(res);
+					props.history.push('/services'); // Default home page after login
+				}
 			});
 	};
 
@@ -53,6 +59,7 @@ const Login = props => {
 					<Form.Label>{t('password')}</Form.Label>
 					<Form.Control type='password' placeholder='Password' onChange={e => setPass(e.target.value)} />
 				</Form.Group>
+				{message && <Alert variant='danger'>{message}</Alert>}
 				<Button variant='primary' type='submit'>
 					{t('submit')}
 				</Button>
