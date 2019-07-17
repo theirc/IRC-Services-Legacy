@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 // import { textFilter } from 'react-bootstrap-table2-filter';
 import List from '../../../../components/views/List/List';
 import api from '../../api';
+import Button from 'react-bootstrap/Button';
 
 import './ListView.scss';
 
@@ -24,6 +25,10 @@ const ListView = props => {
 	const rowEvents = {
 		onClick: (e, row, rowIndex) => props.history.push(`/providers/${row.id}`)
 	};
+
+	const addNew = () => {
+		props.history.push(`/providers/create`);
+	};
 	
 	useEffect(() => {
 		(async function fetchData() {
@@ -36,6 +41,8 @@ const ListView = props => {
 	return (
 		<div className='ListView'>
 			<h2>PROVIDERS</h2>
+			<Button type="button" className="button is-block is-info is-fullwidth btn-add" onClick={addNew}>+ Add New</Button>
+
 			<List {...props} data={data} columns={columns} rowEvents={rowEvents}/>
 		</div>
 	);
