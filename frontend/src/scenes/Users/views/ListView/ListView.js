@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-// import { textFilter } from 'react-bootstrap-table2-filter';
 import List from '../../../../components/views/List/List';
 import api from '../../api';
 import './ListView.scss';
@@ -10,16 +9,24 @@ const ListView = props => {
 		{
 			dataField: 'id',
 			text: 'ID',
-			sort: true
+			sort: true,
+			headerStyle: () => {
+				return { width: '8%' };
+			}
 		}, {
 			dataField: 'name',
 			text: 'Name',
 			sort: true,
-			// filter: textFilter()
+			headerStyle: () => {
+				return { width: '50%' };
+			}
 		}, {
 			dataField: 'email',
 			text: 'email',
 			sort: true,
+			headerStyle: () => {
+				return { width: '42%' };
+			}
 		}
 	];
 

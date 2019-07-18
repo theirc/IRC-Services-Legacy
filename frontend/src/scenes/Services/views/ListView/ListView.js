@@ -10,15 +10,24 @@ const ListView = props => {
 		{
 			dataField: 'id',
 			text: 'ID',
-			sort: true
+			sort: true,
+			headerStyle: () => {
+				return { width: '8%' };
+			}
 		}, {
 			dataField: 'name',
 			text: 'Name',
 			sort: true,
+			headerStyle: () => {
+				return { width: '50%' };
+			}
 		}, {
 			dataField: 'provider',
 			text: 'Provider',
 			sort: true,
+			headerStyle: () => {
+				return { width: '42%' };
+			}
 		}
 	];
 
