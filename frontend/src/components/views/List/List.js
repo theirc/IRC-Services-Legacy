@@ -10,9 +10,9 @@ import skeletonActions from '../../layout/Skeleton/actions';
 import './List.scss';
 
 
-const List = ({ data, columns, rowEvents, darkMode, resultsPerPage, setResultsPerPage }) => {
+const List = ({ data, columns, rowEvents, darkMode, resultsPerPage, setResultsPerPage, defaultSorted }) => {
 	const { t, i18n } = useTranslation();
-	
+
 	const onSizePerPageChange = (sizePerPage, page) => {
 		setResultsPerPage(sizePerPage);
 	}
@@ -40,6 +40,7 @@ const List = ({ data, columns, rowEvents, darkMode, resultsPerPage, setResultsPe
 						{!!data.length &&
 							<BootstrapTable {...props.baseProps}
 								hover
+								defaultSorted={defaultSorted}
 								pagination={paginationFactory(options)}
 								rowEvents={rowEvents}
 								selectRow={{ mode: 'checkbox' }}
