@@ -36,6 +36,7 @@ let initialState = window && window.initialState ? window.initialState : {
 	},
 	skeleton: {
 		darkMode: false,
+		resultsPerPage: 10,
 		sidebarnav: {
 			isOpen: true
 		}

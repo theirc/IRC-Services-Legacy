@@ -2,11 +2,10 @@ import React from 'react';
 import Header from './Header/Header';
 import SidebarNav from './SidebarNav/SidebarNav';
 import Canvas from './Canvas/Canvas';
-import SidePanel from './SidePanel/SidePanel';
-import Footer from './Footer/Footer';
+// import SidePanel from './SidePanel/SidePanel';
+// import Footer from './Footer/Footer';
 import { useTranslation } from "react-i18next";
 import { connect } from 'react-redux';
-import actions from './actions'
 
 import './Skeleton.scss';
 
