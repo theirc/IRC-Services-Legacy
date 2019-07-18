@@ -23,8 +23,6 @@ const Header = props => {
 		<div className='Header'>
 			<Navbar fixed='top' collapseOnSelect expand='sm' bg={props.darkMode ? 'dark' : 'light'} variant={props.darkMode ? 'dark' : 'light'}>
 				<span onClick={onClick} className={`navbar-toggler-icon toggler ${props.sidebarnav.isOpen ? 'expanded' : ''}`}></span>
-				<Navbar.Toggle aria-controls='responsive-navbar-nav' />
-				<Navbar.Collapse id='responsive-navbar-nav'>
 					<Nav className='mr-auto'>
 					</Nav>
 					<Nav>
@@ -34,7 +32,6 @@ const Header = props => {
 							<NavDropdown.Item><Link to='/' onClick={props.logOut}>Log out</Link></NavDropdown.Item>
 						</NavDropdown>
 					</Nav>
-				</Navbar.Collapse>
 			</Navbar>
 		</div>
 	)

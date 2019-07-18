@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-// import { textFilter } from 'react-bootstrap-table2-filter';
 import List from '../../../../components/views/List/List';
 import api from '../../api';
 import Button from 'react-bootstrap/Button';
@@ -16,12 +15,10 @@ const ListView = props => {
 			dataField: 'name',
 			text: 'Name',
 			sort: true,
-			// filter: textFilter()
 		}, {
 			dataField: 'provider',
 			text: 'Provider',
 			sort: true,
-			// filter: textFilter()
 		}
 	];
 
