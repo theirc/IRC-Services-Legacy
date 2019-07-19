@@ -1,7 +1,9 @@
 import React, { Suspense } from "react";
-import { shallow } from "enzyme";
+import { shallow, mount } from "enzyme";
 import { Provider } from 'react-redux';
 import  ConnectedLogin,{Login} from "./Login";
+import  Providers from "../Providers/Providers";
+import  ListView from "../Providers/views/ListView/ListView";
 //import store from '../.././shared/store';
 import configureStore from 'redux-mock-store';
 import { create } from "react-test-renderer";
@@ -17,28 +19,34 @@ import TestRenderer from 'react-test-renderer';
   const mockStore = configureStore(middlewares);
   const store = mockStore(initialState);
 
-  const wrapper = shallow(<ConnectedLogin store={store}/>);
-  const c = shallow(<Suspense callback=''> <Login /> <Suspense>);
+  const onButtonClickMock = jest.fn();
+  const wrapper = shallow(<ConnectedLogin store={store} onSubmit={onButtonClickMock}/>);
+  const c = shallow(<Suspense fallback=''> <Login onSubmit={onButtonClickMock}/> </Suspense>);
+  const p = shallow(<Suspense fallback=''> <Providers /> </Suspense>);
+  const list = shallow(<ListView />);
+  //console.log("List");
+  //console.log(list.debug());
+  //console.log("Providers");
+  //console.log(p.debug());
+  //console.log("Disconected");
+  //console.log(c.debug());
+  //console.log("Connected");
+  //console.log(wrapper.debug());
+  const buttonElement = c.find('form');
+  //console.log(buttonElement.debug())
 
   describe('Login tests: ', () => {
     it('Login component renders ok', () => {
-      expect(wrapper.length).toEqual(1);
+      expect(wrapper).toMatchSnapshot();
     }) 
-
-    it('Fields for username and password and submit button show ok', () => {
-      expect(wrapper.find('#username').length).toEqual(1);
-      expect(wrapper.find('#password').length).toEqual(1);
-      expect(wrapper.find('#submitButton').length).toEqual(1);
-    })
-
-    it('Login button', () => {
-    const instance  = wrapper.root;
-    const button = instance.find('#submitButton');
-    expect(button().click());
-    })
     
-    it('Home page shows after login', () => {
-      
+    it('Submmit button work ok', () => {
+     // const wrapper = shallow(<ConnectedLogin store={store}/>);
+      //const buttonElement = c.find('form');
+      //console.log(buttonElement.debug())
+     // buttonElement.simulate('submit');
+
+
     })
   })
 

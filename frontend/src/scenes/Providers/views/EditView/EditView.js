@@ -19,7 +19,7 @@ const EditView = props => {
 	return (
 		<div className='EditView'>
 			<div className='back'>
-				<Link onClick={onClick}>&lt; Back</Link>
+				<button onClick={onClick}>&lt; Back</button>
 			</div>
 			<h2>{data.name}</h2>
 			<Edit {...props} data={data} />
