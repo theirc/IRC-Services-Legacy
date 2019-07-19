@@ -25,7 +25,7 @@ const Header = props => {
 				</Nav>
 				<Nav>
 					<NavDropdown alignRight title={title} id='collasible-nav-dropdown'>
-						<NavDropdown.Item disabled>Profile</NavDropdown.Item>
+						<NavDropdown.Item><Link to={`/users/${props.user.id}`}>Profile</Link></NavDropdown.Item>
 						<NavDropdown.Divider />
 						<NavDropdown.Item><Link to='/' onClick={props.logOut}>Log out</Link></NavDropdown.Item>
 					</NavDropdown>
