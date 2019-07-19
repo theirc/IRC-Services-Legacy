@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { ButtonToolbar, ToggleButton, ToggleButtonGroup, Form } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import { connect } from 'react-redux';
+import actions from '../../components/layout/Skeleton/actions';
+import api from './api';
 import i18n from '../../shared/i18n';
 import languages from './languages.json';
-import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
-import ToggleButton from 'react-bootstrap/ToggleButton';
-import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
-import actions from '../../components/layout/Skeleton/actions';
-import { connect } from 'react-redux';
-import api from './api';
 
 import './Settings.scss';
 
@@ -36,10 +34,20 @@ const Settings = props => {
 			<h2>Settings</h2>
 			<ButtonToolbar>
 				<ToggleButtonGroup type='radio' name='theme' defaultValue={props.darkMode ? true : false} onChange={v => onChange(v)}>
-					<ToggleButton value={false}>Light (default)</ToggleButton>
-					<ToggleButton value={true}>Dark</ToggleButton>
+					<ToggleButton variant='light' value={false}>Light (default)</ToggleButton>
+					<ToggleButton variant='dark' value={true}>Dark</ToggleButton>
 				</ToggleButtonGroup>
 			</ButtonToolbar>
+
+			<Form>
+				<Form.Group controlId="exampleForm.ControlSelect1">
+					<Form.Label>Languages</Form.Label>
+					<Form.Control as="select">
+						<option>English</option>
+						<option>Spanish</option>
+					</Form.Control>
+				</Form.Group>
+			</Form>
 		</div>
 	)
 }

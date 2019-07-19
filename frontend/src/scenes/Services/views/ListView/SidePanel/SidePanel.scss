@@ -1,0 +1,44 @@
+.SidePanel {
+	background-color: #fff;
+	box-shadow: 0 0 8px 0 #e3e3e3;
+	height: 654px;
+	margin-left: 14px;
+	padding: 10px;
+	width: 300px;
+
+	h2 {
+		display: block;
+		font-weight: normal;
+		margin-bottom: 0;
+		text-align: center;
+	}
+
+	h3 {
+		font-size: 1rem;
+		font-weight: normal;
+		margin: 25px auto 15px;
+	}
+
+	label {
+		color: grey;
+		font-size: 0.8rem;
+	}
+
+	button {
+		margin-top: 30px;
+	}
+
+	// Dark mode
+	&.bg-dark {
+		background-color: #282828!important;
+		box-shadow: 0 0 8px 0 #222;
+
+		hr {
+			border-top: 1px solid #444;
+		}
+
+		h3 {
+			color: white;
+		}
+	}
+}
