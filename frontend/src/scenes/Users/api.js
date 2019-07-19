@@ -40,6 +40,7 @@ api.users = {
 		let { login } = store.getState();
 
 		if (!login.user) return [];
+		store.dispatch(actions.setUsersList(null));
 
 		let headers = composeHeader(login.csrfToken, login.user.token);
 		const method = data.id === 0 ? 'POST' : 'PUT';

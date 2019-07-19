@@ -3,6 +3,7 @@ import api from '../../api';
 import { Link } from 'react-router-dom';
 import './EditView.scss';
 import { Form, Button, Card } from 'react-bootstrap';
+import Edit from '../../../../components/views/Edit/Edit';
 
 const EditView = props => {
 	const [data, setData] = useState([]);
@@ -13,6 +14,7 @@ const EditView = props => {
 
 	const handleSubmit = (event) => {
 		setIsSaving(true);
+		data.groups = []; ///To do: Add Groups functionality
 		if (event) event.preventDefault();
 		(async function save(){
 			const response = await api.users.save(data);
@@ -52,46 +54,41 @@ const EditView = props => {
 		
 	}, []);
 
-	const onClick = () => props.history.goBack()
-
 	return (
 		<div>
-			<Link onClick={onClick}>&lt; Back</Link>
-			<Card>
-				<Card.Body>
-					<Card.Title>User</Card.Title>
-					<Card.Text>
-						<Form onSubmit={handleSubmit}>
-							<Form.Group controlId='formEmail'>
-								<Form.Label>Email</Form.Label>
-									<Form.Control type='text' name='email' onChange={handleChange} value={data.email} required />
-							</Form.Group>
-							<Form.Group controlId='formName'>
-								<Form.Label>Name</Form.Label>
-									<Form.Control type='text' name='name' onChange={handleChange} value={data.name} required />
-							</Form.Group>
-							<Form.Group controlId='formName_es'>
-								<Form.Label>Last Name</Form.Label>
-								<Form.Control type='text' name='surname' onChange={handleChange} value={data.surname}  />
-							</Form.Group>
-							<Form.Group controlId='formName_es'>
-								<Form.Label>Language</Form.Label>
-								<Form.Control type='text' name='language' onChange={handleChange} value={data.language}  />
-							</Form.Group>
-							<Form.Group controlId='formName_es'>
-								<Form.Label>Title</Form.Label>
-								<Form.Control type='text' name='title' onChange={handleChange} value={data.title}  />
-							</Form.Group>
-							
-							{!isSaving && 
-							<Button type="submit"  className="button is-block is-info is-fullwidth">Save</Button>
-							}
-							{!!isSaving && <p>Saving Service Type...</p>}
-						</Form>
+			{ (!data.name && data.id !== 0) && <p>loading...</p> }
+			{(!!data.name || data.id === 0) &&
+			<Edit title='User' {...props}>
+				<Form onSubmit={handleSubmit}>
+					<Form.Group controlId='formEmail'>
+						<Form.Label>Email</Form.Label>
+							<Form.Control type='text' name='email' onChange={handleChange} value={data.email} required />
+					</Form.Group>
+					<Form.Group controlId='formName'>
+						<Form.Label>Name</Form.Label>
+							<Form.Control type='text' name='name' onChange={handleChange} value={data.name} required />
+					</Form.Group>
+					<Form.Group controlId='formName_es'>
+						<Form.Label>Last Name</Form.Label>
+						<Form.Control type='text' name='surname' onChange={handleChange} value={data.surname}  />
+					</Form.Group>
+					<Form.Group controlId='formName_es'>
+						<Form.Label>Language</Form.Label>
+						<Form.Control type='text' name='language' onChange={handleChange} value={data.language}  />
+					</Form.Group>
+					<Form.Group controlId='formName_es'>
+						<Form.Label>Title</Form.Label>
+						<Form.Control type='text' name='title' onChange={handleChange} value={data.title}  />
+					</Form.Group>
 					
-					</Card.Text>
-				</Card.Body>	
-			</Card>
+					{!isSaving && 
+					<Button type="submit"  className="button is-block is-info is-fullwidth">Save</Button>
+					}
+					{!!isSaving && <p>Saving User...</p>}
+				</Form>
+					
+			</Edit>
+			}
 		</div>
 	);
 }

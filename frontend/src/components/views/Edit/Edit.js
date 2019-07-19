@@ -1,20 +1,29 @@
 import React from 'react';
 import { useTranslation } from "react-i18next";
+import { Card } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 import './Edit.scss';
 
 const Edit = props => {
 	const { t, i18n } = useTranslation();
 
+	const onClick = () => props.history.goBack()
+
 	return (
-		<div className='Edit'>
-			{ props.data &&
-				<section>
-					<h3>{props.data.name}</h3>
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse iaculis auctor arcu sit amet auctor. Suspendisse at pellentesque turpis, ut convallis ligula. Fusce fermentum lectus in enim sollicitudin, imperdiet finibus nunc pretium. Etiam placerat ex non hendrerit tempus. Maecenas eu nisi eu sapien aliquet viverra
-				</section>
-			}
-		</div>
+		<section>
+			<Link onClick={onClick}>&lt; Back</Link>
+			<h2>{props.title}</h2>
+			<Card>
+				<Card.Body>
+					<Card.Text>
+					{props.children}
+					</Card.Text>
+				</Card.Body>	
+			</Card>
+			
+		</section>
+		
 	);
 }
 

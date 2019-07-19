@@ -41,6 +41,8 @@ api.serviceCategories = {
 
 		if (!login.user) return [];
 
+		store.dispatch(actions.setServiceCategoriesList(null));
+
 		let headers = composeHeader(login.csrfToken, login.user.token);
 		const method = data.id === 0 ? 'POST' : 'PUT';
 		const url = data.id === 0 ? `/api/service-types/` : `/api/service-types/${data.id}/`;

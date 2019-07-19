@@ -402,18 +402,18 @@ HAYSTACK_CONNECTIONS = {
     },
 }
 
-# JIRA settings
-JIRA_SERVER = os.environ.get(
-    'JIRA_SERVER', 'https://refugeeinfo.atlassian.net/')
-JIRA_USER = os.environ.get('JIRA_USER', '')
-JIRA_PASSWORD = os.environ.get('JIRA_PASSWORD', '')
-JIRA_DUEIN_DAYS = 2
+# # JIRA settings
+# JIRA_SERVER = os.environ.get(
+#     'JIRA_SERVER', 'https://refugeeinfo.atlassian.net/')
+# JIRA_USER = os.environ.get('JIRA_USER', '')
+# JIRA_PASSWORD = os.environ.get('JIRA_PASSWORD', '')
+# JIRA_DUEIN_DAYS = 2
 
-# Production JIRA projects:
-JIRA_SERVICES_PROJECT_KEY = os.environ.get('JIRA_SERVICES_PROJECT_KEY', 'RIS')
-JIRA_FEEDBACK_PROJECT_KEY = os.environ.get('JIRA_FEEDBACK_PROJECT_KEY', 'RIS')
-JIRA_REQUEST_SERVICE_PROJECT_KEY = os.environ.get(
-    'JIRA_REQUEST_SERVICE_PROJECT_KEY', 'RIS')
+# # Production JIRA projects:
+# JIRA_SERVICES_PROJECT_KEY = os.environ.get('JIRA_SERVICES_PROJECT_KEY', 'RIS')
+# JIRA_FEEDBACK_PROJECT_KEY = os.environ.get('JIRA_FEEDBACK_PROJECT_KEY', 'RIS')
+# JIRA_REQUEST_SERVICE_PROJECT_KEY = os.environ.get(
+#     'JIRA_REQUEST_SERVICE_PROJECT_KEY', 'RIS')
 
 # Regex string that will only match valid phone numbers
 # 12-123456

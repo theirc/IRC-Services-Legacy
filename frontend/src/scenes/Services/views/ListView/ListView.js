@@ -49,7 +49,6 @@ const ListView = props => {
 				name: e.name,
 				provider: e.provider
 			})));
-			console.log(response);
 		})();
 	}, []);
 

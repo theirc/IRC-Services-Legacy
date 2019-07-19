@@ -43,13 +43,13 @@ api.providerTypes = {
 
 		let headers = composeHeader(login.csrfToken, login.user.token);
 
-		if (data.id === 0) {
-			const url = `/api/provider-types/`;
-			return fetch(url, { method: 'POST', body: JSON.stringify(data), headers: headers }).then(r => r.json());
-		} else {
-			const url = `/api/provider-types/${data.id}/`;
-			return fetch(url, { method: 'PUT', body: JSON.stringify(data), headers: headers }).then(r => r.json());
-		}
+		store.dispatch(actions.setProviderTypesList(null));
+	
+		const method = data.id === 0 ? 'POST' : 'PUT';
+		const url = data.id === 0 ? `/api/provider-types/` : `/api/provider-types/${data.id}/`;
+
+		return fetch(url, { method: method, body: JSON.stringify(data), headers: headers }).then(r => r.json());
+
 	}
 };
 

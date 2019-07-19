@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { Tabs, Tab, Card } from 'react-bootstrap';
+import Edit from '../../../../components/views/Edit/Edit';
 
 import './EditView.scss';
 
@@ -54,55 +55,49 @@ const EditView = props => {
 		
 	}, []);
 
-	const onClick = () => props.history.goBack()
 
 	return (
 		<div>
-			<Link onClick={onClick}>&lt; Back</Link>
 			{ (!data.name && data.id !== 0) && <p>loading...</p> }
 			{(!!data.name || data.id === 0) &&
-			<Card>
-				<Card.Body>
-					<Card.Title>Service Category</Card.Title>
-					<Card.Text>
-						<Form onSubmit={handleSubmit}>
-							<Tabs defaultActiveKey="english" transition={false} id="noanim-tab-example">
-								<Tab eventKey="english" title="English">
-									<Form.Group controlId='formName'>
-										<Form.Label>Name (English)</Form.Label>
-											<Form.Control type='text' name='name_en' onChange={handleChange} value={data.name_en} required />
-									</Form.Group>
-								</Tab>
-								<Tab eventKey="spanish" title="Spanish">
-								<Form.Group controlId='formName_es'>
-									<Form.Label>Name (Spanish)</Form.Label>
-										<Form.Control type='text' name='name_es' onChange={handleChange} value={data.name_es}  />
-									</Form.Group>
-								</Tab>
-								<Tab eventKey="arabic" title="Arabic">
-									<Form.Group controlId='formName_ar'>
-										<Form.Label>Name (Arabic)</Form.Label>
-											<Form.Control type='text' name='name_ar' onChange={handleChange} value={data.name_ar}  />
-									</Form.Group>
-								</Tab>
-								<Tab eventKey="french" title="French">
-									<Form.Group controlId='formName_fr'>
-										<Form.Label>Name (French)</Form.Label>
-											<Form.Control type='text' name='name_fr' onChange={handleChange} value={data.name_fr}  />
-									</Form.Group>
-								</Tab>
-							</Tabs>
-							{!isSaving && 
-							<Button type="submit"  className="button is-block is-info is-fullwidth">Save</Button>
-							}
-							{!!isSaving && <p>Saving Service Type...</p>}
-						</Form>
-
-					</Card.Text>
-				</Card.Body>	
-			</Card>
+			<Edit title='Provider Type' {...props}>
+				<Form onSubmit={handleSubmit}>
+						<Tabs defaultActiveKey="english" transition={false} id="noanim-tab-example">
+							<Tab eventKey="english" title="English">
+								<Form.Group controlId='formName'>
+									<Form.Label>Name (English)</Form.Label>
+										<Form.Control type='text' name='name_en' onChange={handleChange} value={data.name_en} required />
+								</Form.Group>
+							</Tab>
+							<Tab eventKey="spanish" title="Spanish">
+							<Form.Group controlId='formName_es'>
+								<Form.Label>Name (Spanish)</Form.Label>
+									<Form.Control type='text' name='name_es' onChange={handleChange} value={data.name_es}  />
+								</Form.Group>
+							</Tab>
+							<Tab eventKey="arabic" title="Arabic">
+								<Form.Group controlId='formName_ar'>
+									<Form.Label>Name (Arabic)</Form.Label>
+										<Form.Control type='text' name='name_ar' onChange={handleChange} value={data.name_ar}  />
+								</Form.Group>
+							</Tab>
+							<Tab eventKey="french" title="French">
+								<Form.Group controlId='formName_fr'>
+									<Form.Label>Name (French)</Form.Label>
+										<Form.Control type='text' name='name_fr' onChange={handleChange} value={data.name_fr}  />
+								</Form.Group>
+							</Tab>
+						</Tabs>
+						{!isSaving && 
+						<Button type="submit"  className="button is-block is-info is-fullwidth">Save</Button>
+						}
+						{!!isSaving && <p>Saving Service Type...</p>}
+					</Form>
+			</Edit>
+			}	
 			
-			}
+			
+			
 		</div>
 	);
 }
