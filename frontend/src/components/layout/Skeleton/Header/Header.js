@@ -1,10 +1,8 @@
 import React from 'react';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
+import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import loginActions from '../../../../scenes/Login/actions';
 import skeletonActions from '../actions';
 
@@ -23,15 +21,15 @@ const Header = props => {
 		<div className='Header'>
 			<Navbar fixed='top' collapseOnSelect expand='sm' bg={props.darkMode ? 'dark' : 'light'} variant={props.darkMode ? 'dark' : 'light'}>
 				<span onClick={onClick} className={`navbar-toggler-icon toggler ${props.sidebarnav.isOpen ? 'expanded' : ''}`}></span>
-					<Nav className='mr-auto'>
-					</Nav>
-					<Nav>
-						<NavDropdown alignRight title={title} id='collasible-nav-dropdown'>
-							<NavDropdown.Item disabled>Profile</NavDropdown.Item>
-							<NavDropdown.Divider />
-							<NavDropdown.Item><Link to='/' onClick={props.logOut}>Log out</Link></NavDropdown.Item>
-						</NavDropdown>
-					</Nav>
+				<Nav className='mr-auto'>
+				</Nav>
+				<Nav>
+					<NavDropdown alignRight title={title} id='collasible-nav-dropdown'>
+						<NavDropdown.Item disabled>Profile</NavDropdown.Item>
+						<NavDropdown.Divider />
+						<NavDropdown.Item><Link to='/' onClick={props.logOut}>Log out</Link></NavDropdown.Item>
+					</NavDropdown>
+				</Nav>
 			</Navbar>
 		</div>
 	)

@@ -1,3 +1,9 @@
 .ListView {
-	
+	.wrapper {
+		display: flex;
+		
+		.List {
+			flex-grow: 1;
+		}
+	}
 }

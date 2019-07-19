@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Edit from '../../../../components/views/Edit/Edit';
 import api from '../../api';
-import { Link } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import { Tabs, Tab, Button, Col, Row } from 'react-bootstrap';
 

@@ -38,10 +38,17 @@
 		}
 	}
 
+	ul.dropdown-menu {
+		bottom: 150%;
+		margin: 0 0 0 12px;
+		min-width: unset;
+		top: unset;
+	}
+
 	#pageDropDown {
 		margin-left: 15px;
 	}
-	
+
 	// Dark mode
 	&.bg-dark {
 		background-color: transparent !important;

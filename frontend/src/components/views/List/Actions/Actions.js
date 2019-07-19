@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from "react-i18next";
-import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';
+import { Search } from 'react-bootstrap-table2-toolkit';
 
 import './Actions.scss';
 

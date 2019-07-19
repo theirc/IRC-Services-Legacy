@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { Button } from 'react-bootstrap';
 import List from '../../../../components/views/List/List';
 import api from '../../api';
 import './ListView.scss';
-import Button from 'react-bootstrap/Button';
 
 const ListView = props => {
 	const columns = [
@@ -35,11 +35,11 @@ const ListView = props => {
 	const rowEvents = {
 		onClick: (e, row, rowIndex) => props.history.push(`/users/${row.id}`)
 	};
-	
+
 	const addNew = () => {
 		props.history.push(`/users/create`);
 	};
-	
+
 	useEffect(() => {
 		(async function fetchData() {
 			const response = await api.users.listAll();
@@ -58,7 +58,7 @@ const ListView = props => {
 			<h2>USERS</h2>
 			<Button type="button" className="button is-block is-info is-fullwidth btn-add" onClick={addNew}>+ Add New</Button>
 
-			<List {...props} data={data} columns={columns} rowEvents={rowEvents} defaultSorted={[{dataField: 'id', order: 'asc'}]} />
+			<List {...props} data={data} columns={columns} rowEvents={rowEvents} defaultSorted={[{ dataField: 'id', order: 'asc' }]} />
 		</div>
 	);
 }

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { Button } from 'react-bootstrap';
 import List from '../../../../components/views/List/List';
+import SidePanel from './SidePanel/SidePanel';
 import api from '../../api';
-import Button from 'react-bootstrap/Button';
 
 import './ListView.scss';
 
@@ -40,7 +41,7 @@ const ListView = props => {
 	const addNew = () => {
 		props.history.push(`/services/create`);
 	};
-	
+
 	useEffect(() => {
 		(async function fetchData() {
 			const response = await api.services.listAll();
@@ -57,7 +58,10 @@ const ListView = props => {
 			<h2>SERVICES</h2>
 			<Button type="button" className="button is-block is-info is-fullwidth btn-add" onClick={addNew}>+ Add New</Button>
 
-			<List {...props} data={data} columns={columns} rowEvents={rowEvents} defaultSorted={[{dataField: 'id', order: 'asc'}]} />
+			<div className='wrapper'>
+				<List {...props} data={data} columns={columns} rowEvents={rowEvents} defaultSorted={[{ dataField: 'id', order: 'asc' }]} />
+				<SidePanel />
+			</div>
 		</div>
 	);
 }

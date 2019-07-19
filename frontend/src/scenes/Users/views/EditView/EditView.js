@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import api from '../../api';
-import { Link } from 'react-router-dom';
-import './EditView.scss';
 import { Form, Button, Card } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import api from '../../api';
+import './EditView.scss';
 import Edit from '../../../../components/views/Edit/Edit';
 
 const EditView = props => {

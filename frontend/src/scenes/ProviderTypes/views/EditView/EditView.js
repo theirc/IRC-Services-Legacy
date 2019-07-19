@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import api from '../../api';
-import { Link } from 'react-router-dom';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import { Tabs, Tab, Card } from 'react-bootstrap';
+import { Button, Form, Tab, Tabs } from 'react-bootstrap';
 import Edit from '../../../../components/views/Edit/Edit';
+import api from '../../api';
 
 import './EditView.scss';
 
