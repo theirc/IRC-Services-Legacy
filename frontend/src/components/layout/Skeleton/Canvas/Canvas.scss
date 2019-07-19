@@ -10,12 +10,12 @@ body {
 }
 
 .Canvas {
-  height: -webkit-fill-available;
   margin-left: 235px;
   margin-top: $header-height;
+  min-height: -webkit-fill-available;
   padding: 15px;
-  transition: margin-left .5s; // collapse effect
   text-align: left;
+  transition: margin-left .5s; // collapse effect
 
   &.expanded {
     margin-left: 50px;

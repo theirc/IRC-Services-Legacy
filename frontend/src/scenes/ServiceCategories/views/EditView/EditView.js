@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 // import Edit from '../../../../components/views/Edit/Edit';
-import api from '../../api';
-import { Link } from 'react-router-dom';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
+import { Button, Card, Form, Tab, Tabs } from 'react-bootstrap';
 import { CirclePicker } from 'react-color';
-import { Tabs, Tab, Card } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import api from '../../api';
+
 import './EditView.scss';
 
 const EditView = props => {

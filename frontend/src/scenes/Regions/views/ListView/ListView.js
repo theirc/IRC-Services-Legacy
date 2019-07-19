@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { Button } from 'react-bootstrap';
 import List from '../../../../components/views/List/List';
 import api from '../../api';
-import Button from 'react-bootstrap/Button';
 
 import './ListView.scss';
 
@@ -40,11 +40,11 @@ const ListView = props => {
 	const addNew = () => {
 		props.history.push(`/regions/create`);
 	}
-	
+
 	useEffect(() => {
 		(async function fetchData() {
 			const response = await api.regions.listAll();
-			setData(response.map(e => ({id: e.id, name: e.name, parent: e.parent ? e.parent : '-'})));
+			setData(response.map(e => ({ id: e.id, name: e.name, parent: e.parent ? e.parent : '-' })));
 			console.log(response);
 		})();
 	}, []);
@@ -54,7 +54,7 @@ const ListView = props => {
 			<h2>REGIONS</h2>
 			<Button type="button" className="button is-block is-info is-fullwidth btn-add" onClick={addNew}>+ Add New</Button>
 
-			<List {...props} data={data} columns={columns} rowEvents={rowEvents} defaultSorted={[{dataField: 'id', order: 'asc'}]} />
+			<List {...props} data={data} columns={columns} rowEvents={rowEvents} defaultSorted={[{ dataField: 'id', order: 'asc' }]} />
 		</div>
 	);
 }

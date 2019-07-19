@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ButtonToolbar, ToggleButton, ToggleButtonGroup, Form } from 'react-bootstrap';
+import { ButtonToolbar, Form, ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import actions from '../../components/layout/Skeleton/actions';

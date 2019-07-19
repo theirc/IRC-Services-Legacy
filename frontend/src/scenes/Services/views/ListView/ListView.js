@@ -59,7 +59,7 @@ const ListView = props => {
 			<h2>SERVICES</h2>
 			<Button type="button" className="button is-block is-info is-fullwidth btn-add" onClick={addNew}>+ Add New</Button>
 
-			<div className='container'>
+			<div className='wrapper'>
 				<List {...props} data={data} columns={columns} rowEvents={rowEvents} defaultSorted={[{ dataField: 'id', order: 'asc' }]} />
 				<SidePanel />
 			</div>

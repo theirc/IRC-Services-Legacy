@@ -1,7 +1,5 @@
 import React from 'react';
 import { useTranslation } from "react-i18next";
-import actions from '../actions';
-import { connect } from 'react-redux';
 
 import './SidebarNav.scss';
 
