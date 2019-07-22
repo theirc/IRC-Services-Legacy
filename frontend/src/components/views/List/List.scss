@@ -51,8 +51,8 @@
 
 	// Dark mode
 	&.bg-dark {
-		background-color: transparent !important;
-		box-shadow: none;
+		background-color: #262626 !important;
+		box-shadow: 0 0 8px 0 #222;
 
 		table {
 			border: none;
