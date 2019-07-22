@@ -38,6 +38,7 @@ const Login = props => {
 			.catch(res => setMessage('Invalid credentials'))
 			.then(res => {
 				if(res) {
+					res.loggedIn = new Date().toString();
 					props.setUser(res);
 					props.history.push('/services'); // Default home page after login
 				}
