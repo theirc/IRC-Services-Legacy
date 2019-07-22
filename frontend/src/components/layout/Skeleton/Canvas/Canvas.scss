@@ -1,35 +1,42 @@
-@import '../Skeleton.scss';
+@import "../Skeleton.scss";
 
 body {
 	background-color: #f4f6f9;
-  font-size: 0.9rem;
+	font-size: 0.9rem;
 }
 
 .Canvas {
-  margin-left: 235px;
-  margin-top: $header-height;
-  min-height: -webkit-fill-available;
-  padding: 15px;
-  text-align: left;
-  transition: margin-left .5s; // collapse effect
-  
-  h2 {
-    font-size: 1.1rem;
+	margin-left: 235px;
+	margin-top: $header-height;
+	min-height: -webkit-fill-available;
+	padding: 15px;
+	text-align: left;
+	transition: margin-left 0.5s; // collapse effect
+
+	h2 {
+		font-size: 1.1rem;
 		margin: 20px 0 30px;
 		text-transform: uppercase;
 	}
 
-  &.expanded {
-    margin-left: 50px;
-  }
+	&.expanded {
+		margin-left: 50px;
+	}
 
-  // Dark theme
-  &.bg-dark {
-    background-color: #323232 !important;
+	.btn-add {
+		box-shadow: 0 0 8px 0 #838383;
+		bottom: 20px;
+		position: fixed;
+		right: 20px;
+		z-index: 1;
+	}
 
-    h2 {
-      color: white;
-    }
-  }
+	// Dark theme
+	&.bg-dark {
+		background-color: #323232 !important;
 
+		h2 {
+			color: white;
+		}
+	}
 }
