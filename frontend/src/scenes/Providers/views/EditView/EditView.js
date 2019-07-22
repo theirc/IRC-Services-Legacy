@@ -66,7 +66,7 @@ const EditView = props => {
 	};
 
 	return (
-		<div>
+		<div className='EditView'>
 			{ (!data.name && data.id !== 0) && <p>loading...</p> }
 			{(!!data.name || data.id === 0) &&
 			<Edit title='Provider' {...props}>

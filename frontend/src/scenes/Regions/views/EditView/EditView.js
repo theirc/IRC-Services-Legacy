@@ -18,9 +18,8 @@ const EditView = props => {
 	const onClick = () => props.history.goBack()
 
 	return (
-		<div>
-			<Link onClick={onClick}>&lt; Back</Link>
-			<Edit {...props} data={data} />
+		<div className='EditView'>
+			<Edit title='Region' {...props} data={data} />
 		</div>
 	);
 }

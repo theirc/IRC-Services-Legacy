@@ -3,10 +3,6 @@
 body {
 	background-color: #f4f6f9;
   font-size: 0.9rem;
-  
-  h2 {
-    font-size: 1.1rem;
-  }
 }
 
 .Canvas {
@@ -16,6 +12,12 @@ body {
   padding: 15px;
   text-align: left;
   transition: margin-left .5s; // collapse effect
+  
+  h2 {
+    font-size: 1.1rem;
+		margin: 20px 0 30px;
+		text-transform: uppercase;
+	}
 
   &.expanded {
     margin-left: 50px;

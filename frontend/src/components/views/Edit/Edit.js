@@ -11,8 +11,8 @@ const Edit = props => {
 	const onClick = () => props.history.goBack()
 
 	return (
-		<section>
-			<Link onClick={onClick}>&lt; Back</Link>
+		<section className='Edit'>
+			<Link className='back' onClick={onClick}>&lt; Back</Link>
 			<h2>{props.title}</h2>
 			<Card>
 				<Card.Body>
@@ -21,9 +21,7 @@ const Edit = props => {
 					</Card.Text>
 				</Card.Body>	
 			</Card>
-			
 		</section>
-		
 	);
 }
 
