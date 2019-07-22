@@ -66,7 +66,7 @@ const reducers = {
 // saves state to local storage
 const persist = state => {
 	try {
-		localStorage.setItem('state', JSON.stringify(state));
+		sessionStorage.setItem('state', JSON.stringify(state));
 	} catch(e) {
 		console.log(e);
 	}
@@ -75,7 +75,7 @@ const persist = state => {
 // loads state from local storage
 const load = () => {
 	try {
-		const serializedState = localStorage.getItem('state');
+		const serializedState = sessionStorage.getItem('state');
 
 		if(serializedState) {
 			let state = JSON.parse(serializedState);
@@ -154,7 +154,7 @@ class PersistedStore {
 	persist() {
 		const state = this.store.getState();
 		try {
-			localStorage.setItem(this.name, JSON.stringify(state));
+			sessionStorage.setItem(this.name, JSON.stringify(state));
 		} catch(e) {
 			console.log(e);
 		}
@@ -163,7 +163,7 @@ class PersistedStore {
 	// loads state from local storage
 	load() {
 		try {
-			const serializedState = localStorage.getItem(this.name);
+			const serializedState = sessionStorage.getItem(this.name);
 
 			if(serializedState) {
 				let state = JSON.parse(serializedState);
