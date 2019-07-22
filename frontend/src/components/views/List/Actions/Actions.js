@@ -4,7 +4,10 @@ import { Search } from 'react-bootstrap-table2-toolkit';
 
 import './Actions.scss';
 
-const { SearchBar } = Search;
+const {
+	// ClearSearchButton,
+	SearchBar
+} = Search;
 
 const Actions = props => {
 	const { t, i18n } = useTranslation();
@@ -12,6 +15,7 @@ const Actions = props => {
 	return (
 		<div className='Actions'>
 			<SearchBar {...props.searchProps} className='SearchBar' />
+			{/* <ClearSearchButton { ...props.searchProps } className='ClearSearchButton' /> */}
 		</div>
 	);
 }
