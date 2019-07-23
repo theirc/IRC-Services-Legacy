@@ -1,8 +1,30 @@
 .Edit {
-	h3 {
-		font-size: 0.9rem;
-		font-weight: normal;
-		text-transform: uppercase;
+	// bootstrap overrides
+	.card {
+		background-color: #fff;
+		border: none;
+		box-shadow: 0 0 8px 0 #e3e3e3;
+	}
+
+	// Dark mode
+	&.bg-dark {
+		background-color: initial !important;
+
+		.card {
+			background-color: #262626!important;
+			border: none;
+			box-shadow: 0 0 8px 0 #222;
+
+			.nav-item {
+				background-color: #353535;
+				color: #777;
+				
+				&.active {
+					background-color: #404040;
+					color: white;
+				}
+			}
+		}	
 	}
 	.nav-tabs .nav-link.active {
 		background-color: #ededed;

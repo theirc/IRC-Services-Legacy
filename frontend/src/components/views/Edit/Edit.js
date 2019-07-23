@@ -1,7 +1,9 @@
 import React from 'react';
-import { useTranslation } from "react-i18next";
 import { Card } from 'react-bootstrap';
+import { useTranslation } from "react-i18next";
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+
 
 import './Edit.scss';
 
@@ -11,18 +13,22 @@ const Edit = props => {
 	const onClick = () => props.history.goBack()
 
 	return (
-		<section className='Edit'>
+		<section className={`Edit ${props.darkMode ? 'bg-dark' : ''}`}>
 			<Link className='back' onClick={onClick}>&lt; Back</Link>
 			<h2>{props.title}</h2>
 			<Card>
 				<Card.Body>
 					<Card.Text>
-					{props.children}
+						{props.children}
 					</Card.Text>
-				</Card.Body>	
+				</Card.Body>
 			</Card>
 		</section>
 	);
 }
 
-export default Edit;
+const mapStateToProps = state => ({
+	darkMode: state.skeleton.darkMode,
+});
+
+export default connect(mapStateToProps)(Edit);
