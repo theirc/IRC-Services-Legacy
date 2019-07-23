@@ -4,4 +4,17 @@
 		font-weight: normal;
 		text-transform: uppercase;
 	}
+	.nav-tabs .nav-link.active {
+		background-color: #ededed;
+		border: none;
+	}
+	.nav-link{ 
+		color: inherit; 
+	}
+	.nav-link :hover{ 
+		color: inherit; 
+	}
+	.tab-content{
+		padding-top: 20px;
+	}
 }

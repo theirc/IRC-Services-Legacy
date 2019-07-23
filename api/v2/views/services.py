@@ -402,7 +402,7 @@ class ServiceListViewSet(viewsets.ModelViewSet):
     serializer_class = serializers_v2.ServiceListSerializer
 
 class PrivateProviderListViewSet(viewsets.ModelViewSet):
-    queryset = Provider.objects.values('id', 'name_en');
+    queryset = Provider.objects.values('id', 'name_en')
     serializer_class = serializers_v2.PrivateProviderListSerializer
 
 class ServiceViewSet(viewsets.ModelViewSet):
