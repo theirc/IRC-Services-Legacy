@@ -17,7 +17,7 @@ const SessionTimer = props => {
 	if (count === 0) props.setTimedOut(true);
 
 	return (
-		<Modal {...props} size='sm' aria-labelledby='contained-modal-title-vcenter' centered>
+		<Modal {...props} className='SessionTimer' size='sm' aria-labelledby='contained-modal-title-vcenter' centered>
 			<Modal.Header closeButton>
 				<Modal.Title id='contained-modal-title-vcenter'>
 					Session timeout
