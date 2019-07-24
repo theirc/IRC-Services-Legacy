@@ -35,15 +35,10 @@ const Login = props => {
 
 		return fetch('/login', { headers: composeHeader(csrftoken), body, method: 'POST' })
 			.then(res => {
-				switch(res.status) {
-					case 200:
-						return res.json();
-					
-					case 401:
-						setMessage(res.statusText);
-					default:
-						return Promise.reject(res);
-				}
+				if(res.status === 200) return res.json();
+
+				setMessage(res.statusText);
+				return Promise.reject(res);
 			})
 			.then(res => {
 				if(res) {
