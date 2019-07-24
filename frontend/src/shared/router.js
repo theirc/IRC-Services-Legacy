@@ -18,7 +18,6 @@ const AppRouter = props => {
 	const initialCsrf = props.initialCsrf;
 	sessionStorage.setItem("csrf", initialCsrf);
 
-	console.log('approuter', props);
 	return (
 		<ConnectedRouter history={history}>
 			<Switch>

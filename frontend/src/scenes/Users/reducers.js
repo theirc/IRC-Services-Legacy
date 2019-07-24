@@ -1,4 +1,5 @@
 import actions from './actions';
+import settings from '../../shared/settings';
 
 const initialState = {
 	list: null,
@@ -7,8 +8,9 @@ const initialState = {
 const usersReducers = (state = initialState, action) => {
 	switch (action.type) {
 		case actions.types.setUsersList:
-			console.log('usersReducers::setUsersList');
+			settings.logger.reducers && console.log('usersReducers::setUsersList');
 			return { ...state, list: action.payload };
+
 		default:
 			return state;
 	}

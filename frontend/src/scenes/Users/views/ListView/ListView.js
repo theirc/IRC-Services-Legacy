@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
-import List from '../../../../components/views/List/List';
 import api from '../../api';
+import List from '../../../../components/views/List/List';
+import settings from '../../../../shared/settings';
+
 import './ListView.scss';
 
 const ListView = props => {
@@ -49,7 +51,7 @@ const ListView = props => {
 				email: e.email,
 				groups: e.groups
 			})));
-			console.log(response);
+			settings.logger.requests && console.table(response);
 		})();
 	}, []);
 

@@ -1,4 +1,6 @@
 import actions from './actions';
+import settings from '../../../shared/settings';
+
 
 const initialState = {
 	darkMode: false,
@@ -11,15 +13,15 @@ const initialState = {
 const skeletonReducers = (state = initialState, action) => {
 	switch (action.type) {
 		case actions.types.setDarkMode:
-			console.log('skeletonReducers::setDarkMode');
+			settings.logger.reducers && console.log('skeletonReducers::setDarkMode');
 			return { ...state, darkMode: action.payload };
 
 		case actions.types.setResultsPerPage:
-			console.log('skeletonReducers::setResultsPerPage');
+			settings.logger.reducers && console.log('skeletonReducers::setResultsPerPage');
 			return { ...state, resultsPerPage: action.payload };
 
 		case actions.types.setSidebarNavOpen:
-			console.log('skeletonReducers::setSidebarNavOpen');
+			settings.logger.reducers && console.log('skeletonReducers::setSidebarNavOpen');
 			const sidebarnav = { ...state.sidebarnav, isOpen: action.payload };
 			return { ...state, sidebarnav };
 		

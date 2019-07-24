@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
+import api from '../../api';
 import List from '../../../../components/views/List/List';
 import SidePanel from './SidePanel/SidePanel';
-import api from '../../api';
+import settings from '../../../../shared/settings';
 
 import './ListView.scss';
 
@@ -45,11 +46,8 @@ const ListView = props => {
 	useEffect(() => {
 		(async function fetchData() {
 			const response = await api.services.listAll();
-			setData(response.map(e => ({
-				id: e.id,
-				name: e.name,
-				provider: e.provider
-			})));
+			setData(response.map(e => ({ id: e.id, name: e.name, provider: e.provider })));
+			settings.logger.requests && console.table(response);
 		})();
 	}, []);
 

@@ -10,10 +10,7 @@ const SessionTimer = props => {
 	let [count, setCount] = useState(props.timeout);
 
 	useEffect(() => {
-		const interval = setInterval(() => {
-			setCount(--count);
-			console.log(count);
-		}, 1000);
+		const interval = setInterval(() => setCount(--count), 1000);
 		return () => clearInterval(interval);
 	}, []);
 
@@ -27,7 +24,6 @@ const SessionTimer = props => {
 				</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
-				{/* <h4>Centered Modal</h4> */}
 				<p>You will be logged out in {count} secs</p>
 			</Modal.Body>
 			<Modal.Footer>

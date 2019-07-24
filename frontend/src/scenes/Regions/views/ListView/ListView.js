@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
-import List from '../../../../components/views/List/List';
 import api from '../../api';
+import List from '../../../../components/views/List/List';
+import settings from '../../../../shared/settings';
 
 import './ListView.scss';
 
@@ -45,6 +46,7 @@ const ListView = props => {
 		(async function fetchData() {
 			const response = await api.regions.listAll();
 			setData(response.map(e => ({id: e.id, name: e.name, parent: e.parent ? e.parent : '-'})));
+			settings.logger.requests && console.table(response);
 		})();
 	}, []);
 

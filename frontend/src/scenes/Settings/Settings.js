@@ -22,7 +22,6 @@ const Settings = props => {
 		(async function fetchData() {
 			const response = await api.settings.getAll();
 			setData(response);
-			console.log(response);
 		})();
 	}, []);
 
