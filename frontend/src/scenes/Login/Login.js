@@ -34,8 +34,17 @@ const Login = props => {
 		setMessage('');
 
 		return fetch('/login', { headers: composeHeader(csrftoken), body, method: 'POST' })
-			.then(res => res.status === 200 ? res.json() : Promise.reject(res))
-			.catch(res => setMessage('Invalid credentials'))
+			.then(res => {
+				switch(res.status) {
+					case 200:
+						return res.json();
+					
+					case 401:
+						setMessage(res.statusText);
+					default:
+						return Promise.reject(res);
+				}
+			})
 			.then(res => {
 				if(res) {
 					res.loggedIn = new Date().toString();
@@ -43,6 +52,9 @@ const Login = props => {
 					props.setTimedOut(false); // Override timedout flag
 					props.history.push('/services'); // Default home page after login
 				}
+			})
+			.catch(err => {
+				err.status === undefined && setMessage('Endpoint unreachable');
 			});
 	};
 
