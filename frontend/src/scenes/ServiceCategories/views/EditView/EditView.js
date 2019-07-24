@@ -19,7 +19,6 @@ const EditView = props => {
 		(async function save(){
 			const response = await api.serviceCategories.saveType(data);
 			if (response){
-				sessionStorage.removeItem('serviceCategories');
 				props.history.goBack();
 			}
 		})();
