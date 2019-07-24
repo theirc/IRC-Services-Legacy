@@ -7,6 +7,7 @@ import providerTypesReducers from '../scenes/ProviderTypes/reducers';
 import regionsReducers from '../scenes/Regions/reducers';
 import serviceCategoriesReducers from '../scenes/ServiceCategories/reducers';
 import servicesReducers from '../scenes/Services/reducers';
+import settingsReducers from '../scenes/Settings/reducers';
 import usersReducers from '../scenes/Users/reducers';
 import skeletonReducers from '../components/layout/Skeleton/reducers';
 
@@ -14,7 +15,9 @@ const window = global.window || {};
 
 let initialState = window && window.initialState ? window.initialState : {
 	login: {
-		csrfToken: null
+		csrfToken: null,
+		timedOut: false,
+		user: null,
 	},
 	providers: {
 		list: null
@@ -41,7 +44,7 @@ let initialState = window && window.initialState ? window.initialState : {
 			isOpen: true
 		}
 	},
-	user: null
+	settingsReducers
 };
 
 export const history = createBrowserHistory();
@@ -60,6 +63,7 @@ const reducers = {
 	services: servicesReducers,
 	users: usersReducers,
 	skeleton: skeletonReducers,
+	settings: settingsReducers,
 	router: connectRouter(history)
 };
 

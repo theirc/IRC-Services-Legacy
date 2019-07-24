@@ -22,7 +22,7 @@ const AppRouter = props => {
 	return (
 		<ConnectedRouter history={history}>
 			<Switch>
-				{props.user &&
+				{(!props.timedOut && props.user) &&
 				<div className='AppRouter'>
 					<Route exact path='/providers' component={props => <Skeleton {...props}><Providers {...props} /></Skeleton>} />
 					<Route exact path='/providers/:id' component={props => <Skeleton {...props}><Providers {...props} /></Skeleton>} />
@@ -40,7 +40,7 @@ const AppRouter = props => {
 					<Route exact path='/settings' component={props => <Skeleton {...props}><Settings {...props} /></Skeleton>} />
 				</div>
 				}
-				{!props.user &&
+				{(props.timedOut || !props.user) &&
 					<div className='AppRouter'>
 						<Redirect to='/' />
 						<Route path='/' component={props => <Login {...props} />} />
@@ -51,6 +51,7 @@ const AppRouter = props => {
 	)
 }
 const mapStateToProps = state => ({
+	timedOut: state.login.timedOut,
 	user: state.login.user,
 });
 

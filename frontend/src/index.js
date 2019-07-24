@@ -3,9 +3,10 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux';
-import './shared/i18n';
 import store from './shared/store';
+import './shared/i18n';
 import './index.css';
+
 
 ReactDOM.render(
 	<Provider store={store}>

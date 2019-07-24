@@ -40,6 +40,7 @@ const Login = props => {
 				if(res) {
 					res.loggedIn = new Date().toString();
 					props.setUser(res);
+					props.setTimedOut(false); // Override timedout flag
 					props.history.push('/services'); // Default home page after login
 				}
 			});
@@ -75,6 +76,7 @@ const mapDispatchToProps = dispatch => {
 	return {
 		setCsrfToken: csrfToken => dispatch(actions.setCsrfToken(csrfToken)),
 		setUser: user => dispatch(actions.setUser(user)),
+		setTimedOut: timedOut => dispatch(actions.setTimedOut(timedOut))
 	}
 };
 

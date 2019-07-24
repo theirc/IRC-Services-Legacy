@@ -18,8 +18,8 @@ const Header = props => {
 	};
 
 	return (
-		<div className='Header'>
-			<Navbar fixed='top' collapseOnSelect expand='sm' bg={props.darkMode ? 'dark' : 'light'} variant={props.darkMode ? 'dark' : 'light'}>
+		<div className={`Header ${props.darkMode ? 'bg-dark' : ''}`}>
+			<Navbar fixed='top' collapseOnSelect expand='sm' variant={props.darkMode ? 'dark' : 'light'}>
 				<span onClick={onClick} className={`navbar-toggler-icon toggler ${props.sidebarnav.isOpen ? 'expanded' : ''}`}></span>
 				<Nav className='mr-auto'>
 				</Nav>
