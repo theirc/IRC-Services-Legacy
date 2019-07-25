@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Button } from 'react-bootstrap';
 import api from '../../api';
 import List from '../../../../components/views/List/List';
 import settings from '../../../../shared/settings';
@@ -45,10 +44,8 @@ const ListView = props => {
 
 	return (
 		<div className='ListView'>
-			<h2>PROVIDER TYPES</h2>
-			<Button type="button" className="button is-block is-info is-fullwidth btn-add" onClick={addNew}>+ Add New</Button>
-
-			<List {...props} data={data} columns={columns} rowEvents={rowEvents} defaultSorted={[{ dataField: 'id', order: 'asc' }]} />
+			<h2>{props.title}</h2>
+			<List {...props} data={data} columns={columns} rowEvents={rowEvents} create={addNew} defaultSorted={[{ dataField: 'id', order: 'asc' }]} />
 		</div>
 	);
 }

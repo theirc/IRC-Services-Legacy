@@ -1,17 +1,23 @@
 import React from 'react';
+import { Button } from 'react-bootstrap';
 import { useTranslation } from "react-i18next";
+import { connect } from 'react-redux';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import ToolkitProvider from 'react-bootstrap-table2-toolkit';
 import Actions from './Actions/Actions';
-import { connect } from 'react-redux';
 import skeletonActions from '../../layout/Skeleton/actions';
+import i18n from '../../../shared/i18n';
+import languages from './languages.json';
+
 
 import './List.scss';
 
+const NS = 'List';
 
-const List = ({ data, columns, rowEvents, darkMode, resultsPerPage, setResultsPerPage, defaultSorted }) => {
-	const { t, i18n } = useTranslation();
+const List = ({ data, columns, rowEvents, darkMode, resultsPerPage, setResultsPerPage, defaultSorted, create }) => {
+	i18n.customLoad(languages, NS);
+	const { t } = useTranslation(NS);
 
 	const onSizePerPageChange = (sizePerPage, page) => {
 		setResultsPerPage(sizePerPage);
@@ -50,6 +56,7 @@ const List = ({ data, columns, rowEvents, darkMode, resultsPerPage, setResultsPe
 					</div>
 				}
 			</ToolkitProvider>
+			<Button type='button' className='button is-block is-info is-fullwidth btn-add' onClick={create}>{t('create')}</Button>
 		</div>
 	)
 }

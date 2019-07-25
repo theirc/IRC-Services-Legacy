@@ -1,7 +1,7 @@
 {
 	"en": {
 		"ServiceCategories": {
-			"title": "ServiceCategories",
+			"title": "Service Categories",
 			"description": "Provider Types Description",
 			"properties": {
 				"width": "long",
@@ -11,7 +11,7 @@
 	},
 	"fr": {
 		"ServiceCategories": {
-			"title": "ServiceCategories fr",
+			"title": "Service Categories fr",
 			"description": "ServiceCategories Description fr",
 			"properties": {
 				"width": "long fr",
