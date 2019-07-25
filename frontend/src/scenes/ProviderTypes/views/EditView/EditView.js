@@ -57,7 +57,7 @@ const EditView = props => {
 		<div className='EditView'>
 			{ (!data.name && data.id !== 0) && <p>loading...</p> }
 			{(!!data.name || data.id === 0) &&
-			<Edit title='Provider Type' {...props}>
+			<Edit {...props}>
 				<Form onSubmit={handleSubmit}>
 						<Tabs defaultActiveKey="english" transition={false} id="noanim-tab-example">
 							<Tab eventKey="english" title="English">

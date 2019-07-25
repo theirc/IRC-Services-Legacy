@@ -6,7 +6,7 @@
 			"serviceCategories": "Service Categories",
 			"services": "Services",
 			"serviceMap": "Service Map",
-			"serviceProviders": "Service Providers",
+			"providers": "Service Providers",
 			"settings": "Settings",
 			"users": "Users"
 		}
@@ -18,7 +18,7 @@
 			"serviceCategories": "Service Categories fr",
 			"services": "Services fr",
 			"serviceMap": "Service Map fr",
-			"serviceProviders": "Service Providers fr",
+			"providers": "Service Providers fr",
 			"settings": "Settings fr",
 			"users": "Users fr"
 		}

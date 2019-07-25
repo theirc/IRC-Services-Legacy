@@ -1,21 +1,21 @@
 {
 	"en": {
 		"ServiceCategories": {
-			"title": "Service Categories",
-			"description": "Provider Types Description",
-			"properties": {
-				"width": "long",
-				"height": "not long"
+			"edit": {
+				"title": "Service Category"
+			},
+			"list": {
+				"title": "Service Categories"
 			}
 		}
 	},
 	"fr": {
 		"ServiceCategories": {
-			"title": "Service Categories fr",
-			"description": "ServiceCategories Description fr",
-			"properties": {
-				"width": "long fr",
-				"height": "not long fr"
+			"edit": {
+				"title": "Service Category fr"
+			},
+			"list": {
+				"title": "Service Categories fr"
 			}
 		}
 	}

@@ -15,8 +15,8 @@ const Users = props => {
 
 	return (
 		<div className={NS}>
-			{!props.match.params.id && <ListView {...props} title={t('title')} />}
-			{props.match.params.id && <EditView {...props} />}
+			{!props.match.params.id && <ListView {...props} title={t('list.title')} />}
+			{props.match.params.id && <EditView {...props} title={t('edit.title')} />}
 		</div>
 	)
 }

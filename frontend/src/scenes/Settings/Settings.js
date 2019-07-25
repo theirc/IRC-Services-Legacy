@@ -25,7 +25,7 @@ const Settings = props => {
 		})();
 	}, []);
 
-	const onChange = value => {
+	const handleDarkMode = value => {
 		props.setDarkMode(value);
 	}
 
@@ -33,11 +33,15 @@ const Settings = props => {
 		props.setLogoutTimeout(parseInt(e.target.value));
 	}
 
+	const handleLanguage = e => {
+		i18n.changeLanguage(e.target.value);
+	}
+
 	return (
 		<div className={NS}>
-			<h2>Settings</h2>
+			<h2>{t('title')}</h2>
 			<ButtonToolbar>
-				<ToggleButtonGroup type='radio' name='theme' defaultValue={props.darkMode ? true : false} onChange={v => onChange(v)}>
+				<ToggleButtonGroup type='radio' name='theme' defaultValue={props.darkMode ? true : false} onChange={v => handleDarkMode(v)}>
 					<ToggleButton variant='light' value={false}>Light (default)</ToggleButton>
 					<ToggleButton variant='dark' value={true}>Dark</ToggleButton>
 				</ToggleButtonGroup>
@@ -46,9 +50,9 @@ const Settings = props => {
 			<Form>
 				<Form.Group controlId='settingsForm.LanguageSelect'>
 					<Form.Label>Languages</Form.Label>
-					<Form.Control as='select'>
-						<option>English</option>
-						<option>Spanish</option>
+					<Form.Control as='select' onChange={handleLanguage}>
+						<option value='en-US'>English</option>
+						<option value='fr-FR'>French</option>
 					</Form.Control>
 				</Form.Group>
 

@@ -18,7 +18,7 @@ const EditView = props => {
 
 	return (
 		<div className='EditView'>
-			<Edit title='Service' {...props} data={data} />
+			<Edit {...props} data={data} />
 		</div>
 	);
 }
