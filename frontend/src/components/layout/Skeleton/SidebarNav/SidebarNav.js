@@ -1,46 +1,51 @@
 import React from 'react';
-import { useTranslation } from "react-i18next";
+import { useTranslation } from 'react-i18next';
+import i18n from '../../../../shared/i18n';
+import languages from './languages.json'
 
 import './SidebarNav.scss';
 
+const NS = 'SidebarNav';
+
 const SidebarNav = props => {
-	const { t, i18n } = useTranslation();
+	i18n.customLoad(languages, NS);
+	const { t } = useTranslation(NS);
 
 	return (
 		<nav className={`SidebarNav ${props.sidebarnav.isOpen ? 'open' : 'closed'} ${props.darkMode ? 'bg-dark' : ''}`}>
 			<ul>
-				<li title='Services' className={props.location.pathname.includes('services') && 'active'} onClick={() => props.history.push('/services')}>
+				<li title={t('services')} className={props.location.pathname.includes('services') && 'active'} onClick={() => props.history.push('/services')}>
 					<img src={'/public/static/assets/Skeleton/SidebarNav/nav-services.png'} />
-					Services
+					{t('services')}
 				</li>
-				<li title='Service map'>
-					<a target='_blank' href='https://www.refugee.info/'><img src={'/public/static/assets/Skeleton/SidebarNav/nav-service-map.png'} />Service map</a>
+				<li title={t('serviceMap')}>
+					<a target='_blank' href='https://www.refugee.info/'><img src={'/public/static/assets/Skeleton/SidebarNav/nav-service-map.png'} />{t('serviceMap')}</a>
 				</li>
 				<hr /> {/* Separator */}
-				<li title='Service providers' className={props.location.pathname.includes('providers') && 'active'} onClick={() => props.history.push('/providers')}>
+				<li title={t('serviceProviders')} className={props.location.pathname.includes('providers') && 'active'} onClick={() => props.history.push('/providers')}>
 					<img src={'/public/static/assets/Skeleton/SidebarNav/nav-providers.png'} />
-					Service providers
+					{t('serviceProviders')}
 				</li>
-				<li title='Regions' className={props.location.pathname.includes('regions') && 'active'} onClick={() => props.history.push('/regions')}>
+				<li title={t('regions')} className={props.location.pathname.includes('regions') && 'active'} onClick={() => props.history.push('/regions')}>
 					<img src={'/public/static/assets/Skeleton/SidebarNav/nav-regions.png'} />
-					Regions
+					{t('regions')}
 				</li>
-				<li title='Service categories' className={props.location.pathname.includes('service-categories') && 'active'} onClick={() => props.history.push('/service-categories')}>
+				<li title={t('serviceCategories')} className={props.location.pathname.includes('service-categories') && 'active'} onClick={() => props.history.push('/service-categories')}>
 					<img src={'/public/static/assets/Skeleton/SidebarNav/nav-service-categories.png'} />
-					Service categories
+					{t('serviceCategories')}
 				</li>
-				<li title='Provider types' className={props.location.pathname.includes('provider-types') && 'active'} onClick={() => props.history.push('/provider-types')}>
+				<li title={t('providerTypes')} className={props.location.pathname.includes('provider-types') && 'active'} onClick={() => props.history.push('/provider-types')}>
 					<img src={'/public/static/assets/Skeleton/SidebarNav/nav-provider-types.png'} />
-					Provider types
+					{t('providerTypes')}
 				</li>
-				<li title='Users' className={props.location.pathname.includes('users') && 'active'} onClick={() => props.history.push('/users')}>
+				<li title={t('users')} className={props.location.pathname.includes('users') && 'active'} onClick={() => props.history.push('/users')}>
 					<img src={'/public/static/assets/Skeleton/SidebarNav/nav-users.png'} />
-					Users
+					{t('users')}
 				</li>
 				<hr /> {/* Separator */}
-				<li title='Settings' className={props.location.pathname.includes('settings') && 'active'} onClick={() => props.history.push('/settings')}>
+				<li title={t('settings')} className={props.location.pathname.includes('settings') && 'active'} onClick={() => props.history.push('/settings')}>
 					<img src={'/public/static/assets/Skeleton/SidebarNav/nav-settings.png'} />
-					Settings
+					{t('settings')}
 				</li>
 			</ul>
 		</nav>

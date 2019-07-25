@@ -1,7 +1,7 @@
 const settings = {
 	logger: {
-		requests: false,
-		reducers: false,
+		requests: true,
+		reducers: true,
 	}
 }
 

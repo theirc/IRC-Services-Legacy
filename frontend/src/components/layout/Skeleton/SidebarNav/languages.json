@@ -1,0 +1,26 @@
+{
+	"en": {
+		"SidebarNav": {
+			"providerTypes": "Provider Types",
+			"regions": "Regions",
+			"serviceCategories": "Service Categories",
+			"services": "Services",
+			"serviceMap": "Service Map",
+			"serviceProviders": "Service Providers",
+			"settings": "Settings",
+			"users": "Users"
+		}
+	},
+	"fr": {
+		"SidebarNav": {
+			"providerTypes": "Provider Types fr",
+			"regions": "Regions fr",
+			"serviceCategories": "Service Categories fr",
+			"services": "Services fr",
+			"serviceMap": "Service Map fr",
+			"serviceProviders": "Service Providers fr",
+			"settings": "Settings fr",
+			"users": "Users fr"
+		}
+	}
+}

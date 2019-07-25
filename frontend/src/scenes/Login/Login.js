@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import i18n from '../../shared/i18n';
-import languages from './languages.json';
 import { connect } from 'react-redux';
+import { Alert, Button, Form } from 'react-bootstrap';
 import actions from './actions';
 import composeHeader from '../../data/Helpers/headers';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import Alert from 'react-bootstrap/Alert';
+import i18n from '../../shared/i18n';
+import languages from './languages.json';
 
 import './Login.scss';
 
@@ -35,13 +33,13 @@ const Login = props => {
 
 		return fetch('/login', { headers: composeHeader(csrftoken), body, method: 'POST' })
 			.then(res => {
-				if(res.status === 200) return res.json();
+				if (res.status === 200) return res.json();
 
 				setMessage(res.statusText);
 				return Promise.reject(res);
 			})
 			.then(res => {
-				if(res) {
+				if (res) {
 					res.loggedIn = new Date().toString();
 					props.setUser(res);
 					props.setTimedOut(false); // Override timedout flag
@@ -60,8 +58,8 @@ const Login = props => {
 					<Form.Label>{t('username')}</Form.Label>
 					<Form.Control type='email' placeholder='Enter email' onChange={e => setUser(e.target.value)} />
 					<Form.Text className='text-muted'>
-						We'll never share your email with anyone else.
-				</Form.Text>
+						{t('privacyInfo')}
+					</Form.Text>
 				</Form.Group>
 
 				<Form.Group controlId='formBasicPassword'>

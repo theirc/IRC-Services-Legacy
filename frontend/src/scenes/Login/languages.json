@@ -5,10 +5,7 @@
 			"username": "User Name",
 			"password": "Password",
 			"submit": "Log In",
-			"properties": {
-				"width": "long",
-				"height": "not long"
-			}
+			"privacyInfo": "We'll never share your email with anyone else"
 		}
 	},
 	"fr": {
@@ -17,10 +14,7 @@
 			"username": "User Name fr",
 			"password": "Password fr",
 			"submit": "Log In fr",
-			"properties": {
-				"width": "long fr",
-				"height": "not long fr"
-			}
+			"privacyInfo": "We'll never share your email with anyone else fr"
 		}
 	}
 }
