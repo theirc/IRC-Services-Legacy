@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useTranslation } from "react-i18next";
 import i18n from '../../shared/i18n';
 import languages from './languages.json';

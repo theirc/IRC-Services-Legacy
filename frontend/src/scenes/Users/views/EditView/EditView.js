@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Form, Button, Card } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Button, Form } from 'react-bootstrap';
 import api from '../../api';
 import './EditView.scss';
 import Edit from '../../../../components/views/Edit/Edit';
@@ -58,7 +57,7 @@ const EditView = props => {
 		<div>
 			{ (!data.name && data.id !== 0) && <p>loading...</p> }
 			{(!!data.name || data.id === 0) &&
-			<Edit title='User' {...props}>
+			<Edit {...props}>
 				<Form onSubmit={handleSubmit}>
 					<Form.Group controlId='formEmail'>
 						<Form.Label>Email</Form.Label>

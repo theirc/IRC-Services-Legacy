@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-// import Edit from '../../../../components/views/Edit/Edit';
 import { Button, Form, Tab, Tabs } from 'react-bootstrap';
 import { CirclePicker } from 'react-color';
 import api from '../../api';
+import Edit from '../../../../components/views/Edit/Edit';
 
 import './EditView.scss';
-import Edit from '../../../../components/views/Edit/Edit';
 
 const EditView = props => {
 	const [data, setData] = useState([]);

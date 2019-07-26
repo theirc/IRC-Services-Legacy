@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { Button, Col, Form, Row, Tab, Tabs } from 'react-bootstrap';
 import Edit from '../../../../components/views/Edit/Edit';
 import api from '../../api';
-import Form from 'react-bootstrap/Form';
-import { Tabs, Tab, Button, Col, Row } from 'react-bootstrap';
 
 import './EditView.scss';
 
