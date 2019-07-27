@@ -46,7 +46,7 @@ const ListView = props => {
 		(async function fetchData() {
 			const response = await api.services.listAll();
 			setData(response.map(e => ({ id: e.id, name: e.name, provider: e.provider })));
-			settings.logger.requests && console.table(response);
+			settings.logger.requests && console.log(response);
 		})();
 	}, []);
 

@@ -13,7 +13,7 @@ import skeletonReducers from '../components/layout/Skeleton/reducers';
 
 const window = global.window || {};
 
-let initialState = window && window.initialState ? window.initialState : {
+let initialState = {
 	login: {
 		csrfToken: null,
 		timedOut: false,
@@ -83,7 +83,10 @@ const load = () => {
 
 		if(serializedState) {
 			let state = JSON.parse(serializedState);
+			// Overrides on reload
 			state.router.location.pathname = window.location.pathname; // update router if url changed
+			state.login.timedOut = initialState.login.timedOut; // override timeout message on login scene refresh
+			
 			return state;
 		}
 		

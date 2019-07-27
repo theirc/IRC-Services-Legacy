@@ -17,7 +17,7 @@ const Login = props => {
 
 	const [user, setUser] = useState('');
 	const [pass, setPass] = useState('');
-	const [message, setMessage] = useState('');
+	const [message, setMessage] = useState(props.message ? props.message : '');
 
 	const onSubmit = e => {
 		e.preventDefault();
@@ -42,8 +42,7 @@ const Login = props => {
 				if (res) {
 					res.loggedIn = new Date().toString();
 					props.setUser(res);
-					props.setTimedOut(false); // Override timedout flag
-					props.history.push('/services'); // Default home page after login
+					props.setTimedOut(false); // Clear timeout
 				}
 			})
 			.catch(err => {

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useTranslation } from "react-i18next";
 import IdleTimer from 'react-idle-timer';
 import { connect } from 'react-redux';
 import Canvas from './Canvas/Canvas';
@@ -15,10 +14,8 @@ import './Skeleton.scss';
 
 
 const Skeleton = props => {
-	const { t, i18n } = useTranslation();
-	
 	const [show, setShow] = useState(false);
-		
+
 	let idleTimer = null;
 
 	return (
@@ -43,7 +40,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
 	return {
-		setTimedOut: timedOut => dispatch(loginActions.setTimedOut(timedOut))
+		logOut: () => dispatch(loginActions.setUser(null))
 	}
 };
 

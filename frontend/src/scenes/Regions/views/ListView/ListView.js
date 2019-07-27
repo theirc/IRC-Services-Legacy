@@ -45,7 +45,7 @@ const ListView = props => {
 		(async function fetchData() {
 			const response = await api.regions.listAll();
 			setData(response.map(e => ({id: e.id, name: e.name, parent: e.parent ? e.parent : '-'})));
-			settings.logger.requests && console.table(response);
+			settings.logger.requests && console.log(response);
 		})();
 	}, []);
 

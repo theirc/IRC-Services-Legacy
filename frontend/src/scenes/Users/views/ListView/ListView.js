@@ -50,7 +50,7 @@ const ListView = props => {
 				email: e.email,
 				groups: e.groups
 			})));
-			settings.logger.requests && console.table(response);
+			settings.logger.requests && console.log(response);
 		})();
 	}, []);
 
