@@ -34,6 +34,7 @@ const Settings = props => {
 	}
 
 	const handleLanguage = e => {
+		props.setLanguage(e.target.value);
 		i18n.changeLanguage(e.target.value);
 	}
 
@@ -41,16 +42,16 @@ const Settings = props => {
 		<div className={NS}>
 			<h2>{t('title')}</h2>
 			<ButtonToolbar>
-				<ToggleButtonGroup type='radio' name='theme' defaultValue={props.darkMode ? true : false} onChange={v => handleDarkMode(v)}>
+				<ToggleButtonGroup type='radio' name='theme' value={props.darkMode ? true : false} onChange={v => handleDarkMode(v)}>
 					<ToggleButton variant='light' value={false}>Light (default)</ToggleButton>
-					<ToggleButton variant='dark' value={true}>Dark</ToggleButton>
+					<ToggleButton variant='light' value={true}>Dark</ToggleButton>
 				</ToggleButtonGroup>
 			</ButtonToolbar>
 
 			<Form>
 				<Form.Group controlId='settingsForm.LanguageSelect'>
 					<Form.Label>Languages</Form.Label>
-					<Form.Control as='select' onChange={handleLanguage}>
+					<Form.Control as='select' onChange={handleLanguage} value={props.language}>
 						<option value='en-US'>English</option>
 						<option value='fr-FR'>French</option>
 					</Form.Control>
@@ -58,7 +59,7 @@ const Settings = props => {
 
 				<Form.Group controlId='settingsForm.TimeoutSelect'>
 					<Form.Label>Automatically log out</Form.Label>
-					<Form.Control as='select' onChange={handleAutoLogout}>
+					<Form.Control as='select' onChange={handleAutoLogout} value={props.logoutTimeout}>
 						<option value='1'>1 min</option>
 						<option value='10'>10 min</option>
 						<option value='20'>20 min</option>
@@ -72,11 +73,14 @@ const Settings = props => {
 
 const mapStateToProps = state => ({
 	darkMode: state.skeleton.darkMode,
+	language: state.settings.language,
+	logoutTimeout: state.settings.logoutTimeout
 });
 
 const mapDispatchToProps = dispatch => {
 	return {
 		setDarkMode: darkMode => dispatch(skeletonActions.setDarkMode(darkMode)),
+		setLanguage: language => dispatch(settingsActions.setLanguage(language)),
 		setLogoutTimeout: timeout => dispatch(settingsActions.setLogoutTimeout(timeout)),
 	}
 };

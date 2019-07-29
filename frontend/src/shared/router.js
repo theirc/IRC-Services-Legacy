@@ -32,12 +32,12 @@ const AppRouter = props => {
 						<Route exact path='/regions/:id' component={props => <Skeleton {...props}><Regions {...props} /></Skeleton>} />
 						<Route exact path='/service-categories' component={props => <Skeleton {...props}><ServiceCategories {...props} /></Skeleton>} />
 						<Route exact path='/service-categories/:id' component={props => <Skeleton {...props}><ServiceCategories {...props} /></Skeleton>} />
-						<Redirect from='/' to='/services' />
 						<Route exact path='/services' component={props => <Skeleton {...props}><Services {...props} /></Skeleton>} />
 						<Route exact path='/services/:id' component={props => <Skeleton {...props}><Services {...props} /></Skeleton>} />
 						<Route exact path='/users' component={props => <Skeleton {...props}><Users {...props} /></Skeleton>} />
 						<Route exact path='/users/:id' component={props => <Skeleton {...props}><Users {...props} /></Skeleton>} />
 						<Route exact path='/settings' component={props => <Skeleton {...props}><Settings {...props} /></Skeleton>} />
+						{props.path === '/' && <Redirect exact from='/' to='/services' />}
 					</div>
 				}
 				{!props.user &&
@@ -51,6 +51,7 @@ const AppRouter = props => {
 	)
 }
 const mapStateToProps = state => ({
+	path: state.router.location.pathname,
 	timedOut: state.login.timedOut,
 	user: state.login.user,
 });

@@ -45,7 +45,10 @@ let initialState = {
 			isOpen: true
 		}
 	},
-	settingsReducers
+	settings: {
+		language: 'en-US',
+		logoutTimeout: 10
+	}
 };
 
 export const history = createBrowserHistory();
