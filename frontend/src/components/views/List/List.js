@@ -15,7 +15,7 @@ import './List.scss';
 
 const NS = 'List';
 
-const List = ({ data, columns, rowEvents, darkMode, resultsPerPage, setResultsPerPage, defaultSorted, create }) => {
+const List = ({ data, columns, rowEvents, darkMode, resultsPerPage, setResultsPerPage, defaultSorted, create, enableFilter }) => {
 	i18n.customLoad(languages, NS);
 	const { t } = useTranslation(NS);
 
@@ -41,7 +41,7 @@ const List = ({ data, columns, rowEvents, darkMode, resultsPerPage, setResultsPe
 			>
 				{props =>
 					<div>
-						<Actions {...props} />
+						<Actions {...props} enableFilter={enableFilter}/>
 						{!data.length && <p>loading...</p>}
 						{!!data.length &&
 							<BootstrapTable {...props.baseProps}

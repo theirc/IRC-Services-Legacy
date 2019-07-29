@@ -18,21 +18,21 @@ const Header = props => {
 
 	const title = props.user ? `${props.user.name} ${props.user.surname}` : 'Not Logged In';
 
-	const onClick = e => {
-		props.setSidebarNavOpen(!props.sidebarnav.isOpen);
-	};
+	const handleToggler = e => props.setSidebarNavOpen(!props.sidebarnav.isOpen);
+
+	const handleProfile = () => props.history.push(`/users/${props.user.id}`);
 
 	return (
 		<div className={`Header ${props.darkMode ? 'bg-dark' : ''}`}>
 			<Navbar fixed='top' collapseOnSelect expand='sm' variant={props.darkMode ? 'dark' : 'light'}>
-				<span onClick={onClick} className={`navbar-toggler-icon toggler ${props.sidebarnav.isOpen ? 'expanded' : ''}`}></span>
+				<span onClick={handleToggler} className={`navbar-toggler-icon toggler ${props.sidebarnav.isOpen ? 'expanded' : ''}`}></span>
 				<Nav className='mr-auto'>
 				</Nav>
 				<Nav>
 					<NavDropdown alignRight title={title} id='collasible-nav-dropdown'>
-						<NavDropdown.Item><Link to={`/users/${props.user.id}`}>{t('profile')}</Link></NavDropdown.Item>
+						<NavDropdown.Item onClick={handleProfile}>{t('profile')}</NavDropdown.Item>
 						<NavDropdown.Divider />
-						<NavDropdown.Item><Link to='/' onClick={props.logOut}>{t('logout')}</Link></NavDropdown.Item>
+						<NavDropdown.Item onClick={props.logOut}>{t('logout')}</NavDropdown.Item>
 					</NavDropdown>
 				</Nav>
 			</Navbar>

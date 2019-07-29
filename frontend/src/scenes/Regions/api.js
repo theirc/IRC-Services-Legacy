@@ -36,6 +36,17 @@ api.regions = {
 		// Saving response to redux store
 		return regions.list ? Promise.resolve(regions.list) : fetch(url, { headers }).then(r => r.json()).then(r => { store.dispatch(actions.setRegionsList(r)); return r; });
 	},
+	listCountries: () => {
+		const url = 'api/regions/?exclude_geometry=true&level=1';
+		let { login, regions } = store.getState();
+
+		if (!login.user) return [];
+
+		let headers = composeHeader(login.csrfToken, login.user.token);
+
+		// Saving response to redux store
+		return regions.countriesList ? Promise.resolve(regions.countriesList) : fetch(url, { headers }).then(r => r.json()).then(r => { store.dispatch(actions.setCountriesList(r)); return r; });
+	}
 };
 
 export default api;

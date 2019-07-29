@@ -32,7 +32,7 @@ let initialState = {
 		list: null
 	},
 	services: {
-		list: null
+		list: null,
 	},
 	users: {
 		list: null
@@ -40,6 +40,7 @@ let initialState = {
 	skeleton: {
 		darkMode: false,
 		resultsPerPage: 10,
+		showFilter: false,
 		sidebarnav: {
 			isOpen: true
 		}

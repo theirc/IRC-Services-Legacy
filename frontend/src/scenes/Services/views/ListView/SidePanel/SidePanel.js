@@ -1,12 +1,49 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
-import { useTranslation } from "react-i18next";
+// import { useTranslation } from "react-i18next";
 import { connect } from 'react-redux';
+import serviceCategoriesApi from '../../../../ServiceCategories/api';
+import providersApi from '../../../../Providers/api';
+import regionsApi from '../../../../Regions/api';
+import settings from '../../../../../shared/settings';
 
 import './SidePanel.scss';
 
+const api = {
+	providers: providersApi.providers,
+	regions: regionsApi.regions,
+	serviceCategories: serviceCategoriesApi.serviceCategories,
+};
+
 const SidePanel = props => {
-	const { t, i18n } = useTranslation();
+	// const { t, i18n } = useTranslation();
+
+	const [ serviceCategories, setServiceCategories ] = useState([]);
+	const [ countries, setCountries ] = useState([]);
+	const [ providers, setProviders ] = useState([]);
+
+	// Same effect to queue requests asynchronously for performance
+	useEffect(() => {
+		(async function fetchData() {
+			// Service Categories
+			let response = await api.serviceCategories.listAll();
+			setServiceCategories(response);
+			settings.logger.requests && console.log(response);
+
+			// Regions
+			response = await api.regions.listCountries();
+			setCountries(response);
+			settings.logger.requests && console.log(response);
+
+			// Providers
+			response = await api.providers.listAll();
+			setProviders(response);
+			settings.logger.requests && console.log(response);
+
+			// Region/Area
+			// City
+		})();
+	}, []);
 
 	return (
 		<div className={`SidePanel ${props.darkMode ? 'bg-dark' : ''}`}>
@@ -16,22 +53,19 @@ const SidePanel = props => {
 				<Form.Group controlId="exampleForm.ControlSelect1">
 					<Form.Label>Category</Form.Label>
 					<Form.Control as="select">
-						<option>Cat 1</option>
-						<option>Cat 2</option>
+						{serviceCategories && serviceCategories.map(e => <option value={e.id}>{e.name}</option>)}
 					</Form.Control>
 				</Form.Group>
 				<Form.Group controlId="exampleForm.ControlSelect1">
 					<Form.Label>Country</Form.Label>
 					<Form.Control as="select">
-						<option>Country 1</option>
-						<option>Country 2</option>
+						{countries && countries.map(e => <option value={e.id}>{e.name}</option>)}
 					</Form.Control>
 				</Form.Group>
 				<Form.Group controlId="exampleForm.ControlSelect1">
 					<Form.Label>Provider</Form.Label>
 					<Form.Control as="select">
-						<option>Red Cross</option>
-						<option>Country 2</option>
+						{providers && providers.map(e => <option value={e.id}>{e.name}</option>)}
 					</Form.Control>
 				</Form.Group>
 				<hr />

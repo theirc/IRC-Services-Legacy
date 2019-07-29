@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import api from '../../api';
 import List from '../../../../components/views/List/List';
 import SidePanel from './SidePanel/SidePanel';
@@ -55,11 +56,15 @@ const ListView = props => {
 			<h2>{props.title}</h2>
 
 			<div className='wrapper'>
-				<List {...props} data={data} columns={columns} rowEvents={rowEvents} create={addNew} defaultSorted={[{ dataField: 'id', order: 'asc' }]} />
-				<SidePanel />
+				<List {...props} data={data} columns={columns} enableFilter={true} rowEvents={rowEvents} create={addNew} defaultSorted={[{ dataField: 'id', order: 'asc' }]} />
+				{props.showFilter && <SidePanel />}
 			</div>
 		</div>
 	);
 }
 
-export default ListView;
+const mapStateToProps = state => ({
+	showFilter: state.skeleton.showFilter,
+});
+
+export default connect(mapStateToProps)(ListView);
