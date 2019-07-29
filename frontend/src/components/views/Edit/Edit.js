@@ -1,6 +1,5 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
-import { useTranslation } from "react-i18next";
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -8,8 +7,6 @@ import { Link } from 'react-router-dom';
 import './Edit.scss';
 
 const Edit = props => {
-	const { t, i18n } = useTranslation();
-
 	const onClick = () => props.history.goBack()
 
 	return (

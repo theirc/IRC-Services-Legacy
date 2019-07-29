@@ -10,6 +10,7 @@ const EditView = props => {
 	const [isSaving, setIsSaving] = useState(false);
 	const [isNew, setIsNew] = useState(false);
 
+	const t = props.t;
 
 	const handleSubmit = (event) => {
 		setIsSaving(true);
@@ -57,7 +58,7 @@ const EditView = props => {
 		<div className='EditView'>
 			{ (!data.name && data.id !== 0) && <p>loading...</p> }
 			{(!!data.name || data.id === 0) &&
-			<Edit {...props}>
+			<Edit {...props} title={t('edit.title')}>
 				<Form onSubmit={handleSubmit}>
 						<Tabs defaultActiveKey="english" transition={false} id="noanim-tab-example">
 							<Tab eventKey="english" title="English">

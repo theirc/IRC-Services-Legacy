@@ -14,11 +14,13 @@ const EditView = props => {
 		})();
 	}, []);
 
+	const t = props.t;
+
 	const onClick = () => props.history.goBack()
 
 	return (
 		<div className='EditView'>
-			<Edit {...props} data={data} />
+			<Edit {...props} data={data} title={t('edit.title')}/>
 		</div>
 	);
 }

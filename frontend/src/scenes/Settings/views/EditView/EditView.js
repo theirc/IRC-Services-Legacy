@@ -5,11 +5,11 @@ import Edit from '../../../../components/views/Edit/Edit';
 import './Edit.scss';
 
 const Edit = props => {
-	const { t, i18n } = useTranslation();
+	const t = props.t;
 
 	return (
 	<div className='EditView'>
-		<Edit {...props} />
+		<Edit {...props} title={t('edit.title')}/>
 	</div>
 	);
 }

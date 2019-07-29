@@ -31,6 +31,8 @@ const ListView = props => {
 		}
 	];
 
+	const t = props.t;
+
 	const [data, setData] = useState([]);
 
 	const rowEvents = {
@@ -51,7 +53,7 @@ const ListView = props => {
 
 	return (
 		<div className='ListView'>
-			<h2>{props.title}</h2>
+			<h2>{t('list.title')}</h2>
 			<List {...props} data={data} columns={columns} rowEvents={rowEvents} create={addNew} defaultSorted={[{ dataField: 'id', order: 'asc' }]} />
 		</div>
 	);

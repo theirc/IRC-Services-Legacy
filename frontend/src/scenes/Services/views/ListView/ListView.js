@@ -33,6 +33,7 @@ const ListView = props => {
 		}
 	];
 
+	const t = props.t;
 	const [data, setData] = useState([]);
 
 	const rowEvents = {
@@ -53,8 +54,7 @@ const ListView = props => {
 
 	return (
 		<div className='ListView'>
-			<h2>{props.title}</h2>
-
+			<h2>{t('list.title')}</h2>
 			<div className='wrapper'>
 				<List {...props} data={data} columns={columns} enableFilter={true} rowEvents={rowEvents} create={addNew} defaultSorted={[{ dataField: 'id', order: 'asc' }]} />
 				{props.showFilter && <SidePanel />}

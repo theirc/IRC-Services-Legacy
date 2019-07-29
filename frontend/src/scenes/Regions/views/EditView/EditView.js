@@ -7,6 +7,8 @@ import './EditView.scss';
 const EditView = props => {
 	const [data, setData] = useState([]);
 
+	const t = props.t;
+
 	useEffect(() => {
 		(async function fetchData() {
 			const response = await api.regions.getOne(props.match.params.id);
@@ -18,7 +20,7 @@ const EditView = props => {
 
 	return (
 		<div className='EditView'>
-			<Edit title='Region' {...props} data={data} />
+			<Edit {...props} data={data} title={t('edit.title')} />
 		</div>
 	);
 }

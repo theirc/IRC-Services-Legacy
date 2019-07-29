@@ -15,8 +15,8 @@ const Providers = props => {
 
 	return (
 		<div className={NS}>
-			{!props.match.params.id && <ListView {...props} title={t('list.title')} />}
-			{props.match.params.id && <EditView {...props} title={t('edit.title')} />}
+			{!props.match.params.id && <ListView {...props} t={t} />}
+			{props.match.params.id && <EditView {...props} t={t} />}
 		</div>
 	)
 }

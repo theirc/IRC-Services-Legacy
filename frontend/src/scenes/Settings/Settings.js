@@ -42,7 +42,7 @@ const Settings = props => {
 		<div className={NS}>
 			<h2>{t('title')}</h2>
 			<ButtonToolbar>
-				<ToggleButtonGroup type='radio' name='theme' value={props.darkMode ? true : false} onChange={v => handleDarkMode(v)}>
+				<ToggleButtonGroup className='theme' type='radio' name='theme' value={props.darkMode ? true : false} onChange={v => handleDarkMode(v)}>
 					<ToggleButton variant='light' value={false}>Light (default)</ToggleButton>
 					<ToggleButton variant='light' value={true}>Dark</ToggleButton>
 				</ToggleButtonGroup>
