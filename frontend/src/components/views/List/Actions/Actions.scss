@@ -14,11 +14,21 @@
 		padding: 5px;
 
 		&:hover {
-			border: 1px solid #333;
+			border: 1px solid #ccc;
 			img {
 				filter: sepia(100%) hue-rotate(190deg) saturate(500%);
 			}
 		}
 	}
 
+}
+
+.bg-dark {
+	.Actions {
+		.filter {
+			&:hover {
+				border: 1px solid #333;
+			}
+		}
+	}
 }

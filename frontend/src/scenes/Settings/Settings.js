@@ -7,6 +7,12 @@ import i18n from '../../shared/i18n';
 import languages from './languages.json';
 import settingsActions from '../../scenes/Settings/actions';
 import skeletonActions from '../../components/layout/Skeleton/actions';
+import providersActions from '../Providers/actions';
+import providerTypesActions from '../ProviderTypes/actions';
+import regionsActions from '../Regions/actions';
+import serviceCategoriesActions from '../ServiceCategories/actions';
+import servicesActions from '../Services/actions';
+import usersActions from '../Users/actions';
 
 import './Settings.scss';
 
@@ -34,6 +40,9 @@ const Settings = props => {
 	}
 
 	const handleLanguage = e => {
+		// clear cached requests on language change
+		props.clearCachedRequests();
+
 		props.setLanguage(e.target.value);
 		i18n.changeLanguage(e.target.value);
 	}
@@ -79,6 +88,15 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
 	return {
+		clearCachedRequests: () => {
+			dispatch(providersActions.setProvidersList(null));
+			dispatch(providerTypesActions.setProviderTypesList(null));
+			dispatch(regionsActions.setCountriesList(null));
+			dispatch(regionsActions.setRegionsList(null));
+			dispatch(serviceCategoriesActions.setServiceCategoriesList(null));
+			dispatch(servicesActions.setServicesList(null));
+			dispatch(usersActions.setUsersList(null));
+		},
 		setDarkMode: darkMode => dispatch(skeletonActions.setDarkMode(darkMode)),
 		setLanguage: language => dispatch(settingsActions.setLanguage(language)),
 		setLogoutTimeout: timeout => dispatch(settingsActions.setLogoutTimeout(timeout)),

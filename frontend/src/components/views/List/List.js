@@ -26,7 +26,7 @@ const List = ({ data, columns, rowEvents, darkMode, resultsPerPage, setResultsPe
 	const options = {
 		hidePageListOnlyOnePage: true,
 		onSizePerPageChange: onSizePerPageChange,
-		pageStartIndex: 0,
+		pageStartIndex: 1,
 		sizePerPage: resultsPerPage,
 	};
 
