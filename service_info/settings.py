@@ -528,7 +528,7 @@ INTERNAL_IPS = [
 
 SITE_CONFIG = {
     "cuentanos.org": {
-        "CHAT_ENABLED": False,
+        "CHAT_ENABLED": True,
         "CHAT_APP_ID": 'uchonpxg',
         "INTERCOM_SECRET": os.environ.get('CN_INTERCOM_SECRET', '')
     },
