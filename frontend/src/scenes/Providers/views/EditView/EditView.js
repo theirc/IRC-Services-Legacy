@@ -159,11 +159,10 @@ const EditView = props => {
 					{!isSaving && 
 					<Button type="submit"  className="button is-block is-info is-fullwidth">Save</Button>
 					}
-					{!!isSaving && <p>Saving Service Type...</p>}
+					{!!isSaving && <p>Saving Provider...</p>}
 				</Form>
 			</Edit>
 			}
-		
 		</div>
 	);
 }
