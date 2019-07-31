@@ -47,12 +47,12 @@ urlpatterns = [
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) \
     + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
-if settings.DEBUG:
-    try:
-        import debug_toolbar
+# if settings.DEBUG:
+#     try:
+#         import debug_toolbar
 
-        urlpatterns += [
-            url(r'^__debug__/', include(debug_toolbar.urls)),
-        ]
-    except:
-        pass
+#         urlpatterns += [
+#             url(r'^__debug__/', include(debug_toolbar.urls)),
+#         ]
+#     except:
+#         pass

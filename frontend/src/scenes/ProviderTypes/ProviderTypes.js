@@ -4,6 +4,7 @@ import i18n from '../../shared/i18n';
 import languages from './languages.json';
 import ListView from './views/ListView/ListView';
 import EditView from './views/EditView/EditView';
+
 import './ProviderTypes.scss';
 
 const NS = 'ProviderTypes';
@@ -14,8 +15,8 @@ const ProviderTypes = props => {
 
 	return (
 		<div className={NS}>
-			{!props.match.params.id && <ListView {...props} />}
-			{props.match.params.id && <EditView {...props} />}
+			{!props.match.params.id && <ListView {...props} t={t} />}
+			{props.match.params.id && <EditView {...props} t={t} />}
 		</div>
 	)
 }

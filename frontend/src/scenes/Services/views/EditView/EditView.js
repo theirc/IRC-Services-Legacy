@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Edit from '../../../../components/views/Edit/Edit';
 import api from '../../api';
-import { Link } from 'react-router-dom';
+
 import './EditView.scss';
 
 const EditView = props => {
@@ -14,12 +14,13 @@ const EditView = props => {
 		})();
 	}, []);
 
+	const t = props.t;
+
 	const onClick = () => props.history.goBack()
 
 	return (
-		<div>
-			<Link onClick={onClick}>&lt; Back</Link>
-			<Edit {...props} data={data} />
+		<div className='EditView'>
+			<Edit {...props} data={data} title={t('edit.title')}/>
 		</div>
 	);
 }

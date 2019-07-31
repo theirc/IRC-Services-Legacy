@@ -1,0 +1,14 @@
+{
+	"en": {
+		"List": {
+			"create": "Create",
+			"description": "Description"
+		}
+	},
+	"fr": {
+		"List": {
+			"create": "Create fr",
+			"description": "Description fr"
+		}
+	}
+}

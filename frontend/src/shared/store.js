@@ -2,20 +2,53 @@ import { createStore, combineReducers, compose, applyMiddleware } from "redux";
 import { connectRouter, routerMiddleware } from 'connected-react-router'
 import { createBrowserHistory } from 'history'
 import loginReducers from '../scenes/Login/reducers';
+import providersReducers from '../scenes/Providers/reducers';
+import providerTypesReducers from '../scenes/ProviderTypes/reducers';
+import regionsReducers from '../scenes/Regions/reducers';
+import serviceCategoriesReducers from '../scenes/ServiceCategories/reducers';
+import servicesReducers from '../scenes/Services/reducers';
+import settingsReducers from '../scenes/Settings/reducers';
+import usersReducers from '../scenes/Users/reducers';
 import skeletonReducers from '../components/layout/Skeleton/reducers';
 
 const window = global.window || {};
 
-let initialState = window && window.initialState ? window.initialState : {
+let initialState = {
 	login: {
-		csrfToken: null
+		csrfToken: null,
+		timedOut: false,
+		user: null,
+	},
+	providers: {
+		list: null
+	},
+	providerTypes: {
+		list: null
+	},
+	regions: {
+		list: null
+	},
+	serviceCategories: {
+		list: null
+	},
+	services: {
+		list: null,
+	},
+	users: {
+		list: null
 	},
 	skeleton: {
+		darkMode: false,
+		resultsPerPage: 10,
+		showFilter: false,
 		sidebarnav: {
 			isOpen: true
 		}
 	},
-	user: null
+	settings: {
+		language: 'en-US',
+		logoutTimeout: 10
+	}
 };
 
 export const history = createBrowserHistory();
@@ -27,7 +60,14 @@ const enhancers = window.__REDUX_DEVTOOLS_EXTENSION__ ?
 
 const reducers = {
 	login: loginReducers,
+	providers: providersReducers,
+	providerTypes: providerTypesReducers,
+	regions: regionsReducers,
+	serviceCategories: serviceCategoriesReducers,
+	services: servicesReducers,
+	users: usersReducers,
 	skeleton: skeletonReducers,
+	settings: settingsReducers,
 	router: connectRouter(history)
 };
 
@@ -47,7 +87,10 @@ const load = () => {
 
 		if(serializedState) {
 			let state = JSON.parse(serializedState);
+			// Overrides on reload
 			state.router.location.pathname = window.location.pathname; // update router if url changed
+			state.login.timedOut = initialState.login.timedOut; // override timeout message on login scene refresh
+			
 			return state;
 		}
 		

@@ -1,21 +1,21 @@
 {
 	"en": {
 		"Users": {
-			"title": "Users",
-			"description": "Provider Types Description",
-			"properties": {
-				"width": "long",
-				"height": "not long"
+			"edit": {
+				"title": "User"
+			},
+			"list": {
+				"title": "Users"
 			}
 		}
 	},
 	"fr": {
 		"Users": {
-			"title": "Users fr",
-			"description": "Users Description fr",
-			"properties": {
-				"width": "long fr",
-				"height": "not long fr"
+			"edit": {
+				"title": "User fr"
+			},
+			"list": {
+				"title": "Users fr"
 			}
 		}
 	}

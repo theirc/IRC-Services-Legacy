@@ -1,8 +1,34 @@
 .Actions {
+	display: flex;
 	height: 80px;
+	justify-content: space-between;
 	padding: 20px;
 
-	.search {
-		max-width: 280px;
+	.SearchBar {
+		width: 280px;
+	}
+
+	.filter {
+		background-color: transparent;
+		border: 1px solid transparent;
+		padding: 5px;
+
+		&:hover {
+			border: 1px solid #ccc;
+			img {
+				filter: sepia(100%) hue-rotate(190deg) saturate(500%);
+			}
+		}
+	}
+
+}
+
+.bg-dark {
+	.Actions {
+		.filter {
+			&:hover {
+				border: 1px solid #333;
+			}
+		}
 	}
 }

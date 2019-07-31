@@ -1,0 +1,16 @@
+{
+	"en": {
+		"Header": {
+			"title": "Header",
+			"logout": "Log out",
+			"profile": "Profile"
+		}
+	},
+	"fr": {
+		"Header": {
+			"title": "Header fr",
+			"profile": "Profile fr",
+			"logout": "Log out fr"
+		}
+	}
+}

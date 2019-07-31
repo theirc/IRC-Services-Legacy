@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useTranslation } from "react-i18next";
 import i18n from '../../shared/i18n';
 import languages from './languages.json';
 import ListView from './views/ListView/ListView';
 import EditView from './views/EditView/EditView';
+
 import './Regions.scss';
 
 const NS = 'Regions';
@@ -14,8 +15,8 @@ const Regions = props => {
 
 	return (
 		<div className={NS}>
-			{!props.match.params.id && <ListView {...props} />}
-			{props.match.params.id && <EditView {...props} />}
+			{!props.match.params.id && <ListView {...props} t={t} />}
+			{props.match.params.id && <EditView {...props} t={t} />}
 		</div>
 	)
 }
