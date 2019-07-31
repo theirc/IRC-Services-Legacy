@@ -16,11 +16,26 @@ import TestRenderer from 'react-test-renderer';
 
 
 describe('Providers tests: ', () => {
-
-  const listcomponent = shallow(<ListView />);
-  const edit = shallow(<EditView />);
-  const w = edit.find('button').shallow();
-
+  const mockedFunction = jest.fn();
+  const mockedFunctionForList = jest.fn();
+  const initialProps = {
+    history:{
+      goBack: () => { mockedFunction();
+      }
+    }
+  }
+  const propsForList = {
+    history:{},
+    rowEvents:{
+      onClick: () =>{mockedFunctionForList();}
+    }
+  }
+  const listcomponent = shallow(<ListView {...propsForList} />);
+  const edit = shallow(<EditView {...initialProps} onClick={mockedFunction}/>);
+  const w = edit.find('button');
+  const listToShallow = listcomponent.find('List');
+  
+  
   it('List view renders ok:', () => {
     const title = listcomponent.find('h2');
     const titleText = title.text();
@@ -44,6 +59,11 @@ describe('Providers tests: ', () => {
     const h2s = edit.find('h2');
     expect(editss.length).toBe(6);
     expect(h2s.length).toBe(1);
+  })
+
+  it('Back button:', () => {
+    w.simulate('click');
+    expect(mockedFunction).toHaveBeenCalled();
   })
 
 })
