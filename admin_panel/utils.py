@@ -196,7 +196,7 @@ def push_service_to_transifex(id):
             status = 'Updated'
             info = json.loads(r2.text)
 
-        logger.info(status + r2.text)
+        #logger.info(status + r2.text)
 
         r2.info = info
         r2.info['status'] = status
