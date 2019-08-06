@@ -5,12 +5,17 @@ import  EditView from "./views/EditView/EditView"
 import store from '../../shared/store';
 import { Provider } from 'react-redux';
 import Edit from '../../components/views/Edit/Edit'
+<<<<<<< HEAD
 
+=======
+ 
+>>>>>>> 9b673f12607d3374b8cc729e6b10946980f6381e
 const mockedProps={
     match:{
         params:{
             id: 'create'
         }
+<<<<<<< HEAD
     }
 }
 
@@ -22,6 +27,19 @@ const mockedEmptyProps={
     }
 }
 
+=======
+    }
+}
+ 
+const mockedEmptyProps={
+    match:{
+        params:{
+            id: 'someProp'
+        }
+    }
+}
+ 
+>>>>>>> 9b673f12607d3374b8cc729e6b10946980f6381e
 const mockedFunction = jest.fn();
 const mockedPropsForEdit={
     history:{
@@ -29,12 +47,17 @@ const mockedPropsForEdit={
         }
     }
 }
+<<<<<<< HEAD
 
+=======
+ 
+>>>>>>> 9b673f12607d3374b8cc729e6b10946980f6381e
 const viewEdit = mount(<Provider store={store}>
     <Suspense fallback=''>
         <Edit {...mockedPropsForEdit} onClick={mockedFunction}/>
     </Suspense>
 </Provider>);
+<<<<<<< HEAD
 
 
 const editWithProps = mount(<Provider store={store}>
@@ -43,20 +66,41 @@ const editWithProps = mount(<Provider store={store}>
 		</Suspense>
 </Provider>);
 
+=======
+ 
+ 
+const editWithProps = mount(<Provider store={store}>
+        <Suspense fallback=''>
+            <EditView {...mockedProps}/>
+        </Suspense>
+</Provider>);
+ 
+>>>>>>> 9b673f12607d3374b8cc729e6b10946980f6381e
 const editWithoutProps = mount(<Provider store={store}>
     <Suspense fallback=''>
         <EditView {...mockedEmptyProps}/>
     </Suspense>
 </Provider>);
+<<<<<<< HEAD
 
 
 const list = shallow(<ListView />);
 
+=======
+ 
+ 
+const list = shallow(<ListView />);
+ 
+>>>>>>> 9b673f12607d3374b8cc729e6b10946980f6381e
 describe('Providers Tests: ', () => {
     it('Edit view render with match.params.id equeal to create prop:', () => {
         expect(editWithProps.find('Form').exists()).toBe(true);
     })
+<<<<<<< HEAD
 
+=======
+ 
+>>>>>>> 9b673f12607d3374b8cc729e6b10946980f6381e
     it('Edit view render with match.params.id not equeal to create prop:', () => {
         expect(editWithoutProps.find('EditView').exists()).toBe(true);
     })

@@ -1,11 +1,12 @@
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { Provider } from 'react-redux';
-import './shared/i18n';
 import store from './shared/store';
+import './shared/i18n';
 import './index.css';
+
 
 ReactDOM.render(
 	<Provider store={store}>

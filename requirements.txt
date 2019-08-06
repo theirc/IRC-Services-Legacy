@@ -87,3 +87,7 @@ psycopg2-binary==2.7.4
 django-debug-toolbar==1.9.1
 whoosh==2.7.4
 html2text==2018.1.9
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9b673f12607d3374b8cc729e6b10946980f6381e

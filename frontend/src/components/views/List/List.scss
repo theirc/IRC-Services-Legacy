@@ -1,6 +1,7 @@
 .List {
 	background-color: white;
 	box-shadow: 0 0 8px 0px #e3e3e3;
+
 	table {
 		border-left: none;
 		border-right: none;
@@ -23,6 +24,7 @@
 
 			tr:hover {
 				background-color: #eee !important;
+				color: dodgerblue;
 			}
 
 			tr:nth-of-type(odd) {
@@ -33,6 +35,48 @@
 				background-color: #f8fafb;
 			}
 
+		}
+	}
+
+	ul.dropdown-menu {
+		bottom: 150%;
+		margin: 0 0 0 12px;
+		min-width: unset;
+		top: unset;
+	}
+
+	#pageDropDown {
+		margin-left: 15px;
+	}
+
+	// Dark mode
+	&.bg-dark {
+		background-color: #262626 !important;
+		box-shadow: 0 0 8px 0 #222;
+
+		table {
+			border: none;
+			color: white;
+
+			td {
+				border: none;
+			}
+
+			tr:hover {
+				background-color: #383838 !important;
+			}
+			
+			tr:nth-of-type(odd) {
+				background-color: #262626;
+			}
+			
+			tr:nth-of-type(even) {
+				background-color: #1b1b1b;
+			}
+
+			th {
+				border: none;
+			}
 		}
 	}
 }

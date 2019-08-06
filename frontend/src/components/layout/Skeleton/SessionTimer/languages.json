@@ -1,0 +1,18 @@
+{
+	"en": {
+		"SessionTimer": {
+			"title": "Session timeout",
+			"logout": "Log out",
+			"message": "You'll be logged out in {{secs}} secs",
+			"stay": "Stay"
+		}
+	},
+	"fr": {
+		"SessionTimer": {
+			"title": "Session timeout fr",
+			"logout": "Log out fr",
+			"message": "You'll be logged out in {{secs}} secs fr",
+			"stay": "Stay fr"
+		}
+	}
+}

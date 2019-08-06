@@ -58,6 +58,12 @@ RUN npm install && npm install gulp && npm install angular-material@1.1.7 \
     && gulp && python manage.py collectstatic --noinput
 #RUN python manage.py migrate --noinput
 
+WORKDIR /frontend
+RUN npm install 
+
+WORKDIR /code
+RUN gulp && python manage.py collectstatic --noinput
+
 
 COPY sshd_config /etc/ssh/
 COPY nginx.conf /etc/nginx/sites-enabled/site.conf

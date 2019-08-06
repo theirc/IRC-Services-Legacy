@@ -1,46 +1,46 @@
 import React from 'react';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
-import { useTranslation } from "react-i18next";
-import { Link } from 'react-router-dom';
+import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import i18n from '../../../../shared/i18n';
+import languages from './languages.json'
 import loginActions from '../../../../scenes/Login/actions';
 import skeletonActions from '../actions';
+
 import './Header.scss';
 
+const NS = 'Header';
+
 const Header = props => {
-	const { t, i18n } = useTranslation();
+	i18n.customLoad(languages, NS);
+	const { t } = useTranslation(NS);
 
 	const title = props.user ? `${props.user.name} ${props.user.surname}` : 'Not Logged In';
 
-	const onClick = e => {
-		props.setSidebarNavOpen(!props.isOpen);
-	};
+	const handleToggler = e => props.setSidebarNavOpen(!props.sidebarnav.isOpen);
+
+	const handleProfile = () => props.history.push(`/users/${props.user.id}`);
 
 	return (
-		<div className='Header'>
-			<Navbar fixed='top' collapseOnSelect expand="sm" bg="light" variant="light">
-				<span onClick={onClick} className={`navbar-toggler-icon toggler ${props.isOpen ? 'expanded' : ''}`}></span>
-				<Navbar.Toggle aria-controls="responsive-navbar-nav" />
-				<Navbar.Collapse id="responsive-navbar-nav">
-					<Nav className="mr-auto">
-					</Nav>
-					<Nav>
-						<NavDropdown alignRight title={title} id="collasible-nav-dropdown">
-							<NavDropdown.Item disabled>Profile</NavDropdown.Item>
-							<NavDropdown.Divider />
-							<NavDropdown.Item><Link to='/' onClick={props.logOut}>Log out</Link></NavDropdown.Item>
-						</NavDropdown>
-					</Nav>
-				</Navbar.Collapse>
+		<div className={`Header ${props.darkMode ? 'bg-dark' : ''}`}>
+			<Navbar fixed='top' collapseOnSelect expand='sm' variant={props.darkMode ? 'dark' : 'light'}>
+				<span onClick={handleToggler} className={`navbar-toggler-icon toggler ${props.sidebarnav.isOpen ? 'expanded' : ''}`}></span>
+				<Nav className='mr-auto'>
+				</Nav>
+				<Nav>
+					<NavDropdown alignRight title={title} id='collasible-nav-dropdown'>
+						<NavDropdown.Item onClick={handleProfile}>{t('profile')}</NavDropdown.Item>
+						<NavDropdown.Divider />
+						<NavDropdown.Item onClick={props.logOut}>{t('logout')}</NavDropdown.Item>
+					</NavDropdown>
+				</Nav>
 			</Navbar>
 		</div>
 	)
 }
 
 const mapStateToProps = state => ({
-	isOpen: state.skeleton.sidebarnav.isOpen,
 	user: state.login.user
 });
 

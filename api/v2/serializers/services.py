@@ -201,6 +201,33 @@ class DistanceField(serializers.FloatField):
             return obj.distance.m  # Distance in meters
         return self.default
 
+class PrivateProviderListSerializer(serializers.ModelSerializer):
+    name = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Provider
+        fields = tuple([
+            'id',
+            'name'
+        ])
+
+    def get_name(self, obj):
+        key = [i for i in obj.keys() if i.startswith('name')][0]
+        return obj[key]
+
+class GeographicRegionListSerializer(serializers.ModelSerializer):
+    parent = serializers.SerializerMethodField()
+
+    class Meta:
+        model = GeographicRegion
+        fields = tuple([
+            'id',
+            'name',
+            'parent'
+        ])
+
+    def get_parent(self, obj):
+        return obj['parent__name']
 
 class ProviderSerializer(serializers.ModelSerializer):
     number_of_monthly_beneficiaries = serializers.IntegerField(
@@ -386,6 +413,19 @@ class TypesOrderingSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         pass
 
+class ServiceTypeList2Serializer(serializers.ModelSerializer):
+    name = serializers.SerializerMethodField()
+
+    class Meta:
+        model = ServiceType
+        fields = tuple([
+            'id',
+            'name'
+        ])
+
+    def get_name(self, obj):
+        key = [i for i in obj.keys() if i.startswith('name')][0]
+        return obj[key]
 
 class ServiceTypeSerializer(serializers.ModelSerializer):
     icon_url = serializers.CharField(source='get_icon_url', read_only=True)
@@ -442,6 +482,26 @@ class UserNoteSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserNote
 
+
+class ServiceListSerializer(serializers.ModelSerializer):
+    name = serializers.SerializerMethodField()
+    provider = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Service
+        fields = tuple([
+            'id',
+            'name',
+            'provider'
+        ])
+
+    def get_name(self, obj):
+        key = [i for i in obj.keys() if i.startswith('name')][0]
+        return obj[key]
+
+    def get_provider(self, obj):
+        key = [i for i in obj.keys() if i.startswith('provider')][0]
+        return obj[key]
 
 class ServiceSerializer(serializers.ModelSerializer):
     provider_fetch_url = serializers.CharField(source='get_provider_fetch_url', read_only=True)
@@ -630,6 +690,20 @@ class ServiceManagementSerializer(serializers.ModelSerializer):
                 }
         return output
 
+class ProviderTypeListSerializer(serializers.ModelSerializer):
+    name = serializers.SerializerMethodField()
+
+    class Meta:
+        model = GeographicRegion
+        fields = tuple([
+            'id',
+            'name'
+        ])
+
+    def get_name(self, obj):
+        key = [i for i in obj.keys() if i.startswith('name')][0]
+        return obj[key]
+
 
 class ProviderTypeSerializer(serializers.ModelSerializer):
     class Meta:
@@ -639,7 +713,6 @@ class ProviderTypeSerializer(serializers.ModelSerializer):
                 'id',
             ] + generate_translated_fields('name')
         )
-
 
 class CustomServiceTypeSerializer(serializers.ModelSerializer):
     """Serializer for distincted service types"""
@@ -824,5 +897,3 @@ class ServiceConfirmationLogListSerializer(serializers.ModelSerializer):
     class Meta:
         model = ServiceConfirmationLog
         fields = '__all__'
-
-

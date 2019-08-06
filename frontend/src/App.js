@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import './App.css';
 import { Helmet } from "react-helmet";
 import AppRouter from "./shared/router";
+import './App.css';
 
 class App extends Component {
 	render() {

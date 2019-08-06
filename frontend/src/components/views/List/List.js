@@ -1,43 +1,75 @@
 import React from 'react';
+import { Button } from 'react-bootstrap';
 import { useTranslation } from "react-i18next";
+import { connect } from 'react-redux';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
-import cellEditFactory from 'react-bootstrap-table2-editor';
-import filterFactory from 'react-bootstrap-table2-filter';
+import ToolkitProvider from 'react-bootstrap-table2-toolkit';
 import Actions from './Actions/Actions';
+import skeletonActions from '../../layout/Skeleton/actions';
+import i18n from '../../../shared/i18n';
+import languages from './languages.json';
+
 
 import './List.scss';
 
-const options = {
-	// pageStartIndex: 0,
-	sizePerPage: 10,
-	hideSizePerPage: true,
-	hidePageListOnlyOnePage: true
-};
+const NS = 'List';
 
-const List = ({data, columns, rowEvents}) => {
-	const { t, i18n } = useTranslation();
+const List = ({ data, columns, rowEvents, darkMode, resultsPerPage, setResultsPerPage, defaultSorted, create, enableFilter }) => {
+	i18n.customLoad(languages, NS);
+	const { t } = useTranslation(NS);
+
+	const onSizePerPageChange = (sizePerPage, page) => {
+		setResultsPerPage(sizePerPage);
+	}
+
+	const options = {
+		hidePageListOnlyOnePage: true,
+		onSizePerPageChange: onSizePerPageChange,
+		pageStartIndex: 1,
+		sizePerPage: resultsPerPage,
+	};
 
 	return (
-		<div className='List'>
-			<Actions />
-			{ !data.length && <p>loading...</p> }
-			{ !!data.length &&
-			<BootstrapTable
-				// cellEdit={cellEditFactory({ mode: 'click' })}
+		<div className={`List ${darkMode ? 'bg-dark' : ''}`}>
+			<ToolkitProvider
+				bootstrap4
 				columns={columns}
 				data={data}
-				filter={filterFactory()}
-				hover
 				keyField='id'
-				pagination={paginationFactory(options)}
-				rowEvents={rowEvents}
-				selectRow={{ mode: 'checkbox' }}
-				striped
-			/>
-			}
+				search={{ defaultSearch: '' }}
+			>
+				{props =>
+					<div>
+						<Actions {...props} enableFilter={enableFilter}/>
+						{!data.length && <p>loading...</p>}
+						{!!data.length &&
+							<BootstrapTable {...props.baseProps}
+								hover
+								defaultSorted={defaultSorted}
+								pagination={paginationFactory(options)}
+								rowEvents={rowEvents}
+								selectRow={{ mode: 'checkbox' }}
+								striped
+							/>
+						}
+					</div>
+				}
+			</ToolkitProvider>
+			<Button type='button' className='button is-block is-info is-fullwidth btn-add' onClick={create}>{t('create')}</Button>
 		</div>
 	)
-}	
+}
 
-export default List;
+const mapStateToProps = state => ({
+	darkMode: state.skeleton.darkMode,
+	resultsPerPage: state.skeleton.resultsPerPage,
+});
+
+const mapDispatchToProps = dispatch => {
+	return {
+		setResultsPerPage: resultsPerPage => dispatch(skeletonActions.setResultsPerPage(resultsPerPage)),
+	}
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(List);

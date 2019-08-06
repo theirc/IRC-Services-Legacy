@@ -1,8 +1,10 @@
 import i18n from "i18next";
+import store from './store';
 import { initReactI18next } from "react-i18next";
 
+const language = store.getState().settings.language;
 const options = {
-	lng: 'en',
+	lng: language,
 	fallbackLng: 'en',
 	interpolation: {
 		escapeValue: false, // not needed for react!!
