@@ -246,7 +246,7 @@ angular
         vm.regionlvl2 = null;
         vm.regionlvl3 = null;
 
-        vm.lastUpdate = moment(vm.service.updated_at).format('MMMM Do YYYY, h:mm:ss a');
+        vm.lastUpdate = moment(vm.service.updated_at).format('ll');
         
         /*vm.updateCity = () => {
             service_languages.forEach(function (lang) {
