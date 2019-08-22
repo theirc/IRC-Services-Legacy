@@ -1,69 +1,70 @@
 import React, { Suspense } from "react";
+import ReactDOM from 'react-dom';
 import { shallow, mount, render } from "enzyme";
 import { Provider } from 'react-redux';
-import  Providers from "./Providers";
-import { prop } from '@uirouter/core';
 import  ListView from "./views/ListView/ListView";
-import  EditView from "./views/EditView/EditView"
-//import store from '../.././shared/store';
-import configureStore from 'redux-mock-store';
-import { create } from "react-test-renderer";
-//import { render } from '@testing-library/react'
+import  EditView from "./views/EditView/EditView";
+import store from '../../shared/store';
+import { act } from 'react-dom/test-utils';
 import expectationResultFactory from "jest-jasmine2/build/expectationResultFactory";
-import { findByTestAtrrr, testStore } from '../../.././Utils'
-import { isRegExp } from "util";
-import TestRenderer from 'react-test-renderer';
 
+const mockedFunction = jest.fn();
+const addNewMockedFunction = jest.fn();
 
-describe('Providers tests: ', () => {
-  const mockedFunction = jest.fn();
-  const mockedFunctionForList = jest.fn();
-  const initialProps = {
+const propsForEditViewWithId = {
+    match:{
+      params:{
+        id:'2'
+      }
+    },
     history:{
       goBack: () => { mockedFunction();
       }
     }
-  }
-  const propsForList = {
-    history:{},
-    rowEvents:{
-      onClick: () =>{mockedFunctionForList();}
+}
+const propsForEditViewWithCreateId = {
+    match:{
+      params:{
+        id:'create'
+      }
+    },
+    history:{
+      goBack: () => { mockedFunction();
+      }
+    },  
+    handleSubmit: jest.fn()
+}
+const propsForListView = {
+  history:{
+    goBack: () => { mockedFunction();
     }
-  }
-  const listcomponent = shallow(<ListView {...propsForList} />);
-  const edit = shallow(<EditView {...initialProps} onClick={mockedFunction}/>);
-  const w = edit.find('button');
-  const listToShallow = listcomponent.find('List');
+  },
+  addNew: () => {addNewMockedFunction();}
+  //addNew: () => {mockedAddFunction();}
+}
+
+
+describe('Providers tests: ', () => {
   
-  
-  it('List view renders ok:', () => {
-    const title = listcomponent.find('h2');
-    const titleText = title.text();
-    expect(listcomponent.exists()).toBe(true);
-    expect(titleText).toBe('PROVIDERS');
-  })
 
-  it('Checks list view structure:', () => {
-    expect(listcomponent.find('.ListView').exists()).toBe(true);
-    expect(listcomponent.find('h2').exists()).toBe(true);
-    expect(listcomponent.find('List').exists()).toBe(true);
+  it('Edit view with create ID: ', () => {
+      const editViewToCreate = mount(<Provider store={store}><EditView {...propsForEditViewWithCreateId} onClick={mockedFunction}/></Provider>);
+      const formsElements = editViewToCreate.find('Form');
+      expect(formsElements.exists()).toBe(true);
+      console.log(editViewToCreate.debug());
+    });
+  it('Edit view with a ID: ', () => {
+    const editViewWithID = mount(<Provider store={store}><EditView {...propsForEditViewWithId} onClick={mockedFunction}/></Provider>);
+    const pElement = editViewWithID.find('p');
+    expect(pElement.exists()).toBe(true);
+    expect(pElement.text()).toBe('loading...');
+    console.log(editViewWithID.debug());
   })
-
-  it('Edit view renders ok:', () => {
-    expect(edit.exists()).toBe(true);
-    expect(w.text()).toBe('< Back');
+  it('List view: ', () => {
+    const listView = shallow(<ListView />);
+    expect(listView.find('.ListView').exists()).toBe(true);
+    expect(listView.find('h2').exists()).toBe(true);
+    expect(listView.find('Connect(List)').exists()).toBe(true);
+    console.log(listView.debug());
   })
-
-  it('Checks edit view structure:', () => {
-    const editss = edit.find('Edit');
-    const h2s = edit.find('h2');
-    expect(editss.length).toBe(6);
-    expect(h2s.length).toBe(1);
-  })
-
-  it('Back button:', () => {
-    w.simulate('click');
-    expect(mockedFunction).toHaveBeenCalled();
-  })
-
 })
