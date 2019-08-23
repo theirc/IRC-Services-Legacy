@@ -6,10 +6,8 @@ import  ListView from "./views/ListView/ListView";
 import  EditView from "./views/EditView/EditView";
 import store from '../../shared/store';
 import { act } from 'react-dom/test-utils';
-import expectationResultFactory from "jest-jasmine2/build/expectationResultFactory";
 
 const mockedFunction = jest.fn();
-const addNewMockedFunction = jest.fn();
 
 const propsForEditViewWithId = {
     match:{
@@ -32,7 +30,6 @@ const propsForEditViewWithCreateId = {
       goBack: () => { mockedFunction();
       }
     },  
-    handleSubmit: jest.fn()
 }
 const propsForListView = {
   history:{
@@ -40,7 +37,6 @@ const propsForListView = {
     }
   },
   addNew: () => {addNewMockedFunction();}
-  //addNew: () => {mockedAddFunction();}
 }
 
 
@@ -51,20 +47,35 @@ describe('Providers tests: ', () => {
       const editViewToCreate = mount(<Provider store={store}><EditView {...propsForEditViewWithCreateId} onClick={mockedFunction}/></Provider>);
       const formsElements = editViewToCreate.find('Form');
       expect(formsElements.exists()).toBe(true);
-      console.log(editViewToCreate.debug());
+      editViewToCreate.unmount();
     });
   it('Edit view with a ID: ', () => {
     const editViewWithID = mount(<Provider store={store}><EditView {...propsForEditViewWithId} onClick={mockedFunction}/></Provider>);
     const pElement = editViewWithID.find('p');
     expect(pElement.exists()).toBe(true);
     expect(pElement.text()).toBe('loading...');
-    console.log(editViewWithID.debug());
+    editViewWithID.unmount();
   })
   it('List view: ', () => {
     const listView = shallow(<ListView />);
     expect(listView.find('.ListView').exists()).toBe(true);
     expect(listView.find('h2').exists()).toBe(true);
     expect(listView.find('Connect(List)').exists()).toBe(true);
-    console.log(listView.debug());
+  })
+  it('Create Edit View should have a Save button: ', () =>{
+    const editViewToCreate = mount(<Provider store={store}><EditView {...propsForEditViewWithCreateId} onClick={mockedFunction}/></Provider>);
+    const saveButton = editViewToCreate.find('button');
+    expect(saveButton.exists()).toBe(true);
+    expect(saveButton.find('[type="submit"]').text()).toBe('Save');
+    editViewToCreate.unmount();
+  })
+  it('Save in Create Edit View: ', () =>{
+    const editViewToCreate = mount(<Provider store={store}><EditView {...propsForEditViewWithCreateId} onClick={mockedFunction}/></Provider>);
+    expect(editViewToCreate.find('p').length).toBe(1);
+    editViewToCreate.find('button').at(1).simulate('submit');
+    editViewToCreate.update();
+    expect(editViewToCreate.find('p').length).toBe(2);
+    expect(editViewToCreate.find('p').at(1).text()).toBe('Saving Provider...');
+    editViewToCreate.unmount();
   })
 })
