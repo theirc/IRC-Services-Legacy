@@ -6,7 +6,7 @@ import  ListView from "./views/ListView/ListView";
 import  EditView from "./views/EditView/EditView";
 import store from '../../shared/store';
 import { act } from 'react-dom/test-utils';
-import Providers from './Providers'
+import Users from './Users'
 
 const mockedFunction = jest.fn();
 const addNewMockedFunction = jest.fn();
@@ -41,7 +41,7 @@ const propsForListView = {
   addNew: () => {addNewMockedFunction();}
 }
 
-describe('Providers tests: ', () => {
+describe('Users tests: ', () => {
   
   it('Edit view with create ID: ', () => {
       const editViewToCreate = mount(<Provider store={store}><EditView {...propsForEditViewWithCreateId} onClick={mockedFunction}/></Provider>);
@@ -75,7 +75,7 @@ describe('Providers tests: ', () => {
     editViewToCreate.find('button').at(1).simulate('submit');
     editViewToCreate.update();
     expect(editViewToCreate.find('p').length).toBe(2);
-    expect(editViewToCreate.find('p').at(1).text()).toBe('Saving Provider...');
+    expect(editViewToCreate.find('p').at(1).text()).toBe('Saving User...');
     editViewToCreate.unmount();
   })
 })
