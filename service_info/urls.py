@@ -44,6 +44,8 @@ urlpatterns = [
 
     url(r'^e/(?P<environment>[0-9A-Za-z]+)/v2/', include('api.urls')),
     url(r'^', include('admin_panel.urls')),
+    url(r'^', include('notifications.urls')),
+    
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) \
     + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

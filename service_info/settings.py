@@ -267,6 +267,7 @@ INSTALLED_APPS = (
     # in this project) is hidden.
     'sorl.thumbnail',
     'push_notifications',
+    'notifications',
     'ckeditor',
     'ckeditor_uploader',
     'djng',
