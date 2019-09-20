@@ -40,6 +40,18 @@ def content_publish(request):
 
 @csrf_exempt
 def sms_received(request):
+    body = request.POST.get('Body')
+    channel = request.POST.get('ChannelSid')
+    from_number = request.POST.get('From')
+    instance = request.POST.get('InstanceSid')
+    media_url = request.POST.get('MediaUrl')
+    message_sid = request.POST.get('MessageSid')
+    to = request.POST.get('To')
+    
+    return Null
+           
+@csrf_exempt
+def task_created(request):
     data = JSONParser().parse(request.POST)
     return Null
     
