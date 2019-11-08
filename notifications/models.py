@@ -1,32 +1,25 @@
 from django.db import models
+from django.utils.translation import ugettext_lazy as _, activate, get_language
+from django.core.validators import MinValueValidator, MaxValueValidator
 
-# Create your models here.
 class UserSubscription(models.Model):
     phone = models.CharField(
         _("phone"),
         max_length=255,
-        blank=True,
-        default=''
+        blank=False,
     )
-    categoryId = models.IntegerField(
-        _("categoryId"),
-        blank=True, null=True,
-        validators=[
-            MinValueValidator(0)
-        ]
-    )
-    name = models.CharField(
-        _("name"),
+    categoryId = models.CharField(
+        _("category"),
         max_length=255,
-        blank=True,
-        default=''
+        blank=False, 
+        null=False,
     )
-    validationCode = models.CharField(
-        _("name"),
-        max_length=255,
-        blank=True,
-        default=''
+    active = models.BooleanField(
+        _('active'), 
+        default=False,
     )
+    class Meta:
+        unique_together = ('phone', 'categoryId',)
 
-class Notification(models.Model):
+# class Notification(models.Model):
     

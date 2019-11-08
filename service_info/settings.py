@@ -253,7 +253,7 @@ INSTALLED_APPS = (
 
     'regions',
     'services',
-
+    'notifications',
     'corsheaders',
     'mptt',
     'easy_thumbnails',

@@ -673,19 +673,19 @@ class ServiceTypeViewSet(viewsets.ModelViewSet):
             if len(q):
                 return q
             else:
-                qs = ServiceType.objects.raw("SELECT DISTINCT `services_servicetype`.`id`, `services_servicetype`.`number`, `services_servicetype`.`icon`,  COUNT(`services_service_types`.`service_id`) AS `service_count` FROM `services_servicetype` INNER JOIN `services_service_types` ON (`services_servicetype`.`id` = `services_service_types`.`servicetype_id`)  INNER JOIN `services_service` ON (`services_service_types`.`service_id` = `services_service`.`id` OR `services_servicetype`.`id` = `services_service`.`type_id` )  INNER JOIN `regions_geographicregion` ON (`services_service`.`region_id` = `regions_geographicregion`.`id`)  LEFT OUTER JOIN `regions_geographicregion` T5 ON (`regions_geographicregion`.`parent_id` = T5.`id`)  LEFT OUTER JOIN `regions_geographicregion` T6 ON (T5.`parent_id` = T6.`id`)  WHERE ((`regions_geographicregion`.`slug` = %s OR T5.`slug` = %s OR T6.`slug` = %s) AND `services_service`.`status` = %s)  GROUP BY `services_servicetype`.`id` HAVING COUNT(`services_service_types`.`service_id`) > 0 ORDER BY `services_servicetype`.`number` ASC", [region, region, region, Service.STATUS_CURRENT])
+                #qs = ServiceType.objects.raw("SELECT DISTINCT `services_servicetype`.`id`, `services_servicetype`.`number`, `services_servicetype`.`icon`,  COUNT(`services_service_types`.`service_id`) AS `service_count` FROM `services_servicetype` INNER JOIN `services_service_types` ON (`services_servicetype`.`id` = `services_service_types`.`servicetype_id`)  INNER JOIN `services_service` ON (`services_service_types`.`service_id` = `services_service`.`id` OR `services_servicetype`.`id` = `services_service`.`type_id` )  INNER JOIN `regions_geographicregion` ON (`services_service`.`region_id` = `regions_geographicregion`.`id`)  LEFT OUTER JOIN `regions_geographicregion` T5 ON (`regions_geographicregion`.`parent_id` = T5.`id`)  LEFT OUTER JOIN `regions_geographicregion` T6 ON (T5.`parent_id` = T6.`id`)  WHERE ((`regions_geographicregion`.`slug` = %s OR T5.`slug` = %s OR T6.`slug` = %s) AND `services_service`.`status` = %s)  GROUP BY `services_servicetype`.`id` HAVING COUNT(`services_service_types`.`service_id`) > 0 ORDER BY `services_servicetype`.`number` ASC", [region, region, region, Service.STATUS_CURRENT])
 
-                # qs = self.queryset.filter(
-                #     (                    
-                #             Q(service__region__slug=region) |
-                #             Q(service__region__parent__slug=region) |
-                #             Q(service__region__parent__parent__slug=region) |
-                #             Q(service_type__region__slug=region) |
-                #             Q(service_type__region__parent__slug=region) |
-                #             Q(service_type__region__parent__parent__slug=region)                        
-                #     ) & Q(service__status=Service.STATUS_CURRENT)
+                qs = self.queryset.filter(
+                    (                    
+                            Q(service__region__slug=region) |
+                            Q(service__region__parent__slug=region) |
+                            Q(service__region__parent__parent__slug=region) |
+                            Q(service_type__region__slug=region) |
+                            Q(service_type__region__parent__slug=region) |
+                            Q(service_type__region__parent__parent__slug=region)                        
+                    ) & Q(service__status=Service.STATUS_CURRENT)
                     
-                # ).annotate(service_count=Count('service')).filter(service_count__gt=0).distinct().order_by('number')
+                ).annotate(service_count=Count('service')).filter(service_count__gt=0).distinct().order_by('number')
                 return qs
         else:
             return ServiceType.objects.all().order_by('number')
