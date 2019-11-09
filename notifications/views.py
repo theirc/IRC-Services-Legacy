@@ -25,8 +25,9 @@ def add_subscription(request):
         if serializer.is_valid():
             try:
                 serializer.save()
-                account_sid = 'AC56ec5750accda2f3abe42a2b90a865ab'
-                auth_token = '8457d1f3d80b63b93514346c82304b25'
+                # account_sid = os.environ.get('TWILIO_SID', '')
+                account_sid = ''
+                auth_token = ''
                 client = Client(account_sid, auth_token)
                 try:
 
