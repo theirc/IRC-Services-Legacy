@@ -41,6 +41,10 @@ urlpatterns = [
     url(r'^newsletter-htmls', v2.NewsletterHtmlView.as_view()),
     url(r'^add-subscription/$', notif.add_subscription),
     url(r'^activate-subscription/$', notif.activate_subscription),
-    url(r'^remove-subscription/$', notif.remove_subscription)
+    url(r'^remove-subscription/$', notif.remove_subscription),
+    url(r'^add-log/$', notif.add_log),
+    url(r'^get-logs/$', notif.get_logs),
+    url(r'^fetch-message-logs/$', notif.fetch_message_logs)
+
 
 ]

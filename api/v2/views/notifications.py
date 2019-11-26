@@ -25,4 +25,3 @@ def remove_subscription(request):
         if hasattr(data, "category") & hassattr(data, "phone"):
             subscription = UserSubscription.objects.get(phone=data.pop("phone"), categoryId = data.pop("category"))
             subscription.delete()
-

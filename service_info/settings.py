@@ -31,6 +31,9 @@ STAFF_EMAIL = os.environ.get('STAFF_EMAIL', '')
 
 SILENCED_SYSTEM_CHECKS = ['mysql.E001']
 
+TWILIO_SID = os.environ.get('TWILIO_SID','')
+TWILIO_TOKEN = os.environ.get('TWILIO_TOKEN','')
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.spatialite',
