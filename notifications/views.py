@@ -112,18 +112,18 @@ def fetch_message_logs(request):
         qs = MessageLog.objects.order_by('date_sent').last()
     except Exception as e:
         return JSONResponse('Error reading messages from DB')
-
-    if qs:   
-        try:
-            client = Client(account_sid, auth_token)
-        except Exception as e:
-            return JSONResponse('Error creating Twilio client instance')
+    
+    print(qs)
+    try:
+        client = Client(account_sid, auth_token)
+    except Exception as e:
+        return JSONResponse('Error creating Twilio client instance')
         
+    if qs:  
         try:
             messages = client.messages.list(date_sent_after = qs.date_sent)
         except Exception as e:
             return JSONResponse('Error fetching messages from Twilio')
-
         for msg in messages:
             instance = MessageLog(
                 sid = msg.sid,
@@ -139,7 +139,26 @@ def fetch_message_logs(request):
                 error_message = msg.error_message
             )
             instance.save()
-
+    else:
+        try:
+            messages = client.messages.list()
+        except Exception as e:
+            return JSONResponse('Error fetching messages from Twilio')
+        for msg in messages:
+            instance = MessageLog(
+                sid = msg.sid,
+                body = msg.body,
+                from_number = msg.from_,
+                to = msg.to,
+                status = msg.status,
+                price_unit = msg.price_unit,
+                direction = msg.direction,
+                date_sent = msg.date_sent,
+                date_created = msg.date_created,
+                error_code = msg.error_code,
+                error_message = msg.error_message
+            )
+            instance.save()
     return JSONResponse('Done')
 
 
