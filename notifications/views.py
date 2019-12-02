@@ -8,9 +8,12 @@ from twilio.rest import Client
 from django.conf import settings
 from django.core import serializers
 from django.views.decorators.http import require_http_methods, require_POST
+from random import randrange
+from contentful import Client as Contentful
 
 from notifications.serializer import UserSubscriptionSerializer, EventLogSerializer, MessageLogSerializer
 logger = get_task_logger(__name__)
+import json
 
 class JSONResponse(HttpResponse):
 
@@ -29,15 +32,15 @@ def add_subscription(request):
             serializer.save()
             account_sid = settings.TWILIO_SID
             auth_token = settings.TWILIO_TOKEN
-            
+            code = str(randrange(1000)).zfill(4)
             try:
                 client = Client(account_sid, auth_token)
                 logger.info("*** client instance created ")
                 message = client.messages.create(
                         from_='whatsapp:+15184130994',
-                        body='Hola! Hemos recibido tu solicitud para subscribirte la categor\xeda CARAVANAS. Env\xeda la palabra "si" para confirmar tu subscripci\xf3n.',
+                        body = 'Hemos recibido su solicitud para subscribirse a las notificaciones de la categor\xeda {{1}}. Su c\xf3digo de confirmaci\xf3n es {{2}}.' % (data.pop('categoryId'), code),
                         # status_callback='http://postb.in/1234abcd',
-                        to='whatsapp:+5493413523631'
+                        to='whatsapp:%s' % data.phone
                 )
                 print(message.sid)
                 logger.info("*** Message sent ")
@@ -103,6 +106,18 @@ def get_logs(request):
         
         return JSONResponse(serialized_qs, status=200)
         #return JSONResponse(serializer, status=200)
+@csrf_exempt
+def content_update(request):
+    #Update received from Contentful
+    #print(request.body)
+    #json.dumps(request)
+    data = JSONParser().parse(request)
+    categoryId = data.pop("fields").pop("category").pop("es").pop("sys").pop("id")
+    spaceId = settings.CONTENTFUL_SPACE
+    apikey = settings.CONTENTFUL_API
+    contentful = Contentful(spaceId, apikey, environment= 'master')
+    entry = contentful.entry(categoryId)
+    return JSONResponse(entry, status=200)
 
 @csrf_exempt
 def fetch_message_logs(request):

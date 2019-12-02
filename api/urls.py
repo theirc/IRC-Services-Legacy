@@ -44,7 +44,7 @@ urlpatterns = [
     url(r'^remove-subscription/$', notif.remove_subscription),
     url(r'^add-log/$', notif.add_log),
     url(r'^get-logs/$', notif.get_logs),
-    url(r'^fetch-message-logs/$', notif.fetch_message_logs)
-
+    url(r'^fetch-message-logs/$', notif.fetch_message_logs),
+    url(r'^content-update/$', notif.content_update)
 
 ]

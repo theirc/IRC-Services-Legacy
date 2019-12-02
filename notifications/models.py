@@ -23,7 +23,7 @@ class UserSubscription(models.Model):
         blank=True,
     )
     class Meta:
-        unique_together = ('phone', 'categoryId',)
+        unique_together = ('phone', 'categoryId','active')
 
 # class Notification(models.Model):
     

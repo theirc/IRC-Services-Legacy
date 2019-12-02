@@ -33,6 +33,8 @@ SILENCED_SYSTEM_CHECKS = ['mysql.E001']
 
 TWILIO_SID = os.environ.get('TWILIO_SID','')
 TWILIO_TOKEN = os.environ.get('TWILIO_TOKEN','')
+CONTENTFUL_SPACE = os.environ.get('CONTENTFUL_SPACE','')
+CONTENTFUL_API = os.environ.get('CONTENTFUL_API','')
 
 DATABASES = {
     'default': {
