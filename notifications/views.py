@@ -74,7 +74,7 @@ def activate_subscription(request):
 def remove_subscription(request):            
     if request.method == 'POST':
         data = JSONParser().parse(request)
-        subscription = UserSubscription.objects.get(phone=data.pop("phone"), categoryId = data.pop("categoryId"))
+        subscription = UserSubscription.objects.get(phone=data.pop("phone"))
         if (subscription):
             subscription.active = True
             subscription.delete()
@@ -175,5 +175,3 @@ def fetch_message_logs(request):
             )
             instance.save()
     return JSONResponse('Done')
-
-
