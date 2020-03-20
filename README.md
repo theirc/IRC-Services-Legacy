@@ -2,7 +2,7 @@ Installing
 ----------
 
 ### Dependencies
-+ Python 3.5
++ Python 3.6
 + pip
 + MySQL
 + PostGIS 
@@ -10,7 +10,7 @@ Installing
 ### Installing dependencies
     sudo add-apt-repository ppa:fkrull/deadsnakes
     sudo apt-get update
-    sudo apt-get install python3.5 python3.5-dev python3-pip
+    sudo apt-get install python3.6 python3.6-dev python3-pip
     sudo apt-get install libmysqlclient-dev ruby
     sudo gem install sass
 
@@ -18,7 +18,7 @@ Installing
     Virtualenv is not required (but it's better to use it)
     sudo pip3 install virtualenv
     mkdir ~/.virtualenvs/
-    virtualenv ~/.virtualenvs/api.refugee.info -p <path>/python3.5
+    virtualenv ~/.virtualenvs/api.refugee.info -p <path>/python3.6
 
 ### Configuring App
     source ~/.virtualenvs/api.refugee.info/bin/activate      # if you installed
