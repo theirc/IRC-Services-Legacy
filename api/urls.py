@@ -1,6 +1,7 @@
 from api.v2 import views as v2
 from django.conf.urls import url, include
 from rest_framework import routers
+from notifications import views as notif
 
 router = routers.DefaultRouter()
 # base_name: override URL names for our user model - default would
@@ -37,5 +38,13 @@ urlpatterns = [
     url(r'^blog/(?P<id>.*)/pull/$', v2.BlogPullAPIView.as_view()),
     url(r'^blog/(?P<id>.*)/push/$', v2.BlogPushAPIView.as_view()),
 
-    url(r'^newsletter-htmls', v2.NewsletterHtmlView.as_view())
+    url(r'^newsletter-htmls', v2.NewsletterHtmlView.as_view()),
+    url(r'^add-subscription/$', notif.add_subscription),
+    url(r'^activate-subscription/$', notif.activate_subscription),
+    url(r'^remove-subscription/$', notif.remove_subscription),
+    url(r'^add-log/$', notif.add_log),
+    url(r'^get-logs/$', notif.get_logs),
+    url(r'^fetch-message-logs/$', notif.fetch_message_logs),
+    url(r'^content-update/$', notif.content_update)
+
 ]

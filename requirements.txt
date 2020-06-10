@@ -87,3 +87,5 @@ psycopg2-binary==2.7.4
 django-debug-toolbar==1.9.1
 whoosh==2.7.4
 html2text==2018.1.9
+twilio==6.33.0
+contentful==1.12.3
